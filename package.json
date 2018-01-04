@@ -1,0 +1,23 @@
+{
+	"name": "typescript-relay-modern-compiler",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"graphql-compiler": "0.0.2",
+		"relay-compiler": "1.4.1"
+	},
+	"peerDependencies": {
+		"typescript": "2.6.2"
+	},
+	"devDependencies": {
+		"@types/graphql": "0.11.7",
+		"@types/immutable": "3.8.7"
+	}
+}
