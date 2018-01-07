@@ -1,6 +1,7 @@
 import * as RelayMaskTransform from 'relay-compiler/lib/RelayMaskTransform';
 import * as RelayRelayDirectiveTransform from 'relay-compiler/lib/RelayRelayDirectiveTransform';
 import * as ts from 'typescript';
+import * as path from 'path';
 
 import {
 	transformScalarType,
@@ -113,7 +114,7 @@ function selectionsToAST(selections: Selection[][], state: State, refTypeName?: 
 				]).map(selection => makeProp(selection, state, concreteType)),
 			);
 		}
-		// It might be some other type then the listed concrete types. Ideally, we
+		// It might be some other type than the listed concrete types. Ideally, we
 		// would set the type to diff(string, set of listed concrete types), but
 		// this doesn't exist in Flow at the time.
 		const otherProp = readOnlyObjectTypeProperty(
@@ -150,12 +151,11 @@ function selectionsToAST(selections: Selection[][], state: State, refTypeName?: 
 
 	return ts.createUnionTypeNode(
 		types.map(props => {
-			// Need to figure out what these reftypes are supposed to do.
-			// if (refTypeName) {
-			// 	props.push(
-			// 		readOnlyObjectTypeProperty('$refType', ts.createTypeReferenceNode(ts.createIdentifier(refTypeName), undefined)),
-			// 	);
-			// }
+			if (refTypeName) {
+				props.push(
+					readOnlyObjectTypeProperty(' $refType', ts.createTypeReferenceNode(ts.createIdentifier(refTypeName), undefined)),
+				);
+			}
 			return exactObjectTypeAnnotation(props);
 		}),
 	);
@@ -166,10 +166,12 @@ function exactObjectTypeAnnotation(properties: ts.PropertySignature[]): ts.TypeL
 	return ts.createTypeLiteralNode(properties);
 }
 
+const idRegex = /^[$a-zA-Z_][$a-z0-9A-Z_]*$/;
+
 function readOnlyObjectTypeProperty(propertyName: string, type: ts.TypeNode, optional?: boolean): ts.PropertySignature {
 	return ts.createPropertySignature(
 		[ts.createToken(ts.SyntaxKind.ReadonlyKeyword)],
-		ts.createIdentifier(propertyName),
+		idRegex.test(propertyName) ? ts.createIdentifier(propertyName) : ts.createLiteral(propertyName),
 		optional ? ts.createToken(ts.SyntaxKind.QuestionToken) : undefined,
 		type,
 		undefined
@@ -227,12 +229,14 @@ function importTypes(names: string[], fromModule: string): ts.Statement {
 }
 
 function createVisitor(options: Options) {
-	const state = {
+	const state: State = {
 		customScalars: options.customScalars,
 		enumsHasteModule: options.enumsHasteModule,
 		existingFragmentNames: options.existingFragmentNames,
 		inputFieldWhiteList: options.inputFieldWhiteList,
 		relayRuntimeModule: options.relayRuntimeModule,
+		getGeneratedDirectory: options.getGeneratedDirectory,
+		destinationDirectory: options.destinationDirectory,
 		usedEnums: {},
 		usedFragments: new Set(),
 		useHaste: options.useHaste,
@@ -274,18 +278,15 @@ function createVisitor(options: Options) {
 					return [selection];
 				});
 				const refTypeName = getRefTypeName(node.name);
-				// const refType = t.expressionStatement(
-				// 	t.identifier(
-				// 		`export opaque type ${refTypeName}: FragmentReference = FragmentReference`,
-				// 	),
-				// );
+				const refType = ts.createEnumDeclaration(undefined, [ts.createToken(ts.SyntaxKind.ExportKeyword)], ts.createIdentifier(refTypeName), []);
+
 				const baseType = selectionsToAST(selections, state, refTypeName);
 				const type = isPlural(node) ? ts.createTypeReferenceNode(ts.createIdentifier('ReadonlyArray'), [baseType]) : baseType;
 				return [
 					...getFragmentImports(state),
 					...getEnumDefinitions(state),
 					importTypes(['FragmentReference'], state.relayRuntimeModule),
-					// refType,
+					refType,
 					exportType(node.name, type),
 				];
 			},
@@ -375,44 +376,45 @@ function generateInputVariablesType(node: Root, state: State) {
 
 function groupRefs(props: Selection[]): Selection[] {
 	const result: Selection[] = [];
-	// const refs = [];
+	const refs: string[] = [];
 	props.forEach(prop => {
 		if (prop.ref) {
-			// refs.push(prop.ref);
+			refs.push(prop.ref);
 		} else {
 			result.push(prop);
 		}
 	});
-	// if (refs.length > 0) {
-	// 	const value = intersectionTypeAnnotation(
-	// 		refs.map(ref => t.identifier(getRefTypeName(ref))),
-	// 	);
-	// 	result.push({
-	// 		key: '__fragments',
-	// 		conditional: false,
-	// 		value,
-	// 	});
-	// }
+	if (refs.length > 0) {
+		const value = ts.createIntersectionTypeNode(
+			refs.map(ref => ts.createTypeReferenceNode(ts.createIdentifier(getRefTypeName(ref)), undefined)),
+		);
+		result.push({
+			key: ' $fragments',
+			conditional: false,
+			value,
+		});
+	}
 	return result;
 }
 
 function getFragmentImports(state: State) {
 	const imports: ts.Statement[] = [];
 	if (state.usedFragments.size > 0) {
-		// const usedFragments = Array.from(state.usedFragments).sort();
-		// for (const usedFragment of usedFragments) {
-		// 	const refTypeName = getRefTypeName(usedFragment);
-		// 	if (state.useHaste && state.existingFragmentNames.has(usedFragment)) {
-		// 		// TODO(T22653277) support non-haste environments when importing
-		// 		// fragments
-		// 		imports.push(importTypes([refTypeName], './' + usedFragment + '.graphql'));
-		// 	} else {
-		// 		imports.push(anyTypeAlias(refTypeName));
-		// 	}
-		// }
+		const ownDirectory = state.destinationDirectory.getPath('');
+		const usedFragments = Array.from(state.usedFragments).sort();
+		for (const usedFragment of usedFragments) {
+			const refTypeName = getRefTypeName(usedFragment);
+			if (state.existingFragmentNames.has(usedFragment)) {
+				const importDir = state.getGeneratedDirectory(usedFragment).getPath('');
+				const relative = path.relative(ownDirectory, importDir);
+				const relativeReference = relative.length === 0 ? './' : '';
+				imports.push(importTypes([refTypeName], relativeReference + path.join(relative, usedFragment + '.graphql')));
+			}
+		}
 	}
 	return imports;
 }
+
 
 function anyTypeAlias(typeName: string): ts.Statement {
 	return ts.createTypeAliasDeclaration(
@@ -450,7 +452,7 @@ function stringLiteralTypeAnnotation(name: string): ts.TypeNode {
 }
 
 function getRefTypeName(name: string): string {
-	return `${name}$ref`;
+	return `${name}_ref`;
 }
 
 export const TS_TRANSFORMS: Array<IRTransform> = [

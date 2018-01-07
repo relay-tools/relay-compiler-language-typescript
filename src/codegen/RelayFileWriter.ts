@@ -243,20 +243,24 @@ export class RelayFileWriter implements FileWriterInterface {
 						node.name,
 					);
 
+					const directory = getGeneratedDirectory(node.name);
+
+					// generate typescript types
 					const tsTypes = RelayTSGenerator.generate(flowNode!, {
 						customScalars: this._config.customScalars,
 						enumsHasteModule: this._config.enumsHasteModule,
 						existingFragmentNames,
 						inputFieldWhiteList: this._config.inputFieldWhiteListForFlow,
 						relayRuntimeModule,
+						getGeneratedDirectory,
+						destinationDirectory: directory,
 						useHaste: this._config.useHaste,
 					});
-					// generate typescript types
 
 					const sourceHash = md5(graphql.print(getDefinitionMeta(node.name).ast));
 
 					await writeRelayGeneratedFile(
-						getGeneratedDirectory(node.name),
+						directory,
 						'.ts',
 						node,
 						formatModule,

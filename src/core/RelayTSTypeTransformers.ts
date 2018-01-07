@@ -21,6 +21,8 @@ export type ScalarTypeMapping = {
 export interface Options {
 	customScalars: ScalarTypeMapping,
 	useHaste: boolean,
+	getGeneratedDirectory: (name: string) => CodegenDirectory,
+	destinationDirectory: CodegenDirectory,
 	enumsHasteModule: string | null | undefined,
 	existingFragmentNames: Set<string>,
 	inputFieldWhiteList: ReadonlyArray<string>,
