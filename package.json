@@ -4,20 +4,29 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"build": "rm -rf bin lib && tsc && tsc && mv lib/bin . && sed -i '' 's#\\.\\./#\\.\\./lib/#g' bin/relay-compiler.js",
+		"test": "node bin/relay-compiler.js --schema test/schema.graphql --src test/ --outputDir __generated__"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"graphql-compiler": "0.0.2",
-		"relay-compiler": "1.4.1"
+		"@types/invariant": "2.2.29",
+		"immutable": "~3.7.6",
+		"invariant": "2.2.2",
+		"relay-compiler": "file:../relay/dist/relay-compiler-1.4.1.tgz",
+		"relay-runtime": "file:../relay/dist/relay-runtime-1.4.1.tgz",
+		"yargs": "^9.0.0"
 	},
 	"peerDependencies": {
 		"typescript": "2.6.2"
 	},
 	"devDependencies": {
 		"@types/graphql": "0.11.7",
-		"@types/immutable": "3.8.7"
-	}
+		"@types/immutable": "3.8.7",
+		"@types/node": "8.5.7",
+		"@types/yargs": "10.0.1",
+		"typescript": "2.6.2"
+	},
+	"resolutions": {}
 }
