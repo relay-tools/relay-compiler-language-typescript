@@ -1,51 +1,51 @@
 import {
-	assertAbstractType,
-	ASTNode,
-	getNamedType,
-	getNullableType,
-	GraphQLCompositeType,
-	GraphQLEnumType,
-	GraphQLInputObjectType,
-	GraphQLInterfaceType,
-	GraphQLList,
-	GraphQLNamedType,
-	GraphQLNonNull,
-	GraphQLObjectType,
-	GraphQLScalarType,
-	GraphQLSchema,
-	GraphQLType,
-	GraphQLUnionType,
-	isType,
-	print,
-	typeFromAST,
-	TypeNode,
-	FragmentDefinitionNode,
-	OperationDefinitionNode,
-	ScalarTypeDefinitionNode,
-	SchemaDefinitionNode,
-	ObjectTypeDefinitionNode,
-	InterfaceTypeDefinitionNode,
-	UnionTypeDefinitionNode,
-	EnumTypeDefinitionNode,
-	InputObjectTypeDefinitionNode,
-	DirectiveDefinitionNode,
-} from 'graphql';
+  assertAbstractType,
+  ASTNode,
+  getNamedType,
+  getNullableType,
+  GraphQLCompositeType,
+  GraphQLEnumType,
+  GraphQLInputObjectType,
+  GraphQLInterfaceType,
+  GraphQLList,
+  GraphQLNamedType,
+  GraphQLNonNull,
+  GraphQLObjectType,
+  GraphQLScalarType,
+  GraphQLSchema,
+  GraphQLType,
+  GraphQLUnionType,
+  isType,
+  print,
+  typeFromAST,
+  TypeNode,
+  FragmentDefinitionNode,
+  OperationDefinitionNode,
+  ScalarTypeDefinitionNode,
+  SchemaDefinitionNode,
+  ObjectTypeDefinitionNode,
+  InterfaceTypeDefinitionNode,
+  UnionTypeDefinitionNode,
+  EnumTypeDefinitionNode,
+  InputObjectTypeDefinitionNode,
+  DirectiveDefinitionNode
+} from "graphql";
 
 type GraphQLSingularType =
-	| GraphQLScalarType
-	| GraphQLObjectType
-	| GraphQLInterfaceType
-	| GraphQLUnionType
-	| GraphQLEnumType
-	| GraphQLInputObjectType
-	| GraphQLNonNull<
-			| GraphQLScalarType
-			| GraphQLObjectType
-			| GraphQLInterfaceType
-			| GraphQLUnionType
-			| GraphQLEnumType
-			| GraphQLInputObjectType
-		>;
+  | GraphQLScalarType
+  | GraphQLObjectType
+  | GraphQLInterfaceType
+  | GraphQLUnionType
+  | GraphQLEnumType
+  | GraphQLInputObjectType
+  | GraphQLNonNull<
+      | GraphQLScalarType
+      | GraphQLObjectType
+      | GraphQLInterfaceType
+      | GraphQLUnionType
+      | GraphQLEnumType
+      | GraphQLInputObjectType
+    >;
 
 /**
  * Determine if the given type may implement the named type:
@@ -54,7 +54,11 @@ type GraphQLSingularType =
  * - it is an abstract type and *some* of its concrete types may
  *   implement the named type
  */
-export function mayImplement(schema: GraphQLSchema, type: GraphQLType, typeName: string): boolean;
+export function mayImplement(
+  schema: GraphQLSchema,
+  type: GraphQLType,
+  typeName: string
+): boolean;
 
 export function canHaveSelections(type: GraphQLType): boolean;
 
@@ -65,7 +69,10 @@ export function canHaveSelections(type: GraphQLType): boolean;
  *
  * https://github.com/graphql/graphql-future/blob/master/01%20-%20__id.md
  */
-export function hasID(schema: GraphQLSchema, type: GraphQLCompositeType): boolean;
+export function hasID(
+  schema: GraphQLSchema,
+  type: GraphQLCompositeType
+): boolean;
 
 /**
  * Determine if a type is abstract (not concrete).
@@ -91,14 +98,19 @@ export function getSingularType(type: GraphQLType): GraphQLSingularType;
 /**
  * @public
  */
-export function implementsInterface(type: GraphQLType, interfaceName: string): boolean;
+export function implementsInterface(
+  type: GraphQLType,
+  interfaceName: string
+): boolean;
 
 /**
  * @public
  *
  * Determine if an AST node contains a fragment/operation definition.
  */
-export function isOperationDefinitionAST(ast: ASTNode): ast is FragmentDefinitionNode | OperationDefinitionNode;
+export function isOperationDefinitionAST(
+  ast: ASTNode
+): ast is FragmentDefinitionNode | OperationDefinitionNode;
 
 /**
  * @public
@@ -106,16 +118,16 @@ export function isOperationDefinitionAST(ast: ASTNode): ast is FragmentDefinitio
  * Determine if an AST node contains a schema definition.
  */
 export function isSchemaDefinitionAST(
-	ast: ASTNode,
+  ast: ASTNode
 ): ast is
-	| SchemaDefinitionNode
-	| ScalarTypeDefinitionNode
-	| ObjectTypeDefinitionNode
-	| InterfaceTypeDefinitionNode
-	| UnionTypeDefinitionNode
-	| EnumTypeDefinitionNode
-	| InputObjectTypeDefinitionNode
-	| DirectiveDefinitionNode;
+  | SchemaDefinitionNode
+  | ScalarTypeDefinitionNode
+  | ObjectTypeDefinitionNode
+  | InterfaceTypeDefinitionNode
+  | UnionTypeDefinitionNode
+  | EnumTypeDefinitionNode
+  | InputObjectTypeDefinitionNode
+  | DirectiveDefinitionNode;
 // GraphQL type package is missing these, but they are checked
 // | ScalarTypeExtensionNode
 // | ObjectTypeExtensionNode
@@ -124,13 +136,18 @@ export function isSchemaDefinitionAST(
 // | EnumTypeExtensionNode
 // | InputObjectTypeExtensionNode;
 
-export function assertTypeWithFields(type: GraphQLType | null | undefined): GraphQLObjectType | GraphQLInterfaceType;
+export function assertTypeWithFields(
+  type: GraphQLType | null | undefined
+): GraphQLObjectType | GraphQLInterfaceType;
 
 /**
  * Helper for calling `typeFromAST()` with a clear warning when the type does
  * not exist. This enables the pattern `assertXXXType(getTypeFromAST(...))`,
  * emitting distinct errors for unknown types vs types of the wrong category.
  */
-export function getTypeFromAST(schema: GraphQLSchema, ast: TypeNode): GraphQLType;
+export function getTypeFromAST(
+  schema: GraphQLSchema,
+  ast: TypeNode
+): GraphQLType;
 
-export { getNullableType } from 'graphql';
+export { getNullableType } from "graphql";

@@ -1,5 +1,4 @@
-
-import { IRTransform } from 'relay-compiler/lib/GraphQLCompilerPublic';
+import { IRTransform } from "relay-compiler/lib/GraphQLCompilerPublic";
 
 export const commonTransforms: IRTransform[];
 export const codegenTransforms: IRTransform[];

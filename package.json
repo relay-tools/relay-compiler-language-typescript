@@ -1,35 +1,37 @@
 {
-	"name": "typescript-relay-modern-compiler",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"build": "rm -rf bin lib && tsc && tsc && mv lib/bin . && sed -i '' 's#\\.\\./#\\.\\./lib/#g' bin/relay-compiler.js",
-		"test": "node bin/relay-compiler.js --schema test/schema.graphql --src test/ --outputDir __generated__",
-		"type-check": "tsc --noEmit --pretty"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"dependencies": {
-		"@types/invariant": "2.2.29",
-		"@types/relay-runtime": "^1.3.1",
-		"immutable": "~3.7.6",
-		"invariant": "2.2.2",
-		"relay-compiler": "file:../relay/dist/relay-compiler/relay-compiler-1.4.1-plugin.2.tgz",
-		"yargs": "^9.0.0"
-	},
-	"peerDependencies": {
-		"typescript": "2.6.2"
-	},
-	"devDependencies": {
-		"@types/graphql": "^0.12.1",
-		"@types/immutable": "3.8.7",
-		"@types/node": "8.5.7",
-		"@types/yargs": "10.0.1",
-		"typescript": "2.6.2"
-	},
-	"resolutions": {
-		"relay-runtime": "file:../relay/dist/relay-runtime/relay-runtime-1.4.1-plugin.2.tgz"
-	}
+  "name": "typescript-relay-modern-compiler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf bin lib && tsc && tsc && mv lib/bin . && sed -i '' 's#\\.\\./#\\.\\./lib/#g' bin/relay-compiler.js",
+    "test": "node bin/relay-compiler.js --schema test/schema.graphql --src test/ --outputDir __generated__",
+    "type-check": "tsc --noEmit --pretty",
+    "prettier": "prettier --write '{src,types}/**/*.ts'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/invariant": "2.2.29",
+    "@types/relay-runtime": "^1.3.1",
+    "immutable": "~3.7.6",
+    "invariant": "2.2.2",
+    "relay-compiler": "file:../relay/dist/relay-compiler/relay-compiler-1.4.1-plugin.2.tgz",
+    "yargs": "^9.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "2.6.2"
+  },
+  "devDependencies": {
+    "@types/graphql": "^0.12.1",
+    "@types/immutable": "3.8.7",
+    "@types/node": "8.5.7",
+    "@types/yargs": "10.0.1",
+    "prettier": "^1.10.2",
+    "typescript": "2.6.2"
+  },
+  "resolutions": {
+    "relay-runtime": "file:../relay/dist/relay-runtime/relay-runtime-1.4.1-plugin.2.tgz"
+  }
 }

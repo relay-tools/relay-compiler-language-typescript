@@ -1,10 +1,10 @@
 declare namespace CodegenDirectory {
-	export interface Changes {
-		deleted: Array<string>;
-		updated: Array<string>;
-		created: Array<string>;
-		unchanged: Array<string>;
-	}
+  export interface Changes {
+    deleted: Array<string>;
+    updated: Array<string>;
+    created: Array<string>;
+    unchanged: Array<string>;
+  }
 }
 
 /**
@@ -34,44 +34,49 @@ declare namespace CodegenDirectory {
  *   dir.changes.unchanged
  */
 declare class CodegenDirectory {
-	changes: CodegenDirectory.Changes;
-	onlyValidate: boolean;
+  changes: CodegenDirectory.Changes;
+  onlyValidate: boolean;
 
-	public constructor(
-		dir: string,
-		options?: {
-			onlyValidate?: boolean;
-		},
-	);
+  public constructor(
+    dir: string,
+    options?: {
+      onlyValidate?: boolean;
+    }
+  );
 
-	static combineChanges(dirs: Array<CodegenDirectory>): CodegenDirectory.Changes;
+  static combineChanges(
+    dirs: Array<CodegenDirectory>
+  ): CodegenDirectory.Changes;
 
-	static hasChanges(changes: CodegenDirectory.Changes): boolean;
+  static hasChanges(changes: CodegenDirectory.Changes): boolean;
 
-	static printChanges(changes: CodegenDirectory.Changes, options: { onlyValidate: boolean }): void;
+  static printChanges(
+    changes: CodegenDirectory.Changes,
+    options: { onlyValidate: boolean }
+  ): void;
 
-	printChanges(): void;
+  printChanges(): void;
 
-	read(filename: string): string | null;
+  read(filename: string): string | null;
 
-	markUnchanged(filename: string): void;
+  markUnchanged(filename: string): void;
 
-	/**
-	 * Marks a files as updated or out of date without actually writing the file.
-	 * This is probably only be useful when doing validation without intention to
-	 * actually write to disk.
-	 */
-	markUpdated(filename: string): void;
+  /**
+   * Marks a files as updated or out of date without actually writing the file.
+   * This is probably only be useful when doing validation without intention to
+   * actually write to disk.
+   */
+  markUpdated(filename: string): void;
 
-	writeFile(filename: string, content: string): void;
+  writeFile(filename: string, content: string): void;
 
-	/**
-	 * Deletes all non-generated files, except for invisible "dot" files (ie.
-	 * files with names starting with ".").
-	 */
-	deleteExtraFiles(): void;
+  /**
+   * Deletes all non-generated files, except for invisible "dot" files (ie.
+   * files with names starting with ".").
+   */
+  deleteExtraFiles(): void;
 
-	getPath(filename: string): string;
+  getPath(filename: string): string;
 }
 export = CodegenDirectory;
 export as namespace CodegenDirectory;
