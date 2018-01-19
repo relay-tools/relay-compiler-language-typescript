@@ -29,13 +29,16 @@ graphQLServer.listen(GRAPHQL_PORT, () => console.log(
 
 // Serve the Relay app
 const compiler = webpack({
-  entry: ['whatwg-fetch', path.resolve(__dirname, 'js', 'app.js')],
+  entry: ['whatwg-fetch', path.resolve(__dirname, 'ts', 'app.ts')],
   module: {
-    loaders: [
+    rules: [
       {
+        test: /\.tsx?$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-        test: /\.js$/,
+        use: [
+          { loader: 'babel-loader' },
+          { loader: 'ts-loader' },
+        ],
       },
     ],
   },
