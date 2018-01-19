@@ -64,7 +64,43 @@ fragment ConcreateTypes on Viewer {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-TODO
+import { FragmentReference } from "relay-runtime";
+export enum FragmentSpread_ref {
+}
+export type FragmentSpread = {
+    readonly id: string;
+    readonly justFrag: ({
+        readonly " $fragments": PictureFragment_ref;
+    }) | null;
+    readonly fragAndField: ({
+        readonly uri: string | null;
+        readonly " $fragments": PictureFragment_ref;
+    }) | null;
+    readonly " $fragments": OtherFragment_ref & UserFrag1_ref & UserFrag2_ref;
+    readonly " $refType": FragmentSpread_ref;
+};
+
+
+import { FragmentReference } from "relay-runtime";
+export enum ConcreateTypes_ref {
+}
+export type ConcreateTypes = {
+    readonly actor: ({
+        readonly __typename: "Page";
+        readonly id: string;
+        readonly " $fragments": PageFragment_ref;
+    } | {
+        readonly __typename: "User";
+        readonly name: string | null;
+    } | {
+        /*This will never be '% other', but we need some
+        value in case none of the concrete values match.*/
+        readonly __typename: "%other";
+    }) | null;
+    readonly " $refType": ConcreateTypes_ref;
+};
+
+`;
 
 exports[`TypeScriptGenerator matches expected output: inline-fragment.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
@@ -130,7 +166,63 @@ fragment InlineFragmentKitchenSink on Story {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-TODO
+import { FragmentReference } from "relay-runtime";
+export enum InlineFragment_ref {
+}
+export type InlineFragment = {
+    readonly id: string;
+    readonly name?: string | null;
+    readonly message?: ({
+        readonly text: string | null;
+    }) | null;
+    readonly " $refType": InlineFragment_ref;
+};
+
+
+import { FragmentReference } from "relay-runtime";
+export enum InlineFragmentWithOverlappingFields_ref {
+}
+export type InlineFragmentWithOverlappingFields = {
+    readonly hometown?: ({
+        readonly id: string;
+        readonly name: string | null;
+        readonly message?: ({
+            readonly text: string | null;
+        }) | null;
+    }) | null;
+    readonly name?: string | null;
+    readonly " $refType": InlineFragmentWithOverlappingFields_ref;
+};
+
+
+import { FragmentReference } from "relay-runtime";
+export enum InlineFragmentConditionalID_ref {
+}
+export type InlineFragmentConditionalID = {
+    readonly id?: string;
+    readonly name?: string | null;
+    readonly " $refType": InlineFragmentConditionalID_ref;
+};
+
+
+import { FragmentReference } from "relay-runtime";
+export enum InlineFragmentKitchenSink_ref {
+}
+export type InlineFragmentKitchenSink = {
+    readonly actor: ({
+        readonly id: string;
+        readonly profilePicture: ({
+            readonly uri: string | null;
+            readonly width?: number | null;
+            readonly height?: number | null;
+        }) | null;
+        readonly name?: string | null;
+        readonly " $fragments": SomeFragment_ref;
+    }) | null;
+    readonly " $refType": InlineFragmentKitchenSink_ref;
+};
+
+`;
 
 exports[`TypeScriptGenerator matches expected output: linked-field.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
@@ -583,4 +675,47 @@ fragment AnotherRecursiveFragment on Image {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-TODO
+import { FragmentReference } from "relay-runtime";
+export enum UserProfile_ref {
+}
+export type UserProfile = {
+    readonly profilePicture: ({
+        readonly uri: string | null;
+        readonly width: number | null;
+        readonly height: number | null;
+        readonly " $fragments": PhotoFragment_ref;
+    }) | null;
+    readonly " $refType": UserProfile_ref;
+};
+
+
+import { FragmentReference } from "relay-runtime";
+export enum PhotoFragment_ref {
+}
+export type PhotoFragment = {
+    readonly uri: string | null;
+    readonly width: number | null;
+    readonly " $refType": PhotoFragment_ref;
+};
+
+
+import { FragmentReference } from "relay-runtime";
+export enum RecursiveFragment_ref {
+}
+export type RecursiveFragment = {
+    readonly uri: string | null;
+    readonly width: number | null;
+    readonly " $refType": RecursiveFragment_ref;
+};
+
+
+import { FragmentReference } from "relay-runtime";
+export enum AnotherRecursiveFragment_ref {
+}
+export type AnotherRecursiveFragment = {
+    readonly uri: string | null;
+    readonly height: number | null;
+    readonly " $refType": AnotherRecursiveFragment_ref;
+};
+
+`;
