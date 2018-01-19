@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf bin lib && tsc && tsc && mv lib/bin . && sed -i '' 's#\\.\\./#\\.\\./lib/#g' bin/relay-compiler.js",
+    "build": "rm -rf lib && tsc",
     "test": "node bin/relay-compiler.js --schema test/schema.graphql --src test/ --outputDir __generated__",
     "type-check": "tsc --noEmit --pretty",
     "prettier": "prettier --write '{src,types}/**/*.ts'"
