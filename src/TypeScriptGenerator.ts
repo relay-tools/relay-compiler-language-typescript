@@ -1,5 +1,5 @@
-import * as RelayMaskTransform from 'relay-compiler/lib/RelayMaskTransform';
-import * as RelayRelayDirectiveTransform from 'relay-compiler/lib/RelayRelayDirectiveTransform';
+import { TypeGenerator, IRTransforms } from 'relay-compiler';
+
 import * as ts from 'typescript';
 import * as path from 'path';
 
@@ -9,20 +9,19 @@ import {
 	ScalarTypeMapping,
 	Options,
 	State
-} from './RelayTSTypeTransformers';
-import { GraphQLNonNull, GraphQLEnumType, GraphQLType, GraphQLScalarType, GraphQLNamedType } from '../util/graphql';
+} from './TypeScriptTypeTransformers';
+import { GraphQLNonNull, GraphQLEnumType, GraphQLType, GraphQLScalarType, GraphQLNamedType } from 'graphql';
 import {
-	FlattenTransform,
 	IRVisitor,
 	SchemaUtils,
-	IRTransform,
+  IRTransform,
 	Fragment,
 	Root
 } from 'relay-compiler/lib/GraphQLCompilerPublic';
 
 const { isAbstractType } = SchemaUtils;
 
-export function generate(node: Root | Fragment, options: Options): string {
+export const generate: TypeGenerator["generate"] = (node, options) => {
 	const ast: ts.Statement[] = IRVisitor.visit(node, createVisitor(options));
 	const printer = ts.createPrinter({
 		newLine: ts.NewLineKind.LineFeed,
@@ -455,8 +454,8 @@ function getRefTypeName(name: string): string {
 	return `${name}_ref`;
 }
 
-export const TS_TRANSFORMS: Array<IRTransform> = [
-	RelayRelayDirectiveTransform.transform,
-	RelayMaskTransform.transform,
-	FlattenTransform.transformWithOptions({}),
+export const transforms: TypeGenerator["transforms"] = [
+  IRTransforms.commonTransforms[2], // RelayRelayDirectiveTransform.transform
+  IRTransforms.commonTransforms[3], // RelayMaskTransform.transform
+  IRTransforms.printTransforms[0], // FlattenTransform.transformWithOptions({})
 ];

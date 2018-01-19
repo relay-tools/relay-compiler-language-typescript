@@ -1,18 +1,10 @@
-import { CompilerCache } from '../util/CompilerCache';
-
 import * as ts from 'typescript';
-import { getModuleName } from '../util/getModuleName';
-import { Source, parse } from '../util/graphql';
 import * as path from 'path';
 import * as util from 'util';
 
-import { File } from 'relay-compiler/lib/GraphQLCompilerPublic';
+import { GraphQLTag, GraphQLTagFinder } from 'relay-compiler';
 import { callbackify } from 'util';
 import { isPropertyAccessOrQualifiedName } from 'typescript';
-
-interface Options {
-	validateNames: boolean;
-};
 
 interface Location {
 	line: number;
@@ -45,52 +37,7 @@ function createContainerName(callExpr: ts.CallExpression): 'createFragmentContai
 	throw new Error('Not a relay create container call');
 }
 
-function validateTemplate(template: string, moduleName: string, keyName: string | null, filePath: string, loc: Location) {
-	const ast = parse(new (Source as any)(template, filePath, loc) as Source);
-	ast.definitions.forEach((def: any) => {
-		invariant(
-			def.name,
-			'FindGraphQLTags: In module `%s`, a definition of kind `%s` requires a name.',
-			moduleName,
-			def.kind,
-		);
-		const definitionName = def.name.value;
-		if (def.kind === 'OperationDefinition') {
-			const operationNameParts = definitionName.match(
-				/^(.*)(Mutation|Query|Subscription)$/,
-			);
-			invariant(
-				operationNameParts && definitionName.startsWith(moduleName),
-				'FindGraphQLTags: Operation names in graphql tags must be prefixed ' +
-				'with the module name and end in "Mutation", "Query", or ' +
-				'"Subscription". Got `%s` in module `%s`.',
-				definitionName,
-				moduleName,
-			);
-		} else if (def.kind === 'FragmentDefinition') {
-			if (keyName) {
-				invariant(
-					definitionName === moduleName + '_' + keyName,
-					'FindGraphQLTags: Container fragment names must be ' +
-					'`<ModuleName>_<propName>`. Got `%s`, expected `%s`.',
-					definitionName,
-					moduleName + '_' + keyName,
-				);
-			} else {
-				invariant(
-					definitionName.startsWith(moduleName),
-					'FindGraphQLTags: Fragment names in graphql tags must be prefixed ' +
-					'with the module name. Got `%s` in module `%s`.',
-					definitionName,
-					moduleName,
-				);
-			}
-		}
-	});
-}
-
-
-function visit(node: ts.Node, addGraphQLText: (text: string) => void, options: Options, moduleName: string, filePath: string): void {
+function visit(node: ts.Node, addGraphQLTag: (tag: GraphQLTag) => void): void {
 	function visitNode(node: ts.Node) {
 		switch (node.kind) {
 			case ts.SyntaxKind.CallExpression: {
@@ -114,7 +61,6 @@ function visit(node: ts.Node, addGraphQLText: (text: string) => void, options: O
 
 							// We tested for this
 							const propAssignment = prop as ts.PropertyAssignment;
-							const keyName = (propAssignment.name as ts.Identifier).text;
 
 							const taggedTemplate = propAssignment.initializer as ts.TaggedTemplateExpression;
 							invariant(
@@ -124,17 +70,11 @@ function visit(node: ts.Node, addGraphQLText: (text: string) => void, options: O
 								createContainerName(callExpr),
 								taggedTemplate.tag.getText(),
 							);
-							const template = getGraphQLText(taggedTemplate);
-							if (options.validateNames) {
-								validateTemplate(
-									template,
-									moduleName,
-									keyName,
-									filePath,
-									getSourceLocationOffset(taggedTemplate),
-								);
-							}
-							addGraphQLText(template);
+							addGraphQLTag({
+                keyName: (propAssignment.name as ts.Identifier).text,
+                template: getGraphQLText(taggedTemplate),
+                sourceLocationOffset: getSourceLocationOffset(taggedTemplate),
+              });
 						});
 					} else {
 						invariant(
@@ -151,21 +91,15 @@ function visit(node: ts.Node, addGraphQLText: (text: string) => void, options: O
 							createContainerName(callExpr),
 							taggedTemplate.tag.getText(),
 						);
-						const template = getGraphQLText(taggedTemplate);
-						if (options.validateNames) {
-							validateTemplate(
-								template,
-								moduleName,
-								null,
-								filePath,
-								getSourceLocationOffset(taggedTemplate),
-							);
-						}
-						addGraphQLText(template);
+            addGraphQLTag({
+              keyName: null,
+              template: getGraphQLText(taggedTemplate),
+              sourceLocationOffset: getSourceLocationOffset(taggedTemplate),
+            });
 					}
 					// Visit remaining arguments
 					for (let i = 2; i < callExpr.arguments.length; i++) {
-						visit(callExpr.arguments[i], addGraphQLText, options, moduleName, filePath);
+						visit(callExpr.arguments[i], addGraphQLTag);
 					}
 					return;
 				}
@@ -174,8 +108,12 @@ function visit(node: ts.Node, addGraphQLText: (text: string) => void, options: O
 			case ts.SyntaxKind.TaggedTemplateExpression: {
 				const taggedTemplate = node as ts.TaggedTemplateExpression;
 				if (isGraphQLTag(taggedTemplate.tag)) {
-					const template = getGraphQLText(taggedTemplate);
-					addGraphQLText(template);
+          // TODO: This code previously had no validation and thus no keyName/sourceLocationOffset. Are these right?
+          addGraphQLTag({
+            keyName: null,
+            template: getGraphQLText(taggedTemplate),
+            sourceLocationOffset: getSourceLocationOffset(taggedTemplate),
+          });
 				}
 			}
 		}
@@ -183,36 +121,6 @@ function visit(node: ts.Node, addGraphQLText: (text: string) => void, options: O
 	}
 
 	visitNode(node);
-}
-
-function findTags(
-	text: string,
-	filePath: string,
-	options: Options,
-): string[] {
-	const result: string[] = [];
-	const ast = ts.createSourceFile(filePath, text, ts.ScriptTarget.Latest, true);
-	const moduleName = getModuleName(filePath);
-
-	visit(ast, (text) => result.push(text), options, moduleName, filePath);
-	return result;
-}
-
-const cache = new CompilerCache<string[]>('FindGraphQLTags', 'v1');
-
-export function memoizedFind(
-	text: string,
-	baseDir: string,
-	file: File,
-	options: Options,
-): string[] {
-	return cache.getOrCompute(
-		file.hash,
-		() => {
-			const absPath = path.join(baseDir, file.relPath);
-			return find(text, absPath, options);
-		},
-	);
 }
 
 function isGraphQLTag(tag: ts.Node): boolean {
@@ -243,4 +151,10 @@ function invariant(condition: boolean, msg: string, ...args: any[]) {
 	}
 }
 
-export const find = findTags;
+export const find: GraphQLTagFinder = text => {
+  const result: GraphQLTag[] = [];
+  // TODO: Make relay-compiler pass a `File` object instead of just text so e.g. we can get the filename?
+	const ast = ts.createSourceFile('TODO!', text, ts.ScriptTarget.Latest, true);
+	visit(ast, tag => result.push(tag));
+	return result;
+}
