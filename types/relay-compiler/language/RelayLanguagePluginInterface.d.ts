@@ -33,15 +33,18 @@ export type FormatModule = (
   }
 ) => string;
 
-export type GraphQLTagFinder = (text: string, filePath: string) => Array<GraphQLTag>;
+export type GraphQLTagFinder = (
+  text: string,
+  filePath: string
+) => Array<GraphQLTag>;
 
 export interface TypeGeneratorOptions {
-  readonly customScalars: { [type: string]: string },
-  readonly useHaste: boolean,
-  readonly enumsHasteModule: string | null,
-  readonly existingFragmentNames: Set<string>,
-  readonly inputFieldWhiteList: ReadonlyArray<string>,
-  readonly relayRuntimeModule: string,
+  readonly customScalars: { [type: string]: string };
+  readonly useHaste: boolean;
+  readonly enumsHasteModule: string | null;
+  readonly existingFragmentNames: Set<string>;
+  readonly inputFieldWhiteList: ReadonlyArray<string>;
+  readonly relayRuntimeModule: string;
 }
 
 export interface TypeGenerator {
