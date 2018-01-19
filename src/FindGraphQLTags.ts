@@ -130,7 +130,8 @@ function visit(node: ts.Node, addGraphQLTag: (tag: GraphQLTag) => void): void {
       case ts.SyntaxKind.TaggedTemplateExpression: {
         const taggedTemplate = node as ts.TaggedTemplateExpression;
         if (isGraphQLTag(taggedTemplate.tag)) {
-          // TODO: This code previously had no validation and thus no keyName/sourceLocationOffset. Are these right?
+          // TODO: This code previously had no validation and thus no
+          //       keyName/sourceLocationOffset. Are these right?
           addGraphQLTag({
             keyName: null,
             template: getGraphQLText(taggedTemplate),

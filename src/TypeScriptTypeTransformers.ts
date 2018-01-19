@@ -13,7 +13,7 @@ import {
   GraphQLUnionType
 } from "graphql";
 
-import { TypeGeneratorOptions } from 'relay-compiler'
+import { TypeGeneratorOptions } from "relay-compiler";
 
 export type ScalarTypeMapping = {
   [type: string]: string;
