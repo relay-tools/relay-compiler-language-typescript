@@ -33,7 +33,7 @@ export type FormatModule = (
   }
 ) => string;
 
-export type GraphQLTagFinder = (text: string) => Array<GraphQLTag>;
+export type GraphQLTagFinder = (text: string, filePath: string) => Array<GraphQLTag>;
 
 export interface TypeGeneratorOptions {
   readonly customScalars: { [type: string]: string },

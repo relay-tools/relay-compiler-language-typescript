@@ -181,10 +181,9 @@ function invariant(condition: boolean, msg: string, ...args: any[]) {
   }
 }
 
-export const find: GraphQLTagFinder = text => {
+export const find: GraphQLTagFinder = (text, filePath) => {
   const result: GraphQLTag[] = [];
-  // TODO: Make relay-compiler pass a `File` object instead of just text so e.g. we can get the filename?
-  const ast = ts.createSourceFile("TODO!", text, ts.ScriptTarget.Latest, true);
+  const ast = ts.createSourceFile(filePath, text, ts.ScriptTarget.Latest, true);
   visit(ast, tag => result.push(tag));
   return result;
 };
