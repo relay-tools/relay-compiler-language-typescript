@@ -170,7 +170,7 @@ function getSourceLocationOffset(quasi: ts.TaggedTemplateExpression) {
   const pos = getTemplateNode(quasi).pos;
   const loc = quasi.getSourceFile().getLineAndCharacterOfPosition(pos);
   return {
-    line: loc.line + 1,
+    line: loc.line,
     column: loc.character + 1
   };
 }
