@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "rm -rf lib && tsc",
-    "test": "node bin/relay-compiler.js --schema test/schema.graphql --src test/ --outputDir __generated__",
+    "relay": "node bin/relay-compiler.js --schema test/schema.graphql --src test/ --outputDir __generated__",
+    "test": "yarn type-check && jest",
     "type-check": "tsc --noEmit --pretty",
     "prettier": "prettier --write '{src,types}/**/*.ts'",
     "sync-fixtures": "rsync -avh --delete --stats --progress ../relay/packages/relay-compiler/language/javascript/__tests__/fixtures/flow-generator/*.graphql test/fixtures/type-generator"

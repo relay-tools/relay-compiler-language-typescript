@@ -13,26 +13,20 @@ import {
   GraphQLUnionType
 } from "graphql";
 
+import { TypeGeneratorOptions } from 'relay-compiler'
+
 export type ScalarTypeMapping = {
   [type: string]: string;
 };
 
-export interface Options {
-  customScalars: ScalarTypeMapping;
-  useHaste: boolean;
-  enumsHasteModule: string | null | undefined;
-  existingFragmentNames: Set<string>;
-  inputFieldWhiteList: ReadonlyArray<string>;
-  relayRuntimeModule: string;
-  // TODO: Marking these as optional until we determine how we can best make imports work.
-  getGeneratedDirectory?: (name: string) => CodegenDirectory;
-  destinationDirectory?: CodegenDirectory;
-}
-
 export type State = {
   usedEnums: { [name: string]: GraphQLEnumType };
   usedFragments: Set<string>;
-} & Options;
+  // TODO: Marking these as optional and moved from ‘options’ to ‘state’ until we determine how we can best make imports
+  //       work.
+  getGeneratedDirectory?: (name: string) => CodegenDirectory;
+  destinationDirectory?: CodegenDirectory;
+} & TypeGeneratorOptions;
 
 export function transformScalarType(
   type: GraphQLType,
