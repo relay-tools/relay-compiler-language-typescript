@@ -1,6 +1,8 @@
-import { GraphQLCompilerContext } from './GraphQLCompilerContext';
+import { GraphQLCompilerContext } from "./GraphQLCompilerContext";
 
-export type IRTransform = (context: GraphQLCompilerContext) => GraphQLCompilerContext;
+export type IRTransform = (
+  context: GraphQLCompilerContext
+) => GraphQLCompilerContext;
 
 // Transforms applied to fragments used for reading data from a store
 export const FRAGMENT_TRANSFORMS: Array<IRTransform>;

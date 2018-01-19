@@ -1,4 +1,4 @@
-import { FormatModule } from 'relay-compiler';
+import { FormatModule } from "relay-compiler";
 
 export const formatGeneratedModule: FormatModule = ({
   moduleName,
@@ -8,17 +8,19 @@ export const formatGeneratedModule: FormatModule = ({
   typeText,
   hash,
   relayRuntimeModule,
-  sourceHash,
+  sourceHash
 }) => {
-  const documentTypeImport = documentType ? `import type { ${documentType} } from '${relayRuntimeModule}';` : '';
-  const docTextComment = docText ? '\n/*\n' + docText.trim() + '\n*/\n' : '';
+  const documentTypeImport = documentType
+    ? `import type { ${documentType} } from '${relayRuntimeModule}';`
+    : "";
+  const docTextComment = docText ? "\n/*\n" + docText.trim() + "\n*/\n" : "";
   return `/* tslint:disable */
 
 ${documentTypeImport}
-${typeText || ''}
+${typeText || ""}
 
 ${docTextComment}
-const node: ${documentType || 'never'} = ${concreteText};
+const node: ${documentType || "never"} = ${concreteText};
 (node as any).hash = '${sourceHash}';
 export default node;
 `;
