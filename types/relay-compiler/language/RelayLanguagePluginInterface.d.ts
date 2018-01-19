@@ -35,10 +35,18 @@ export type FormatModule = (
 
 export type GraphQLTagFinder = (text: string) => Array<GraphQLTag>;
 
+export interface TypeGeneratorOptions {
+  readonly customScalars: { [type: string]: string },
+  readonly useHaste: boolean,
+  readonly enumsHasteModule: string | null,
+  readonly existingFragmentNames: Set<string>,
+  readonly inputFieldWhiteList: ReadonlyArray<string>,
+  readonly relayRuntimeModule: string,
+}
+
 export interface TypeGenerator {
   transforms: Array<IRTransform>;
-  // For now this is an opaque set of options communicated from the bin to the plugin.
-  generate: (node: Root | Fragment, options: any) => string;
+  generate: (node: Root | Fragment, options: TypeGeneratorOptions) => string;
 }
 
 export interface PluginInterface {

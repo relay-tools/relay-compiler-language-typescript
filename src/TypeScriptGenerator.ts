@@ -7,7 +7,6 @@ import {
   transformScalarType,
   transformInputType,
   ScalarTypeMapping,
-  Options,
   State
 } from "./TypeScriptTypeTransformers";
 import {
@@ -24,6 +23,8 @@ import {
   Fragment,
   Root
 } from "relay-compiler/lib/GraphQLCompilerPublic";
+
+import { TypeGeneratorOptions } from 'relay-compiler'
 
 const { isAbstractType } = SchemaUtils;
 
@@ -276,15 +277,15 @@ function importTypes(names: string[], fromModule: string): ts.Statement {
   );
 }
 
-function createVisitor(options: Options) {
+function createVisitor(options: TypeGeneratorOptions) {
   const state: State = {
     customScalars: options.customScalars,
     enumsHasteModule: options.enumsHasteModule,
     existingFragmentNames: options.existingFragmentNames,
     inputFieldWhiteList: options.inputFieldWhiteList,
     relayRuntimeModule: options.relayRuntimeModule,
-    getGeneratedDirectory: options.getGeneratedDirectory,
-    destinationDirectory: options.destinationDirectory,
+    getGeneratedDirectory: undefined,
+    destinationDirectory: undefined,
     usedEnums: {},
     usedFragments: new Set(),
     useHaste: options.useHaste
