@@ -467,11 +467,11 @@ function groupRefs(props: Selection[]): Selection[] {
 function getFragmentImports(state: State) {
   const imports: ts.Statement[] = [];
   if (state.usedFragments.size > 0) {
-    const ownDirectory = state.destinationDirectory.getPath("");
+    const ownDirectory = state.destinationDirectory && state.destinationDirectory.getPath("");
     const usedFragments = Array.from(state.usedFragments).sort();
     for (const usedFragment of usedFragments) {
       const refTypeName = getRefTypeName(usedFragment);
-      if (state.existingFragmentNames.has(usedFragment)) {
+      if (ownDirectory && state.getGeneratedDirectory && state.existingFragmentNames.has(usedFragment)) {
         const importDir = state.getGeneratedDirectory(usedFragment).getPath("");
         const relative = path.relative(ownDirectory, importDir);
         const relativeReference = relative.length === 0 ? "./" : "";
