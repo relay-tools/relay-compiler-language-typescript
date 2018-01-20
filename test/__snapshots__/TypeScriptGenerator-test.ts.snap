@@ -473,7 +473,7 @@ fragment ScalarField on User {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-export type PersonalityTraits = CHEERFUL | DERISIVE | HELPFUL | SNARKY | %future added value;
+export type PersonalityTraits = "CHEERFUL" | "DERISIVE" | "HELPFUL" | "SNARKY" | "%future added value";
 import { FragmentReference } from "relay-runtime";
 export enum ScalarField_ref {
 }

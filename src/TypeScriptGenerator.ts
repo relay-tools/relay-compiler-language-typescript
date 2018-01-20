@@ -148,7 +148,7 @@ function selectionsToAST(
       otherProp,
       ts.SyntaxKind.MultiLineCommentTrivia,
       "This will never be '% other', but we need some\n" +
-        "value in case none of the concrete values match.",
+      "value in case none of the concrete values match.",
       true
     );
     types.push([otherPropWithComment]);
@@ -338,8 +338,8 @@ function createVisitor(options: TypeGeneratorOptions) {
         const baseType = selectionsToAST(selections, state, refTypeName);
         const type = isPlural(node)
           ? ts.createTypeReferenceNode(ts.createIdentifier("ReadonlyArray"), [
-              baseType
-            ])
+            baseType
+          ])
           : baseType;
         return [
           ...getFragmentImports(state),
@@ -355,13 +355,13 @@ function createVisitor(options: TypeGeneratorOptions) {
         return flattenArray(node.selections).map(typeSelection => {
           return isAbstractType(typeCondition)
             ? {
-                ...typeSelection,
-                conditional: true
-              }
+              ...typeSelection,
+              conditional: true
+            }
             : {
-                ...typeSelection,
-                concreteType: typeCondition.toString()
-              };
+              ...typeSelection,
+              concreteType: typeCondition.toString()
+            };
         });
       },
       Condition(node: any) {
@@ -525,7 +525,7 @@ function getEnumDefinitions({ enumsHasteModule, usedEnums }: State) {
 }
 
 function stringLiteralTypeAnnotation(name: string): ts.TypeNode {
-  return ts.createTypeReferenceNode(name, undefined);
+  return ts.createLiteralTypeNode(ts.createLiteral(name));
 }
 
 function getRefTypeName(name: string): string {
