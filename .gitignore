@@ -58,6 +58,5 @@ typings/
 .env
 
 .vscode
-__generated__
 /lib
 /bin
