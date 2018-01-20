@@ -4,10 +4,11 @@
     "start": "babel-node ./server.js",
     "build": "relay-compiler --src ./ts/ --schema ./data/schema.graphql --language typescript",
     "update-schema": "babel-node ./scripts/updateSchema.js",
-    "lint": "eslint ./js"
+    "lint": "eslint ./js",
+    "type-check": "tsc --noEmit --pretty"
   },
   "resolutions": {
-    "relay-compiler-language-typescript": "file:../relay-compiler-language-typescript-1.0.0-alpha.1.tgz",
+    "relay-compiler-language-typescript": "file:../relay-compiler-language-typescript-1.0.0-alpha.2.tgz",
     "relay-compiler": "file:../../relay/dist/relay-compiler/relay-compiler-1.4.1-plugin.3.tgz",
     "relay-runtime": "file:../../relay/dist/relay-runtime/relay-runtime-1.4.1-plugin.3.tgz",
     "babel-plugin-relay": "file:../../relay/dist/babel-plugin-relay/babel-plugin-relay-1.4.1-plugin.3.tgz",
@@ -39,6 +40,11 @@
     "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
+    "@types/prop-types": "^15.5.2",
+    "@types/react": "^16.0.34",
+    "@types/react-dom": "^16.0.3",
+    "@types/react-relay": "^1.3.1",
+    "@types/relay-runtime": "^1.3.1",
     "babel-cli": "^6.26.0",
     "babel-eslint": "6.1.2",
     "eslint": "3.19.0",
@@ -46,8 +52,9 @@
     "eslint-plugin-babel": "3.3.0",
     "eslint-plugin-flowtype": "2.15.0",
     "eslint-plugin-react": "5.2.2",
+    "fork-ts-checker-webpack-plugin": "^0.3.0",
     "relay-compiler": "file:../../relay/dist/relay-compiler/relay-compiler-1.4.1-plugin.3.tgz",
-    "relay-compiler-language-typescript": "file:../relay-compiler-language-typescript-1.0.0-alpha.1.tgz",
+    "relay-compiler-language-typescript": "file:../relay-compiler-language-typescript-1.0.0-alpha.2.tgz",
     "ts-loader": "^3.2.0",
     "typescript": "^2.6.2"
   }
