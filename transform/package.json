@@ -1,0 +1,45 @@
+{
+  "name": "typescript-transform-relay",
+  "version": "1.0.0",
+  "description": "A transformer for use with TypeScript when using relay (modern/compat/classic)",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kastermester/relay-compiler-language-typescript.git"
+  },
+  "keywords": [
+    "relay",
+    "typescript"
+  ],
+  "author": "Kaare Hoff Skovgaard <kaare@kaareskovgaard.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kastermester/relay-compiler-language-typescript/issues"
+  },
+  "homepage": "https://github.com/kastermester/relay-compiler-language-typescript#readme",
+  "dependencies": {
+    "graphql": "^0.12.3",
+    "typescript": "^2.6.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.0.1",
+    "@types/node": "^9.3.0",
+    "async-file": "^2.0.2",
+    "jest": "^22.1.4",
+    "ts-jest": "^22.0.1"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "test/.+?-test\\.tsx?$",
+    "moduleFileExtensions": [
+      "js",
+      "ts",
+      "tsx"
+    ]
+  }
+}
