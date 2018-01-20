@@ -16,7 +16,7 @@ import {
 } from 'react-relay';
 import {ConnectionHandler, RecordSourceSelectorProxy, Environment} from 'relay-runtime';
 
-import { TodoApp_viewer } from '../components/__generated__/TodoApp_viewer.graphql';
+import { TodoApp_viewer } from '../__generated__/TodoApp_viewer.graphql';
 
 const mutation = graphql`
   mutation AddTodoMutation($input: AddTodoInput!) {

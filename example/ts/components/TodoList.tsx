@@ -20,7 +20,7 @@ import {
   RelayProp,
 } from 'react-relay';
 
-import { TodoList_viewer } from './__generated__/TodoList_viewer.graphql';
+import { TodoList_viewer } from '../__generated__/TodoList_viewer.graphql';
 import { ChangeEvent } from 'react';
 
 interface Props {

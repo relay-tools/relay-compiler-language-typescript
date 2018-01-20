@@ -1,6 +1,8 @@
 /* tslint:disable */
 
 import { ConcreteFragment } from 'relay-runtime';
+import { TodoListFooter_viewer_ref } from "./TodoListFooter_viewer.graphql";
+import { TodoList_viewer_ref } from "./TodoList_viewer.graphql";
 import { FragmentReference } from "relay-runtime";
 export enum TodoApp_viewer_ref {
 }

@@ -522,9 +522,9 @@ babel-plugin-check-es2015-constants@^6.22.0, babel-plugin-check-es2015-constants
   dependencies:
     babel-runtime "^6.22.0"
 
-"babel-plugin-relay@file:../../relay/dist/babel-plugin-relay/babel-plugin-relay-1.4.1-plugin.3.tgz":
-  version "1.4.1-plugin.3"
-  resolved "file:../../relay/dist/babel-plugin-relay/babel-plugin-relay-1.4.1-plugin.3.tgz#de6321776d7a2f8e72ef6ccd547875642bd9cbde"
+"babel-plugin-relay@file:../../relay/dist/babel-plugin-relay/babel-plugin-relay-1.4.1-plugin.6.tgz":
+  version "1.4.1-plugin.6"
+  resolved "file:../../relay/dist/babel-plugin-relay/babel-plugin-relay-1.4.1-plugin.6.tgz#6e3849672a69d5e39217a7c7bb3596e6a019510c"
   dependencies:
     babel-runtime "^6.23.0"
     babel-types "^6.24.1"
@@ -4364,14 +4364,14 @@ react-dom@^15.6.1:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-"react-relay@file:../../relay/dist/react-relay/react-relay-1.4.1-plugin.3.tgz":
-  version "1.4.1-plugin.3"
-  resolved "file:../../relay/dist/react-relay/react-relay-1.4.1-plugin.3.tgz#5fee3a670181a95e1389ce35e52a3bc9e8d1b779"
+"react-relay@file:../../relay/dist/react-relay/react-relay-1.4.1-plugin.6.tgz":
+  version "1.4.1-plugin.6"
+  resolved "file:../../relay/dist/react-relay/react-relay-1.4.1-plugin.6.tgz#48aeb9d33c233151d7726ab61f0ff03ca1c4941f"
   dependencies:
     babel-runtime "^6.23.0"
     fbjs "^0.8.14"
     prop-types "^15.5.8"
-    relay-runtime "1.4.1-plugin.3"
+    relay-runtime "1.4.1-plugin.6"
 
 react@^15.6.1:
   version "15.6.1"
@@ -4544,20 +4544,20 @@ regjsparser@^0.1.4:
   dependencies:
     jsesc "~0.5.0"
 
-"relay-compiler-language-typescript@file:../relay-compiler-language-typescript-1.0.0-alpha.2.tgz":
-  version "1.0.0-alpha.2"
-  resolved "file:../relay-compiler-language-typescript-1.0.0-alpha.2.tgz#b0a3df2a1a4482c2534ebd1b0eb095951b2619cc"
+"relay-compiler-language-typescript@file:../relay-compiler-language-typescript-1.0.0-alpha.6.tgz":
+  version "1.0.0-alpha.6"
+  resolved "file:../relay-compiler-language-typescript-1.0.0-alpha.6.tgz#471eb1864600c1c97656e50bff8e6bd66de607ef"
   dependencies:
     "@types/invariant" "2.2.29"
     "@types/relay-runtime" "^1.3.1"
     immutable "~3.7.6"
     invariant "2.2.2"
-    relay-compiler "file:../../../../Library/Caches/Yarn/v1/.tmp/relay/dist/relay-compiler/relay-compiler-1.4.1-plugin.3.tgz"
-    relay-runtime "file:../../../../Library/Caches/Yarn/v1/.tmp/relay/dist/relay-runtime/relay-runtime-1.4.1-plugin.3.tgz"
+    relay-compiler "file:../../../../Library/Caches/Yarn/v1/.tmp/relay/dist/relay-compiler/relay-compiler-1.4.1-plugin.6.tgz"
+    relay-runtime "file:../../../../Library/Caches/Yarn/v1/.tmp/relay/dist/relay-runtime/relay-runtime-1.4.1-plugin.6.tgz"
 
-"relay-compiler@file:../../../../Library/Caches/Yarn/v1/.tmp/relay/dist/relay-compiler/relay-compiler-1.4.1-plugin.3.tgz", "relay-compiler@file:../../relay/dist/relay-compiler/relay-compiler-1.4.1-plugin.3.tgz":
-  version "1.4.1-plugin.3"
-  resolved "file:../../relay/dist/relay-compiler/relay-compiler-1.4.1-plugin.3.tgz#a0c25e2ec4b189b5f034abeee7be4b100a2136a9"
+"relay-compiler@file:../../../../Library/Caches/Yarn/v1/.tmp/relay/dist/relay-compiler/relay-compiler-1.4.1-plugin.6.tgz", "relay-compiler@file:../../relay/dist/relay-compiler/relay-compiler-1.4.1-plugin.6.tgz":
+  version "1.4.1-plugin.6"
+  resolved "file:../../relay/dist/relay-compiler/relay-compiler-1.4.1-plugin.6.tgz#e925ba2dd3c16844f2a1df457efacda44d1360da"
   dependencies:
     babel-generator "^6.26.0"
     babel-polyfill "^6.20.0"
@@ -4572,7 +4572,7 @@ regjsparser@^0.1.4:
     fbjs "^0.8.14"
     graphql "^0.12.3"
     immutable "~3.7.6"
-    relay-runtime "1.4.1-plugin.3"
+    relay-runtime "1.4.1-plugin.6"
     signedsource "^1.0.0"
     yargs "^9.0.0"
 
@@ -4585,9 +4585,9 @@ relay-devtools@^1.4.0:
     update-notifier "^2.2.0"
     ws "^3.1.0"
 
-relay-runtime@1.4.1-plugin.3, "relay-runtime@file:../../../../Library/Caches/Yarn/v1/.tmp/relay/dist/relay-runtime/relay-runtime-1.4.1-plugin.3.tgz", "relay-runtime@file:../../relay/dist/relay-runtime/relay-runtime-1.4.1-plugin.3.tgz":
-  version "1.4.1-plugin.3"
-  resolved "file:../../relay/dist/relay-runtime/relay-runtime-1.4.1-plugin.3.tgz#bf9f7d4fc8950abc2f1da9614afe82204edb5f8f"
+relay-runtime@1.4.1-plugin.6, "relay-runtime@file:../../../../Library/Caches/Yarn/v1/.tmp/relay/dist/relay-runtime/relay-runtime-1.4.1-plugin.6.tgz", "relay-runtime@file:../../relay/dist/relay-runtime/relay-runtime-1.4.1-plugin.6.tgz":
+  version "1.4.1-plugin.6"
+  resolved "file:../../relay/dist/relay-runtime/relay-runtime-1.4.1-plugin.6.tgz#6976444ef6bf09f386478fd3aa10c325c957ef00"
   dependencies:
     babel-runtime "^6.23.0"
     fbjs "^0.8.14"

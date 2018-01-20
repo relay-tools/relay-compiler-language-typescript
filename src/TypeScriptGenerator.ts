@@ -148,7 +148,7 @@ function selectionsToAST(
       otherProp,
       ts.SyntaxKind.MultiLineCommentTrivia,
       "This will never be '% other', but we need some\n" +
-      "value in case none of the concrete values match.",
+        "value in case none of the concrete values match.",
       true
     );
     types.push([otherPropWithComment]);
@@ -284,11 +284,10 @@ function createVisitor(options: TypeGeneratorOptions) {
     existingFragmentNames: options.existingFragmentNames,
     inputFieldWhiteList: options.inputFieldWhiteList,
     relayRuntimeModule: options.relayRuntimeModule,
-    getGeneratedDirectory: undefined,
-    destinationDirectory: undefined,
     usedEnums: {},
     usedFragments: new Set(),
-    useHaste: options.useHaste
+    useHaste: options.useHaste,
+    useSingleArtifactDirectory: options.useSingleArtifactDirectory
   };
 
   return {
@@ -338,8 +337,8 @@ function createVisitor(options: TypeGeneratorOptions) {
         const baseType = selectionsToAST(selections, state, refTypeName);
         const type = isPlural(node)
           ? ts.createTypeReferenceNode(ts.createIdentifier("ReadonlyArray"), [
-            baseType
-          ])
+              baseType
+            ])
           : baseType;
         return [
           ...getFragmentImports(state),
@@ -355,13 +354,13 @@ function createVisitor(options: TypeGeneratorOptions) {
         return flattenArray(node.selections).map(typeSelection => {
           return isAbstractType(typeCondition)
             ? {
-              ...typeSelection,
-              conditional: true
-            }
+                ...typeSelection,
+                conditional: true
+              }
             : {
-              ...typeSelection,
-              concreteType: typeCondition.toString()
-            };
+                ...typeSelection,
+                concreteType: typeCondition.toString()
+              };
         });
       },
       Condition(node: any) {
@@ -478,29 +477,16 @@ function createAnyTypeAlias(name: string): ts.TypeAliasDeclaration {
 function getFragmentImports(state: State) {
   const imports: ts.Statement[] = [];
   if (state.usedFragments.size > 0) {
-    const ownDirectory =
-      state.destinationDirectory && state.destinationDirectory.getPath("");
     const usedFragments = Array.from(state.usedFragments).sort();
     for (const usedFragment of usedFragments) {
       const refTypeName = getRefTypeName(usedFragment);
       if (
-        ownDirectory &&
-        state.getGeneratedDirectory &&
+        state.useSingleArtifactDirectory &&
         state.existingFragmentNames.has(usedFragment)
       ) {
-        const importDir = state.getGeneratedDirectory(usedFragment).getPath("");
-        const relative = path.relative(ownDirectory, importDir);
-        const relativeReference = relative.length === 0 ? "./" : "";
-        imports.push(
-          importTypes(
-            [refTypeName],
-            relativeReference + path.join(relative, usedFragment + ".graphql")
-          )
-        );
+        imports.push(importTypes([refTypeName], `./${usedFragment}.graphql`));
       } else {
-        imports.push(
-          createAnyTypeAlias(refTypeName),
-        );
+        imports.push(createAnyTypeAlias(refTypeName));
       }
     }
   }

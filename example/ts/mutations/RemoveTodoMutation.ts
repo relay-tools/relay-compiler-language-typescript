@@ -16,8 +16,8 @@ import {
 } from 'react-relay';
 import {ConnectionHandler, Environment, RecordSourceSelectorProxy} from 'relay-runtime';
 
-import { Todo_todo } from '../components/__generated__/Todo_todo.graphql';
-import { Todo_viewer } from '../components/__generated__/Todo_viewer.graphql';
+import { Todo_todo } from '../__generated__/Todo_todo.graphql';
+import { Todo_viewer } from '../__generated__/Todo_viewer.graphql';
 
 const mutation = graphql`
   mutation RemoveTodoMutation($input: RemoveTodoInput!) {
