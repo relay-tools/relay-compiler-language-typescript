@@ -1,6 +1,5 @@
 import { transformer } from '../src';
 import * as ts from 'typescript';
-import * as fs from 'async-file';
 import { Options } from '../src/Options';
 
 function transformWithOptions(options: Options, contents: string, fileName: string): ts.TranspileOutput {

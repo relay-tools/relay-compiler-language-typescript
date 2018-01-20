@@ -8,7 +8,7 @@ import { print } from "graphql";
 const GENERATED = './__generated__/';
 
 import { OperationDefinitionNode, FragmentDefinitionNode } from "graphql";
-import { Options } from "./Options";
+import { NormalizedOptions } from "./Options";
 
 function createVariableStatement(type: ts.NodeFlags.Const | ts.NodeFlags.Let | undefined, name: ts.Identifier, initializer: ts.Expression): ts.VariableStatement {
   return ts.createVariableStatement(
@@ -27,12 +27,12 @@ function createVariableStatement(type: ts.NodeFlags.Const | ts.NodeFlags.Let | u
 }
 
 /**
- * Relay Modern creates separate generated files, so Babel transforms graphql
+ * Relay Modern creates separate generated files, so TS transforms graphql
  * definitions to lazy require function calls.
  */
 export function createModernNode(
   ctx: ts.TransformationContext,
-  opts: Options,
+  opts: NormalizedOptions,
   graphqlDefinition: OperationDefinitionNode | FragmentDefinitionNode,
   fileName: string,
 ): ts.Expression {
@@ -69,20 +69,20 @@ export function createModernNode(
           ts.createStatement(
             warnNeedsRebuild(definitionName, opts.buildCommand),
           ),
-        ]),
+        ], /* multiLine */ true),
       ),
     ];
     if (opts.isDevVariable != null) {
       checkStatements = [
         ts.createIf(
           ts.createIdentifier(opts.isDevVariable),
-          ts.createBlock(checkStatements),
+          ts.createBlock(checkStatements, /* multiLine */ true),
         ),
       ];
     }
     bodyStatements.unshift(...checkStatements);
   }
-  return ts.createFunctionExpression(undefined, undefined, undefined, undefined, [], undefined, ts.createBlock(bodyStatements));
+  return ts.createFunctionExpression(undefined, undefined, undefined, undefined, [], undefined, ts.createBlock(bodyStatements, /* multiLine */ true));
 }
 
 function warnNeedsRebuild(

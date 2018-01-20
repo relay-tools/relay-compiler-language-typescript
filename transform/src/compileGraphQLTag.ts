@@ -4,7 +4,7 @@ import { createModernNode } from "./createModernNode";
 import { getFragmentNameParts } from "./getFragmentNameParts";
 import { DocumentNode, FragmentDefinitionNode, OperationDefinitionNode } from "graphql";
 import * as ts from 'typescript';
-import { Options } from "./Options";
+import { NormalizedOptions } from "./Options";
 
 /**
  * Given a graphql`` tagged template literal, replace it with the appropriate
@@ -12,7 +12,7 @@ import { Options } from "./Options";
  */
 export function compileGraphQLTag(
   ctx: ts.TransformationContext,
-  opts: Options,
+  opts: NormalizedOptions,
   node: ts.Node,
   ast: DocumentNode,
   fileName: string,
@@ -64,7 +64,7 @@ export function compileGraphQLTag(
   );
 }
 
-function createAST(ctx: ts.TransformationContext, opts: Options, node: ts.Node | null, graphqlDefinition: FragmentDefinitionNode | OperationDefinitionNode, fileName: string) {
+function createAST(ctx: ts.TransformationContext, opts: NormalizedOptions, node: ts.Node | null, graphqlDefinition: FragmentDefinitionNode | OperationDefinitionNode, fileName: string) {
   const isCompatMode = Boolean(opts.compat);
   const isDevVariable = opts.isDevVariable;
   const artifactDirectory = opts.artifactDirectory;
@@ -73,7 +73,7 @@ function createAST(ctx: ts.TransformationContext, opts: Options, node: ts.Node |
 
   // Fallback is 'true'
   const isDevelopment =
-    (process.env.BABEL_ENV || process.env.NODE_ENV) !== 'production';
+    (process.env.NODE_ENV) !== 'production';
 
   const modernNode = createModernNode(ctx, opts, graphqlDefinition, fileName);
   if (isCompatMode) {
@@ -100,7 +100,7 @@ function createObject(obj: { [propName: string]: ts.Expression }, originalNode: 
     return ts.createPropertyAssignment(name, obj[propName])
   });
 
-  const objectLiteralNode = ts.createObjectLiteral(assignments, true);
+  const objectLiteralNode = ts.createObjectLiteral(assignments, /* multiLine */ true);
   ts.setSourceMapRange(objectLiteralNode, ts.getSourceMapRange(originalNode));
   return objectLiteralNode;
 }

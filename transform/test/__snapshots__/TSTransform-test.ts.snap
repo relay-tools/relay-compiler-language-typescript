@@ -3,13 +3,16 @@
 exports[`TSTransform Should work: simple test 1`] = `
 Object {
   "diagnostics": Array [],
-  "outputText": "createFragmentContainer(MyComponent, { todo: function () { if (IS_DEV) {
-        var node = require(\\"../testing/artifacts/MyFragment_todo.graphql\\").default;
-        if (node.hash && node.hash !== \\"e655cc161574f3976cf1b4a8310f6885\\") {
-            console.error(\\"The definition of 'MyFragment_todo' appears to have changed. Run \`relay-compiler\` to update the generated files to receive the expected data.\\");
+  "outputText": "createFragmentContainer(MyComponent, { todo: function () {
+        if (IS_DEV) {
+            var node = require(\\"../testing/artifacts/MyFragment_todo.graphql\\").default;
+            if (node.hash && node.hash !== \\"e655cc161574f3976cf1b4a8310f6885\\") {
+                console.error(\\"The definition of 'MyFragment_todo' appears to have changed. Run \`relay-compiler\` to update the generated files to receive the expected data.\\");
+            }
         }
-    } return require(\\"../testing/artifacts/MyFragment_todo.graphql\\").default; } });
+        return require(\\"../testing/artifacts/MyFragment_todo.graphql\\").default;
+    } });
 //# sourceMappingURL=MyComponent.js.map",
-  "sourceMapText": "{\\"version\\":3,\\"file\\":\\"MyComponent.js\\",\\"sourceRoot\\":\\"\\",\\"sources\\":[\\"MyComponent.ts\\"],\\"names\\":[],\\"mappings\\":\\"AAAA,uBAAuB,CAAC,WAAW,EAAE,EAAC,IAAI,EAAE;;;;;+EAAkD,EAAC,CAAC,CAAA\\"}",
+  "sourceMapText": "{\\"version\\":3,\\"file\\":\\"MyComponent.js\\",\\"sourceRoot\\":\\"\\",\\"sources\\":[\\"MyComponent.ts\\"],\\"names\\":[],\\"mappings\\":\\"AAAA,uBAAuB,CAAC,WAAW,EAAE,EAAC,IAAI,EAAE;;;;;;;;KAAkD,EAAC,CAAC,CAAA\\"}",
 }
 `;
