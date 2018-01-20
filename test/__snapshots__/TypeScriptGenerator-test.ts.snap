@@ -64,6 +64,10 @@ fragment ConcreateTypes on Viewer {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+type OtherFragment_ref = any;
+type PictureFragment_ref = any;
+type UserFrag1_ref = any;
+type UserFrag2_ref = any;
 import { FragmentReference } from "relay-runtime";
 export enum FragmentSpread_ref {
 }
@@ -81,6 +85,7 @@ export type FragmentSpread = {
 };
 
 
+type PageFragment_ref = any;
 import { FragmentReference } from "relay-runtime";
 export enum ConcreateTypes_ref {
 }
@@ -205,6 +210,7 @@ export type InlineFragmentConditionalID = {
 };
 
 
+type SomeFragment_ref = any;
 import { FragmentReference } from "relay-runtime";
 export enum InlineFragmentKitchenSink_ref {
 }
@@ -675,6 +681,7 @@ fragment AnotherRecursiveFragment on Image {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+type PhotoFragment_ref = any;
 import { FragmentReference } from "relay-runtime";
 export enum UserProfile_ref {
 }
