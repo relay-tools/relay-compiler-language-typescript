@@ -13,14 +13,23 @@
 import MarkAllTodosMutation from '../mutations/MarkAllTodosMutation';
 import Todo from './Todo';
 
-import React from 'react';
+import * as React from 'react';
 import {
   createFragmentContainer,
   graphql,
+  RelayProp,
 } from 'react-relay';
 
-class TodoList extends React.Component {
-  _handleMarkAllChange = (e) => {
+import { TodoList_viewer } from './__generated__/TodoList_viewer.graphql';
+import { ChangeEvent } from 'react';
+
+interface Props {
+  relay: RelayProp,
+  viewer: TodoList_viewer
+}
+
+class TodoList extends React.Component<Props> {
+  _handleMarkAllChange = (e: ChangeEvent<HTMLInputElement>) => {
     const complete = e.target.checked;
     MarkAllTodosMutation.commit(
       this.props.relay.environment,
@@ -30,13 +39,18 @@ class TodoList extends React.Component {
     );
   };
   renderTodos() {
-    return this.props.viewer.todos.edges.map(edge =>
-      <Todo
-        key={edge.node.id}
-        todo={edge.node}
+    if (!this.props.viewer.todos || !this.props.viewer.todos.edges) {
+      throw new Error('assertion failed');
+    }
+    return this.props.viewer.todos.edges.map(edge => {
+      const node = edge && edge.node;
+      if (!node) throw new Error('assertion failed');
+      return <Todo
+        key={node.id}
+        todo={node}
         viewer={this.props.viewer}
       />
-    );
+    });
   }
   render() {
     const numTodos = this.props.viewer.totalCount;

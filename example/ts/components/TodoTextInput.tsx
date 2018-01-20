@@ -10,15 +10,25 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-const PropTypes = require('prop-types');
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import * as PropTypes from 'prop-types';
+import { ChangeEvent } from 'react';
 
 const ENTER_KEY_CODE = 13;
 const ESC_KEY_CODE = 27;
 
-export default class TodoTextInput extends React.Component {
+interface Props extends React.HTMLProps<HTMLInputElement> {
+  className?: string,
+  commitOnBlur?: boolean,
+  initialValue?: string | null,
+  onDelete?: () => void,
+  onCancel?: () => void,
+  onSave: (text: string) => void,
+  placeholder?: string,
+}
+
+export default class TodoTextInput extends React.Component<Props> {
   static defaultProps = {
     commitOnBlur: false,
   };
@@ -36,7 +46,8 @@ export default class TodoTextInput extends React.Component {
     text: this.props.initialValue || '',
   };
   componentDidMount() {
-    ReactDOM.findDOMNode(this).focus();
+    const element = ReactDOM.findDOMNode(this) as HTMLElement
+    element.focus();
   }
   _commitChanges = () => {
     const newText = this.state.text.trim();
@@ -54,10 +65,12 @@ export default class TodoTextInput extends React.Component {
       this._commitChanges();
     }
   };
-  _handleChange = (e) => {
-    this.setState({text: e.target.value});
+  _handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    this.setState({text: (e.target as HTMLInputElement).value});
   };
-  _handleKeyDown = (e) => {
+  // FIXME: KeyboardEvent in the global.d.ts file that ships with react.d.ts is not generic
+  // _handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  _handleKeyDown = (e: any) => {
     if (this.props.onCancel && e.keyCode === ESC_KEY_CODE) {
       this.props.onCancel();
     } else if (e.keyCode === ENTER_KEY_CODE) {

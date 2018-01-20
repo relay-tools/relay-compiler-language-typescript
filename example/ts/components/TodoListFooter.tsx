@@ -12,13 +12,22 @@
 
 import RemoveCompletedTodosMutation from '../mutations/RemoveCompletedTodosMutation';
 
-import React from 'react';
+import * as React from 'react';
 import {
   graphql,
   createFragmentContainer,
+  RelayProp,
 } from 'react-relay';
 
-class TodoListFooter extends React.Component {
+import { TodoListFooter_viewer } from './__generated__/TodoListFooter_viewer.graphql'
+import { Environment } from 'relay-runtime';
+
+interface Props {
+  relay: RelayProp
+  viewer: TodoListFooter_viewer
+}
+
+class TodoListFooter extends React.Component<Props> {
   _handleRemoveCompletedTodosClick = () => {
     RemoveCompletedTodosMutation.commit(
       this.props.relay.environment,
@@ -27,8 +36,8 @@ class TodoListFooter extends React.Component {
     );
   };
   render() {
-    const numCompletedTodos = this.props.viewer.completedCount;
-    const numRemainingTodos = this.props.viewer.totalCount - numCompletedTodos;
+    const numCompletedTodos = this.props.viewer.completedCount || 0;
+    const numRemainingTodos = (this.props.viewer.totalCount || 0) - numCompletedTodos;
     return (
       <footer className="footer">
         <span className="todo-count">

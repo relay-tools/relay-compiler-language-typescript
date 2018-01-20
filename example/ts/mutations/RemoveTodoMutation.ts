@@ -14,7 +14,10 @@ import {
   commitMutation,
   graphql,
 } from 'react-relay';
-import {ConnectionHandler} from 'relay-runtime';
+import {ConnectionHandler, Environment, RecordSourceSelectorProxy} from 'relay-runtime';
+
+import { Todo_todo } from '../components/__generated__/Todo_todo.graphql';
+import { Todo_viewer } from '../components/__generated__/Todo_viewer.graphql';
 
 const mutation = graphql`
   mutation RemoveTodoMutation($input: RemoveTodoInput!) {
@@ -28,7 +31,7 @@ const mutation = graphql`
   }
 `;
 
-function sharedUpdater(store, user, deletedID) {
+function sharedUpdater(store: RecordSourceSelectorProxy, user: Todo_viewer, deletedID: string) {
   const userProxy = store.get(user.id);
   const conn = ConnectionHandler.getConnection(
     userProxy,
@@ -41,9 +44,9 @@ function sharedUpdater(store, user, deletedID) {
 }
 
 function commit(
-  environment,
-  todo,
-  user,
+  environment: Environment,
+  todo: Todo_todo,
+  user: Todo_viewer,
 ) {
   return commitMutation(
     environment,
@@ -54,6 +57,7 @@ function commit(
       },
       updater: (store) => {
         const payload = store.getRootField('removeTodo');
+        if (!payload) throw new Error('assertion failed')
         sharedUpdater(store, user, payload.getValue('deletedTodoId'));
       },
       optimisticUpdater: (store) => {

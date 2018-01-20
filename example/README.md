@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-npm install
+yarn install
 ```
 
 ## Running
@@ -11,28 +11,28 @@ npm install
 Set up generated files:
 
 ```
-npm run update-schema
-npm run build
+yarn update-schema
+yarn build
 ```
 
 Start a local server:
 
 ```
-npm start
+yarn start
 ```
 
 ## Developing
 
-Any changes you make to files in the `js/` directory will cause the server to
+Any changes you make to files in the `ts/` directory will cause the server to
 automatically rebuild the app and refresh your browser.
 
 If at any time you make changes to `data/schema.js`, stop the server,
 regenerate `data/schema.graphql`, and restart the server:
 
 ```
-npm run update-schema
-npm run build
-npm start
+yarn update-schema
+yarn build
+yarn start
 ```
 
 ## License

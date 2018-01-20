@@ -16,6 +16,7 @@ import path from 'path';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import {schema} from './data/schema';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 const APP_PORT = 3000;
 const GRAPHQL_PORT = 8080;
@@ -29,7 +30,10 @@ graphQLServer.listen(GRAPHQL_PORT, () => console.log(
 
 // Serve the Relay app
 const compiler = webpack({
-  entry: ['whatwg-fetch', path.resolve(__dirname, 'ts', 'app.ts')],
+  entry: ['whatwg-fetch', path.resolve(__dirname, 'ts', 'app.tsx')],
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js'],
+  },
   module: {
     rules: [
       {
@@ -37,11 +41,14 @@ const compiler = webpack({
         exclude: /node_modules/,
         use: [
           { loader: 'babel-loader' },
-          { loader: 'ts-loader' },
+          { loader: 'ts-loader', options: { transpileOnly: true } },
         ],
       },
     ],
   },
+  plugins: [
+    new ForkTsCheckerWebpackPlugin(),
+  ],
   output: {filename: 'app.js', path: '/'},
 });
 const app = new WebpackDevServer(compiler, {

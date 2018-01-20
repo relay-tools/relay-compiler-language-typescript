@@ -15,21 +15,34 @@ import RemoveTodoMutation from '../mutations/RemoveTodoMutation';
 import RenameTodoMutation from '../mutations/RenameTodoMutation';
 import TodoTextInput from './TodoTextInput';
 
-import React from 'react';
+import * as React from 'react';
 import {
   createFragmentContainer,
   graphql,
+  RelayProp,
 } from 'react-relay';
+
 import classnames from 'classnames';
 
-class Todo extends React.Component {
+import { Todo_todo } from './__generated__/Todo_todo.graphql';
+import { Todo_viewer } from './__generated__/Todo_viewer.graphql';
+import { ChangeEvent } from 'react';
+import { Environment } from 'relay-runtime';
+
+interface Props {
+  relay: RelayProp
+  todo: Todo_todo
+  viewer: Todo_viewer
+}
+
+class Todo extends React.Component<Props> {
   state = {
     isEditing: false,
   };
-  _handleCompleteChange = (e) => {
+  _handleCompleteChange = (e: ChangeEvent<HTMLInputElement>) => {
     const complete = e.target.checked;
     ChangeTodoStatusMutation.commit(
-      this.props.relay.environment,
+      (this.props.relay && this.props.relay.environment) as Environment,
       complete,
       this.props.todo,
       this.props.viewer,
@@ -48,22 +61,22 @@ class Todo extends React.Component {
     this._setEditMode(false);
     this._removeTodo();
   };
-  _handleTextInputSave = (text) => {
+  _handleTextInputSave = (text: string) => {
     this._setEditMode(false);
     RenameTodoMutation.commit(
-      this.props.relay.environment,
+      (this.props.relay && this.props.relay.environment) as Environment,
       text,
       this.props.todo,
     );
   };
   _removeTodo() {
     RemoveTodoMutation.commit(
-      this.props.relay.environment,
+      (this.props.relay && this.props.relay.environment) as Environment,
       this.props.todo,
       this.props.viewer,
     );
   }
-  _setEditMode = (shouldEdit) => {
+  _setEditMode = (shouldEdit: boolean) => {
     this.setState({isEditing: shouldEdit});
   };
   renderTextInput() {
@@ -87,7 +100,7 @@ class Todo extends React.Component {
         })}>
         <div className="view">
           <input
-            checked={this.props.todo.complete}
+            checked={!!this.props.todo.complete}
             className="toggle"
             onChange={this._handleCompleteChange}
             type="checkbox"

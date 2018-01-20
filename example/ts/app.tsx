@@ -12,8 +12,8 @@
 
 import 'todomvc-common';
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 
 import {installRelayDevTools} from 'relay-devtools';
 
@@ -36,8 +36,8 @@ installRelayDevTools();
 const mountNode = document.getElementById('root');
 
 function fetchQuery(
-  operation,
-  variables,
+  operation: any,
+  variables: any,
 ) {
   return fetch('/graphql', {
     method: 'POST',
