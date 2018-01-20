@@ -465,6 +465,16 @@ function groupRefs(props: Selection[]): Selection[] {
   return result;
 }
 
+function createAnyTypeAlias(name: string): ts.TypeAliasDeclaration {
+  return ts.createTypeAliasDeclaration(
+    undefined,
+    undefined,
+    ts.createIdentifier(name),
+    undefined,
+    ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+  );
+}
+
 function getFragmentImports(state: State) {
   const imports: ts.Statement[] = [];
   if (state.usedFragments.size > 0) {
@@ -486,6 +496,10 @@ function getFragmentImports(state: State) {
             [refTypeName],
             relativeReference + path.join(relative, usedFragment + ".graphql")
           )
+        );
+      } else {
+        imports.push(
+          createAnyTypeAlias(refTypeName),
         );
       }
     }
