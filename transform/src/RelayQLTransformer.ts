@@ -80,13 +80,20 @@ export class RelayQLTransformer {
     node: ts.TaggedTemplateExpression,
     options: TextTransformOptions,
   ): Printable {
+    const documentName = sanitizeDocumentName(options.documentName);
+    const opts = {
+      documentName,
+      propName: options.propName,
+      enableValidation: options.enableValidation,
+      tagName: options.tagName,
+    };
     const {
       substitutions,
       templateText,
       variableNames,
-    } = this.processTemplateLiteral(node, options.documentName);
-    const documentText = this.processTemplateText(templateText, options);
-    const definition = this.processDocumentText(documentText, options);
+    } = this.processTemplateLiteral(node, documentName);
+    const documentText = this.processTemplateText(templateText, opts);
+    const definition = this.processDocumentText(documentText, opts);
 
     const Printer = RelayQLPrinter(this.options);
     return new Printer(options.tagName, variableNames).print(
@@ -119,14 +126,14 @@ export class RelayQLTransformer {
       };
     }
     chunks.push(template.head.text);
+    let previousChunk = template.head.text;
     template.templateSpans.forEach((element, ii) => {
       const literal = element.literal;
       const chunk = literal.text;
-      chunks.push(chunk);
       const name = 'RQL_' + ii;
       const value = element.expression;
       substitutions.push({ name, value });
-      if (/:\s*$/.test(chunk)) {
+      if (/:\s*$/.test(previousChunk)) {
         if (!this.options.substituteVariables) {
           throw new Error(util.format(
             "You supplied a GraphQL document named `%s` that uses template " +
@@ -140,6 +147,8 @@ export class RelayQLTransformer {
       } else {
         chunks.push('...' + name);
       }
+      chunks.push(chunk);
+      previousChunk = chunk;
     });
     return { substitutions, templateText: chunks.join('').trim(), variableNames };
   }
@@ -151,9 +160,8 @@ export class RelayQLTransformer {
     templateText: string,
     { documentName, propName }: TextTransformOptions,
   ): string {
-    const pattern = /^(fragment|mutation|query|subscription)\s*(\w*)?([\s\S]*)/;
+    const pattern = /^[\s\n]*(fragment|mutation|query|subscription)\s*(\w*)?([\s\S]*)/;
     const matches = pattern.exec(templateText);
-    const sanitizedDocumentName = sanitizeDocumentName(documentName);
     if (!matches) {
       throw new Error(util.format(
         "You supplied a GraphQL document named `%s` with invalid syntax. It " +
@@ -167,7 +175,7 @@ export class RelayQLTransformer {
     // Allow `fragment on Type {...}`.
     if (type === 'fragment' && name === 'on') {
       name =
-        sanitizedDocumentName + (propName ? '_' + capitalize(propName) : '') + 'RelayQL';
+        documentName + (propName ? '_' + capitalize(propName) : '') + 'RelayQL';
       rest = 'on' + rest;
     }
     const definitionName = capitalize(name);

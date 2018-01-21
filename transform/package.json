@@ -28,6 +28,7 @@
     "@types/jest": "^22.0.1",
     "@types/node": "^9.3.0",
     "jest": "^22.1.4",
+    "relay-test-utils": "^1.5.0-rc.1",
     "ts-jest": "^22.0.1"
   },
   "jest": {

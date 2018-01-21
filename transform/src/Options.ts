@@ -11,6 +11,7 @@ export interface Options {
 	isDevVariable?: string;
 	buildCommand?: string;
 	isDevelopment?: boolean;
+	substituteVariables?: boolean;
 }
 
 export interface NormalizedOptions {
@@ -20,6 +21,7 @@ export interface NormalizedOptions {
 	isDevVariable?: string;
 	buildCommand?: string;
 	isDevelopment?: boolean;
+	substituteVariables?: boolean;
 }
 
 const dotJsonLength = '.json'.length;
@@ -49,7 +51,7 @@ export function normalizeOptions(options: Options): NormalizedOptions {
 		relayQLTransformer: options.schema ? new RelayQLTransformer(readGraphQLSchema(options.schema), {
 			inputArgumentName: 'input',
 			snakeCase: false,
-			substituteVariables: true,
+			substituteVariables: options.substituteVariables || false,
 			validator: null,
 		}) : undefined,
 	};

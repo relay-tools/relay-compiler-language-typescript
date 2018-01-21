@@ -16,18 +16,45 @@ interface ExtraNode {
   transformFlags: TransformFlags;
 }
 
+function insertVarDecl(varDecl: ts.Statement, insertInto: ts.NodeArray<ts.Statement>): ts.Statement[] {
+  const useStrictIdx = insertInto.findIndex(
+    stmt => ts.isExpressionStatement(stmt) && ts.isLiteralExpression(stmt.expression) && stmt.expression.text == 'use strict'
+  );
+  if (useStrictIdx >= 0) {
+    const newStmts = insertInto.slice(0);
+    newStmts.splice(useStrictIdx + 1, 0, varDecl);
+    return newStmts;
+  }
+  return [varDecl, ...insertInto];
+}
+
 function visitor(ctx: ts.TransformationContext, sf: ts.SourceFile, opts: NormalizedOptions): ts.Visitor {
   const fileName = sf.fileName;
+  let i = 0;
+  const varDecls: ts.VariableDeclaration[] = [];
+  function declareVar(id: ts.Identifier): void {
+    varDecls.push(ts.createVariableDeclaration(id, undefined, undefined));
+  }
+  let scopeLevel = 0;
   const visit = (node: ts.Node): ts.Node => {
     // Easy bailout if there are not ES2015 features used
     if (((node as any as ExtraNode).transformFlags & TransformFlags.ContainsES2015) !== TransformFlags.ContainsES2015) {
       return node;
     }
+    if (ts.isBlock(node)) {
+      scopeLevel++;
+    }
 
     if (ts.isTaggedTemplateExpression(node)) {
       const ast = getValidGraphQLTag(node);
       if (ast) {
-        return compileGraphQLTag(ctx, opts, node, ast, fileName);
+        const res = compileGraphQLTag(ctx, opts, node, ast, fileName);
+        if (scopeLevel > 0) {
+          const id = ts.createIdentifier('__graphql$' + i++);
+          declareVar(id);
+          return ts.createLogicalOr(id, ts.createAssignment(id, res));
+        }
+        return res;
       }
 
       const relayQLTag = getValidRelayQLTag(node);
@@ -43,7 +70,16 @@ function visitor(ctx: ts.TransformationContext, sf: ts.SourceFile, opts: Normali
         return result;
       }
     }
-    return ts.visitEachChild(node, visit, ctx);
+    const res = ts.visitEachChild(node, visit, ctx);
+
+    if (ts.isSourceFile(res) && varDecls.length > 0) {
+      const varDecl = ts.createVariableStatement(undefined, ts.createVariableDeclarationList(varDecls));
+      return ts.updateSourceFileNode(res, insertVarDecl(varDecl, res.statements));
+    }
+    if (ts.isBlock(node)) {
+      scopeLevel--;
+    }
+    return res;
   };
 
   return visit;

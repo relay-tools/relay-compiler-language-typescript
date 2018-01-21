@@ -17,11 +17,14 @@ export function compileRelayQLTag(
 	tagName: string,
 	enableValidation: boolean,
 ): ts.Expression {
-	const result = transformer.transform(node, {
-		documentName,
-		propName,
-		tagName,
-		enableValidation,
-	});
-	return result;
+	try {
+		return transformer.transform(node, {
+			documentName,
+			propName,
+			tagName,
+			enableValidation,
+		});
+	} catch (e) {
+		throw createTransformError(e);
+	}
 }

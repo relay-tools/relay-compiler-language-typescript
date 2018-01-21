@@ -82,18 +82,12 @@ function createAST(
   const buildCommand =
     (opts.buildCommand) || 'relay-compiler';
 
-  // Fallback is 'true'
-  const isDevelopment =
-    (process.env.NODE_ENV) !== 'production';
-
   const modernNode = createModernNode(ctx, opts, graphqlDefinition, fileName);
   if (isCompatMode) {
-    console.log('Launching compat mode!');
     const result = createCompatNode(
       modernNode,
       createClassicNode(ctx, bindingsAtNode(node), node, graphqlDefinition, opts),
     );
-    console.log('Done generating stuff');
     if (setSourceMapRange) {
       ts.setSourceMapRange(result, ts.getSourceMapRange(node));
     }
