@@ -1,7 +1,6 @@
 ## Examples of generated artifacts
 
-See [here](example/ts/__generated__/), [here](example/ts/components/__generated__/), and
-[here](example/ts/mutations/__generated__/).
+See [here](example/ts/__generated__/).
 
 ## Installation
 
