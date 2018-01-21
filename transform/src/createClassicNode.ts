@@ -244,8 +244,8 @@ function createConcreteNode(transformedAST: ts.Expression, substitutions: ts.Var
   if (substitutions.length > 0) {
     body.unshift(
       ts.createVariableStatement(
-        [ts.createToken(ts.SyntaxKind.ConstKeyword)],
-        ts.createVariableDeclarationList(substitutions))
+        undefined,
+        ts.createVariableDeclarationList(substitutions, ts.NodeFlags.Const))
     );
   }
   return ts.createFunctionExpression(

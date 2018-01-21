@@ -3,7 +3,7 @@
 exports[`TSTransform \`development\` option does not test the hash when \`development\` is not set 1`] = `
 "({
     data: function () {
-        return require(\\"./__generated__/TestFrag.graphql\\").default;
+        return require(\\"./__generated__/TestFrag.graphql.ts\\").default;
     }
 });
 "
@@ -12,11 +12,11 @@ exports[`TSTransform \`development\` option does not test the hash when \`develo
 exports[`TSTransform \`development\` option tests the hash when \`development\` is set 1`] = `
 "({
     data: function () {
-        const node = require(\\"./__generated__/TestFrag.graphql\\").default;
+        const node = require(\\"./__generated__/TestFrag.graphql.ts\\").default;
         if (node.hash && node.hash !== \\"0bb6b7b29bc3e910921551c4ff5b6757\\") {
             console.error(\\"The definition of 'TestFrag' appears to have changed. Run \`relay-compiler\` to update the generated files to receive the expected data.\\");
         }
-        return require(\\"./__generated__/TestFrag.graphql\\").default;
+        return require(\\"./__generated__/TestFrag.graphql.ts\\").default;
     }
 });
 "
@@ -26,12 +26,12 @@ exports[`TSTransform \`development\` option tests the hash when \`isDevVariable\
 "({
     data: function () {
         if (IS_DEV) {
-            const node = require(\\"./__generated__/TestFrag.graphql\\").default;
+            const node = require(\\"./__generated__/TestFrag.graphql.ts\\").default;
             if (node.hash && node.hash !== \\"0bb6b7b29bc3e910921551c4ff5b6757\\") {
                 console.error(\\"The definition of 'TestFrag' appears to have changed. Run \`relay-compiler\` to update the generated files to receive the expected data.\\");
             }
         }
-        return require(\\"./__generated__/TestFrag.graphql\\").default;
+        return require(\\"./__generated__/TestFrag.graphql.ts\\").default;
     }
 });
 "
@@ -40,11 +40,11 @@ exports[`TSTransform \`development\` option tests the hash when \`isDevVariable\
 exports[`TSTransform \`development\` option uses a custom build command in message 1`] = `
 "({
     data: function () {
-        const node = require(\\"./__generated__/TestFrag.graphql\\").default;
+        const node = require(\\"./__generated__/TestFrag.graphql.ts\\").default;
         if (node.hash && node.hash !== \\"0bb6b7b29bc3e910921551c4ff5b6757\\") {
             console.error(\\"The definition of 'TestFrag' appears to have changed. Run \`relay-build\` to update the generated files to receive the expected data.\\");
         }
-        return require(\\"./__generated__/TestFrag.graphql\\").default;
+        return require(\\"./__generated__/TestFrag.graphql.ts\\").default;
     }
 });
 "
@@ -529,13 +529,13 @@ const graphql = require('graphql');
 const CompatProfilePic = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
     passing: function () {
-        return require("./__generated__/CompatProfile_passing.graphql").default;
+        return require("./__generated__/CompatProfile_passing.graphql.ts").default;
     },
     receiving: function () {
-        return require("./__generated__/CompatProfile_receiving.graphql").default;
+        return require("./__generated__/CompatProfile_receiving.graphql.ts").default;
     },
     receivingGlobals: function () {
-        return require("./__generated__/CompatProfile_receivingGlobals.graphql").default;
+        return require("./__generated__/CompatProfile_receivingGlobals.graphql.ts").default;
     },
 });
 
@@ -605,10 +605,10 @@ const CompatProfilePic = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
     passing: {
         modern: function () {
-            return require("./__generated__/CompatProfile_passing.graphql").default;
+            return require("./__generated__/CompatProfile_passing.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
-            var ProfilePic_user_args1 = ProfilePic.getFragment("user", {
+            const ProfilePic_user_args1 = ProfilePic.getFragment("user", {
                 size: 40,
                 scale: 1.5,
                 title: "Photo"
@@ -653,7 +653,7 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
     },
     receiving: {
         modern: function () {
-            return require("./__generated__/CompatProfile_receiving.graphql").default;
+            return require("./__generated__/CompatProfile_receiving.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -751,10 +751,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
     },
     passingWithDefault: {
         modern: function () {
-            return require("./__generated__/CompatProfile_passingWithDefault.graphql").default;
+            return require("./__generated__/CompatProfile_passingWithDefault.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
-            var ProfilePic_user_args1 = ProfilePic.getFragment("user", {
+            const ProfilePic_user_args1 = ProfilePic.getFragment("user", {
                 size: {
                     kind: "CallVariable",
                     callVariableName: "withDefault"
@@ -804,7 +804,7 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
     },
     receivingGlobals: {
         modern: function () {
-            return require("./__generated__/CompatProfile_receivingGlobals.graphql").default;
+            return require("./__generated__/CompatProfile_receivingGlobals.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -937,10 +937,10 @@ const CompatProfilePic = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
     passing: {
         modern: function () {
-            return require("./__generated__/CompatProfile_passing.graphql").default;
+            return require("./__generated__/CompatProfile_passing.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
-            var ProfilePic_user_args1 = ProfilePic.getFragment("user", {
+            const ProfilePic_user_args1 = ProfilePic.getFragment("user", {
                 size: 40,
                 scale: 1.5,
                 title: "Photo"
@@ -985,7 +985,7 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
     },
     receiving: {
         modern: function () {
-            return require("./__generated__/CompatProfile_receiving.graphql").default;
+            return require("./__generated__/CompatProfile_receiving.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -1083,10 +1083,10 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
     },
     passingWithDefault: {
         modern: function () {
-            return require("./__generated__/CompatProfile_passingWithDefault.graphql").default;
+            return require("./__generated__/CompatProfile_passingWithDefault.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
-            var ProfilePic_user_args1 = ProfilePic.getFragment("user", {
+            const ProfilePic_user_args1 = ProfilePic.getFragment("user", {
                 size: {
                     kind: "CallVariable",
                     callVariableName: "withDefault"
@@ -1136,7 +1136,7 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
     },
     receivingGlobals: {
         modern: function () {
-            return require("./__generated__/CompatProfile_receivingGlobals.graphql").default;
+            return require("./__generated__/CompatProfile_receivingGlobals.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -1247,7 +1247,7 @@ const { graphql } = RelayClassic;
 const CompatProfile = () => null;
 module.exports = RelayClassic.createFragmentContainer(CompatProfile, {
     viewer: function () {
-        return require("./__generated__/CompatProfile_viewer.graphql").default;
+        return require("./__generated__/CompatProfile_viewer.graphql.ts").default;
     }
 });
 
@@ -1296,7 +1296,7 @@ const CompatProfile = () => null;
 module.exports = RelayClassic.createFragmentContainer(CompatProfile, {
     viewer: {
         modern: function () {
-            return require("./__generated__/CompatProfile_viewer.graphql").default;
+            return require("./__generated__/CompatProfile_viewer.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -1417,7 +1417,7 @@ const CompatProfile = () => null;
 module.exports = RelayClassic.createFragmentContainer(CompatProfile, {
     viewer: {
         modern: function () {
-            return require("./__generated__/CompatProfile_viewer.graphql").default;
+            return require("./__generated__/CompatProfile_viewer.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -3441,10 +3441,10 @@ const graphql = require('graphql');
 const CompatProfilePic = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
     user: function () {
-        return require("./__generated__/CompatProfile_user.graphql").default;
+        return require("./__generated__/CompatProfile_user.graphql.ts").default;
     },
     user2: function () {
-        return require("./__generated__/CompatProfile_user2.graphql").default;
+        return require("./__generated__/CompatProfile_user2.graphql.ts").default;
     }
 });
 
@@ -3499,7 +3499,7 @@ const CompatProfilePic = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
     user: {
         modern: function () {
-            return require("./__generated__/CompatProfile_user.graphql").default;
+            return require("./__generated__/CompatProfile_user.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -3565,7 +3565,7 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
     },
     user2: {
         modern: function () {
-            return require("./__generated__/CompatProfile_user2.graphql").default;
+            return require("./__generated__/CompatProfile_user2.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -3682,7 +3682,7 @@ const CompatProfilePic = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
     user: {
         modern: function () {
-            return require("./__generated__/CompatProfile_user.graphql").default;
+            return require("./__generated__/CompatProfile_user.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -3748,7 +3748,7 @@ module.exports = RelayCompatContainer.createContainer(CompatProfilePic, {
     },
     user2: {
         modern: function () {
-            return require("./__generated__/CompatProfile_user2.graphql").default;
+            return require("./__generated__/CompatProfile_user2.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -4247,10 +4247,10 @@ class RefetchExample extends React.Component {
 }
 module.exports = createRefetchContainer(RefetchExample, {
     user: function () {
-        return require("./__generated__/RefetchExample_user.graphql").default;
+        return require("./__generated__/RefetchExample_user.graphql.ts").default;
     }
 }, function () {
-    return require("./__generated__/RefetchExampleRefetchQuery.graphql").default;
+    return require("./__generated__/RefetchExampleRefetchQuery.graphql.ts").default;
 });
 
 `;
@@ -4306,7 +4306,7 @@ class RefetchExample extends React.Component {
 module.exports = createRefetchContainer(RefetchExample, {
     user: {
         modern: function () {
-            return require("./__generated__/RefetchExample_user.graphql").default;
+            return require("./__generated__/RefetchExample_user.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -4343,10 +4343,10 @@ module.exports = createRefetchContainer(RefetchExample, {
     }
 }, {
     modern: function () {
-        return require("./__generated__/RefetchExampleRefetchQuery.graphql").default;
+        return require("./__generated__/RefetchExampleRefetchQuery.graphql.ts").default;
     },
     classic: function (RelayQL_GENERATED) {
-        var RefetchExample_user = (RefetchExample.__container__ || RefetchExample).getFragment("user");
+        const RefetchExample_user = (RefetchExample.__container__ || RefetchExample).getFragment("user");
         return {
             kind: "OperationDefinition",
             argumentDefinitions: [],
@@ -4462,7 +4462,7 @@ class RefetchExample extends React.Component {
 module.exports = createRefetchContainer(RefetchExample, {
     user: {
         modern: function () {
-            return require("./__generated__/RefetchExample_user.graphql").default;
+            return require("./__generated__/RefetchExample_user.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -4499,10 +4499,10 @@ module.exports = createRefetchContainer(RefetchExample, {
     }
 }, {
     modern: function () {
-        return require("./__generated__/RefetchExampleRefetchQuery.graphql").default;
+        return require("./__generated__/RefetchExampleRefetchQuery.graphql.ts").default;
     },
     classic: function (RelayQL_GENERATED) {
-        var RefetchExample_user = (RefetchExample.__container__ || RefetchExample).getFragment("user");
+        const RefetchExample_user = (RefetchExample.__container__ || RefetchExample).getFragment("user");
         return {
             kind: "OperationDefinition",
             argumentDefinitions: [],
@@ -5749,7 +5749,7 @@ const graphql = require('graphql');
 const CompatProfile = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     user: function () {
-        return require("./__generated__/CompatProfile_user.graphql").default;
+        return require("./__generated__/CompatProfile_user.graphql.ts").default;
     },
 });
 
@@ -5794,10 +5794,10 @@ const CompatProfile = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     user: {
         modern: function () {
-            return require("./__generated__/CompatProfile_user.graphql").default;
+            return require("./__generated__/CompatProfile_user.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
-            var CompatProfilePic_user = CompatProfilePic.getFragment("user");
+            const CompatProfilePic_user = CompatProfilePic.getFragment("user");
             return {
                 kind: "FragmentDefinition",
                 argumentDefinitions: [],
@@ -5874,10 +5874,10 @@ const CompatProfile = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     user: {
         modern: function () {
-            return require("./__generated__/CompatProfile_user.graphql").default;
+            return require("./__generated__/CompatProfile_user.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
-            var CompatProfilePic_user = CompatProfilePic.getFragment("user");
+            const CompatProfilePic_user = CompatProfilePic.getFragment("user");
             return {
                 kind: "FragmentDefinition",
                 argumentDefinitions: [],
@@ -6487,7 +6487,7 @@ function SomeTopLevelView() {
     let _graphql = 'unrelated';
     return (<View>
       <QueryRenderer environment={RelayStore} query={__graphql$0 || (__graphql$0 = function () {
-        return require("./__generated__/ExampleQuery.graphql").default;
+        return require("./__generated__/ExampleQuery.graphql.ts").default;
     })} variables={{ id: '12345' }}/>
     </View>);
 }
@@ -6540,10 +6540,10 @@ function SomeTopLevelView() {
     return (<View>
       <QueryRenderer environment={RelayStore} query={__graphql$0 || (__graphql$0 = {
         modern: function () {
-            return require("./__generated__/ExampleQuery.graphql").default;
+            return require("./__generated__/ExampleQuery.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
-            var ProfilePic_user = ProfilePic.getFragment("user");
+            const ProfilePic_user = ProfilePic.getFragment("user");
             return {
                 kind: "OperationDefinition",
                 argumentDefinitions: [{
@@ -6661,10 +6661,10 @@ function SomeTopLevelView() {
     return (<View>
       <QueryRenderer environment={RelayStore} query={__graphql$0 || (__graphql$0 = {
         modern: function () {
-            return require("./__generated__/ExampleQuery.graphql").default;
+            return require("./__generated__/ExampleQuery.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
-            var ProfilePic_user = ProfilePic.getFragment("user");
+            const ProfilePic_user = ProfilePic.getFragment("user");
             return {
                 kind: "OperationDefinition",
                 argumentDefinitions: [{
@@ -7499,7 +7499,7 @@ const CompatCommentCreateMutation = graphql\`
 const graphql = require('graphql');
 const CompatProfilePic = require('CompatProfilePic');
 const CompatCommentCreateMutation = function () {
-    return require("./__generated__/CompatCommentCreateMutation.graphql").default;
+    return require("./__generated__/CompatCommentCreateMutation.graphql.ts").default;
 };
 
 `;
@@ -7541,10 +7541,10 @@ const graphql = require('graphql');
 const CompatProfilePic = require('CompatProfilePic');
 const CompatCommentCreateMutation = {
     modern: function () {
-        return require("./__generated__/CompatCommentCreateMutation.graphql").default;
+        return require("./__generated__/CompatCommentCreateMutation.graphql.ts").default;
     },
     classic: function (RelayQL_GENERATED) {
-        var CompatProfilePic_user = CompatProfilePic.getFragment("user");
+        const CompatProfilePic_user = CompatProfilePic.getFragment("user");
         return {
             kind: "OperationDefinition",
             argumentDefinitions: [{
@@ -7670,10 +7670,10 @@ const graphql = require('graphql');
 const CompatProfilePic = require('CompatProfilePic');
 const CompatCommentCreateMutation = {
     modern: function () {
-        return require("./__generated__/CompatCommentCreateMutation.graphql").default;
+        return require("./__generated__/CompatCommentCreateMutation.graphql.ts").default;
     },
     classic: function (RelayQL_GENERATED) {
-        var CompatProfilePic_user = CompatProfilePic.getFragment("user");
+        const CompatProfilePic_user = CompatProfilePic.getFragment("user");
         return {
             kind: "OperationDefinition",
             argumentDefinitions: [{
@@ -7802,7 +7802,7 @@ const CompatViewerQuery = graphql\`
 const graphql = require('graphql');
 const CompatProfilePic = require('CompatProfilePic');
 const CompatViewerQuery = function () {
-    return require("./__generated__/CompatViewerQuery.graphql").default;
+    return require("./__generated__/CompatViewerQuery.graphql.ts").default;
 };
 
 `;
@@ -7848,10 +7848,10 @@ const graphql = require('graphql');
 const CompatProfilePic = require('CompatProfilePic');
 const CompatViewerQuery = {
     modern: function () {
-        return require("./__generated__/CompatViewerQuery.graphql").default;
+        return require("./__generated__/CompatViewerQuery.graphql.ts").default;
     },
     classic: function (RelayQL_GENERATED) {
-        var CompatProfilePic_user = CompatProfilePic.getFragment("user");
+        const CompatProfilePic_user = CompatProfilePic.getFragment("user");
         return {
             kind: "OperationDefinition",
             argumentDefinitions: [{
@@ -8025,10 +8025,10 @@ const graphql = require('graphql');
 const CompatProfilePic = require('CompatProfilePic');
 const CompatViewerQuery = {
     modern: function () {
-        return require("./__generated__/CompatViewerQuery.graphql").default;
+        return require("./__generated__/CompatViewerQuery.graphql.ts").default;
     },
     classic: function (RelayQL_GENERATED) {
-        var CompatProfilePic_user = CompatProfilePic.getFragment("user");
+        const CompatProfilePic_user = CompatProfilePic.getFragment("user");
         return {
             kind: "OperationDefinition",
             argumentDefinitions: [{
@@ -8197,7 +8197,7 @@ const CompatCommentCreateMutation = graphql\`
 const graphql = require('graphql');
 const CompatProfilePic = require('CompatProfilePic');
 const CompatCommentCreateMutation = function () {
-    return require("./__generated__/CompatCommentCreateMutation.graphql").default;
+    return require("./__generated__/CompatCommentCreateMutation.graphql.ts").default;
 };
 
 `;
@@ -8239,10 +8239,10 @@ const graphql = require('graphql');
 const CompatProfilePic = require('CompatProfilePic');
 const CompatCommentCreateMutation = {
     modern: function () {
-        return require("./__generated__/CompatCommentCreateMutation.graphql").default;
+        return require("./__generated__/CompatCommentCreateMutation.graphql.ts").default;
     },
     classic: function (RelayQL_GENERATED) {
-        var CompatProfilePic_user = CompatProfilePic.getFragment("user");
+        const CompatProfilePic_user = CompatProfilePic.getFragment("user");
         return {
             kind: "OperationDefinition",
             argumentDefinitions: [{
@@ -8368,10 +8368,10 @@ const graphql = require('graphql');
 const CompatProfilePic = require('CompatProfilePic');
 const CompatCommentCreateMutation = {
     modern: function () {
-        return require("./__generated__/CompatCommentCreateMutation.graphql").default;
+        return require("./__generated__/CompatCommentCreateMutation.graphql.ts").default;
     },
     classic: function (RelayQL_GENERATED) {
-        var CompatProfilePic_user = CompatProfilePic.getFragment("user");
+        const CompatProfilePic_user = CompatProfilePic.getFragment("user");
         return {
             kind: "OperationDefinition",
             argumentDefinitions: [{
@@ -8713,7 +8713,7 @@ const graphql = require('graphql');
 const CompatProfile = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     user: function () {
-        return require("./__generated__/CompatProfile_user.graphql").default;
+        return require("./__generated__/CompatProfile_user.graphql.ts").default;
     },
 });
 
@@ -8755,7 +8755,7 @@ const CompatProfile = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     user: {
         modern: function () {
-            return require("./__generated__/CompatProfile_user.graphql").default;
+            return require("./__generated__/CompatProfile_user.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -8830,7 +8830,7 @@ const CompatProfile = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     user: {
         modern: function () {
-            return require("./__generated__/CompatProfile_user.graphql").default;
+            return require("./__generated__/CompatProfile_user.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -8902,7 +8902,7 @@ const graphql = require('graphql');
 const CompatProfile = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     user: function () {
-        return require("./__generated__/CompatProfile_user.graphql").default;
+        return require("./__generated__/CompatProfile_user.graphql.ts").default;
     }
 });
 
@@ -8942,7 +8942,7 @@ const CompatProfile = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     user: {
         modern: function () {
-            return require("./__generated__/CompatProfile_user.graphql").default;
+            return require("./__generated__/CompatProfile_user.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -9015,7 +9015,7 @@ const CompatProfile = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     user: {
         modern: function () {
-            return require("./__generated__/CompatProfile_user.graphql").default;
+            return require("./__generated__/CompatProfile_user.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -9091,10 +9091,10 @@ const graphql = require('graphql');
 const CompatProfile = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     user: function () {
-        return require("./__generated__/CompatProfile_user.graphql").default;
+        return require("./__generated__/CompatProfile_user.graphql.ts").default;
     },
     viewer: function () {
-        return require("./__generated__/CompatProfile_viewer.graphql").default;
+        return require("./__generated__/CompatProfile_viewer.graphql.ts").default;
     }
 });
 
@@ -9138,7 +9138,7 @@ const CompatProfile = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     user: {
         modern: function () {
-            return require("./__generated__/CompatProfile_user.graphql").default;
+            return require("./__generated__/CompatProfile_user.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -9175,7 +9175,7 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     },
     viewer: {
         modern: function () {
-            return require("./__generated__/CompatProfile_viewer.graphql").default;
+            return require("./__generated__/CompatProfile_viewer.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -9252,7 +9252,7 @@ const CompatProfile = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     user: {
         modern: function () {
-            return require("./__generated__/CompatProfile_user.graphql").default;
+            return require("./__generated__/CompatProfile_user.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -9289,7 +9289,7 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     },
     viewer: {
         modern: function () {
-            return require("./__generated__/CompatProfile_viewer.graphql").default;
+            return require("./__generated__/CompatProfile_viewer.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -9513,7 +9513,7 @@ const CompatViewerQuery = graphql\`
 const graphql = require('graphql');
 const CompatProfilePic = require('CompatProfilePic');
 const CompatViewerQuery = function () {
-    return require("./__generated__/CompatViewerQuery.graphql").default;
+    return require("./__generated__/CompatViewerQuery.graphql.ts").default;
 };
 
 `;
@@ -9553,10 +9553,10 @@ const graphql = require('graphql');
 const CompatProfilePic = require('CompatProfilePic');
 const CompatViewerQuery = {
     modern: function () {
-        return require("./__generated__/CompatViewerQuery.graphql").default;
+        return require("./__generated__/CompatViewerQuery.graphql.ts").default;
     },
     classic: function (RelayQL_GENERATED) {
-        var CompatProfilePic_user = CompatProfilePic.getFragment("user");
+        const CompatProfilePic_user = CompatProfilePic.getFragment("user");
         return {
             kind: "OperationDefinition",
             argumentDefinitions: [{
@@ -9682,10 +9682,10 @@ const graphql = require('graphql');
 const CompatProfilePic = require('CompatProfilePic');
 const CompatViewerQuery = {
     modern: function () {
-        return require("./__generated__/CompatViewerQuery.graphql").default;
+        return require("./__generated__/CompatViewerQuery.graphql.ts").default;
     },
     classic: function (RelayQL_GENERATED) {
-        var CompatProfilePic_user = CompatProfilePic.getFragment("user");
+        const CompatProfilePic_user = CompatProfilePic.getFragment("user");
         return {
             kind: "OperationDefinition",
             argumentDefinitions: [{
@@ -10774,7 +10774,7 @@ const graphql = require('graphql');
 const CompatProfile = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     data: function () {
-        return require("./__generated__/CompatProfile.graphql").default;
+        return require("./__generated__/CompatProfile.graphql.ts").default;
     }
 });
 
@@ -10815,10 +10815,10 @@ const CompatProfile = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     data: {
         modern: function () {
-            return require("./__generated__/CompatProfile.graphql").default;
+            return require("./__generated__/CompatProfile.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
-            var SomeOtherContainer = SomeOtherContainer.getFragment("data");
+            const SomeOtherContainer = SomeOtherContainer.getFragment("data");
             return {
                 kind: "FragmentDefinition",
                 argumentDefinitions: [],
@@ -10891,10 +10891,10 @@ const CompatProfile = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     data: {
         modern: function () {
-            return require("./__generated__/CompatProfile.graphql").default;
+            return require("./__generated__/CompatProfile.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
-            var SomeOtherContainer = SomeOtherContainer.getFragment("data");
+            const SomeOtherContainer = SomeOtherContainer.getFragment("data");
             return {
                 kind: "FragmentDefinition",
                 argumentDefinitions: [],
@@ -10969,10 +10969,10 @@ const graphql = require('graphql');
 const CompatProfile = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     data: function () {
-        return require("./__generated__/CompatProfile.graphql").default;
+        return require("./__generated__/CompatProfile.graphql.ts").default;
     },
     viewer: function () {
-        return require("./__generated__/CompatProfile_viewer.graphql").default;
+        return require("./__generated__/CompatProfile_viewer.graphql.ts").default;
     }
 });
 
@@ -11016,7 +11016,7 @@ const CompatProfile = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     data: {
         modern: function () {
-            return require("./__generated__/CompatProfile.graphql").default;
+            return require("./__generated__/CompatProfile.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -11053,7 +11053,7 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     },
     viewer: {
         modern: function () {
-            return require("./__generated__/CompatProfile_viewer.graphql").default;
+            return require("./__generated__/CompatProfile_viewer.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -11130,7 +11130,7 @@ const CompatProfile = () => null;
 module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     data: {
         modern: function () {
-            return require("./__generated__/CompatProfile.graphql").default;
+            return require("./__generated__/CompatProfile.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -11167,7 +11167,7 @@ module.exports = RelayCompatContainer.createContainer(CompatProfile, {
     },
     viewer: {
         modern: function () {
-            return require("./__generated__/CompatProfile_viewer.graphql").default;
+            return require("./__generated__/CompatProfile_viewer.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -11478,10 +11478,10 @@ const CompatPage = require('CompatPage');
 module.exports = Relay.createFragmentContainer(CompatProfile, {
     viewer: {
         modern: function () {
-            return require("./__generated__/CompatProfile_viewer.graphql").default;
+            return require("./__generated__/CompatProfile_viewer.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
-            var CompatUtil_viewer1 = RelayQL_GENERATED.__getClassicFragment(CompatUtil.viewer1.viewer1 || CompatUtil.viewer1, true).node;
+            const CompatUtil_viewer1 = RelayQL_GENERATED.__getClassicFragment(CompatUtil.viewer1.viewer1 || CompatUtil.viewer1, true).node;
             return {
                 kind: "FragmentDefinition",
                 argumentDefinitions: [],
@@ -11518,10 +11518,10 @@ module.exports = Relay.createFragmentContainer(CompatProfile, {
     },
     page: {
         modern: function () {
-            return require("./__generated__/CompatProfile_page.graphql").default;
+            return require("./__generated__/CompatProfile_page.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
-            var CompatPage_page = CompatPage.getFragment("page");
+            const CompatPage_page = CompatPage.getFragment("page");
             return {
                 kind: "FragmentDefinition",
                 argumentDefinitions: [],
@@ -11597,10 +11597,10 @@ const CompatPage = require('CompatPage');
 module.exports = Relay.createFragmentContainer(CompatProfile, {
     viewer: {
         modern: function () {
-            return require("./__generated__/CompatProfile_viewer.graphql").default;
+            return require("./__generated__/CompatProfile_viewer.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
-            var CompatUtil_viewer1 = RelayQL_GENERATED.__getClassicFragment(CompatUtil.viewer1.viewer1 || CompatUtil.viewer1, true).node;
+            const CompatUtil_viewer1 = RelayQL_GENERATED.__getClassicFragment(CompatUtil.viewer1.viewer1 || CompatUtil.viewer1, true).node;
             return {
                 kind: "FragmentDefinition",
                 argumentDefinitions: [],
@@ -11637,10 +11637,10 @@ module.exports = Relay.createFragmentContainer(CompatProfile, {
     },
     page: {
         modern: function () {
-            return require("./__generated__/CompatProfile_page.graphql").default;
+            return require("./__generated__/CompatProfile_page.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
-            var CompatPage_page = CompatPage.getFragment("page");
+            const CompatPage_page = CompatPage.getFragment("page");
             return {
                 kind: "FragmentDefinition",
                 argumentDefinitions: [],
@@ -11723,7 +11723,7 @@ const graphql = require('graphql');
 const actor = {
     actor: {
         modern: function () {
-            return require("./__generated__/CompatUtil_actor.graphql").default;
+            return require("./__generated__/CompatUtil_actor.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -11777,10 +11777,10 @@ module.exports = {
     // actor,
     viewer: {
         modern: function () {
-            return require("./__generated__/CompatUtil_viewer.graphql").default;
+            return require("./__generated__/CompatUtil_viewer.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
-            var CompatUtil_actor = RelayQL_GENERATED.__getClassicFragment(actor.actor, true).node;
+            const CompatUtil_actor = RelayQL_GENERATED.__getClassicFragment(actor.actor, true).node;
             return {
                 kind: "FragmentDefinition",
                 argumentDefinitions: [],
@@ -11854,7 +11854,7 @@ const graphql = require('graphql');
 const actor = {
     actor: {
         modern: function () {
-            return require("./__generated__/CompatUtil_actor.graphql").default;
+            return require("./__generated__/CompatUtil_actor.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -11908,10 +11908,10 @@ module.exports = {
     // actor,
     viewer: {
         modern: function () {
-            return require("./__generated__/CompatUtil_viewer.graphql").default;
+            return require("./__generated__/CompatUtil_viewer.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
-            var CompatUtil_actor = RelayQL_GENERATED.__getClassicFragment(actor.actor, true).node;
+            const CompatUtil_actor = RelayQL_GENERATED.__getClassicFragment(actor.actor, true).node;
             return {
                 kind: "FragmentDefinition",
                 argumentDefinitions: [],
@@ -11975,7 +11975,7 @@ const graphql = require('graphql');
 module.exports = {
     viewer1: {
         modern: function () {
-            return require("./__generated__/CompatUtil_viewer1.graphql").default;
+            return require("./__generated__/CompatUtil_viewer1.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -12033,7 +12033,7 @@ module.exports = {
     },
     viewer2: {
         modern: function () {
-            return require("./__generated__/CompatUtil_viewer2.graphql").default;
+            return require("./__generated__/CompatUtil_viewer2.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -12128,7 +12128,7 @@ const graphql = require('graphql');
 module.exports = {
     viewer1: {
         modern: function () {
-            return require("./__generated__/CompatUtil_viewer1.graphql").default;
+            return require("./__generated__/CompatUtil_viewer1.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -12186,7 +12186,7 @@ module.exports = {
     },
     viewer2: {
         modern: function () {
-            return require("./__generated__/CompatUtil_viewer2.graphql").default;
+            return require("./__generated__/CompatUtil_viewer2.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -12278,7 +12278,7 @@ const graphql = require('graphql');
 module.exports = {
     viewer1: {
         modern: function () {
-            return require("./__generated__/CompatUtil_viewer1.graphql").default;
+            return require("./__generated__/CompatUtil_viewer1.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -12336,7 +12336,7 @@ module.exports = {
     },
     viewer2: {
         modern: function () {
-            return require("./__generated__/CompatUtil_viewer2.graphql").default;
+            return require("./__generated__/CompatUtil_viewer2.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -12428,7 +12428,7 @@ const graphql = require('graphql');
 module.exports = {
     viewer1: {
         modern: function () {
-            return require("./__generated__/CompatUtil_viewer1.graphql").default;
+            return require("./__generated__/CompatUtil_viewer1.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -12486,7 +12486,7 @@ module.exports = {
     },
     viewer2: {
         modern: function () {
-            return require("./__generated__/CompatUtil_viewer2.graphql").default;
+            return require("./__generated__/CompatUtil_viewer2.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
             return {
@@ -12679,13 +12679,13 @@ class CompatProfile extends React.Component {
     }
     doSomething() {
         commitMutation(this.props.relay, __graphql$0 || (__graphql$0 = function () {
-            return require("./__generated__/ActorSubscribe.graphql").default;
+            return require("./__generated__/ActorSubscribe.graphql.ts").default;
         }), { input: { subscribeeId: 123 } });
     }
 }
 module.exports = createFragmentContainer(CompatProfile, {
     data: function () {
-        return require("./__generated__/CompatProfile.graphql").default;
+        return require("./__generated__/CompatProfile.graphql.ts").default;
     }
 });
 
@@ -12761,10 +12761,10 @@ class CompatProfile extends React.Component {
     doSomething() {
         commitMutation(this.props.relay, __graphql$0 || (__graphql$0 = {
             modern: function () {
-                return require("./__generated__/ActorSubscribe.graphql").default;
+                return require("./__generated__/ActorSubscribe.graphql.ts").default;
             },
             classic: function (RelayQL_GENERATED) {
-                var CompatProfile = (CompatProfile.__container__ || CompatProfile).getFragment("data");
+                const CompatProfile = (CompatProfile.__container__ || CompatProfile).getFragment("data");
                 return {
                     kind: "OperationDefinition",
                     argumentDefinitions: [{
@@ -12846,10 +12846,10 @@ class CompatProfile extends React.Component {
 module.exports = createFragmentContainer(CompatProfile, {
     data: {
         modern: function () {
-            return require("./__generated__/CompatProfile.graphql").default;
+            return require("./__generated__/CompatProfile.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
-            var CompatProfilePic_user = CompatProfilePic.getFragment("user");
+            const CompatProfilePic_user = CompatProfilePic.getFragment("user");
             return {
                 kind: "FragmentDefinition",
                 argumentDefinitions: [],
@@ -12974,10 +12974,10 @@ class CompatProfile extends React.Component {
     doSomething() {
         commitMutation(this.props.relay, __graphql$0 || (__graphql$0 = {
             modern: function () {
-                return require("./__generated__/ActorSubscribe.graphql").default;
+                return require("./__generated__/ActorSubscribe.graphql.ts").default;
             },
             classic: function (RelayQL_GENERATED) {
-                var CompatProfile = (CompatProfile.__container__ || CompatProfile).getFragment("data");
+                const CompatProfile = (CompatProfile.__container__ || CompatProfile).getFragment("data");
                 return {
                     kind: "OperationDefinition",
                     argumentDefinitions: [{
@@ -13059,10 +13059,10 @@ class CompatProfile extends React.Component {
 module.exports = createFragmentContainer(CompatProfile, {
     data: {
         modern: function () {
-            return require("./__generated__/CompatProfile.graphql").default;
+            return require("./__generated__/CompatProfile.graphql.ts").default;
         },
         classic: function (RelayQL_GENERATED) {
-            var CompatProfilePic_user = CompatProfilePic.getFragment("user");
+            const CompatProfilePic_user = CompatProfilePic.getFragment("user");
             return {
                 kind: "FragmentDefinition",
                 argumentDefinitions: [],

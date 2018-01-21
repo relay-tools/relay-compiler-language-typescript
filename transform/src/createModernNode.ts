@@ -40,7 +40,7 @@ export function createModernNode(
   if (!definitionName) {
     throw new Error('GraphQL operations and fragments must contain names');
   }
-  const requiredFile = definitionName + '.graphql';
+  const requiredFile = definitionName + '.graphql.ts';
   const requiredPath = opts.artifactDirectory
     ? getRelativeImportPath(fileName, opts.artifactDirectory, requiredFile)
     : GENERATED + requiredFile;
@@ -108,13 +108,5 @@ function getRelativeImportPath(
   artifactDirectory: string,
   fileToRequire: string,
 ): string {
-
-  const relative = path.relative(
-    path.dirname(fileName),
-    path.resolve(artifactDirectory),
-  );
-
-  const relativeReference = relative.length === 0 ? './' : '';
-
-  return relativeReference + path.join(relative, fileToRequire);
+  return path.join(artifactDirectory, fileToRequire);
 }
