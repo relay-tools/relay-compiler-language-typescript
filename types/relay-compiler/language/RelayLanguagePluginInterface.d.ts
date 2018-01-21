@@ -45,6 +45,7 @@ export interface TypeGeneratorOptions {
   readonly existingFragmentNames: Set<string>;
   readonly inputFieldWhiteList: ReadonlyArray<string>;
   readonly relayRuntimeModule: string;
+  readonly useSingleArtifactDirectory: boolean;
 }
 
 export interface TypeGenerator {

@@ -22,10 +22,6 @@ export type ScalarTypeMapping = {
 export type State = {
   usedEnums: { [name: string]: GraphQLEnumType };
   usedFragments: Set<string>;
-  // TODO: Marking these as optional and moved from ‘options’ to ‘state’ until we determine how we can best make imports
-  //       work.
-  getGeneratedDirectory?: (name: string) => CodegenDirectory;
-  destinationDirectory?: CodegenDirectory;
 } & TypeGeneratorOptions;
 
 export function transformScalarType(

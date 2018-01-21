@@ -3076,9 +3076,9 @@ regex-not@^1.0.0:
   dependencies:
     extend-shallow "^2.0.1"
 
-relay-compiler@1.4.1-plugin.3, "relay-compiler@file:../relay/dist/relay-compiler/relay-compiler-1.4.1-plugin.3.tgz":
-  version "1.4.1-plugin.3"
-  resolved "file:../relay/dist/relay-compiler/relay-compiler-1.4.1-plugin.3.tgz#a0c25e2ec4b189b5f034abeee7be4b100a2136a9"
+relay-compiler@1.4.1-plugin.6, "relay-compiler@file:../relay/dist/relay-compiler/relay-compiler-1.4.1-plugin.6.tgz":
+  version "1.4.1-plugin.6"
+  resolved "file:../relay/dist/relay-compiler/relay-compiler-1.4.1-plugin.6.tgz#e925ba2dd3c16844f2a1df457efacda44d1360da"
   dependencies:
     babel-generator "^6.26.0"
     babel-polyfill "^6.20.0"
@@ -3093,26 +3093,26 @@ relay-compiler@1.4.1-plugin.3, "relay-compiler@file:../relay/dist/relay-compiler
     fbjs "^0.8.14"
     graphql "^0.12.3"
     immutable "~3.7.6"
-    relay-runtime "1.4.1-plugin.3"
+    relay-runtime "1.4.1-plugin.6"
     signedsource "^1.0.0"
     yargs "^9.0.0"
 
-relay-runtime@1.4.1-plugin.3, "relay-runtime@file:../relay/dist/relay-runtime/relay-runtime-1.4.1-plugin.3.tgz":
-  version "1.4.1-plugin.3"
-  resolved "file:../relay/dist/relay-runtime/relay-runtime-1.4.1-plugin.3.tgz#bf9f7d4fc8950abc2f1da9614afe82204edb5f8f"
+relay-runtime@1.4.1-plugin.6, "relay-runtime@file:../relay/dist/relay-runtime/relay-runtime-1.4.1-plugin.6.tgz":
+  version "1.4.1-plugin.6"
+  resolved "file:../relay/dist/relay-runtime/relay-runtime-1.4.1-plugin.6.tgz#6976444ef6bf09f386478fd3aa10c325c957ef00"
   dependencies:
     babel-runtime "^6.23.0"
     fbjs "^0.8.14"
 
-"relay-test-utils@file:../relay/dist/relay-test-utils/relay-test-utils-1.4.1-plugin.3.tgz":
-  version "1.4.1-plugin.3"
-  resolved "file:../relay/dist/relay-test-utils/relay-test-utils-1.4.1-plugin.3.tgz#db77b9f58f69433eac7eb711e9864c3066d6bd0c"
+"relay-test-utils@file:../relay/dist/relay-test-utils/relay-test-utils-1.4.1-plugin.6.tgz":
+  version "1.4.1-plugin.6"
+  resolved "file:../relay/dist/relay-test-utils/relay-test-utils-1.4.1-plugin.6.tgz#f3ff7ed9a206b2a578ffae8fd284acacebb1e77b"
   dependencies:
     babel-runtime "^6.23.0"
     fbjs "^0.8.14"
     prop-types "^15.5.8"
-    relay-compiler "1.4.1-plugin.3"
-    relay-runtime "1.4.1-plugin.3"
+    relay-compiler "1.4.1-plugin.6"
+    relay-runtime "1.4.1-plugin.6"
 
 remove-trailing-separator@^1.0.1:
   version "1.1.0"

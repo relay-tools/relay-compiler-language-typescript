@@ -22,7 +22,7 @@ import {
   RelayProp,
 } from 'react-relay';
 
-import { TodoApp_viewer } from './__generated__/TodoApp_viewer.graphql';
+import { TodoApp_viewer } from '../__generated__/TodoApp_viewer.graphql';
 
 interface Props {
   relay: RelayProp
