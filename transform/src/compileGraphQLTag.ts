@@ -5,6 +5,10 @@ import { getFragmentNameParts } from "./getFragmentNameParts";
 import { DocumentNode, FragmentDefinitionNode, OperationDefinitionNode } from "graphql";
 import * as ts from 'typescript';
 import { NormalizedOptions } from "./Options";
+import { createCompatNode } from "./createCompatNode";
+import { createClassicNode } from "./createClassicNode";
+import { bindingsAtNode } from "./bindingsAtNode";
+import { setSourceMapRange } from "typescript";
 
 /**
  * Given a graphql`` tagged template literal, replace it with the appropriate
@@ -13,7 +17,7 @@ import { NormalizedOptions } from "./Options";
 export function compileGraphQLTag(
   ctx: ts.TransformationContext,
   opts: NormalizedOptions,
-  node: ts.Node,
+  node: ts.TaggedTemplateExpression,
   ast: DocumentNode,
   fileName: string,
 ): ts.Expression {
@@ -28,7 +32,7 @@ export function compileGraphQLTag(
           `graphql tag referenced by the property ${objPropName}.`,
         );
       }
-      return createAST(ctx, opts, node, mainDefinition, fileName);
+      return createAST(ctx, opts, node, mainDefinition, fileName, true);
     }
 
     const nodeMap: { [key: string]: ts.Expression } = {};
@@ -41,7 +45,7 @@ export function compileGraphQLTag(
       }
 
       const [, propName] = getFragmentNameParts(definition.name.value);
-      nodeMap[propName] = createAST(ctx, opts, null, definition, fileName);
+      nodeMap[propName] = createAST(ctx, opts, node, definition, fileName, false);
     }
     return createObject(nodeMap, node);
   }
@@ -53,7 +57,7 @@ export function compileGraphQLTag(
         '(query, mutation, or subscription) per graphql tag.',
       );
     }
-    return createAST(ctx, opts, node, mainDefinition, fileName);
+    return createAST(ctx, opts, node, mainDefinition, fileName, true);
   }
 
   throw new Error(
@@ -64,7 +68,14 @@ export function compileGraphQLTag(
   );
 }
 
-function createAST(ctx: ts.TransformationContext, opts: NormalizedOptions, node: ts.Node | null, graphqlDefinition: FragmentDefinitionNode | OperationDefinitionNode, fileName: string) {
+function createAST(
+  ctx: ts.TransformationContext,
+  opts: NormalizedOptions,
+  node: ts.TaggedTemplateExpression,
+  graphqlDefinition: FragmentDefinitionNode | OperationDefinitionNode,
+  fileName: string,
+  setSoueceMapRange: boolean,
+) {
   const isCompatMode = Boolean(opts.compat);
   const isDevVariable = opts.isDevVariable;
   const artifactDirectory = opts.artifactDirectory;
@@ -77,14 +88,18 @@ function createAST(ctx: ts.TransformationContext, opts: NormalizedOptions, node:
 
   const modernNode = createModernNode(ctx, opts, graphqlDefinition, fileName);
   if (isCompatMode) {
-    throw new Error('Not implemented');
-    // return createCompatNode(
-    //   t,
-    //   modernNode,
-    //   createClassicNode(t, path, graphqlDefinition, state),
-    // );
+    console.log('Launching compat mode!');
+    const result = createCompatNode(
+      modernNode,
+      createClassicNode(ctx, bindingsAtNode(node), node, graphqlDefinition, opts),
+    );
+    console.log('Done generating stuff');
+    if (setSourceMapRange) {
+      ts.setSourceMapRange(result, ts.getSourceMapRange(node));
+    }
+    return result;
   }
-  if (node != null) {
+  if (setSourceMapRange) {
     ts.setSourceMapRange(modernNode, ts.getSourceMapRange(node));
   }
   return modernNode;

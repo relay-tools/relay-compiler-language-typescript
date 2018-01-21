@@ -181,7 +181,6 @@ export class RelayQLTransformer {
     documentText: string,
     { documentName, enableValidation }: TextTransformOptions,
   ): RelayQLDefinition<any> {
-    console.log(documentText);
     const document = parse(new Source(documentText, documentName));
     const validationErrors = enableValidation
       ? this.validateDocument(document, documentName)

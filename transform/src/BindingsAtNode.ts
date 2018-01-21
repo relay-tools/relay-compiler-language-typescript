@@ -109,17 +109,18 @@ export function bindingsAtNode(node: ts.Node): Bindings {
 
   while (node.parent != null) {
     const parent = node.parent;
+    node = parent;
     if (ts.isBlock(parent) || ts.isSourceFile(parent)) {
       findStatementsBindings(parent);
       continue;
     }
-
     if (ts.isForStatement(parent) && parent.initializer != null) {
       findInitializerBindings(parent.initializer);
       continue;
     }
     if (ts.isForOfStatement(parent)) {
       findInitializerBindings(parent.initializer);
+      continue;
     }
   }
   return bindings;

@@ -23,6 +23,5 @@ export function compileRelayQLTag(
 		tagName,
 		enableValidation,
 	});
-	ts.setSourceMapRange(result, ts.getSourceMapRange(node));
 	return result;
 }

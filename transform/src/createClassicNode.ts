@@ -18,7 +18,7 @@ import {
   print
 } from "graphql";
 import { NormalizedOptions } from "./Options";
-import { Bindings, BindingKind } from "./BindingsAtNode";
+import { Bindings, BindingKind } from "./bindingsAtNode";
 
 interface Fragment {
   name: string;

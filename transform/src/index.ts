@@ -38,7 +38,9 @@ function visitor(ctx: ts.TransformationContext, sf: ts.SourceFile, opts: Normali
             'Check your configuration for TypeScript and ensure you\'ve set a path for your GraphQL schema.'
           );
         }
-        return compileRelayQLTag(ctx, opts, opts.relayQLTransformer, node, sf.fileName, relayQLTag[2], relayQLTag[1], true);
+        const result = compileRelayQLTag(ctx, opts, opts.relayQLTransformer, node, sf.fileName, relayQLTag[2], relayQLTag[1], true);
+        ts.setSourceMapRange(result, ts.getSourceMapRange(node));
+        return result;
       }
     }
     return ts.visitEachChild(node, visit, ctx);

@@ -20,9 +20,14 @@ const schemaPath = path.resolve(__dirname, 'testschema.rfc.graphql');
 
 describe('TSTransform', () => {
   it('Modern should compile', async () => {
-    const text = 'createFragmentContainer(MyComponent, {todo: graphql`fragment MyFragment_todo on MyType { id }`})';
+    const text = 'createFragmentContainer(MyComponent, {todo: graphql`fragment MyFragment_todo on Node { id }`})';
 
     expect(transformWithOptions({ isDevVariable: 'IS_DEV', artifactDirectory: '/testing/artifacts' }, text, '/test/MyComponent.ts')).toMatchSnapshot('modern test');
+  });
+  it('Compat should compile', async () => {
+    const text = 'createFragmentContainer(MyComponent, {todo: graphql`fragment MyFragment_todo on Node { id }`})';
+
+    expect(transformWithOptions({ isDevVariable: 'IS_DEV', artifactDirectory: '/testing/artifacts', schema: schemaPath, compat: true }, text, '/test/MyComponent.ts')).toMatchSnapshot('compat test');
   });
   it('Classic should compile', async () => {
     const text = 'createFragmentContainer(MyComponent, {todo: () => Relay.QL`fragment on Node { id }`})';
