@@ -4,6 +4,8 @@ import * as fs from 'fs';
 import { getValidGraphQLTag } from './getValidGraphQLTag';
 import { NormalizedOptions, normalizeOptions, Options } from './Options';
 import { compileGraphQLTag } from './compileGraphQLTag';
+import { getValidRelayQLTag } from './getValidRelayQLTag';
+import { compileRelayQLTag } from './compileRelayQLTag';
 
 // https://github.com/Microsoft/TypeScript/blob/cc6d18e4db924d05e55c2a22587ad47ba53e7989/src/compiler/types.ts#L4490
 const enum TransformFlags {
@@ -26,6 +28,17 @@ function visitor(ctx: ts.TransformationContext, sf: ts.SourceFile, opts: Normali
       const ast = getValidGraphQLTag(node);
       if (ast) {
         return compileGraphQLTag(ctx, opts, node, ast, fileName);
+      }
+
+      const relayQLTag = getValidRelayQLTag(node);
+      if (relayQLTag != null) {
+        if (opts.relayQLTransformer == null) {
+          throw new Error(
+            'typescript-transform-relay: Missing schema option. ' +
+            'Check your configuration for TypeScript and ensure you\'ve set a path for your GraphQL schema.'
+          );
+        }
+        return compileRelayQLTag(ctx, opts, opts.relayQLTransformer, node, sf.fileName, relayQLTag[2], relayQLTag[1], true);
       }
     }
     return ts.visitEachChild(node, visit, ctx);

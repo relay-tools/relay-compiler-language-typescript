@@ -1,6 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TSTransform Should work: simple test 1`] = `
+exports[`TSTransform Classic should compile: classic test 1`] = `
+Object {
+  "diagnostics": Array [],
+  "outputText": "createFragmentContainer(MyComponent, { todo: function () { return function () {
+        return {
+            children: [
+                {
+                    fieldName: \\"id\\",
+                    kind: \\"Field\\",
+                    metadata: {
+                        isRequisite: true
+                    },
+                    type: \\"String\\"
+                },
+                {
+                    fieldName: \\"__typename\\",
+                    kind: \\"Field\\",
+                    metadata: {
+                        isGenerated: true,
+                        isRequisite: true
+                    },
+                    type: \\"String\\"
+                }
+            ],
+            id: Relay.QL.__id(),
+            kind: \\"Fragment\\",
+            metadata: {
+                isAbstract: true
+            },
+            name: \\"MyComponent_TodoRelayQL\\",
+            type: \\"Node\\"
+        };
+    }(); } });
+//# sourceMappingURL=MyComponent.js.map",
+  "sourceMapText": "{\\"version\\":3,\\"file\\":\\"MyComponent.js\\",\\"sourceRoot\\":\\"\\",\\"sources\\":[\\"MyComponent.ts\\"],\\"names\\":[],\\"mappings\\":\\"AAAA,uBAAuB,CAAC,WAAW,EAAE,EAAC,IAAI,EAAE,qBAAM;;;;;;;;;;;;;;;;;;;;;;;;;;;;;OAAiC,GAAA,EAAC,CAAC,CAAA\\"}",
+}
+`;
+
+exports[`TSTransform Modern should compile: modern test 1`] = `
 Object {
   "diagnostics": Array [],
   "outputText": "createFragmentContainer(MyComponent, { todo: function () {

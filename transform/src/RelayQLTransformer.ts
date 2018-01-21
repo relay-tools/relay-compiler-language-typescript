@@ -1,6 +1,7 @@
 import { RelayQLPrinter } from "./RelayQLPrinter";
 
 import * as util from "util";
+import * as path from "path";
 import * as ts from "typescript";
 
 import {
@@ -53,6 +54,15 @@ type TextTransformOptions = {
   tagName: string,
 };
 
+function sanitizeDocumentName(str: string): string {
+  const basename = path.basename(str);
+  const firstDot = basename.indexOf('.');
+  if (firstDot < 0) {
+    return basename;
+  }
+  return basename.substr(0, firstDot);
+}
+
 /**
  * Transforms a TemplateLiteral node into a RelayQLDefinition, which is then
  * transformed into a TS AST via RelayQLPrinter.
@@ -71,10 +81,10 @@ export class RelayQLTransformer {
     options: TextTransformOptions,
   ): Printable {
     const {
-    substitutions,
+      substitutions,
       templateText,
       variableNames,
-  } = this.processTemplateLiteral(node, options.documentName);
+    } = this.processTemplateLiteral(node, options.documentName);
     const documentText = this.processTemplateText(templateText, options);
     const definition = this.processDocumentText(documentText, options);
 
@@ -143,6 +153,7 @@ export class RelayQLTransformer {
   ): string {
     const pattern = /^(fragment|mutation|query|subscription)\s*(\w*)?([\s\S]*)/;
     const matches = pattern.exec(templateText);
+    const sanitizedDocumentName = sanitizeDocumentName(documentName);
     if (!matches) {
       throw new Error(util.format(
         "You supplied a GraphQL document named `%s` with invalid syntax. It " +
@@ -156,7 +167,7 @@ export class RelayQLTransformer {
     // Allow `fragment on Type {...}`.
     if (type === 'fragment' && name === 'on') {
       name =
-        documentName + (propName ? '_' + capitalize(propName) : '') + 'RelayQL';
+        sanitizedDocumentName + (propName ? '_' + capitalize(propName) : '') + 'RelayQL';
       rest = 'on' + rest;
     }
     const definitionName = capitalize(name);
@@ -170,6 +181,7 @@ export class RelayQLTransformer {
     documentText: string,
     { documentName, enableValidation }: TextTransformOptions,
   ): RelayQLDefinition<any> {
+    console.log(documentText);
     const document = parse(new Source(documentText, documentName));
     const validationErrors = enableValidation
       ? this.validateDocument(document, documentName)

@@ -1,5 +1,8 @@
 import { GraphQLSchema, buildClientSchema, buildASTSchema, parse } from "graphql";
 import * as fs from 'fs';
+import * as path from 'path';
+import { RelayQLTransformer } from "./RelayQLTransformer";
+import { SCHEMA_EXTENSION } from "./GraphQLRelayDirective";
 
 export interface Options {
 	artifactDirectory?: string;
@@ -13,7 +16,7 @@ export interface Options {
 export interface NormalizedOptions {
 	artifactDirectory?: string;
 	compat?: boolean;
-	schema?: GraphQLSchema;
+	relayQLTransformer?: RelayQLTransformer;
 	isDevVariable?: string;
 	buildCommand?: string;
 	isDevelopment?: boolean;
@@ -23,7 +26,7 @@ const dotJsonLength = '.json'.length;
 const dotGraphQLLength = '.graphql'.length;
 
 export function readGraphQLSchema(schemaPath: string): GraphQLSchema {
-	const contents = fs.readFileSync(schemaPath, { encoding: 'utf8' });
+	const contents = fs.readFileSync(path.resolve(schemaPath), { encoding: 'utf8' });
 	if (schemaPath.substring(schemaPath.length - dotJsonLength) === '.json') {
 		const json = JSON.parse(contents);
 		if (json.__schema) {
@@ -34,14 +37,20 @@ export function readGraphQLSchema(schemaPath: string): GraphQLSchema {
 		}
 		throw new Error('Expected data file to contain a JSON encoded GraphQLSchema');
 	} else if (schemaPath.substring(schemaPath.length - dotGraphQLLength) === '.graphql') {
-		return buildASTSchema(parse(contents));
+		return buildASTSchema(parse(SCHEMA_EXTENSION + "\n" + contents));
 	}
 	throw new Error('Unsupported file. schema option only supports json and graphql file extensions');
 }
 
 export function normalizeOptions(options: Options): NormalizedOptions {
+	const { schema, ...opts } = options;
 	return {
-		...options,
-		schema: options.schema ? readGraphQLSchema(options.schema) : undefined,
+		...opts,
+		relayQLTransformer: options.schema ? new RelayQLTransformer(readGraphQLSchema(options.schema), {
+			inputArgumentName: 'input',
+			snakeCase: false,
+			substituteVariables: true,
+			validator: null,
+		}) : undefined,
 	};
 }
