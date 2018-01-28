@@ -1,11 +1,12 @@
-import * as ts from 'typescript';
-import { parse } from 'graphql';
-import * as fs from 'fs';
-import { getValidGraphQLTag } from './getValidGraphQLTag';
-import { NormalizedOptions, normalizeOptions, Options } from './Options';
-import { compileGraphQLTag } from './compileGraphQLTag';
-import { getValidRelayQLTag } from './getValidRelayQLTag';
-import { compileRelayQLTag } from './compileRelayQLTag';
+import * as ts from "typescript";
+import { parse } from "graphql";
+import * as fs from "fs";
+import { getValidGraphQLTag } from "./getValidGraphQLTag";
+import { NormalizedOptions, normalizeOptions, Options } from "./Options";
+import { compileGraphQLTag } from "./compileGraphQLTag";
+import { getValidRelayQLTag } from "./getValidRelayQLTag";
+import { compileRelayQLTag } from "./compileRelayQLTag";
+import { ScopeAnalyzer } from "./ScopeAnalyzer";
 
 // https://github.com/Microsoft/TypeScript/blob/cc6d18e4db924d05e55c2a22587ad47ba53e7989/src/compiler/types.ts#L4490
 const enum TransformFlags {
@@ -18,7 +19,7 @@ interface ExtraNode {
 
 function insertVarDecl(varDecl: ts.Statement, insertInto: ts.NodeArray<ts.Statement>): ts.Statement[] {
   const useStrictIdx = insertInto.findIndex(
-    stmt => ts.isExpressionStatement(stmt) && ts.isLiteralExpression(stmt.expression) && stmt.expression.text == 'use strict'
+    stmt => ts.isExpressionStatement(stmt) && ts.isLiteralExpression(stmt.expression) && stmt.expression.text == "use strict"
   );
   if (useStrictIdx >= 0) {
     const newStmts = insertInto.slice(0);
@@ -31,6 +32,7 @@ function insertVarDecl(varDecl: ts.Statement, insertInto: ts.NodeArray<ts.Statem
 function visitor(ctx: ts.TransformationContext, sf: ts.SourceFile, opts: NormalizedOptions): ts.Visitor {
   const fileName = sf.fileName;
   let i = 0;
+  const scopeAnalyzer = new ScopeAnalyzer(sf);
   const varDecls: ts.VariableDeclaration[] = [];
   function declareVar(id: ts.Identifier): void {
     varDecls.push(ts.createVariableDeclaration(id, undefined, undefined));
@@ -48,9 +50,9 @@ function visitor(ctx: ts.TransformationContext, sf: ts.SourceFile, opts: Normali
     if (ts.isTaggedTemplateExpression(node)) {
       const ast = getValidGraphQLTag(node);
       if (ast) {
-        const res = compileGraphQLTag(ctx, opts, node, ast, fileName);
+        const res = compileGraphQLTag(ctx, opts, node, ast, scopeAnalyzer, fileName);
         if (scopeLevel > 0) {
-          const id = ts.createIdentifier('__graphql$' + i++);
+          const id = ts.createIdentifier("__graphql$" + i++);
           declareVar(id);
           return ts.createLogicalOr(id, ts.createAssignment(id, res));
         }
@@ -61,8 +63,8 @@ function visitor(ctx: ts.TransformationContext, sf: ts.SourceFile, opts: Normali
       if (relayQLTag != null) {
         if (opts.relayQLTransformer == null) {
           throw new Error(
-            'typescript-transform-relay: Missing schema option. ' +
-            'Check your configuration for TypeScript and ensure you\'ve set a path for your GraphQL schema.'
+            "typescript-transform-relay: Missing schema option. " +
+            "Check your configuration for TypeScript and ensure you've set a path for your GraphQL schema."
           );
         }
         const result = compileRelayQLTag(ctx, opts, opts.relayQLTransformer, node, sf.fileName, relayQLTag[2], relayQLTag[1], true);

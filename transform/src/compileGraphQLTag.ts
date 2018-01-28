@@ -7,7 +7,7 @@ import * as ts from 'typescript';
 import { NormalizedOptions } from "./Options";
 import { createCompatNode } from "./createCompatNode";
 import { createClassicNode } from "./createClassicNode";
-import { bindingsAtNode } from "./bindingsAtNode";
+import { ScopeAnalyzer } from "./ScopeAnalyzer";
 import { setSourceMapRange } from "typescript";
 
 /**
@@ -19,6 +19,7 @@ export function compileGraphQLTag(
   opts: NormalizedOptions,
   node: ts.TaggedTemplateExpression,
   ast: DocumentNode,
+  scopeAnalyzer: ScopeAnalyzer,
   fileName: string,
 ): ts.Expression {
   const mainDefinition = ast.definitions[0];
@@ -32,7 +33,7 @@ export function compileGraphQLTag(
           `graphql tag referenced by the property ${objPropName}.`,
         );
       }
-      return createAST(ctx, opts, node, mainDefinition, fileName, true);
+      return createAST(ctx, opts, node, mainDefinition, fileName, scopeAnalyzer, true);
     }
 
     const nodeMap: { [key: string]: ts.Expression } = {};
@@ -45,7 +46,7 @@ export function compileGraphQLTag(
       }
 
       const [, propName] = getFragmentNameParts(definition.name.value);
-      nodeMap[propName] = createAST(ctx, opts, node, definition, fileName, false);
+      nodeMap[propName] = createAST(ctx, opts, node, definition, fileName, scopeAnalyzer, false);
     }
     return createObject(nodeMap, node);
   }
@@ -57,7 +58,7 @@ export function compileGraphQLTag(
         '(query, mutation, or subscription) per graphql tag.',
       );
     }
-    return createAST(ctx, opts, node, mainDefinition, fileName, true);
+    return createAST(ctx, opts, node, mainDefinition, fileName, scopeAnalyzer, true);
   }
 
   throw new Error(
@@ -74,6 +75,7 @@ function createAST(
   node: ts.TaggedTemplateExpression,
   graphqlDefinition: FragmentDefinitionNode | OperationDefinitionNode,
   fileName: string,
+  scopeAnalyzer: ScopeAnalyzer,
   setSoueceMapRange: boolean,
 ) {
   const isCompatMode = Boolean(opts.compat);
@@ -86,7 +88,7 @@ function createAST(
   if (isCompatMode) {
     const result = createCompatNode(
       modernNode,
-      createClassicNode(ctx, bindingsAtNode(node), node, graphqlDefinition, opts),
+      createClassicNode(ctx, scopeAnalyzer, node, graphqlDefinition, opts),
     );
     if (setSourceMapRange) {
       ts.setSourceMapRange(result, ts.getSourceMapRange(node));

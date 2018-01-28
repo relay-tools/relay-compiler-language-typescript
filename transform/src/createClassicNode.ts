@@ -18,7 +18,7 @@ import {
   print
 } from "graphql";
 import { NormalizedOptions } from "./Options";
-import { Bindings, BindingKind } from "./bindingsAtNode";
+import { ScopeAnalyzer, BindingKind } from "./ScopeAnalyzer";
 
 interface Fragment {
   name: string;
@@ -35,17 +35,17 @@ interface Fragments {
  */
 export function createClassicNode(
   ctx: ts.TransformationContext,
-  bindings: Bindings,
+  scopeAnalyzer: ScopeAnalyzer,
   node: ts.TaggedTemplateExpression,
   graphqlDefinition: DefinitionNode,
   options: NormalizedOptions
 ): ts.Expression {
   if (graphqlDefinition.kind === 'FragmentDefinition') {
-    return createFragmentConcreteNode(ctx, bindings, node, graphqlDefinition, options);
+    return createFragmentConcreteNode(ctx, scopeAnalyzer, node, graphqlDefinition, options);
   }
 
   if (graphqlDefinition.kind === 'OperationDefinition') {
-    return createOperationConcreteNode(ctx, bindings, node, graphqlDefinition, options);
+    return createOperationConcreteNode(ctx, scopeAnalyzer, node, graphqlDefinition, options);
   }
 
   throw new Error(
@@ -58,7 +58,7 @@ export function createClassicNode(
 
 function createFragmentConcreteNode(
   ctx: ts.TransformationContext,
-  bindings: Bindings,
+  scopeAnalyzer: ScopeAnalyzer,
   node: ts.TaggedTemplateExpression,
   graphqlDefinition: FragmentDefinitionNode,
   options: NormalizedOptions
@@ -71,7 +71,7 @@ function createFragmentConcreteNode(
   } = createClassicAST(ctx, graphqlDefinition);
   const substitutions = createSubstitutionsForFragmentSpreads(
     ctx,
-    bindings,
+    scopeAnalyzer,
     node,
     fragments,
   );
@@ -82,7 +82,7 @@ function createFragmentConcreteNode(
       argumentDefinitions,
       variables,
     ),
-    node: createRelayQLTemplate(ctx, bindings, node, classicAST, options),
+    node: createRelayQLTemplate(ctx, scopeAnalyzer, node, classicAST, options),
   });
 
   return createConcreteNode(transformedAST, substitutions);
@@ -90,7 +90,7 @@ function createFragmentConcreteNode(
 
 function createOperationConcreteNode(
   ctx: ts.TransformationContext,
-  bindings: Bindings,
+  scopeAnalyzer: ScopeAnalyzer,
   node: ts.TaggedTemplateExpression,
   definition: OperationDefinitionNode,
   options: NormalizedOptions,
@@ -102,14 +102,14 @@ function createOperationConcreteNode(
   const { classicAST, fragments } = createClassicAST(ctx, definition);
   const substitutions = createSubstitutionsForFragmentSpreads(
     ctx,
-    bindings,
+    scopeAnalyzer,
     node,
     fragments,
   );
   const nodeAST =
     classicAST.operation === 'query'
-      ? createFragmentForOperation(ctx, bindings, node, classicAST, options)
-      : createRelayQLTemplate(ctx, bindings, node, classicAST, options);
+      ? createFragmentForOperation(ctx, scopeAnalyzer, node, classicAST, options)
+      : createRelayQLTemplate(ctx, scopeAnalyzer, node, classicAST, options);
   const transformedAST = createObject({
     kind: ts.createLiteral('OperationDefinition'),
     argumentDefinitions: createOperationArguments(
@@ -361,7 +361,7 @@ function createObject(obj: { [key: string]: ts.Expression | null }) {
 
 function createFragmentForOperation(
   ctx: ts.TransformationContext,
-  bindings: Bindings,
+  scopeAnalyzer: ScopeAnalyzer,
   node: ts.TaggedTemplateExpression,
   operation: OperationDefinitionNode,
   options: NormalizedOptions,
@@ -417,12 +417,12 @@ function createFragmentForOperation(
     directives: operation.directives,
     selectionSet: operation.selectionSet,
   };
-  return createRelayQLTemplate(ctx, bindings, node, fragmentNode, options);
+  return createRelayQLTemplate(ctx, scopeAnalyzer, node, fragmentNode, options);
 }
 
 function createRelayQLTemplate(
   ctx: ts.TransformationContext,
-  bindings: Bindings,
+  scopeAnalyzer: ScopeAnalyzer,
   node: ts.TaggedTemplateExpression,
   ast: any,
   options: NormalizedOptions
@@ -456,7 +456,7 @@ function createRelayQLTemplate(
 
 function createSubstitutionsForFragmentSpreads(
   ctx: ts.TransformationContext,
-  bindings: Bindings,
+  scopeAnalyzer: ScopeAnalyzer,
   node: ts.TaggedTemplateExpression,
   fragments: Fragments,
 ): ts.VariableDeclaration[] {
@@ -464,13 +464,13 @@ function createSubstitutionsForFragmentSpreads(
     const fragment = fragments[varName];
     const [module, propName] = getFragmentNameParts(fragment.name);
     if (!fragment.isMasked) {
-      if (!bindings.has(module) && !bindings.has(propName)) {
+      if (!scopeAnalyzer.getBindingAtNode(node, module) && !scopeAnalyzer.getBindingAtNode(node, propName)) {
         throw new Error(`TSTransformRelay: Please make sure module '${module}' is imported and not renamed or the
         fragment '${
           fragment.name
           }' is defined and bound to local variable '${propName}'. `);
       }
-      const fragmentProp = bindings.has(propName)
+      const fragmentProp = scopeAnalyzer.getBindingAtNode(node, propName)
         ? ts.createPropertyAccess(ts.createIdentifier(propName), ts.createIdentifier(propName))
         : ts.createLogicalOr(
           ts.createPropertyAccess(
@@ -500,7 +500,7 @@ function createSubstitutionsForFragmentSpreads(
       return ts.createVariableDeclaration(
         ts.createIdentifier(varName),
         undefined,
-        createGetFragmentCall(ctx, bindings, module, propName, fragment.args),
+        createGetFragmentCall(ctx, scopeAnalyzer, module, propName, node, fragment.args),
       );
     }
   });
@@ -508,9 +508,10 @@ function createSubstitutionsForFragmentSpreads(
 
 function createGetFragmentCall(
   ctx: ts.TransformationContext,
-  bindings: Bindings,
+  scopeAnalyzer: ScopeAnalyzer,
   module: string,
   propName: string,
+  node: ts.Node,
   fragmentArguments: ts.Expression | null,
 ): ts.Expression {
   const args = [];
@@ -526,7 +527,7 @@ function createGetFragmentCall(
   // container. It might be a bound reference to the React class itself.
   // To be safe, when defined locally, always check the __container__ property
   // first.
-  const container = isDefinedLocally(bindings, module)
+  const container = isDefinedLocally(scopeAnalyzer, node, module)
     ? ts.createLogicalOr(
       // __container__ is defined via ReactRelayCompatContainerBuilder.
       ts.createPropertyAccess(ts.createIdentifier(module), ts.createIdentifier('__container__')),
@@ -541,12 +542,12 @@ function createGetFragmentCall(
   );
 }
 
-function isDefinedLocally(bindings: Bindings, name: string): boolean {
-  const binding = bindings.get(name);
-  if (!binding) {
+function isDefinedLocally(scopeAnalyzer: ScopeAnalyzer, node: ts.Node, name: string): boolean {
+  const binding = scopeAnalyzer.getBindingAtNode(node, name);
+  if (binding === null) {
     return false;
   }
 
-  return binding.kind === BindingKind.Local;
+  return binding !== BindingKind.Import && binding !== BindingKind.Require;
 }
 
