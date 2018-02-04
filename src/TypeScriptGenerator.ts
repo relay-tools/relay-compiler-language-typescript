@@ -299,7 +299,10 @@ function createVisitor(options: TypeGeneratorOptions) {
           selectionsToAST(node.selections, state)
         );
         return [
-          ...getFragmentImports(state),
+          // TODO: This is disabled until TS 2.8 is released which has the features we need to properly support fragment
+          //       reference checking. See https://github.com/alloy/DefinitelyTyped/pull/1
+          //
+          // ...getFragmentImports(state),
           ...getEnumDefinitions(state),
           inputVariablesType,
           responseType
@@ -326,35 +329,39 @@ function createVisitor(options: TypeGeneratorOptions) {
           }
           return [selection];
         });
-        const refTypeName = getRefTypeName(node.name);
-        const _refType = ts.createEnumDeclaration(
-          undefined,
-          [ts.createToken(ts.SyntaxKind.ConstKeyword)],
-          ts.createIdentifier(`_${refTypeName}`),
-          []
-        );
-        const refType = ts.createTypeAliasDeclaration(
-          undefined,
-          [ts.createToken(ts.SyntaxKind.ExportKeyword)],
-          refTypeName,
-          undefined,
-          ts.createIntersectionTypeNode([
-            ts.createTypeReferenceNode(_refType.name, undefined),
-            ts.createTypeReferenceNode("FragmentReference", undefined)
-          ])
-        );
-        const baseType = selectionsToAST(selections, state, refTypeName);
+        // TODO: This is disabled until TS 2.8 is released which has the features we need to properly support fragment
+        //       reference checking. See https://github.com/alloy/DefinitelyTyped/pull/1
+        //
+        // const refTypeName = getRefTypeName(node.name);
+        // const _refType = ts.createEnumDeclaration(
+        //   undefined,
+        //   [ts.createToken(ts.SyntaxKind.ConstKeyword)],
+        //   ts.createIdentifier(`_${refTypeName}`),
+        //   []
+        // );
+        // const refType = ts.createTypeAliasDeclaration(
+        //   undefined,
+        //   [ts.createToken(ts.SyntaxKind.ExportKeyword)],
+        //   refTypeName,
+        //   undefined,
+        //   ts.createIntersectionTypeNode([
+        //     ts.createTypeReferenceNode(_refType.name, undefined),
+        //     ts.createTypeReferenceNode("FragmentReference", undefined)
+        //   ])
+        // );
+        // const baseType = selectionsToAST(selections, state, refTypeName);
+        const baseType = selectionsToAST(selections, state);
         const type = isPlural(node)
           ? ts.createTypeReferenceNode(ts.createIdentifier("ReadonlyArray"), [
               baseType
             ])
           : baseType;
         return [
-          ...getFragmentImports(state),
+          // ...getFragmentImports(state),
           ...getEnumDefinitions(state),
-          importTypes(["FragmentReference"], state.relayRuntimeModule),
-          _refType,
-          refType,
+          // importTypes(["FragmentReference"], state.relayRuntimeModule),
+          // _refType,
+          // refType,
           exportType(node.name, type)
         ];
       },
@@ -465,11 +472,14 @@ function groupRefs(props: Selection[]): Selection[] {
         )
       )
     );
-    result.push({
-      key: " $fragmentRefs",
-      conditional: false,
-      value
-    });
+    // TODO: This is disabled until TS 2.8 is released which has the features we need to properly support fragment
+    //       reference checking. See https://github.com/alloy/DefinitelyTyped/pull/1
+    //
+    // result.push({
+    //   key: " $fragmentRefs",
+    //   conditional: false,
+    //   value
+    // });
   }
   return result;
 }
