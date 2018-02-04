@@ -340,7 +340,7 @@ function createVisitor(options: TypeGeneratorOptions) {
           undefined,
           ts.createIntersectionTypeNode([
             ts.createTypeReferenceNode(_refType.name, undefined),
-            ts.createTypeReferenceNode("ConcreteFragment", undefined)
+            ts.createTypeReferenceNode("FragmentReference", undefined)
           ])
         );
         const baseType = selectionsToAST(selections, state, refTypeName);
@@ -352,7 +352,7 @@ function createVisitor(options: TypeGeneratorOptions) {
         return [
           ...getFragmentImports(state),
           ...getEnumDefinitions(state),
-          importTypes(["ConcreteFragment"], state.relayRuntimeModule),
+          importTypes(["FragmentReference"], state.relayRuntimeModule),
           _refType,
           refType,
           exportType(node.name, type)

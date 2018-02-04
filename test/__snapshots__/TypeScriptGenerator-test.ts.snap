@@ -13,20 +13,20 @@ fragment NestedCondition on Node {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _ConditionField$ref {
 }
-export type ConditionField$ref = _ConditionField$ref & ConcreteFragment;
+export type ConditionField$ref = _ConditionField$ref & FragmentReference;
 export type ConditionField = {
     readonly id?: string;
     readonly " $refType": ConditionField$ref;
 };
 
 
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _NestedCondition$ref {
 }
-export type NestedCondition$ref = _NestedCondition$ref & ConcreteFragment;
+export type NestedCondition$ref = _NestedCondition$ref & FragmentReference;
 export type NestedCondition = {
     readonly id?: string;
     readonly " $refType": NestedCondition$ref;
@@ -70,10 +70,10 @@ type OtherFragment$ref = any;
 type PictureFragment$ref = any;
 type UserFrag1$ref = any;
 type UserFrag2$ref = any;
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _FragmentSpread$ref {
 }
-export type FragmentSpread$ref = _FragmentSpread$ref & ConcreteFragment;
+export type FragmentSpread$ref = _FragmentSpread$ref & FragmentReference;
 export type FragmentSpread = {
     readonly id: string;
     readonly justFrag: ({
@@ -89,10 +89,10 @@ export type FragmentSpread = {
 
 
 type PageFragment$ref = any;
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _ConcreateTypes$ref {
 }
-export type ConcreateTypes$ref = _ConcreateTypes$ref & ConcreteFragment;
+export type ConcreateTypes$ref = _ConcreateTypes$ref & FragmentReference;
 export type ConcreateTypes = {
     readonly actor: ({
         readonly __typename: "Page";
@@ -175,10 +175,10 @@ fragment InlineFragmentKitchenSink on Story {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _InlineFragment$ref {
 }
-export type InlineFragment$ref = _InlineFragment$ref & ConcreteFragment;
+export type InlineFragment$ref = _InlineFragment$ref & FragmentReference;
 export type InlineFragment = {
     readonly id: string;
     readonly name?: string | null;
@@ -189,10 +189,10 @@ export type InlineFragment = {
 };
 
 
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _InlineFragmentWithOverlappingFields$ref {
 }
-export type InlineFragmentWithOverlappingFields$ref = _InlineFragmentWithOverlappingFields$ref & ConcreteFragment;
+export type InlineFragmentWithOverlappingFields$ref = _InlineFragmentWithOverlappingFields$ref & FragmentReference;
 export type InlineFragmentWithOverlappingFields = {
     readonly hometown?: ({
         readonly id: string;
@@ -206,10 +206,10 @@ export type InlineFragmentWithOverlappingFields = {
 };
 
 
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _InlineFragmentConditionalID$ref {
 }
-export type InlineFragmentConditionalID$ref = _InlineFragmentConditionalID$ref & ConcreteFragment;
+export type InlineFragmentConditionalID$ref = _InlineFragmentConditionalID$ref & FragmentReference;
 export type InlineFragmentConditionalID = {
     readonly id?: string;
     readonly name?: string | null;
@@ -218,10 +218,10 @@ export type InlineFragmentConditionalID = {
 
 
 type SomeFragment$ref = any;
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _InlineFragmentKitchenSink$ref {
 }
-export type InlineFragmentKitchenSink$ref = _InlineFragmentKitchenSink$ref & ConcreteFragment;
+export type InlineFragmentKitchenSink$ref = _InlineFragmentKitchenSink$ref & FragmentReference;
 export type InlineFragmentKitchenSink = {
     readonly actor: ({
         readonly id: string;
@@ -269,10 +269,10 @@ query UnionTypeTest {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _LinkedField$ref {
 }
-export type LinkedField$ref = _LinkedField$ref & ConcreteFragment;
+export type LinkedField$ref = _LinkedField$ref & FragmentReference;
 export type LinkedField = {
     readonly profilePicture: ({
         readonly uri: string | null;
@@ -382,10 +382,10 @@ fragment PluralFragment on Node @relay(plural: true) {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _PluralFragment$ref {
 }
-export type PluralFragment$ref = _PluralFragment$ref & ConcreteFragment;
+export type PluralFragment$ref = _PluralFragment$ref & FragmentReference;
 export type PluralFragment = ReadonlyArray<{
         readonly id: string;
         readonly " $refType": PluralFragment$ref;
@@ -432,10 +432,10 @@ export type ExampleQueryResponse = {
 };
 
 
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _ExampleFragment$ref {
 }
-export type ExampleFragment$ref = _ExampleFragment$ref & ConcreteFragment;
+export type ExampleFragment$ref = _ExampleFragment$ref & FragmentReference;
 export type ExampleFragment = {
     readonly id: string;
     readonly " $refType": ExampleFragment$ref;
@@ -491,10 +491,10 @@ fragment ScalarField on User {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 export type PersonalityTraits = "CHEERFUL" | "DERISIVE" | "HELPFUL" | "SNARKY" | "%future added value";
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _ScalarField$ref {
 }
-export type ScalarField$ref = _ScalarField$ref & ConcreteFragment;
+export type ScalarField$ref = _ScalarField$ref & FragmentReference;
 export type ScalarField = {
     readonly id: string;
     readonly name: string | null;
@@ -576,10 +576,10 @@ fragment TypenameWithCommonSelections on Actor {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _TypenameInside$ref {
 }
-export type TypenameInside$ref = _TypenameInside$ref & ConcreteFragment;
+export type TypenameInside$ref = _TypenameInside$ref & FragmentReference;
 export type TypenameInside = {
     readonly __typename: "User";
     readonly firstName: string | null;
@@ -596,10 +596,10 @@ export type TypenameInside = {
 };
 
 
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _TypenameOutside$ref {
 }
-export type TypenameOutside$ref = _TypenameOutside$ref & ConcreteFragment;
+export type TypenameOutside$ref = _TypenameOutside$ref & FragmentReference;
 export type TypenameOutside = {
     readonly __typename: "User";
     readonly firstName: string | null;
@@ -616,10 +616,10 @@ export type TypenameOutside = {
 };
 
 
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _TypenameOutsideWithAbstractType$ref {
 }
-export type TypenameOutsideWithAbstractType$ref = _TypenameOutsideWithAbstractType$ref & ConcreteFragment;
+export type TypenameOutsideWithAbstractType$ref = _TypenameOutsideWithAbstractType$ref & FragmentReference;
 export type TypenameOutsideWithAbstractType = {
     readonly __typename: string;
     readonly username?: string | null;
@@ -633,10 +633,10 @@ export type TypenameOutsideWithAbstractType = {
 };
 
 
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _TypenameWithoutSpreads$ref {
 }
-export type TypenameWithoutSpreads$ref = _TypenameWithoutSpreads$ref & ConcreteFragment;
+export type TypenameWithoutSpreads$ref = _TypenameWithoutSpreads$ref & FragmentReference;
 export type TypenameWithoutSpreads = {
     readonly firstName: string | null;
     readonly __typename: "User";
@@ -644,10 +644,10 @@ export type TypenameWithoutSpreads = {
 };
 
 
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _TypenameWithoutSpreadsAbstractType$ref {
 }
-export type TypenameWithoutSpreadsAbstractType$ref = _TypenameWithoutSpreadsAbstractType$ref & ConcreteFragment;
+export type TypenameWithoutSpreadsAbstractType$ref = _TypenameWithoutSpreadsAbstractType$ref & FragmentReference;
 export type TypenameWithoutSpreadsAbstractType = {
     readonly __typename: string;
     readonly id: string;
@@ -655,10 +655,10 @@ export type TypenameWithoutSpreadsAbstractType = {
 };
 
 
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _TypenameWithCommonSelections$ref {
 }
-export type TypenameWithCommonSelections$ref = _TypenameWithCommonSelections$ref & ConcreteFragment;
+export type TypenameWithCommonSelections$ref = _TypenameWithCommonSelections$ref & FragmentReference;
 export type TypenameWithCommonSelections = {
     readonly __typename: string;
     readonly name: string | null;
@@ -700,10 +700,10 @@ fragment AnotherRecursiveFragment on Image {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 type PhotoFragment$ref = any;
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _UserProfile$ref {
 }
-export type UserProfile$ref = _UserProfile$ref & ConcreteFragment;
+export type UserProfile$ref = _UserProfile$ref & FragmentReference;
 export type UserProfile = {
     readonly profilePicture: ({
         readonly uri: string | null;
@@ -715,10 +715,10 @@ export type UserProfile = {
 };
 
 
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _PhotoFragment$ref {
 }
-export type PhotoFragment$ref = _PhotoFragment$ref & ConcreteFragment;
+export type PhotoFragment$ref = _PhotoFragment$ref & FragmentReference;
 export type PhotoFragment = {
     readonly uri: string | null;
     readonly width: number | null;
@@ -726,10 +726,10 @@ export type PhotoFragment = {
 };
 
 
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _RecursiveFragment$ref {
 }
-export type RecursiveFragment$ref = _RecursiveFragment$ref & ConcreteFragment;
+export type RecursiveFragment$ref = _RecursiveFragment$ref & FragmentReference;
 export type RecursiveFragment = {
     readonly uri: string | null;
     readonly width: number | null;
@@ -737,10 +737,10 @@ export type RecursiveFragment = {
 };
 
 
-import { ConcreteFragment } from "relay-runtime";
+import { FragmentReference } from "relay-runtime";
 const enum _AnotherRecursiveFragment$ref {
 }
-export type AnotherRecursiveFragment$ref = _AnotherRecursiveFragment$ref & ConcreteFragment;
+export type AnotherRecursiveFragment$ref = _AnotherRecursiveFragment$ref & FragmentReference;
 export type AnotherRecursiveFragment = {
     readonly uri: string | null;
     readonly height: number | null;
