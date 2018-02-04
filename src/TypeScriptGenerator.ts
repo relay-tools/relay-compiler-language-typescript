@@ -327,13 +327,22 @@ function createVisitor(options: TypeGeneratorOptions) {
           return [selection];
         });
         const refTypeName = getRefTypeName(node.name);
-        const refType = ts.createEnumDeclaration(
+        const _refType = ts.createEnumDeclaration(
           undefined,
-          [ts.createToken(ts.SyntaxKind.ExportKeyword)],
-          ts.createIdentifier(refTypeName),
+          [ts.createToken(ts.SyntaxKind.ConstKeyword)],
+          ts.createIdentifier(`_${refTypeName}`),
           []
         );
-
+        const refType = ts.createTypeAliasDeclaration(
+          undefined,
+          [ts.createToken(ts.SyntaxKind.ExportKeyword)],
+          refTypeName,
+          undefined,
+          ts.createIntersectionTypeNode([
+            ts.createTypeReferenceNode(_refType.name, undefined),
+            ts.createTypeReferenceNode("ConcreteFragment", undefined)
+          ])
+        );
         const baseType = selectionsToAST(selections, state, refTypeName);
         const type = isPlural(node)
           ? ts.createTypeReferenceNode(ts.createIdentifier("ReadonlyArray"), [
@@ -343,7 +352,8 @@ function createVisitor(options: TypeGeneratorOptions) {
         return [
           ...getFragmentImports(state),
           ...getEnumDefinitions(state),
-          importTypes(["FragmentReference"], state.relayRuntimeModule),
+          importTypes(["ConcreteFragment"], state.relayRuntimeModule),
+          _refType,
           refType,
           exportType(node.name, type)
         ];
@@ -456,7 +466,7 @@ function groupRefs(props: Selection[]): Selection[] {
       )
     );
     result.push({
-      key: " $fragments",
+      key: " $fragmentRefs",
       conditional: false,
       value
     });
@@ -529,7 +539,7 @@ function stringLiteralTypeAnnotation(name: string): ts.TypeNode {
 }
 
 function getRefTypeName(name: string): string {
-  return `${name}_ref`;
+  return `${name}$ref`;
 }
 
 export const transforms: TypeGenerator["transforms"] = [
