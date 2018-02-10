@@ -16,7 +16,7 @@ import {
 } from 'react-relay';
 import {ConnectionHandler, Environment, DataID, RecordSourceSelectorProxy} from 'relay-runtime';
 
-import { TodoListFooter_viewer } from '../__generated__/TodoListFooter_viewer.graphql'
+import { TodoListFooter_viewer } from '../__relay_artifacts__/TodoListFooter_viewer.graphql'
 
 const mutation = graphql`
   mutation RemoveCompletedTodosMutation($input: RemoveCompletedTodosInput!) {

@@ -1,6 +1,6 @@
 /* tslint:disable */
 
-import { ConcreteRequest } from 'relay-runtime';
+import { ConcreteRequest } from "relay-runtime";
 export type MarkAllTodosMutationVariables = {
     readonly input: {
         readonly complete?: boolean;

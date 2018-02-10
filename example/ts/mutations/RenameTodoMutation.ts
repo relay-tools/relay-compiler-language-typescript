@@ -16,7 +16,7 @@ import {
 } from 'react-relay';
 import { Environment } from 'relay-runtime';
 
-import { Todo_todo } from '../__generated__/Todo_todo.graphql';
+import { Todo_todo } from '../__relay_artifacts__/Todo_todo.graphql';
 
 const mutation = graphql`
   mutation RenameTodoMutation($input: RenameTodoInput!) {
