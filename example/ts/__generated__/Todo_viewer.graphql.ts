@@ -1,14 +1,10 @@
 /* tslint:disable */
 
-import { ConcreteFragment } from 'relay-runtime';
-import { FragmentReference } from "relay-runtime";
-export enum Todo_viewer_ref {
-}
+import { ConcreteFragment } from "relay-runtime";
 export type Todo_viewer = {
     readonly id: string;
     readonly totalCount: number | null;
     readonly completedCount: number | null;
-    readonly " $refType": Todo_viewer_ref;
 };
 
 

@@ -1,14 +1,10 @@
 /* tslint:disable */
 
-import { ConcreteFragment } from 'relay-runtime';
-import { FragmentReference } from "relay-runtime";
-export enum Todo_todo_ref {
-}
+import { ConcreteFragment } from "relay-runtime";
 export type Todo_todo = {
     readonly complete: boolean | null;
     readonly id: string;
     readonly text: string | null;
-    readonly " $refType": Todo_todo_ref;
 };
 
 

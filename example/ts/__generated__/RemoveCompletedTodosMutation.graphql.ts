@@ -1,6 +1,6 @@
 /* tslint:disable */
 
-import { ConcreteRequest } from 'relay-runtime';
+import { ConcreteRequest } from "relay-runtime";
 export type RemoveCompletedTodosMutationVariables = {
     readonly input: {
         readonly clientMutationId: string | null;

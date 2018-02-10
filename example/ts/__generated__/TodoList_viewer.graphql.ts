@@ -1,26 +1,18 @@
 /* tslint:disable */
 
-import { ConcreteFragment } from 'relay-runtime';
-import { Todo_todo_ref } from "./Todo_todo.graphql";
-import { Todo_viewer_ref } from "./Todo_viewer.graphql";
-import { FragmentReference } from "relay-runtime";
-export enum TodoList_viewer_ref {
-}
+import { ConcreteFragment } from "relay-runtime";
 export type TodoList_viewer = {
     readonly todos: ({
         readonly edges: ReadonlyArray<({
                 readonly node: ({
                     readonly id: string;
                     readonly complete: boolean | null;
-                    readonly " $fragments": Todo_todo_ref;
                 }) | null;
             }) | null> | null;
     }) | null;
     readonly id: string;
     readonly totalCount: number | null;
     readonly completedCount: number | null;
-    readonly " $fragments": Todo_viewer_ref;
-    readonly " $refType": TodoList_viewer_ref;
 };
 
 

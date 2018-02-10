@@ -1,9 +1,6 @@
 /* tslint:disable */
 
-import { ConcreteFragment } from 'relay-runtime';
-import { FragmentReference } from "relay-runtime";
-export enum TodoListFooter_viewer_ref {
-}
+import { ConcreteFragment } from "relay-runtime";
 export type TodoListFooter_viewer = {
     readonly id: string;
     readonly completedCount: number | null;
@@ -16,7 +13,6 @@ export type TodoListFooter_viewer = {
             }) | null> | null;
     }) | null;
     readonly totalCount: number | null;
-    readonly " $refType": TodoListFooter_viewer_ref;
 };
 
 
