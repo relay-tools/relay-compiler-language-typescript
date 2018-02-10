@@ -19,7 +19,7 @@ import {
   RelayProp,
 } from 'react-relay';
 
-import { TodoListFooter_viewer } from '../__generated__/TodoListFooter_viewer.graphql'
+import { TodoListFooter_viewer } from '../__relay_artifacts__/TodoListFooter_viewer.graphql'
 import { Environment } from 'relay-runtime';
 
 interface Props {

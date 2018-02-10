@@ -24,8 +24,8 @@ import {
 
 import classnames from 'classnames';
 
-import { Todo_todo } from '../__generated__/Todo_todo.graphql';
-import { Todo_viewer } from '../__generated__/Todo_viewer.graphql';
+import { Todo_todo } from '../__relay_artifacts__/Todo_todo.graphql';
+import { Todo_viewer } from '../__relay_artifacts__/Todo_viewer.graphql';
 import { ChangeEvent } from 'react';
 import { Environment } from 'relay-runtime';
 

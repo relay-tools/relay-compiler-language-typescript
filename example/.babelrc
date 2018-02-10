@@ -1,7 +1,7 @@
 {
   "passPerPreset": true,
   "plugins": [
-    ["relay", { "artifactDirectory": "./ts/__generated__" }],
+    ["relay", { "artifactDirectory": "./ts/__relay_artifacts__" }],
     "transform-runtime"
   ],
   "presets": [

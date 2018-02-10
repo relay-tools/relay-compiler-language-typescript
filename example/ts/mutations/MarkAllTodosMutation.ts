@@ -15,7 +15,7 @@ import {
   graphql,
 } from 'react-relay';
 
-import { TodoList_viewer } from '../__generated__/TodoList_viewer.graphql'
+import { TodoList_viewer } from '../__relay_artifacts__/TodoList_viewer.graphql'
 import { Environment } from 'relay-runtime';
 
 const mutation = graphql`

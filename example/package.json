@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "start": "babel-node ./server.js",
-    "build": "relay-compiler --src ./ts/ --schema ./data/schema.graphql --language typescript --artifactDirectory ./ts/__generated__",
+    "build": "relay-compiler --src ./ts/ --schema ./data/schema.graphql --language typescript --artifactDirectory ./ts/__relay_artifacts__",
     "update-schema": "babel-node ./scripts/updateSchema.js",
     "lint": "eslint ./js",
     "type-check": "tsc --noEmit --pretty"
