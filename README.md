@@ -62,6 +62,8 @@ react_relay_1.createFragmentContainer(MyComponent, react_relay_1.graphql `
 
 …and this makes it impossible for `babel-plugin-relay` to find the locations where the `graphql` function is being used.
 
+Note that this does mean you need to configure Babel to transform the ES module `import` and `export` statements, by using the [`babel-plugin-transform-es2015-modules-commonjs`](https://babeljs.io/docs/plugins/transform-es2015-modules-commonjs/) transform plugin, if you’re not already.
+
 ## Examples
 
 You can find a copy of the Relay
