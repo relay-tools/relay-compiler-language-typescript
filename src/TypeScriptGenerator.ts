@@ -286,6 +286,7 @@ function createVisitor(options: TypeGeneratorOptions) {
     relayRuntimeModule: options.relayRuntimeModule,
     usedEnums: {},
     usedFragments: new Set(),
+    usedObjectTypes: new Map(),
     useHaste: options.useHaste,
     useSingleArtifactDirectory: options.useSingleArtifactDirectory
   };
@@ -304,6 +305,7 @@ function createVisitor(options: TypeGeneratorOptions) {
           //
           // ...getFragmentImports(state),
           ...getEnumDefinitions(state),
+          ...getObjectTypeDefinitions(state),
           inputVariablesType,
           responseType
         ];
@@ -521,6 +523,14 @@ function anyTypeAlias(typeName: string): ts.Statement {
     undefined,
     ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
   );
+}
+
+function getObjectTypeDefinitions(state: State): ts.Statement[] {
+  const { usedObjectTypes } = state;
+  const typeDefs: ts.Statement[] = [];
+
+  usedObjectTypes.forEach(t => t && typeDefs.push(t));
+  return typeDefs;
 }
 
 function getEnumDefinitions({ enumsHasteModule, usedEnums }: State) {

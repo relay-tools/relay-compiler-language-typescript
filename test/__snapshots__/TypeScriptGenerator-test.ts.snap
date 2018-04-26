@@ -270,11 +270,12 @@ mutation CommentCreateMutation(
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+export interface CommentCreateInput {
+    readonly clientMutationId: string | null;
+    readonly feedbackId: string | null;
+}
 export type CommentCreateMutationVariables = {
-    readonly input: {
-        readonly clientMutationId: string | null;
-        readonly feedbackId: string | null;
-    };
+    readonly input: CommentCreateInput;
     readonly first?: number | null;
     readonly orderBy?: ReadonlyArray<string> | null;
 };
@@ -303,11 +304,12 @@ mutation InputHasArray($input: UpdateAllSeenStateInput) {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+export interface UpdateAllSeenStateInput {
+    readonly clientMutationId: string | null;
+    readonly storyIds: ReadonlyArray<string | null> | null;
+}
 export type InputHasArrayVariables = {
-    readonly input?: {
-        readonly clientMutationId: string | null;
-        readonly storyIds: ReadonlyArray<string | null> | null;
-    } | null;
+    readonly input?: UpdateAllSeenStateInput | null;
 };
 export type InputHasArrayResponse = {
     readonly viewerNotificationsUpdateAllSeenState: ({
@@ -376,11 +378,12 @@ export type ExampleFragment = {
 };
 
 
+export interface CommentCreateInput {
+    readonly clientMutationId: string | null;
+    readonly feedbackId: string | null;
+}
 export type TestMutationVariables = {
-    readonly input: {
-        readonly clientMutationId: string | null;
-        readonly feedbackId: string | null;
-    };
+    readonly input: CommentCreateInput;
 };
 export type TestMutationResponse = {
     readonly commentCreate: ({
@@ -391,11 +394,12 @@ export type TestMutationResponse = {
 };
 
 
+export interface FeedbackLikeInput {
+    readonly clientMutationId: string | null;
+    readonly feedbackId: string | null;
+}
 export type TestSubscriptionVariables = {
-    readonly input?: {
-        readonly clientMutationId: string | null;
-        readonly feedbackId: string | null;
-    } | null;
+    readonly input?: FeedbackLikeInput | null;
 };
 export type TestSubscriptionResponse = {
     readonly feedbackLikeSubscribe: ({
