@@ -3,7 +3,7 @@
 import { ConcreteRequest } from "relay-runtime";
 export type RemoveCompletedTodosMutationVariables = {
     readonly input: {
-        readonly clientMutationId: string | null;
+        readonly clientMutationId?: string | null;
     };
 };
 export type RemoveCompletedTodosMutationResponse = {

@@ -3,9 +3,9 @@
 import { ConcreteRequest } from "relay-runtime";
 export type ChangeTodoStatusMutationVariables = {
     readonly input: {
-        readonly complete?: boolean;
-        readonly id?: string;
-        readonly clientMutationId: string | null;
+        readonly complete: boolean;
+        readonly id: string;
+        readonly clientMutationId?: string | null;
     };
 };
 export type ChangeTodoStatusMutationResponse = {

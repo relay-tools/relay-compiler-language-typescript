@@ -123,7 +123,7 @@ function transformNonNullableInputType(type: GraphQLInputType, state: State) {
         const property = ts.createPropertySignature(
           [ts.createToken(ts.SyntaxKind.ReadonlyKeyword)],
           ts.createIdentifier(field.name),
-          field.type instanceof GraphQLNonNull
+          !(field.type instanceof GraphQLNonNull)
             ? ts.createToken(ts.SyntaxKind.QuestionToken)
             : undefined,
           transformInputType(field.type, state),
