@@ -3,9 +3,9 @@
 import { ConcreteRequest } from "relay-runtime";
 export type RenameTodoMutationVariables = {
     readonly input: {
-        readonly id?: string;
-        readonly text?: string;
-        readonly clientMutationId: string | null;
+        readonly id: string;
+        readonly text: string;
+        readonly clientMutationId?: string | null;
     };
 };
 export type RenameTodoMutationResponse = {

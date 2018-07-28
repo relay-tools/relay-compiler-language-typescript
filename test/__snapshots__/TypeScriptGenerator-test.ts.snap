@@ -272,8 +272,8 @@ mutation CommentCreateMutation(
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 export type CommentCreateMutationVariables = {
     readonly input: {
-        readonly clientMutationId: string | null;
-        readonly feedbackId: string | null;
+        readonly clientMutationId?: string | null;
+        readonly feedbackId?: string | null;
     };
     readonly first?: number | null;
     readonly orderBy?: ReadonlyArray<string> | null;
@@ -305,8 +305,8 @@ mutation InputHasArray($input: UpdateAllSeenStateInput) {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 export type InputHasArrayVariables = {
     readonly input?: {
-        readonly clientMutationId: string | null;
-        readonly storyIds: ReadonlyArray<string | null> | null;
+        readonly clientMutationId?: string | null;
+        readonly storyIds?: ReadonlyArray<string | null> | null;
     } | null;
 };
 export type InputHasArrayResponse = {
@@ -378,8 +378,8 @@ export type ExampleFragment = {
 
 export type TestMutationVariables = {
     readonly input: {
-        readonly clientMutationId: string | null;
-        readonly feedbackId: string | null;
+        readonly clientMutationId?: string | null;
+        readonly feedbackId?: string | null;
     };
 };
 export type TestMutationResponse = {
@@ -393,8 +393,8 @@ export type TestMutationResponse = {
 
 export type TestSubscriptionVariables = {
     readonly input?: {
-        readonly clientMutationId: string | null;
-        readonly feedbackId: string | null;
+        readonly clientMutationId?: string | null;
+        readonly feedbackId?: string | null;
     } | null;
 };
 export type TestSubscriptionResponse = {
