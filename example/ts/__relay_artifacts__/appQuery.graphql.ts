@@ -94,7 +94,10 @@ v2 = {
   "name": "complete",
   "args": null,
   "storageKey": null
-};
+},
+v3 = [
+  v1
+];
 return {
   "kind": "Request",
   "operationKind": "query",
@@ -204,9 +207,7 @@ return {
             "alias": null,
             "name": "todos",
             "storageKey": "todos(first:2147483647)",
-            "args": [
-              v1
-            ],
+            "args": v3,
             "concreteType": "TodoConnection",
             "plural": false,
             "selections": [
@@ -286,9 +287,7 @@ return {
             "kind": "LinkedHandle",
             "alias": null,
             "name": "todos",
-            "args": [
-              v1
-            ],
+            "args": v3,
             "handle": "connection",
             "key": "TodoList_todos",
             "filters": null
