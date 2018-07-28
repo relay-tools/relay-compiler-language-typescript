@@ -10,9 +10,9 @@ export type MarkAllTodosMutationVariables = {
 export type MarkAllTodosMutationResponse = {
     readonly markAllTodos: ({
         readonly changedTodos: ReadonlyArray<({
-                readonly id: string;
-                readonly complete: boolean | null;
-            }) | null> | null;
+            readonly id: string;
+            readonly complete: boolean | null;
+        }) | null> | null;
         readonly viewer: ({
             readonly id: string;
             readonly completedCount: number | null;

@@ -4,11 +4,11 @@ import { ConcreteFragment } from "relay-runtime";
 export type TodoList_viewer = {
     readonly todos: ({
         readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly id: string;
-                    readonly complete: boolean | null;
-                }) | null;
-            }) | null> | null;
+            readonly node: ({
+                readonly id: string;
+                readonly complete: boolean | null;
+            }) | null;
+        }) | null> | null;
     }) | null;
     readonly id: string;
     readonly totalCount: number | null;

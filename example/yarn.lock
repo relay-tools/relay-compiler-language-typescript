@@ -2700,7 +2700,6 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.4, graceful-fs@^4.1.6,
 
 graphql-compiler@1.6.1-plugin.1, "graphql-compiler@https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/graphql-compiler-1.6.1-plugin.1.tgz":
   version "1.6.1-plugin.1"
-  uid baeb9c43262c879b6b4904580a050ba8d8aff92d
   resolved "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/graphql-compiler-1.6.1-plugin.1.tgz#baeb9c43262c879b6b4904580a050ba8d8aff92d"
   dependencies:
     chalk "^1.1.1"
@@ -4577,9 +4576,9 @@ regjsparser@^0.1.4:
   dependencies:
     jsesc "~0.5.0"
 
-"relay-compiler-language-typescript@file:../relay-compiler-language-typescript-1.6.1-plugin.2.tgz":
-  version "1.6.1-plugin.2"
-  resolved "file:../relay-compiler-language-typescript-1.6.1-plugin.2.tgz#c06d70c8ebbb7e264d85f9f5395803f2bfa23115"
+"relay-compiler-language-typescript@file:../relay-compiler-language-typescript-0.9.1.tgz":
+  version "0.9.1"
+  resolved "file:../relay-compiler-language-typescript-0.9.1.tgz#aa9203292af526987e0368ee5205f06b586e2ec2"
   dependencies:
     immutable "^3.7.6"
     invariant "^2.2.2"
@@ -4616,7 +4615,6 @@ relay-devtools@^1.4.0:
 
 relay-runtime@1.6.1-plugin.1, "relay-runtime@https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/relay-runtime-1.6.1-plugin.1.tgz":
   version "1.6.1-plugin.1"
-  uid "4e4d81c9d37baf667b314df571071eedf27439dd"
   resolved "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/relay-runtime-1.6.1-plugin.1.tgz#4e4d81c9d37baf667b314df571071eedf27439dd"
   dependencies:
     babel-runtime "^6.23.0"
