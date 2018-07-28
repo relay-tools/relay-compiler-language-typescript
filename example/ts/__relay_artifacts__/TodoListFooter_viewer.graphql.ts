@@ -6,11 +6,11 @@ export type TodoListFooter_viewer = {
     readonly completedCount: number | null;
     readonly completedTodos: ({
         readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly id: string;
-                    readonly complete: boolean | null;
-                }) | null;
-            }) | null> | null;
+            readonly node: ({
+                readonly id: string;
+                readonly complete: boolean | null;
+            }) | null;
+        }) | null> | null;
     }) | null;
     readonly totalCount: number | null;
 };
