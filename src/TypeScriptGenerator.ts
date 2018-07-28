@@ -22,7 +22,7 @@ import {
   IRTransform,
   Fragment,
   Root
-} from "relay-compiler/lib/GraphQLCompilerPublic";
+} from "graphql-compiler";
 
 import { TypeGeneratorOptions } from "relay-compiler";
 
