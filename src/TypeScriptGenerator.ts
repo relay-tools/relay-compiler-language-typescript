@@ -282,6 +282,7 @@ function createVisitor(options: TypeGeneratorOptions) {
     customScalars: options.customScalars,
     enumsHasteModule: options.enumsHasteModule,
     existingFragmentNames: options.existingFragmentNames,
+    generatedInputObjectTypes: {},
     inputFieldWhiteList: options.inputFieldWhiteList,
     relayRuntimeModule: options.relayRuntimeModule,
     usedEnums: {},
@@ -294,6 +295,7 @@ function createVisitor(options: TypeGeneratorOptions) {
     leave: {
       Root(node: any) {
         const inputVariablesType = generateInputVariablesType(node, state);
+        const inputObjectTypes = generateInputObjectTypes(state);
         const responseType = exportType(
           `${node.name}Response`,
           selectionsToAST(node.selections, state)
@@ -304,6 +306,7 @@ function createVisitor(options: TypeGeneratorOptions) {
           //
           // ...getFragmentImports(state),
           ...getEnumDefinitions(state),
+          ...inputObjectTypes,
           inputVariablesType,
           responseType
         ];
@@ -436,6 +439,20 @@ function flattenArray<T>(arrayOfArrays: T[][]): T[] {
   const result: T[] = [];
   arrayOfArrays.forEach(array => result.push(...array));
   return result;
+}
+
+function generateInputObjectTypes(state: State) {
+  return Object.keys(state.generatedInputObjectTypes).map(typeIdentifier => {
+    const inputObjectType = state.generatedInputObjectTypes[typeIdentifier];
+    if (inputObjectType === 'pending') {
+      throw new Error(
+        'TypeScriptGenerator: Expected input object type to have been' +
+          ' defined before calling `generateInputObjectTypes`',
+      );
+    } else {
+      return exportType(typeIdentifier, inputObjectType);
+    }
+  });
 }
 
 function generateInputVariablesType(node: Root, state: State) {
