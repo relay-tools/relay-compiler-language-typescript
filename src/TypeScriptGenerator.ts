@@ -283,6 +283,7 @@ function createVisitor(options: TypeGeneratorOptions) {
     enumsHasteModule: options.enumsHasteModule,
     existingFragmentNames: options.existingFragmentNames,
     generatedInputObjectTypes: {},
+    generatedFragments: new Set(),
     inputFieldWhiteList: options.inputFieldWhiteList,
     relayRuntimeModule: options.relayRuntimeModule,
     usedEnums: {},
@@ -332,6 +333,7 @@ function createVisitor(options: TypeGeneratorOptions) {
           }
           return [selection];
         });
+        state.generatedFragments.add(node.name);
         // TODO: This is disabled until TS 2.8 is released which has the features we need to properly support fragment
         //       reference checking. See https://github.com/alloy/DefinitelyTyped/pull/1
         //
@@ -518,6 +520,7 @@ function getFragmentImports(state: State) {
     for (const usedFragment of usedFragments) {
       const refTypeName = getRefTypeName(usedFragment);
       if (
+        !state.generatedFragments.has(usedFragment) &&
         state.useSingleArtifactDirectory &&
         state.existingFragmentNames.has(usedFragment)
       ) {
