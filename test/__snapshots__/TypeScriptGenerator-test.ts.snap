@@ -341,6 +341,22 @@ export type PluralFragment = ReadonlyArray<{
 
 `;
 
+exports[`TypeScriptGenerator matches expected output: recursive-fragments.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+fragment FragmentSpread on Node {
+   id
+   ... @include(if: $condition) {
+     ...FragmentSpread
+   }
+ }
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+export type FragmentSpread = {
+    readonly id: string;
+};
+
+`;
+
 exports[`TypeScriptGenerator matches expected output: roots.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 query ExampleQuery($id: ID!) {
