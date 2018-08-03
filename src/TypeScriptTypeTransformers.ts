@@ -23,7 +23,7 @@ export type State = {
   usedEnums: { [name: string]: GraphQLEnumType };
   usedFragments: Set<string>;
   generatedInputObjectTypes: {
-    [name: string]: ts.TypeNode | 'pending';
+    [name: string]: ts.TypeNode | "pending";
   };
   generatedFragments: Set<string>;
 } & TypeGeneratorOptions;
@@ -124,9 +124,12 @@ function transformNonNullableInputType(type: GraphQLInputType, state: State) {
   } else if (type instanceof GraphQLInputObjectType) {
     const typeIdentifier = getInputObjectTypeIdentifier(type);
     if (state.generatedInputObjectTypes[typeIdentifier]) {
-      return ts.createTypeReferenceNode(ts.createIdentifier(typeIdentifier), []);
+      return ts.createTypeReferenceNode(
+        ts.createIdentifier(typeIdentifier),
+        []
+      );
     }
-    state.generatedInputObjectTypes[typeIdentifier] = 'pending';
+    state.generatedInputObjectTypes[typeIdentifier] = "pending";
     const fields = type.getFields();
 
     const props = Object.keys(fields)
@@ -144,7 +147,9 @@ function transformNonNullableInputType(type: GraphQLInputType, state: State) {
         );
         return property;
       });
-    state.generatedInputObjectTypes[typeIdentifier] = ts.createTypeLiteralNode(props);
+    state.generatedInputObjectTypes[typeIdentifier] = ts.createTypeLiteralNode(
+      props
+    );
     return ts.createTypeReferenceNode(ts.createIdentifier(typeIdentifier), []);
   } else {
     throw new Error(

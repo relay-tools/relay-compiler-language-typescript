@@ -28,6 +28,9 @@ import { TypeGeneratorOptions } from "relay-compiler";
 
 const { isAbstractType } = SchemaUtils;
 
+const REF_TYPE = " $refType";
+const FRAGMENT_REFS = " $fragmentRefs";
+
 export const generate: TypeGenerator["generate"] = (node, options) => {
   const ast: ts.Statement[] = IRVisitor.visit(node, createVisitor(options));
   const printer = ts.createPrinter({
@@ -179,7 +182,7 @@ function selectionsToAST(
       if (refTypeName) {
         props.push(
           readOnlyObjectTypeProperty(
-            " $refType",
+            REF_TYPE,
             ts.createTypeReferenceNode(
               ts.createIdentifier(refTypeName),
               undefined
@@ -302,10 +305,7 @@ function createVisitor(options: TypeGeneratorOptions) {
           selectionsToAST(node.selections, state)
         );
         return [
-          // TODO: This is disabled until TS 2.8 is released which has the features we need to properly support fragment
-          //       reference checking. See https://github.com/alloy/DefinitelyTyped/pull/1
-          //
-          // ...getFragmentImports(state),
+          ...getFragmentImports(state),
           ...getEnumDefinitions(state),
           ...inputObjectTypes,
           inputVariablesType,
@@ -334,39 +334,38 @@ function createVisitor(options: TypeGeneratorOptions) {
           return [selection];
         });
         state.generatedFragments.add(node.name);
-        // TODO: This is disabled until TS 2.8 is released which has the features we need to properly support fragment
-        //       reference checking. See https://github.com/alloy/DefinitelyTyped/pull/1
-        //
-        // const refTypeName = getRefTypeName(node.name);
-        // const _refType = ts.createEnumDeclaration(
-        //   undefined,
-        //   [ts.createToken(ts.SyntaxKind.ConstKeyword)],
-        //   ts.createIdentifier(`_${refTypeName}`),
-        //   []
-        // );
-        // const refType = ts.createTypeAliasDeclaration(
-        //   undefined,
-        //   [ts.createToken(ts.SyntaxKind.ExportKeyword)],
-        //   refTypeName,
-        //   undefined,
-        //   ts.createIntersectionTypeNode([
-        //     ts.createTypeReferenceNode(_refType.name, undefined),
-        //     ts.createTypeReferenceNode("FragmentReference", undefined)
-        //   ])
-        // );
-        // const baseType = selectionsToAST(selections, state, refTypeName);
-        const baseType = selectionsToAST(selections, state);
+        const refTypeName = getRefTypeName(node.name);
+        const _refTypeName = `_${refTypeName}`;
+        const _refType = ts.createVariableStatement(
+          [ts.createToken(ts.SyntaxKind.DeclareKeyword)],
+          ts.createVariableDeclarationList(
+            [
+              ts.createVariableDeclaration(
+                _refTypeName,
+                ts.createTypeOperatorNode(
+                  ts.SyntaxKind.UniqueKeyword,
+                  ts.createKeywordTypeNode(ts.SyntaxKind.SymbolKeyword)
+                )
+              )
+            ],
+            ts.NodeFlags.Const
+          )
+        );
+        const refType = exportType(
+          refTypeName,
+          ts.createTypeQueryNode(ts.createIdentifier(_refTypeName))
+        );
+        const baseType = selectionsToAST(selections, state, refTypeName);
         const type = isPlural(node)
           ? ts.createTypeReferenceNode(ts.createIdentifier("ReadonlyArray"), [
               baseType
             ])
           : baseType;
         return [
-          // ...getFragmentImports(state),
+          ...getFragmentImports(state),
           ...getEnumDefinitions(state),
-          // importTypes(["FragmentReference"], state.relayRuntimeModule),
-          // _refType,
-          // refType,
+          _refType,
+          refType,
           exportType(node.name, type)
         ];
       },
@@ -446,10 +445,10 @@ function flattenArray<T>(arrayOfArrays: T[][]): T[] {
 function generateInputObjectTypes(state: State) {
   return Object.keys(state.generatedInputObjectTypes).map(typeIdentifier => {
     const inputObjectType = state.generatedInputObjectTypes[typeIdentifier];
-    if (inputObjectType === 'pending') {
+    if (inputObjectType === "pending") {
       throw new Error(
-        'TypeScriptGenerator: Expected input object type to have been' +
-          ' defined before calling `generateInputObjectTypes`',
+        "TypeScriptGenerator: Expected input object type to have been" +
+          " defined before calling `generateInputObjectTypes`"
       );
     } else {
       return exportType(typeIdentifier, inputObjectType);
@@ -491,14 +490,11 @@ function groupRefs(props: Selection[]): Selection[] {
         )
       )
     );
-    // TODO: This is disabled until TS 2.8 is released which has the features we need to properly support fragment
-    //       reference checking. See https://github.com/alloy/DefinitelyTyped/pull/1
-    //
-    // result.push({
-    //   key: " $fragmentRefs",
-    //   conditional: false,
-    //   value
-    // });
+    result.push({
+      key: FRAGMENT_REFS,
+      conditional: false,
+      value
+    });
   }
   return result;
 }
