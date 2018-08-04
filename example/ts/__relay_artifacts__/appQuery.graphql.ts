@@ -1,9 +1,12 @@
 /* tslint:disable */
 
 import { ConcreteRequest } from "relay-runtime";
+import { TodoApp_viewer$ref } from "./TodoApp_viewer.graphql";
 export type appQueryVariables = {};
 export type appQueryResponse = {
-    readonly viewer: ({}) | null;
+    readonly viewer: ({
+        readonly " $fragmentRefs": TodoApp_viewer$ref;
+    }) | null;
 };
 
 

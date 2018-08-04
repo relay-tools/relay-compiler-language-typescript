@@ -13,13 +13,19 @@ fragment NestedCondition on Node {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+declare const _ConditionField$ref: unique symbol;
+export type ConditionField$ref = typeof _ConditionField$ref;
 export type ConditionField = {
     readonly id?: string;
+    readonly " $refType": ConditionField$ref;
 };
 
 
+declare const _NestedCondition$ref: unique symbol;
+export type NestedCondition$ref = typeof _NestedCondition$ref;
 export type NestedCondition = {
     readonly id?: string;
+    readonly " $refType": NestedCondition$ref;
 };
 
 `;
@@ -56,20 +62,34 @@ fragment ConcreateTypes on Viewer {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+type OtherFragment$ref = any;
+type PictureFragment$ref = any;
+type UserFrag1$ref = any;
+type UserFrag2$ref = any;
+declare const _FragmentSpread$ref: unique symbol;
+export type FragmentSpread$ref = typeof _FragmentSpread$ref;
 export type FragmentSpread = {
     readonly id: string;
     readonly justFrag: ({
+        readonly " $fragmentRefs": PictureFragment$ref;
     }) | null;
     readonly fragAndField: ({
         readonly uri: string | null;
+        readonly " $fragmentRefs": PictureFragment$ref;
     }) | null;
+    readonly " $fragmentRefs": OtherFragment$ref & UserFrag1$ref & UserFrag2$ref;
+    readonly " $refType": FragmentSpread$ref;
 };
 
 
+type PageFragment$ref = any;
+declare const _ConcreateTypes$ref: unique symbol;
+export type ConcreateTypes$ref = typeof _ConcreateTypes$ref;
 export type ConcreateTypes = {
     readonly actor: ({
         readonly __typename: "Page";
         readonly id: string;
+        readonly " $fragmentRefs": PageFragment$ref;
     } | {
         readonly __typename: "User";
         readonly name: string | null;
@@ -78,6 +98,7 @@ export type ConcreateTypes = {
         value in case none of the concrete values match.*/
         readonly __typename: "%other";
     }) | null;
+    readonly " $refType": ConcreateTypes$ref;
 };
 
 `;
@@ -146,15 +167,20 @@ fragment InlineFragmentKitchenSink on Story {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+declare const _InlineFragment$ref: unique symbol;
+export type InlineFragment$ref = typeof _InlineFragment$ref;
 export type InlineFragment = {
     readonly id: string;
     readonly name?: string | null;
     readonly message?: ({
         readonly text: string | null;
     }) | null;
+    readonly " $refType": InlineFragment$ref;
 };
 
 
+declare const _InlineFragmentWithOverlappingFields$ref: unique symbol;
+export type InlineFragmentWithOverlappingFields$ref = typeof _InlineFragmentWithOverlappingFields$ref;
 export type InlineFragmentWithOverlappingFields = {
     readonly hometown?: ({
         readonly id: string;
@@ -164,15 +190,22 @@ export type InlineFragmentWithOverlappingFields = {
         }) | null;
     }) | null;
     readonly name?: string | null;
+    readonly " $refType": InlineFragmentWithOverlappingFields$ref;
 };
 
 
+declare const _InlineFragmentConditionalID$ref: unique symbol;
+export type InlineFragmentConditionalID$ref = typeof _InlineFragmentConditionalID$ref;
 export type InlineFragmentConditionalID = {
     readonly id?: string;
     readonly name?: string | null;
+    readonly " $refType": InlineFragmentConditionalID$ref;
 };
 
 
+type SomeFragment$ref = any;
+declare const _InlineFragmentKitchenSink$ref: unique symbol;
+export type InlineFragmentKitchenSink$ref = typeof _InlineFragmentKitchenSink$ref;
 export type InlineFragmentKitchenSink = {
     readonly actor: ({
         readonly id: string;
@@ -182,7 +215,9 @@ export type InlineFragmentKitchenSink = {
             readonly height?: number | null;
         }) | null;
         readonly name?: string | null;
+        readonly " $fragmentRefs": SomeFragment$ref;
     }) | null;
+    readonly " $refType": InlineFragmentKitchenSink$ref;
 };
 
 `;
@@ -218,6 +253,8 @@ query UnionTypeTest {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+declare const _LinkedField$ref: unique symbol;
+export type LinkedField$ref = typeof _LinkedField$ref;
 export type LinkedField = {
     readonly profilePicture: ({
         readonly uri: string | null;
@@ -233,6 +270,7 @@ export type LinkedField = {
     readonly actor: ({
         readonly id: string;
     }) | null;
+    readonly " $refType": LinkedField$ref;
 };
 
 
@@ -321,8 +359,8 @@ export type InputHasArrayVariables = {
 export type InputHasArrayResponse = {
     readonly viewerNotificationsUpdateAllSeenState: ({
         readonly stories: ReadonlyArray<({
-                readonly actorCount: number | null;
-            }) | null> | null;
+            readonly actorCount: number | null;
+        }) | null> | null;
     }) | null;
 };
 
@@ -335,9 +373,12 @@ fragment PluralFragment on Node @relay(plural: true) {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+declare const _PluralFragment$ref: unique symbol;
+export type PluralFragment$ref = typeof _PluralFragment$ref;
 export type PluralFragment = ReadonlyArray<{
-        readonly id: string;
-    }>;
+    readonly id: string;
+    readonly " $refType": PluralFragment$ref;
+}>;
 
 `;
 
@@ -351,8 +392,13 @@ fragment FragmentSpread on Node {
  }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+type FragmentSpread$ref = any;
+declare const _FragmentSpread$ref: unique symbol;
+export type FragmentSpread$ref = typeof _FragmentSpread$ref;
 export type FragmentSpread = {
     readonly id: string;
+    readonly " $fragmentRefs": FragmentSpread$ref;
+    readonly " $refType": FragmentSpread$ref;
 };
 
 `;
@@ -396,8 +442,11 @@ export type ExampleQueryResponse = {
 };
 
 
+declare const _ExampleFragment$ref: unique symbol;
+export type ExampleFragment$ref = typeof _ExampleFragment$ref;
 export type ExampleFragment = {
     readonly id: string;
+    readonly " $refType": ExampleFragment$ref;
 };
 
 
@@ -459,6 +508,8 @@ fragment ScalarField on User {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 export type PersonalityTraits = "CHEERFUL" | "DERISIVE" | "HELPFUL" | "SNARKY" | "%future added value";
+declare const _ScalarField$ref: unique symbol;
+export type ScalarField$ref = typeof _ScalarField$ref;
 export type ScalarField = {
     readonly id: string;
     readonly name: string | null;
@@ -468,9 +519,10 @@ export type ScalarField = {
         readonly aliasedField: number | null;
     }) | null;
     readonly screennames: ReadonlyArray<({
-            readonly name: string | null;
-            readonly service: string | null;
-        }) | null> | null;
+        readonly name: string | null;
+        readonly service: string | null;
+    }) | null> | null;
+    readonly " $refType": ScalarField$ref;
 };
 
 `;
@@ -539,32 +591,44 @@ fragment TypenameWithCommonSelections on Actor {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+declare const _TypenameInside$ref: unique symbol;
+export type TypenameInside$ref = typeof _TypenameInside$ref;
 export type TypenameInside = {
     readonly __typename: "User";
     readonly firstName: string | null;
+    readonly " $refType": TypenameInside$ref;
 } | {
     readonly __typename: "Page";
     readonly username: string | null;
+    readonly " $refType": TypenameInside$ref;
 } | {
     /*This will never be '% other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
+    readonly " $refType": TypenameInside$ref;
 };
 
 
+declare const _TypenameOutside$ref: unique symbol;
+export type TypenameOutside$ref = typeof _TypenameOutside$ref;
 export type TypenameOutside = {
     readonly __typename: "User";
     readonly firstName: string | null;
+    readonly " $refType": TypenameOutside$ref;
 } | {
     readonly __typename: "Page";
     readonly username: string | null;
+    readonly " $refType": TypenameOutside$ref;
 } | {
     /*This will never be '% other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
+    readonly " $refType": TypenameOutside$ref;
 };
 
 
+declare const _TypenameOutsideWithAbstractType$ref: unique symbol;
+export type TypenameOutsideWithAbstractType$ref = typeof _TypenameOutsideWithAbstractType$ref;
 export type TypenameOutsideWithAbstractType = {
     readonly __typename: string;
     readonly username?: string | null;
@@ -574,26 +638,36 @@ export type TypenameOutsideWithAbstractType = {
         readonly street?: string | null;
     }) | null;
     readonly firstName?: string | null;
+    readonly " $refType": TypenameOutsideWithAbstractType$ref;
 };
 
 
+declare const _TypenameWithoutSpreads$ref: unique symbol;
+export type TypenameWithoutSpreads$ref = typeof _TypenameWithoutSpreads$ref;
 export type TypenameWithoutSpreads = {
     readonly firstName: string | null;
     readonly __typename: "User";
+    readonly " $refType": TypenameWithoutSpreads$ref;
 };
 
 
+declare const _TypenameWithoutSpreadsAbstractType$ref: unique symbol;
+export type TypenameWithoutSpreadsAbstractType$ref = typeof _TypenameWithoutSpreadsAbstractType$ref;
 export type TypenameWithoutSpreadsAbstractType = {
     readonly __typename: string;
     readonly id: string;
+    readonly " $refType": TypenameWithoutSpreadsAbstractType$ref;
 };
 
 
+declare const _TypenameWithCommonSelections$ref: unique symbol;
+export type TypenameWithCommonSelections$ref = typeof _TypenameWithCommonSelections$ref;
 export type TypenameWithCommonSelections = {
     readonly __typename: string;
     readonly name: string | null;
     readonly firstName?: string | null;
     readonly username?: string | null;
+    readonly " $refType": TypenameWithCommonSelections$ref;
 };
 
 `;
@@ -628,30 +702,44 @@ fragment AnotherRecursiveFragment on Image {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+type PhotoFragment$ref = any;
+declare const _UserProfile$ref: unique symbol;
+export type UserProfile$ref = typeof _UserProfile$ref;
 export type UserProfile = {
     readonly profilePicture: ({
         readonly uri: string | null;
         readonly width: number | null;
         readonly height: number | null;
+        readonly " $fragmentRefs": PhotoFragment$ref;
     }) | null;
+    readonly " $refType": UserProfile$ref;
 };
 
 
+declare const _PhotoFragment$ref: unique symbol;
+export type PhotoFragment$ref = typeof _PhotoFragment$ref;
 export type PhotoFragment = {
     readonly uri: string | null;
     readonly width: number | null;
+    readonly " $refType": PhotoFragment$ref;
 };
 
 
+declare const _RecursiveFragment$ref: unique symbol;
+export type RecursiveFragment$ref = typeof _RecursiveFragment$ref;
 export type RecursiveFragment = {
     readonly uri: string | null;
     readonly width: number | null;
+    readonly " $refType": RecursiveFragment$ref;
 };
 
 
+declare const _AnotherRecursiveFragment$ref: unique symbol;
+export type AnotherRecursiveFragment$ref = typeof _AnotherRecursiveFragment$ref;
 export type AnotherRecursiveFragment = {
     readonly uri: string | null;
     readonly height: number | null;
+    readonly " $refType": AnotherRecursiveFragment$ref;
 };
 
 `;

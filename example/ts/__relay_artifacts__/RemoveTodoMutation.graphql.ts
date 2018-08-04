@@ -1,11 +1,12 @@
 /* tslint:disable */
 
 import { ConcreteRequest } from "relay-runtime";
+export type RemoveTodoInput = {
+    readonly id: string;
+    readonly clientMutationId?: string | null;
+};
 export type RemoveTodoMutationVariables = {
-    readonly input: {
-        readonly id: string;
-        readonly clientMutationId?: string | null;
-    };
+    readonly input: RemoveTodoInput;
 };
 export type RemoveTodoMutationResponse = {
     readonly removeTodo: ({

@@ -9,7 +9,7 @@
   },
   "resolutions": {
     "graphql": "^0.13.1",
-    "relay-compiler-language-typescript": "file:../relay-compiler-language-typescript-0.9.1.tgz",
+    "relay-compiler-language-typescript": "file:../relay-compiler-language-typescript-1.0.0.tgz",
     "relay-compiler": "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/relay-compiler-1.6.1-plugin.1.tgz",
     "graphql-compiler": "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/graphql-compiler-1.6.1-plugin.1.tgz",
     "relay-runtime": "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/relay-runtime-1.6.1-plugin.1.tgz",
@@ -58,8 +58,8 @@
     "eslint-plugin-react": "5.2.2",
     "fork-ts-checker-webpack-plugin": "^0.3.0",
     "relay-compiler": "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/relay-compiler-1.6.1-plugin.1.tgz",
-    "relay-compiler-language-typescript": "file:../relay-compiler-language-typescript-0.9.1.tgz",
+    "relay-compiler-language-typescript": "file:../relay-compiler-language-typescript-1.0.0.tgz",
     "ts-loader": "^3.2.0",
-    "typescript": "^2.6.2"
+    "typescript": "2.8.1"
   }
 }
