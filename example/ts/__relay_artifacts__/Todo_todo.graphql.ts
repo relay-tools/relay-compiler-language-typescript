@@ -1,10 +1,13 @@
 /* tslint:disable */
 
 import { ConcreteFragment } from "relay-runtime";
+declare const _Todo_todo$ref: unique symbol;
+export type Todo_todo$ref = typeof _Todo_todo$ref;
 export type Todo_todo = {
     readonly complete: boolean | null;
     readonly id: string;
     readonly text: string | null;
+    readonly " $refType": Todo_todo$ref;
 };
 
 

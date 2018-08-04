@@ -1,10 +1,13 @@
 /* tslint:disable */
 
 import { ConcreteFragment } from "relay-runtime";
+declare const _Todo_viewer$ref: unique symbol;
+export type Todo_viewer$ref = typeof _Todo_viewer$ref;
 export type Todo_viewer = {
     readonly id: string;
     readonly totalCount: number | null;
     readonly completedCount: number | null;
+    readonly " $refType": Todo_viewer$ref;
 };
 
 

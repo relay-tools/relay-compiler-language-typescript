@@ -1,6 +1,8 @@
 /* tslint:disable */
 
 import { ConcreteFragment } from "relay-runtime";
+declare const _TodoListFooter_viewer$ref: unique symbol;
+export type TodoListFooter_viewer$ref = typeof _TodoListFooter_viewer$ref;
 export type TodoListFooter_viewer = {
     readonly id: string;
     readonly completedCount: number | null;
@@ -13,6 +15,7 @@ export type TodoListFooter_viewer = {
         }) | null> | null;
     }) | null;
     readonly totalCount: number | null;
+    readonly " $refType": TodoListFooter_viewer$ref;
 };
 
 
