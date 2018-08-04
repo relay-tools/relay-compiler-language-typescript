@@ -4,7 +4,7 @@ A language plugin for [Relay](https://facebook.github.io/relay/) that adds TypeS
 definitions.
 
 ⚠️ As of this writing, [the pull-request](https://github.com/facebook/relay/pull/2293) that adds language plugin support
-to Relay has not yet been merged. Thus, if you want to use this plugin you’ll have to cut a release with that patch
+to Relay has been merged but not release yet. Thus, if you want to use this plugin you’ll have to cut a release with that patch
 yourself. Alternatively, you can use prebuilt packages that [Artsy uses](https://github.com/alloy/relay/releases) (use the ones that are of the form `vx.x.x-plugin.x`, not `vx.x.x-artsy.x`).
 
 ## Installation
