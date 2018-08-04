@@ -1,5 +1,7 @@
 # relay-compiler-language-typescript
 
+[![Build Status](https://travis-ci.org/relay-tools/relay-compiler-language-typescript.svg?branch=master)](https://travis-ci.org/relay-tools/relay-compiler-language-typescript)
+
 A language plugin for [Relay](https://facebook.github.io/relay/) that adds TypeScript support, including emitting type
 definitions.
 
