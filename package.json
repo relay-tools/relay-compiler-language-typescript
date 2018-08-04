@@ -48,7 +48,7 @@
     "graphql-compiler": "*",
     "relay-compiler": "*",
     "relay-runtime": "*",
-    "typescript": ">=2.9.1"
+    "typescript": ">=2.8.1"
   },
   "devDependencies": {
     "@types/graphql": "^0.12.1",
@@ -64,7 +64,7 @@
     "relay-runtime": "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/relay-runtime-1.6.1-plugin.1.tgz",
     "relay-test-utils": "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/relay-test-utils-1.6.1-plugin.1.tgz",
     "ts-jest": "^22.0.1",
-    "typescript": "^2.9.1"
+    "typescript": "2.8.1"
   },
   "resolutions": {
     "graphql-compiler": "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/graphql-compiler-1.6.1-plugin.1.tgz",

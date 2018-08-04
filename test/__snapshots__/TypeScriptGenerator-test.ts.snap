@@ -274,7 +274,8 @@ export type LinkedField = {
 };
 
 
-export type UnionTypeTestVariables = {};
+export type UnionTypeTestVariables = {
+};
 export type UnionTypeTestResponse = {
     readonly neverNode: ({
         readonly __typename: "FakeNode";
