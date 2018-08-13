@@ -16,13 +16,21 @@ import {
   GraphQLScalarType,
   GraphQLNamedType
 } from "graphql";
-import {
+
+// Get the types
+import * as GraphQLCompilerTypes from "graphql-compiler";
+// Load the actual code with a fallback to < Relay 1.6 which changed graphql-compiler to an actual package.
+let GraphQLCompiler: typeof GraphQLCompilerTypes
+try {
+  GraphQLCompiler = require("relay-compiler/lib/GraphQLCompilerPublic");
+}
+catch (err) {
+  GraphQLCompiler = require("graphql-compiler");
+}
+const {
   IRVisitor,
   SchemaUtils,
-  IRTransform,
-  Fragment,
-  Root
-} from "graphql-compiler";
+} = GraphQLCompiler;
 
 import { TypeGeneratorOptions } from "relay-compiler";
 
@@ -250,7 +258,7 @@ function mergeSelections(a: SelectionMap, b: SelectionMap): SelectionMap {
   return merged;
 }
 
-function isPlural(node: Fragment): boolean {
+function isPlural(node: GraphQLCompilerTypes.Fragment): boolean {
   return Boolean(node.metadata && node.metadata.plural);
 }
 
@@ -456,7 +464,7 @@ function generateInputObjectTypes(state: State) {
   });
 }
 
-function generateInputVariablesType(node: Root, state: State) {
+function generateInputVariablesType(node: GraphQLCompilerTypes.Root, state: State) {
   return exportType(
     `${node.name}Variables`,
     exactObjectTypeAnnotation(

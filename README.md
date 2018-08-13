@@ -14,7 +14,8 @@ yourself. Alternatively, you can use prebuilt packages that [Artsy uses](https:/
 Add the package to your dev dependencies:
 
 ```
-yarn add relay-compiler-language-typescript --dev
+yarn add graphql-compiler --dev
+yarn add typescript relay-compiler-language-typescript --dev
 ```
 
 ## Configuration
