@@ -1,6 +1,6 @@
 {
   "name": "relay-compiler-language-typescript",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A language plugin for Relay that adds TypeScript support, including emitting type definitions.",
   "license": "MIT",
   "keywords": [
