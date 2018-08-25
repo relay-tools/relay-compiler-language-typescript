@@ -258,7 +258,7 @@ function isPlural(node: GraphQLCompilerTypes.Fragment): boolean {
   return Boolean(node.metadata && node.metadata.plural);
 }
 
-function exportType(name: string, type: ts.TypeNode): ts.Statement {
+function exportType(name: string, type: ts.TypeNode) {
   return ts.createTypeAliasDeclaration(
     undefined,
     [ts.createToken(ts.SyntaxKind.ExportKeyword)],
@@ -308,12 +308,26 @@ function createVisitor(options: TypeGeneratorOptions) {
           `${node.name}Response`,
           selectionsToAST(node.selections, state)
         );
+        const operationType = exportType(
+          node.name,
+          exactObjectTypeAnnotation([
+            readOnlyObjectTypeProperty(
+              "response",
+              ts.createTypeReferenceNode(responseType.name, undefined)
+            ),
+            readOnlyObjectTypeProperty(
+              "variables",
+              ts.createTypeReferenceNode(inputVariablesType.name, undefined)
+            )
+          ])
+        );
         return [
           ...getFragmentImports(state),
           ...getEnumDefinitions(state),
           ...inputObjectTypes,
           inputVariablesType,
-          responseType
+          responseType,
+          operationType
         ];
       },
 
