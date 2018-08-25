@@ -25,6 +25,10 @@ export type AddTodoMutationResponse = {
         }) | null;
     }) | null;
 };
+export type AddTodoMutation = {
+    readonly response: AddTodoMutationResponse;
+    readonly variables: AddTodoMutationVariables;
+};
 
 
 

@@ -17,6 +17,7 @@ import {
 
 import { TodoList_viewer } from '../__relay_artifacts__/TodoList_viewer.graphql'
 import { Environment } from 'relay-runtime';
+import { MarkAllTodosMutation } from '../__relay_artifacts__/MarkAllTodosMutation.graphql';
 
 const mutation = graphql`
   mutation MarkAllTodosMutation($input: MarkAllTodosInput!) {
@@ -59,7 +60,7 @@ function commit(
   todos: TodoList_viewer["todos"],
   user: TodoList_viewer,
 ) {
-  return commitMutation(
+  return commitMutation<MarkAllTodosMutation>(
     environment,
     {
       mutation,

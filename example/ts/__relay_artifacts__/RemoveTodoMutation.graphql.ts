@@ -17,6 +17,10 @@ export type RemoveTodoMutationResponse = {
         }) | null;
     }) | null;
 };
+export type RemoveTodoMutation = {
+    readonly response: RemoveTodoMutationResponse;
+    readonly variables: RemoveTodoMutationVariables;
+};
 
 
 

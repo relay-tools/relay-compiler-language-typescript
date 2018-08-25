@@ -17,6 +17,10 @@ export type RenameTodoMutationResponse = {
         }) | null;
     }) | null;
 };
+export type RenameTodoMutation = {
+    readonly response: RenameTodoMutationResponse;
+    readonly variables: RenameTodoMutationVariables;
+};
 
 
 
