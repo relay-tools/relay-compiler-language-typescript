@@ -20,17 +20,13 @@ import {
 // Get the types
 import * as GraphQLCompilerTypes from "graphql-compiler";
 // Load the actual code with a fallback to < Relay 1.6 which changed graphql-compiler to an actual package.
-let GraphQLCompiler: typeof GraphQLCompilerTypes
+let GraphQLCompiler: typeof GraphQLCompilerTypes;
 try {
   GraphQLCompiler = require("relay-compiler/lib/GraphQLCompilerPublic");
-}
-catch (err) {
+} catch (err) {
   GraphQLCompiler = require("graphql-compiler");
 }
-const {
-  IRVisitor,
-  SchemaUtils,
-} = GraphQLCompiler;
+const { IRVisitor, SchemaUtils } = GraphQLCompiler;
 
 import { TypeGeneratorOptions } from "relay-compiler";
 
@@ -464,7 +460,10 @@ function generateInputObjectTypes(state: State) {
   });
 }
 
-function generateInputVariablesType(node: GraphQLCompilerTypes.Root, state: State) {
+function generateInputVariablesType(
+  node: GraphQLCompilerTypes.Root,
+  state: State
+) {
   return exportType(
     `${node.name}Variables`,
     exactObjectTypeAnnotation(
