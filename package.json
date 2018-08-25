@@ -48,7 +48,9 @@
     "graphql-compiler": "*",
     "relay-compiler": "*",
     "relay-runtime": "*",
-    "typescript": ">=2.8.1"
+    "typescript": ">=2.9.1",
+    "@types/react-relay": ">=1.3.9",
+    "@types/relay-runtime": ">=1.3.5"
   },
   "devDependencies": {
     "@types/graphql": "^0.12.1",
