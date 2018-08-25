@@ -8,6 +8,10 @@ export type appQueryResponse = {
         readonly " $fragmentRefs": TodoApp_viewer$ref;
     }) | null;
 };
+export type appQuery = {
+    readonly response: appQueryResponse;
+    readonly variables: appQueryVariables;
+};
 
 
 

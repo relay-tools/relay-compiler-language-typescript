@@ -20,17 +20,13 @@ import {
 // Get the types
 import * as GraphQLCompilerTypes from "graphql-compiler";
 // Load the actual code with a fallback to < Relay 1.6 which changed graphql-compiler to an actual package.
-let GraphQLCompiler: typeof GraphQLCompilerTypes
+let GraphQLCompiler: typeof GraphQLCompilerTypes;
 try {
   GraphQLCompiler = require("relay-compiler/lib/GraphQLCompilerPublic");
-}
-catch (err) {
+} catch (err) {
   GraphQLCompiler = require("graphql-compiler");
 }
-const {
-  IRVisitor,
-  SchemaUtils,
-} = GraphQLCompiler;
+const { IRVisitor, SchemaUtils } = GraphQLCompiler;
 
 import { TypeGeneratorOptions } from "relay-compiler";
 
@@ -262,7 +258,7 @@ function isPlural(node: GraphQLCompilerTypes.Fragment): boolean {
   return Boolean(node.metadata && node.metadata.plural);
 }
 
-function exportType(name: string, type: ts.TypeNode): ts.Statement {
+function exportType(name: string, type: ts.TypeNode) {
   return ts.createTypeAliasDeclaration(
     undefined,
     [ts.createToken(ts.SyntaxKind.ExportKeyword)],
@@ -312,12 +308,26 @@ function createVisitor(options: TypeGeneratorOptions) {
           `${node.name}Response`,
           selectionsToAST(node.selections, state)
         );
+        const operationType = exportType(
+          node.name,
+          exactObjectTypeAnnotation([
+            readOnlyObjectTypeProperty(
+              "response",
+              ts.createTypeReferenceNode(responseType.name, undefined)
+            ),
+            readOnlyObjectTypeProperty(
+              "variables",
+              ts.createTypeReferenceNode(inputVariablesType.name, undefined)
+            )
+          ])
+        );
         return [
           ...getFragmentImports(state),
           ...getEnumDefinitions(state),
           ...inputObjectTypes,
           inputVariablesType,
-          responseType
+          responseType,
+          operationType
         ];
       },
 
@@ -464,7 +474,10 @@ function generateInputObjectTypes(state: State) {
   });
 }
 
-function generateInputVariablesType(node: GraphQLCompilerTypes.Root, state: State) {
+function generateInputVariablesType(
+  node: GraphQLCompilerTypes.Root,
+  state: State
+) {
   return exportType(
     `${node.name}Variables`,
     exactObjectTypeAnnotation(

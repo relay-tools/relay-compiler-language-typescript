@@ -4576,9 +4576,9 @@ regjsparser@^0.1.4:
   dependencies:
     jsesc "~0.5.0"
 
-"relay-compiler-language-typescript@file:../relay-compiler-language-typescript-1.0.0.tgz":
-  version "1.0.0"
-  resolved "file:../relay-compiler-language-typescript-1.0.0.tgz#aeaf7e9f48192d7a2bb2600a7fb1ca18267d13b9"
+"relay-compiler-language-typescript@file:../relay-compiler-language-typescript-1.1.0-alpha.1.tgz":
+  version "1.1.0-alpha.1"
+  resolved "file:../relay-compiler-language-typescript-1.1.0-alpha.1.tgz#183e9ff611e378b0ab1a9a36e98121c43ea08879"
   dependencies:
     immutable "^3.7.6"
     invariant "^2.2.2"
@@ -5346,9 +5346,9 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@^2.9.1:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
+typescript@2.9.1:
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.1.tgz#fdb19d2c67a15d11995fd15640e373e09ab09961"
 
 ua-parser-js@^0.7.18:
   version "0.7.18"

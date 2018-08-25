@@ -18,6 +18,7 @@ import {ConnectionHandler, Environment, RecordSourceSelectorProxy} from 'relay-r
 
 import { Todo_todo } from '../__relay_artifacts__/Todo_todo.graphql';
 import { Todo_viewer } from '../__relay_artifacts__/Todo_viewer.graphql';
+import { RemoveTodoMutation } from '../__relay_artifacts__/RemoveTodoMutation.graphql';
 
 const mutation = graphql`
   mutation RemoveTodoMutation($input: RemoveTodoInput!) {
@@ -48,7 +49,7 @@ function commit(
   todo: Todo_todo,
   user: Todo_viewer,
 ) {
-  return commitMutation(
+  return commitMutation<RemoveTodoMutation>(
     environment,
     {
       mutation,

@@ -17,6 +17,7 @@ import {
 import {ConnectionHandler, RecordSourceSelectorProxy, Environment} from 'relay-runtime';
 
 import { TodoApp_viewer } from '../__relay_artifacts__/TodoApp_viewer.graphql';
+import { AddTodoMutation } from '../__relay_artifacts__/AddTodoMutation.graphql'
 
 const mutation = graphql`
   mutation AddTodoMutation($input: AddTodoInput!) {
@@ -54,14 +55,14 @@ function commit(
   text: string,
   user: TodoApp_viewer
 ) {
-  return commitMutation(
+  return commitMutation<AddTodoMutation>(
     environment,
     {
       mutation,
       variables: {
         input: {
           text,
-          clientMutationId: tempID++,
+          clientMutationId: (tempID++).toString(),
         },
       },
       updater: (store) => {

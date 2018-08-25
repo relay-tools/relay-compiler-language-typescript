@@ -29,6 +29,7 @@ import {
 } from 'relay-runtime';
 
 import TodoApp from './components/TodoApp';
+import { appQuery } from './__relay_artifacts__/appQuery.graphql';
 
 // Useful for debugging, but remember to remove for a production deploy.
 installRelayDevTools();
@@ -59,7 +60,7 @@ const modernEnvironment = new Environment({
 });
 
 ReactDOM.render(
-  <QueryRenderer
+  <QueryRenderer<appQuery>
     environment={modernEnvironment}
     query={graphql`
       query appQuery {
@@ -70,8 +71,10 @@ ReactDOM.render(
     `}
     variables={{}}
     render={({error, props}) => {
-      if (props) {
+      if (props && props.viewer) {
         return <TodoApp viewer={props.viewer} />;
+      } else if (props || error) {
+        console.error(`Unexpected data: ${props || error}`)
       } else {
         return <div>Loading</div>;
       }

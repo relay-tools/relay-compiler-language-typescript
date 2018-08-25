@@ -21,6 +21,10 @@ export type ChangeTodoStatusMutationResponse = {
         }) | null;
     }) | null;
 };
+export type ChangeTodoStatusMutation = {
+    readonly response: ChangeTodoStatusMutationResponse;
+    readonly variables: ChangeTodoStatusMutationVariables;
+};
 
 
 

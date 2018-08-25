@@ -16,6 +16,10 @@ export type RemoveCompletedTodosMutationResponse = {
         }) | null;
     }) | null;
 };
+export type RemoveCompletedTodosMutation = {
+    readonly response: RemoveCompletedTodosMutationResponse;
+    readonly variables: RemoveCompletedTodosMutationVariables;
+};
 
 
 

@@ -20,6 +20,10 @@ export type MarkAllTodosMutationResponse = {
         }) | null;
     }) | null;
 };
+export type MarkAllTodosMutation = {
+    readonly response: MarkAllTodosMutationResponse;
+    readonly variables: MarkAllTodosMutationVariables;
+};
 
 
 
