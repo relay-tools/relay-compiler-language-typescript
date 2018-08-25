@@ -353,26 +353,37 @@ function createVisitor(options: TypeGeneratorOptions) {
         });
         state.generatedFragments.add(node.name);
         const refTypeName = getRefTypeName(node.name);
-        const _refTypeName = `_${refTypeName}`;
-        const _refType = ts.createVariableStatement(
-          [ts.createToken(ts.SyntaxKind.DeclareKeyword)],
-          ts.createVariableDeclarationList(
-            [
-              ts.createVariableDeclaration(
-                _refTypeName,
-                ts.createTypeOperatorNode(
-                  ts.SyntaxKind.UniqueKeyword,
-                  ts.createKeywordTypeNode(ts.SyntaxKind.SymbolKeyword)
+        const refTypeNodes: ts.Node[] = []
+        if (options.useSingleArtifactDirectory) {
+          const _refTypeName = `_${refTypeName}`;
+          const _refType = ts.createVariableStatement(
+            [ts.createToken(ts.SyntaxKind.DeclareKeyword)],
+            ts.createVariableDeclarationList(
+              [
+                ts.createVariableDeclaration(
+                  _refTypeName,
+                  ts.createTypeOperatorNode(
+                    ts.SyntaxKind.UniqueKeyword,
+                    ts.createKeywordTypeNode(ts.SyntaxKind.SymbolKeyword)
+                  )
                 )
-              )
-            ],
-            ts.NodeFlags.Const
+              ],
+              ts.NodeFlags.Const
+            )
+          );
+          const refType = exportType(
+            refTypeName,
+            ts.createTypeQueryNode(ts.createIdentifier(_refTypeName))
+          );
+          refTypeNodes.push(_refType)
+          refTypeNodes.push(refType)
+        } else {
+          const refType = exportType(
+            refTypeName,
+            ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
           )
-        );
-        const refType = exportType(
-          refTypeName,
-          ts.createTypeQueryNode(ts.createIdentifier(_refTypeName))
-        );
+          refTypeNodes.push(refType)
+        }
         const baseType = selectionsToAST(selections, state, refTypeName);
         const type = isPlural(node)
           ? ts.createTypeReferenceNode(ts.createIdentifier("ReadonlyArray"), [
@@ -382,8 +393,7 @@ function createVisitor(options: TypeGeneratorOptions) {
         return [
           ...getFragmentImports(state),
           ...getEnumDefinitions(state),
-          _refType,
-          refType,
+          ...refTypeNodes,
           exportType(node.name, type)
         ];
       },
