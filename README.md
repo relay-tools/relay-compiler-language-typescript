@@ -67,6 +67,16 @@ react_relay_1.createFragmentContainer(MyComponent, react_relay_1.graphql `
 
 Note that this does mean you need to configure Babel to transform the ES module `import` and `export` statements, by using the [`babel-plugin-transform-es2015-modules-commonjs`](https://babeljs.io/docs/plugins/transform-es2015-modules-commonjs/) transform plugin, if you’re not already.
 
+## Problems
+
+### React Hot Loader
+
+React Hot Loader not always compile `__generated__` directory so you will get modules with TS types into your browser and that will break your app.
+As a mainteiner of RHL pointed at a similar issue https://github.com/gaearon/react-hot-loader/issues/1032:
+ > The problem - hot reloading is not "complete"
+
+So either RHL will be discontinued or made "complete" https://github.com/gaearon/react-hot-loader/issues/1024 until then this project can't gurantee to work with it.
+
 ## Examples
 
 You can find a copy of the Relay
