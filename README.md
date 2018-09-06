@@ -5,9 +5,7 @@
 A language plugin for [Relay](https://facebook.github.io/relay/) that adds TypeScript support, including emitting type
 definitions.
 
-⚠️ As of this writing, [the pull-request](https://github.com/facebook/relay/pull/2293) that adds language plugin support
-to Relay has been merged but not release yet. Thus, if you want to use this plugin you’ll have to cut a release with that patch
-yourself. Alternatively, you can use prebuilt packages that [Artsy uses](https://github.com/alloy/relay/releases) (use the ones that are of the form `vx.x.x-plugin.x`, not `vx.x.x-artsy.x`).
+⚠️ As of this writing, the stable version of relay with this plugin isn't released yet so you will need to use 1.7.0 release candidate eg.: `yarn add relay-runtime@1.7.0-rc.1`.
 
 ## Installation
 
