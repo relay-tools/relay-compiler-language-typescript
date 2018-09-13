@@ -71,11 +71,11 @@ Note that this does mean you need to configure Babel to transform the ES module 
 
 ### React Hot Loader
 
-React Hot Loader not always compile `__generated__` directory so you will get modules with TS types into your browser and that will break your app.
-As a mainteiner of RHL pointed at a similar issue https://github.com/gaearon/react-hot-loader/issues/1032:
+React Hot Loader is known to not always work well with generated code such as our typing artefacts, which will lead to loading modules _with_ TypeScript types into the browser and break. As a maintainer of RHL [pointed out](https://github.com/gaearon/react-hot-loader/issues/1032) in a similar issue:
+
  > The problem - hot reloading is not "complete"
 
-So either RHL will be discontinued or made "complete" https://github.com/gaearon/react-hot-loader/issues/1024 until then this project can't gurantee to work with it.
+So [until RHL will be made “complete”](https://github.com/gaearon/react-hot-loader/issues/1024) this project can’t gurantee to always work well with it, nor is it our control to do anything about that.
 
 ## Examples
 
