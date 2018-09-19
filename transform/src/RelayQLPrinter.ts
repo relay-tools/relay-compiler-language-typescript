@@ -40,7 +40,7 @@ export function RelayQLPrinter(options: PrinterOptions) {
     ? function <T extends { [key: string]: string }>(fields: T): T {
       const formatted = {} as T;
       (Object.keys(fields) as (keyof T)[]).forEach(name => {
-        formatted[name] = name.replace(
+        formatted[name] = (name as string).replace(
           /[A-Z]/g,
           letter => '_' + letter.toLowerCase(),
         );

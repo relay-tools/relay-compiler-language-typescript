@@ -39,7 +39,10 @@ export function readGraphQLSchema(schemaPath: string): GraphQLSchema {
 		}
 		throw new Error('Expected data file to contain a JSON encoded GraphQLSchema');
 	} else if (schemaPath.substring(schemaPath.length - dotGraphQLLength) === '.graphql') {
-		return buildASTSchema(parse(SCHEMA_EXTENSION + "\n" + contents));
+		return buildASTSchema(parse(SCHEMA_EXTENSION + "\n" + contents, {
+			allowLegacySDLImplementsInterfaces: true,
+			allowLegacySDLEmptyFields: true,
+		}));
 	}
 	throw new Error('Unsupported file. schema option only supports json and graphql file extensions');
 }

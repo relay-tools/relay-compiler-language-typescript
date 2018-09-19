@@ -70,17 +70,17 @@ type RelayQLSelection =
   | RelayQLFragmentSpread
   | RelayQLInlineFragment;
 
-type RelayQLNodeType = ASTNode & {
+export type RelayQLNodeType<Node extends ASTNode> = Node & {
   selectionSet?: SelectionSetNode;
   directives?: DirectiveNode[];
   name?: NameNode;
 }
 
-class RelayQLNode<T extends RelayQLNodeType> {
-  ast: T;
+class RelayQLNode<T extends ASTNode> {
+  ast: RelayQLNodeType<T>;
   context: RelayQLContext;
 
-  constructor(context: RelayQLContext, ast: T) {
+  constructor(context: RelayQLContext, ast: RelayQLNodeType<T>) {
     this.ast = ast;
     this.context = context;
   }
@@ -114,13 +114,13 @@ class RelayQLNode<T extends RelayQLNodeType> {
     // $FlowFixMe
     return this.ast.selectionSet.selections.map(selection => {
       if (selection.kind === 'Field') {
-        return new RelayQLField(this.context, selection, this.getType());
+        return new RelayQLField(this.context, selection as RelayQLNodeType<FieldNode>, this.getType());
       } else if (selection.kind === 'FragmentSpread') {
-        return new RelayQLFragmentSpread(this.context, selection);
+        return new RelayQLFragmentSpread(this.context, selection as RelayQLNodeType<FragmentSpreadNode>);
       } else if (selection.kind === 'InlineFragment') {
         return new RelayQLInlineFragment(
           this.context,
-          selection,
+          selection as RelayQLNodeType<InlineFragmentNode>,
           this.getType(),
         );
       } else {
@@ -149,7 +149,7 @@ class RelayQLNode<T extends RelayQLNodeType> {
   }
 }
 
-export class RelayQLDefinition<T extends RelayQLNodeType> extends RelayQLNode<T> {
+export class RelayQLDefinition<T extends ASTNode> extends RelayQLNode<T> {
   getName(): string {
     // TODO: this.context.definitionName;
     return this.ast.name
@@ -167,7 +167,7 @@ export class RelayQLFragment extends RelayQLDefinition<
 
   constructor(
     context: RelayQLContext,
-    ast: FragmentDefinitionNode | InlineFragmentNode,
+    ast: RelayQLNodeType<FragmentDefinitionNode | InlineFragmentNode>,
     parentType?: RelayQLType,
   ) {
     const relayDirectiveArgs: { [key: string]: ValueNode } = {};
@@ -253,7 +253,7 @@ export class RelayQLField extends RelayQLNode<FieldNode> {
 
   constructor(
     context: RelayQLContext,
-    ast: FieldNode,
+    ast: RelayQLNodeType<FieldNode>,
     parentType: RelayQLType,
   ) {
     super(context, ast);
@@ -346,7 +346,7 @@ export class RelayQLInlineFragment extends RelayQLNode<InlineFragmentNode> {
 
   constructor(
     context: RelayQLContext,
-    ast: InlineFragmentNode,
+    ast: RelayQLNodeType<InlineFragmentNode>,
     parentType: RelayQLType,
   ) {
     super(context, ast);
@@ -542,9 +542,13 @@ export class RelayQLType {
     // Temporary workarounds to support legacy schemas
     if (!schemaFieldDef) {
       if (hasTypeName && fieldName === '__type__') {
+        const typeType = this.context.schema.getType('Type');
+        if (typeType == null) {
+          throw new Error('Could not read schema type `Type`');
+        }
         schemaFieldDef = {
           name: '__type__',
-          type: new GraphQLNonNull(this.context.schema.getType('Type')),
+          type: new GraphQLNonNull(typeType),
           description: 'The introspected type of this object.',
           deprecatedReason: 'Use __typename',
           args: [],
@@ -690,7 +694,7 @@ export class RelayQLType {
         value: fieldName,
       },
     };
-    return new RelayQLField(this.context, generatedFieldAST, this);
+    return new RelayQLField(this.context, generatedFieldAST as RelayQLNodeType<FieldNode>, this);
   }
 
   generateIdFragment(): RelayQLFragment {

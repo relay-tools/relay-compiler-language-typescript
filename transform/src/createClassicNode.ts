@@ -128,7 +128,7 @@ function createClassicAST(ctx: ts.TransformationContext, definition: DefinitionN
 
   const fragments: Fragments = {};
   const variables: { [key: string]: null } = {};
-  let argumentDefinitions: ArgumentNode[] | null = null;
+  let argumentDefinitions: ReadonlyArray<ArgumentNode> | null = null;
 
   const visitors = {
     Directive(node: DirectiveNode) {
@@ -259,7 +259,7 @@ function createConcreteNode(transformedAST: ts.Expression, substitutions: ts.Var
   );
 }
 
-function createOperationArguments(variableDefinitions: VariableDefinitionNode[] | undefined) {
+function createOperationArguments(variableDefinitions: ReadonlyArray<VariableDefinitionNode> | undefined) {
   if (!variableDefinitions) {
     return ts.createArrayLiteral([], false);
   }
@@ -550,4 +550,3 @@ function isDefinedLocally(scopeAnalyzer: ScopeAnalyzer, node: ts.Node, name: str
 
   return binding !== BindingKind.Import && binding !== BindingKind.Require;
 }
-

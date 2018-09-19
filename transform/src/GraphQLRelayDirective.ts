@@ -1,4 +1,4 @@
-import { buildSchema } from "graphql";
+import { buildSchema, GraphQLDirective } from "graphql";
 
 export const SCHEMA_EXTENSION = `directive @relay(
   # Marks this fragment spread as being deferrable such that it loads after
@@ -25,7 +25,7 @@ export const SCHEMA_EXTENSION = `directive @relay(
 
 export const GraphQLRelayDirective = buildSchema(
 	SCHEMA_EXTENSION + '\ntype Query { x: String }',
-).getDirective('relay');
+).getDirective('relay') as GraphQLDirective;
 
 if (!GraphQLRelayDirective) {
 	throw new Error('Failed to create GraphQLRelayDirective.');

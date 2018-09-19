@@ -1,6 +1,4 @@
 import * as ts from "typescript";
-import { parse } from "graphql";
-import * as fs from "fs";
 import { getValidGraphQLTag } from "./getValidGraphQLTag";
 import { NormalizedOptions, normalizeOptions, Options } from "./Options";
 import { compileGraphQLTag } from "./compileGraphQLTag";

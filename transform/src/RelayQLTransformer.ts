@@ -9,6 +9,7 @@ import {
   RelayQLMutation,
   RelayQLQuery,
   RelayQLSubscription,
+  RelayQLNodeType,
 } from "./RelayQLAST";
 import {
   formatError,
@@ -21,12 +22,10 @@ import {
   KnownTypeNamesRule,
   PossibleFragmentSpreadsRule,
   VariablesInAllowedPositionRule,
-  ProvidedNonNullArgumentsRule,
 } from "graphql";
 import * as gql from "graphql";
 
 const ValuesOfCorrectTypeRule: typeof PossibleFragmentSpreadsRule = (gql as any).ValuesOfCorrectTypeRule;
-const VariablesDefaultValueAllowedRule: typeof PossibleFragmentSpreadsRule = (gql as any).VariablesDefaultValueAllowedRule;
 
 import { RelayQLDefinition } from "./RelayQLAST";
 import { Printable, Substitution } from "./RelayQLPrinter";
@@ -213,14 +212,14 @@ export class RelayQLTransformer {
       schema: this.schema,
     };
     if (definition.kind === 'FragmentDefinition') {
-      return new RelayQLFragment(context, definition);
+      return new RelayQLFragment(context, definition as RelayQLNodeType<gql.FragmentDefinitionNode>);
     } else if (definition.kind === 'OperationDefinition') {
       if (definition.operation === 'mutation') {
-        return new RelayQLMutation(context, definition);
+        return new RelayQLMutation(context, definition as RelayQLNodeType<gql.OperationDefinitionNode>);
       } else if (definition.operation === 'query') {
-        return new RelayQLQuery(context, definition);
+        return new RelayQLQuery(context, definition as RelayQLNodeType<gql.OperationDefinitionNode>);
       } else if (definition.operation === 'subscription') {
-        return new RelayQLSubscription(context, definition);
+        return new RelayQLSubscription(context, definition as RelayQLNodeType<gql.OperationDefinitionNode>);
       } else {
         throw new Error(util.format("Unsupported operation: %s", definition.operation));
       }
@@ -241,10 +240,6 @@ export class RelayQLTransformer {
         document.definitions.length,
       ));
     }
-    const definition = document.definitions[0];
-    const isMutation =
-      definition.kind === 'OperationDefinition' &&
-      definition.operation === 'mutation';
 
     const validator = this.options.validator;
     let validationErrors;
@@ -258,12 +253,8 @@ export class RelayQLTransformer {
         KnownTypeNamesRule,
         PossibleFragmentSpreadsRule,
         ValuesOfCorrectTypeRule,
-        VariablesDefaultValueAllowedRule,
         VariablesInAllowedPositionRule,
       ];
-      if (!isMutation) {
-        rules.push(ProvidedNonNullArgumentsRule);
-      }
       validationErrors = validate(this.schema, document, rules);
     }
 
