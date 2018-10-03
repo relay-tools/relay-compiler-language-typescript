@@ -1,21 +1,21 @@
-import { TypeGenerator, IRTransforms } from "relay-compiler";
+import { IRTransforms, TypeGenerator } from "relay-compiler";
 
-import * as ts from "typescript";
 import * as path from "path";
+import * as ts from "typescript";
 
 import {
-  transformScalarType,
-  transformInputType,
-  ScalarTypeMapping,
-  State
-} from "./TypeScriptTypeTransformers";
-import {
-  GraphQLNonNull,
   GraphQLEnumType,
-  GraphQLType,
+  GraphQLNamedType,
+  GraphQLNonNull,
   GraphQLScalarType,
-  GraphQLNamedType
+  GraphQLType
 } from "graphql";
+import {
+  ScalarTypeMapping,
+  State,
+  transformInputType,
+  transformScalarType
+} from "./TypeScriptTypeTransformers";
 
 // Get the types
 import * as GraphQLCompilerTypes from "graphql-compiler";
@@ -75,14 +75,8 @@ function makeProp(
   state: State,
   concreteType?: string
 ): ts.PropertySignature {
-  let {
-    key,
-    schemaName,
-    value,
-    conditional,
-    nodeType,
-    nodeSelections
-  } = selection;
+  let { value } = selection;
+  const { key, schemaName, conditional, nodeType, nodeSelections } = selection;
   if (nodeType) {
     value = transformScalarType(
       nodeType,
@@ -353,7 +347,7 @@ function createVisitor(options: TypeGeneratorOptions) {
         });
         state.generatedFragments.add(node.name);
         const refTypeName = getRefTypeName(node.name);
-        const refTypeNodes: ts.Node[] = []
+        const refTypeNodes: ts.Node[] = [];
         if (options.useSingleArtifactDirectory) {
           const _refTypeName = `_${refTypeName}`;
           const _refType = ts.createVariableStatement(
@@ -375,14 +369,14 @@ function createVisitor(options: TypeGeneratorOptions) {
             refTypeName,
             ts.createTypeQueryNode(ts.createIdentifier(_refTypeName))
           );
-          refTypeNodes.push(_refType)
-          refTypeNodes.push(refType)
+          refTypeNodes.push(_refType);
+          refTypeNodes.push(refType);
         } else {
           const refType = exportType(
             refTypeName,
             ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
-          )
-          refTypeNodes.push(refType)
+          );
+          refTypeNodes.push(refType);
         }
         const baseType = selectionsToAST(selections, state, refTypeName);
         const type = isPlural(node)
@@ -452,7 +446,7 @@ function createVisitor(options: TypeGeneratorOptions) {
   };
 }
 
-function selectionsToMap(selections: Array<Selection>): SelectionMap {
+function selectionsToMap(selections: Selection[]): SelectionMap {
   const map = new Map();
   selections.forEach(selection => {
     const previousSel = map.get(selection.key);

@@ -1,14 +1,10 @@
 {
   "name": "relay-compiler-language-typescript",
   "version": "1.1.0",
-  "description": "A language plugin for Relay that adds TypeScript support, including emitting type definitions.",
+  "description":
+    "A language plugin for Relay that adds TypeScript support, including emitting type definitions.",
   "license": "MIT",
-  "keywords": [
-    "relay",
-    "graphql",
-    "react",
-    "typescript"
-  ],
+  "keywords": ["relay", "graphql", "react", "typescript"],
   "contributors": [
     {
       "name": "Kaare Hoff Skovgaard",
@@ -19,27 +15,30 @@
       "email": "eloy.de.enige@gmail.com"
     }
   ],
-  "homepage": "https://github.com/relay-tools/relay-compiler-language-typescript",
+  "homepage":
+    "https://github.com/relay-tools/relay-compiler-language-typescript",
   "repository": {
     "type": "git",
-    "url": "https://github.com/relay-tools/relay-compiler-language-typescript.git"
+    "url":
+      "https://github.com/relay-tools/relay-compiler-language-typescript.git"
   },
   "bugs": {
-    "url": "https://github.com/relay-tools/relay-compiler-language-typescript/issues"
+    "url":
+      "https://github.com/relay-tools/relay-compiler-language-typescript/issues"
   },
   "main": "lib/index.js",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "scripts": {
     "prepublish": "npm run build",
     "build": "rm -rf lib && tsc",
-    "relay": "node bin/relay-compiler.js --schema test/schema.graphql --src test/ --outputDir __generated__",
+    "relay":
+      "node bin/relay-compiler.js --schema test/schema.graphql --src test/ --outputDir __generated__",
     "lint": "tslint -c tslint.json --project tsconfig.json",
     "test": "npm run type-check && jest",
     "type-check": "tsc --noEmit --pretty",
     "prettier": "prettier --write '{src,types}/**/*.ts'",
-    "sync-fixtures": "rsync -avh --delete --stats --progress ../relay/packages/relay-compiler/language/javascript/__tests__/fixtures/flow-generator/*.graphql test/fixtures/type-generator",
+    "sync-fixtures":
+      "rsync -avh --delete --stats --progress ../relay/packages/relay-compiler/language/javascript/__tests__/fixtures/flow-generator/*.graphql test/fixtures/type-generator",
     "precommit": "lint-staged"
   },
   "dependencies": {
@@ -67,31 +66,35 @@
     "jest": "^22.1.4",
     "lint-staged": "^7.3.0",
     "prettier": "^1.10.2",
-    "relay-compiler": "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/relay-compiler-1.6.1-plugin.1.tgz",
-    "relay-runtime": "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/relay-runtime-1.6.1-plugin.1.tgz",
-    "relay-test-utils": "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/relay-test-utils-1.6.1-plugin.1.tgz",
+    "relay-compiler":
+      "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/relay-compiler-1.6.1-plugin.1.tgz",
+    "relay-runtime":
+      "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/relay-runtime-1.6.1-plugin.1.tgz",
+    "relay-test-utils":
+      "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/relay-test-utils-1.6.1-plugin.1.tgz",
     "ts-jest": "^22.0.1",
     "tslint-config-prettier": "^1.15.0",
     "typescript": "2.8.1"
   },
   "resolutions": {
-    "graphql-compiler": "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/graphql-compiler-1.6.1-plugin.1.tgz",
-    "relay-compiler": "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/relay-compiler-1.6.1-plugin.1.tgz",
-    "relay-runtime": "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/relay-runtime-1.6.1-plugin.1.tgz",
-    "relay-test-utils": "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/relay-test-utils-1.6.1-plugin.1.tgz"
+    "graphql-compiler":
+      "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/graphql-compiler-1.6.1-plugin.1.tgz",
+    "relay-compiler":
+      "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/relay-compiler-1.6.1-plugin.1.tgz",
+    "relay-runtime":
+      "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/relay-runtime-1.6.1-plugin.1.tgz",
+    "relay-test-utils":
+      "https://github.com/alloy/relay/releases/download/v1.6.1-plugin.1/relay-test-utils-1.6.1-plugin.1.tgz"
   },
   "jest": {
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
     "testRegex": "test/.+?-test\\.tsx?$",
-    "moduleFileExtensions": [
-      "js",
-      "ts",
-      "tsx"
-    ]
+    "moduleFileExtensions": ["js", "ts", "tsx"]
   },
   "lint-staged": {
+    "**/*.json": ["prettier --write", "git add"],
     "{src,types}/**/*.ts": [
       "tslint -c tslint.json --fix",
       "prettier --write",
