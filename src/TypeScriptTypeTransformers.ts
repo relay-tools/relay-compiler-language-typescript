@@ -2,8 +2,8 @@ import * as ts from "typescript";
 
 import {
   GraphQLEnumType,
-  GraphQLInputType,
   GraphQLInputObjectType,
+  GraphQLInputType,
   GraphQLInterfaceType,
   GraphQLList,
   GraphQLNonNull,
