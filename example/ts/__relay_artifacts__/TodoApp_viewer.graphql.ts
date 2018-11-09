@@ -1,16 +1,15 @@
 /* tslint:disable */
 
-import { ConcreteFragment } from 'relay-runtime';
-import { TodoListFooter_viewer_ref } from "./TodoListFooter_viewer.graphql";
-import { TodoList_viewer_ref } from "./TodoList_viewer.graphql";
-import { FragmentReference } from "relay-runtime";
-export enum TodoApp_viewer_ref {
-}
+import { ConcreteFragment } from "relay-runtime";
+import { TodoListFooter_viewer$ref } from "./TodoListFooter_viewer.graphql";
+import { TodoList_viewer$ref } from "./TodoList_viewer.graphql";
+declare const _TodoApp_viewer$ref: unique symbol;
+export type TodoApp_viewer$ref = typeof _TodoApp_viewer$ref;
 export type TodoApp_viewer = {
     readonly id: string;
     readonly totalCount: number | null;
-    readonly " $fragments": TodoListFooter_viewer_ref & TodoList_viewer_ref;
-    readonly " $refType": TodoApp_viewer_ref;
+    readonly " $fragmentRefs": TodoListFooter_viewer$ref & TodoList_viewer$ref;
+    readonly " $refType": TodoApp_viewer$ref;
 };
 
 

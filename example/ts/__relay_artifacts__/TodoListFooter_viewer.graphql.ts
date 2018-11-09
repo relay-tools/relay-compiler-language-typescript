@@ -1,22 +1,21 @@
 /* tslint:disable */
 
-import { ConcreteFragment } from 'relay-runtime';
-import { FragmentReference } from "relay-runtime";
-export enum TodoListFooter_viewer_ref {
-}
+import { ConcreteFragment } from "relay-runtime";
+declare const _TodoListFooter_viewer$ref: unique symbol;
+export type TodoListFooter_viewer$ref = typeof _TodoListFooter_viewer$ref;
 export type TodoListFooter_viewer = {
     readonly id: string;
     readonly completedCount: number | null;
     readonly completedTodos: ({
         readonly edges: ReadonlyArray<({
-                readonly node: ({
-                    readonly id: string;
-                    readonly complete: boolean | null;
-                }) | null;
-            }) | null> | null;
+            readonly node: ({
+                readonly id: string;
+                readonly complete: boolean | null;
+            }) | null;
+        }) | null> | null;
     }) | null;
     readonly totalCount: number | null;
-    readonly " $refType": TodoListFooter_viewer_ref;
+    readonly " $refType": TodoListFooter_viewer$ref;
 };
 
 

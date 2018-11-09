@@ -16,8 +16,9 @@ import {
 } from 'react-relay';
 import { Environment } from 'relay-runtime';
 
-import { Todo_todo } from '../__generated__/Todo_todo.graphql';
-import { Todo_viewer } from '../__generated__/Todo_viewer.graphql';
+import { Todo_todo } from '../__relay_artifacts__/Todo_todo.graphql';
+import { Todo_viewer } from '../__relay_artifacts__/Todo_viewer.graphql';
+import { ChangeTodoStatusMutation } from '../__relay_artifacts__/ChangeTodoStatusMutation.graphql';
 
 const mutation = graphql`
   mutation ChangeTodoStatusMutation($input: ChangeTodoStatusInput!) {
@@ -35,7 +36,7 @@ const mutation = graphql`
 `;
 
 function getOptimisticResponse(complete: boolean, todo: Todo_todo, user: Todo_viewer) {
-  const viewerPayload: { id: string, completedCount?: number } = { id: user.id };
+  const viewerPayload: { id: string, completedCount: number | null } = { id: user.id, completedCount: null };
   if (user.completedCount != null) {
     viewerPayload.completedCount = complete ?
       user.completedCount + 1 :
@@ -58,7 +59,7 @@ function commit(
   todo: Todo_todo,
   user: Todo_viewer,
 ) {
-  return commitMutation(
+  return commitMutation<ChangeTodoStatusMutation>(
     environment,
     {
       mutation,

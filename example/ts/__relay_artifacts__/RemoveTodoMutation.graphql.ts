@@ -1,29 +1,35 @@
 /* tslint:disable */
 
-import { ConcreteRequest } from 'relay-runtime';
-export type RemoveCompletedTodosMutationVariables = {
-    readonly input: {
-        readonly clientMutationId: string | null;
-    };
+import { ConcreteRequest } from "relay-runtime";
+export type RemoveTodoInput = {
+    readonly id: string;
+    readonly clientMutationId?: string | null;
 };
-export type RemoveCompletedTodosMutationResponse = {
-    readonly removeCompletedTodos: ({
-        readonly deletedTodoIds: ReadonlyArray<string | null> | null;
+export type RemoveTodoMutationVariables = {
+    readonly input: RemoveTodoInput;
+};
+export type RemoveTodoMutationResponse = {
+    readonly removeTodo: ({
+        readonly deletedTodoId: string | null;
         readonly viewer: ({
             readonly completedCount: number | null;
             readonly totalCount: number | null;
         }) | null;
     }) | null;
 };
+export type RemoveTodoMutation = {
+    readonly response: RemoveTodoMutationResponse;
+    readonly variables: RemoveTodoMutationVariables;
+};
 
 
 
 /*
-mutation RemoveCompletedTodosMutation(
-  $input: RemoveCompletedTodosInput!
+mutation RemoveTodoMutation(
+  $input: RemoveTodoInput!
 ) {
-  removeCompletedTodos(input: $input) {
-    deletedTodoIds
+  removeTodo(input: $input) {
+    deletedTodoId
     viewer {
       completedCount
       totalCount
@@ -38,7 +44,7 @@ var v0 = [
   {
     "kind": "LocalArgument",
     "name": "input",
-    "type": "RemoveCompletedTodosInput!",
+    "type": "RemoveTodoInput!",
     "defaultValue": null
   }
 ],
@@ -47,13 +53,13 @@ v1 = [
     "kind": "Variable",
     "name": "input",
     "variableName": "input",
-    "type": "RemoveCompletedTodosInput!"
+    "type": "RemoveTodoInput!"
   }
 ],
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "deletedTodoIds",
+  "name": "deletedTodoId",
   "args": null,
   "storageKey": null
 },
@@ -74,13 +80,13 @@ v4 = {
 return {
   "kind": "Request",
   "operationKind": "mutation",
-  "name": "RemoveCompletedTodosMutation",
+  "name": "RemoveTodoMutation",
   "id": null,
-  "text": "mutation RemoveCompletedTodosMutation(\n  $input: RemoveCompletedTodosInput!\n) {\n  removeCompletedTodos(input: $input) {\n    deletedTodoIds\n    viewer {\n      completedCount\n      totalCount\n      id\n    }\n  }\n}\n",
+  "text": "mutation RemoveTodoMutation(\n  $input: RemoveTodoInput!\n) {\n  removeTodo(input: $input) {\n    deletedTodoId\n    viewer {\n      completedCount\n      totalCount\n      id\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
-    "name": "RemoveCompletedTodosMutation",
+    "name": "RemoveTodoMutation",
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": v0,
@@ -88,10 +94,10 @@ return {
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "removeCompletedTodos",
+        "name": "removeTodo",
         "storageKey": null,
         "args": v1,
-        "concreteType": "RemoveCompletedTodosPayload",
+        "concreteType": "RemoveTodoPayload",
         "plural": false,
         "selections": [
           v2,
@@ -114,16 +120,16 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "RemoveCompletedTodosMutation",
+    "name": "RemoveTodoMutation",
     "argumentDefinitions": v0,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "removeCompletedTodos",
+        "name": "removeTodo",
         "storageKey": null,
         "args": v1,
-        "concreteType": "RemoveCompletedTodosPayload",
+        "concreteType": "RemoveTodoPayload",
         "plural": false,
         "selections": [
           v2,
@@ -153,5 +159,5 @@ return {
   }
 };
 })();
-(node as any).hash = '303799d791e6e233861ee011ff3bdbb8';
+(node as any).hash = '560d32d6f18b4072042cf217a41beb97';
 export default node;

@@ -1,34 +1,38 @@
 /* tslint:disable */
 
-import { ConcreteRequest } from 'relay-runtime';
-export type ChangeTodoStatusMutationVariables = {
-    readonly input: {
-        readonly complete?: boolean;
-        readonly id?: string;
-        readonly clientMutationId: string | null;
-    };
+import { ConcreteRequest } from "relay-runtime";
+export type MarkAllTodosInput = {
+    readonly complete: boolean;
+    readonly clientMutationId?: string | null;
 };
-export type ChangeTodoStatusMutationResponse = {
-    readonly changeTodoStatus: ({
-        readonly todo: ({
+export type MarkAllTodosMutationVariables = {
+    readonly input: MarkAllTodosInput;
+};
+export type MarkAllTodosMutationResponse = {
+    readonly markAllTodos: ({
+        readonly changedTodos: ReadonlyArray<({
             readonly id: string;
             readonly complete: boolean | null;
-        }) | null;
+        }) | null> | null;
         readonly viewer: ({
             readonly id: string;
             readonly completedCount: number | null;
         }) | null;
     }) | null;
 };
+export type MarkAllTodosMutation = {
+    readonly response: MarkAllTodosMutationResponse;
+    readonly variables: MarkAllTodosMutationVariables;
+};
 
 
 
 /*
-mutation ChangeTodoStatusMutation(
-  $input: ChangeTodoStatusInput!
+mutation MarkAllTodosMutation(
+  $input: MarkAllTodosInput!
 ) {
-  changeTodoStatus(input: $input) {
-    todo {
+  markAllTodos(input: $input) {
+    changedTodos {
       id
       complete
     }
@@ -45,7 +49,7 @@ var v0 = [
   {
     "kind": "LocalArgument",
     "name": "input",
-    "type": "ChangeTodoStatusInput!",
+    "type": "MarkAllTodosInput!",
     "defaultValue": null
   }
 ],
@@ -60,27 +64,27 @@ v2 = [
   {
     "kind": "LinkedField",
     "alias": null,
-    "name": "changeTodoStatus",
+    "name": "markAllTodos",
     "storageKey": null,
     "args": [
       {
         "kind": "Variable",
         "name": "input",
         "variableName": "input",
-        "type": "ChangeTodoStatusInput!"
+        "type": "MarkAllTodosInput!"
       }
     ],
-    "concreteType": "ChangeTodoStatusPayload",
+    "concreteType": "MarkAllTodosPayload",
     "plural": false,
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "todo",
+        "name": "changedTodos",
         "storageKey": null,
         "args": null,
         "concreteType": "Todo",
-        "plural": false,
+        "plural": true,
         "selections": [
           v1,
           {
@@ -117,13 +121,13 @@ v2 = [
 return {
   "kind": "Request",
   "operationKind": "mutation",
-  "name": "ChangeTodoStatusMutation",
+  "name": "MarkAllTodosMutation",
   "id": null,
-  "text": "mutation ChangeTodoStatusMutation(\n  $input: ChangeTodoStatusInput!\n) {\n  changeTodoStatus(input: $input) {\n    todo {\n      id\n      complete\n    }\n    viewer {\n      id\n      completedCount\n    }\n  }\n}\n",
+  "text": "mutation MarkAllTodosMutation(\n  $input: MarkAllTodosInput!\n) {\n  markAllTodos(input: $input) {\n    changedTodos {\n      id\n      complete\n    }\n    viewer {\n      id\n      completedCount\n    }\n  }\n}\n",
   "metadata": {},
   "fragment": {
     "kind": "Fragment",
-    "name": "ChangeTodoStatusMutation",
+    "name": "MarkAllTodosMutation",
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": v0,
@@ -131,11 +135,11 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "ChangeTodoStatusMutation",
+    "name": "MarkAllTodosMutation",
     "argumentDefinitions": v0,
     "selections": v2
   }
 };
 })();
-(node as any).hash = '82df4993530f2c7019c4cb7382a187fa';
+(node as any).hash = '00fd81d60a24546c792660837e3fc6bd';
 export default node;

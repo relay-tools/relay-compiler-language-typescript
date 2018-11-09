@@ -1,32 +1,39 @@
-import { TypeGenerator, IRTransforms } from "relay-compiler";
+import { IRTransforms, TypeGenerator } from "relay-compiler";
 
-import * as ts from "typescript";
 import * as path from "path";
+import * as ts from "typescript";
 
 import {
-  transformScalarType,
-  transformInputType,
-  ScalarTypeMapping,
-  State
-} from "./TypeScriptTypeTransformers";
-import {
-  GraphQLNonNull,
   GraphQLEnumType,
-  GraphQLType,
+  GraphQLNamedType,
+  GraphQLNonNull,
   GraphQLScalarType,
-  GraphQLNamedType
+  GraphQLType
 } from "graphql";
 import {
-  IRVisitor,
-  SchemaUtils,
-  IRTransform,
-  Fragment,
-  Root
-} from "relay-compiler/lib/GraphQLCompilerPublic";
+  ScalarTypeMapping,
+  State,
+  transformInputType,
+  transformScalarType
+} from "./TypeScriptTypeTransformers";
+
+// Get the types
+import * as GraphQLCompilerTypes from "graphql-compiler";
+// Load the actual code with a fallback to < Relay 1.6 which changed graphql-compiler to an actual package.
+let GraphQLCompiler: typeof GraphQLCompilerTypes;
+try {
+  GraphQLCompiler = require("relay-compiler/lib/GraphQLCompilerPublic");
+} catch (err) {
+  GraphQLCompiler = require("graphql-compiler");
+}
+const { IRVisitor, SchemaUtils } = GraphQLCompiler;
 
 import { TypeGeneratorOptions } from "relay-compiler";
 
 const { isAbstractType } = SchemaUtils;
+
+const REF_TYPE = " $refType";
+const FRAGMENT_REFS = " $fragmentRefs";
 
 export const generate: TypeGenerator["generate"] = (node, options) => {
   const ast: ts.Statement[] = IRVisitor.visit(node, createVisitor(options));
@@ -68,14 +75,8 @@ function makeProp(
   state: State,
   concreteType?: string
 ): ts.PropertySignature {
-  let {
-    key,
-    schemaName,
-    value,
-    conditional,
-    nodeType,
-    nodeSelections
-  } = selection;
+  let { value } = selection;
+  const { key, schemaName, conditional, nodeType, nodeSelections } = selection;
   if (nodeType) {
     value = transformScalarType(
       nodeType,
@@ -179,7 +180,7 @@ function selectionsToAST(
       if (refTypeName) {
         props.push(
           readOnlyObjectTypeProperty(
-            " $refType",
+            REF_TYPE,
             ts.createTypeReferenceNode(
               ts.createIdentifier(refTypeName),
               undefined
@@ -247,11 +248,11 @@ function mergeSelections(a: SelectionMap, b: SelectionMap): SelectionMap {
   return merged;
 }
 
-function isPlural(node: Fragment): boolean {
+function isPlural(node: GraphQLCompilerTypes.Fragment): boolean {
   return Boolean(node.metadata && node.metadata.plural);
 }
 
-function exportType(name: string, type: ts.TypeNode): ts.Statement {
+function exportType(name: string, type: ts.TypeNode) {
   return ts.createTypeAliasDeclaration(
     undefined,
     [ts.createToken(ts.SyntaxKind.ExportKeyword)],
@@ -282,6 +283,8 @@ function createVisitor(options: TypeGeneratorOptions) {
     customScalars: options.customScalars,
     enumsHasteModule: options.enumsHasteModule,
     existingFragmentNames: options.existingFragmentNames,
+    generatedInputObjectTypes: {},
+    generatedFragments: new Set(),
     inputFieldWhiteList: options.inputFieldWhiteList,
     relayRuntimeModule: options.relayRuntimeModule,
     usedEnums: {},
@@ -294,15 +297,31 @@ function createVisitor(options: TypeGeneratorOptions) {
     leave: {
       Root(node: any) {
         const inputVariablesType = generateInputVariablesType(node, state);
+        const inputObjectTypes = generateInputObjectTypes(state);
         const responseType = exportType(
           `${node.name}Response`,
           selectionsToAST(node.selections, state)
         );
+        const operationType = exportType(
+          node.name,
+          exactObjectTypeAnnotation([
+            readOnlyObjectTypeProperty(
+              "response",
+              ts.createTypeReferenceNode(responseType.name, undefined)
+            ),
+            readOnlyObjectTypeProperty(
+              "variables",
+              ts.createTypeReferenceNode(inputVariablesType.name, undefined)
+            )
+          ])
+        );
         return [
           ...getFragmentImports(state),
           ...getEnumDefinitions(state),
+          ...inputObjectTypes,
           inputVariablesType,
-          responseType
+          responseType,
+          operationType
         ];
       },
 
@@ -326,14 +345,39 @@ function createVisitor(options: TypeGeneratorOptions) {
           }
           return [selection];
         });
+        state.generatedFragments.add(node.name);
         const refTypeName = getRefTypeName(node.name);
-        const refType = ts.createEnumDeclaration(
-          undefined,
-          [ts.createToken(ts.SyntaxKind.ExportKeyword)],
-          ts.createIdentifier(refTypeName),
-          []
-        );
-
+        const refTypeNodes: ts.Node[] = [];
+        if (options.useSingleArtifactDirectory) {
+          const _refTypeName = `_${refTypeName}`;
+          const _refType = ts.createVariableStatement(
+            [ts.createToken(ts.SyntaxKind.DeclareKeyword)],
+            ts.createVariableDeclarationList(
+              [
+                ts.createVariableDeclaration(
+                  _refTypeName,
+                  ts.createTypeOperatorNode(
+                    ts.SyntaxKind.UniqueKeyword,
+                    ts.createKeywordTypeNode(ts.SyntaxKind.SymbolKeyword)
+                  )
+                )
+              ],
+              ts.NodeFlags.Const
+            )
+          );
+          const refType = exportType(
+            refTypeName,
+            ts.createTypeQueryNode(ts.createIdentifier(_refTypeName))
+          );
+          refTypeNodes.push(_refType);
+          refTypeNodes.push(refType);
+        } else {
+          const refType = exportType(
+            refTypeName,
+            ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+          );
+          refTypeNodes.push(refType);
+        }
         const baseType = selectionsToAST(selections, state, refTypeName);
         const type = isPlural(node)
           ? ts.createTypeReferenceNode(ts.createIdentifier("ReadonlyArray"), [
@@ -343,8 +387,7 @@ function createVisitor(options: TypeGeneratorOptions) {
         return [
           ...getFragmentImports(state),
           ...getEnumDefinitions(state),
-          importTypes(["FragmentReference"], state.relayRuntimeModule),
-          refType,
+          ...refTypeNodes,
           exportType(node.name, type)
         ];
       },
@@ -403,7 +446,7 @@ function createVisitor(options: TypeGeneratorOptions) {
   };
 }
 
-function selectionsToMap(selections: Array<Selection>): SelectionMap {
+function selectionsToMap(selections: Selection[]): SelectionMap {
   const map = new Map();
   selections.forEach(selection => {
     const previousSel = map.get(selection.key);
@@ -421,7 +464,24 @@ function flattenArray<T>(arrayOfArrays: T[][]): T[] {
   return result;
 }
 
-function generateInputVariablesType(node: Root, state: State) {
+function generateInputObjectTypes(state: State) {
+  return Object.keys(state.generatedInputObjectTypes).map(typeIdentifier => {
+    const inputObjectType = state.generatedInputObjectTypes[typeIdentifier];
+    if (inputObjectType === "pending") {
+      throw new Error(
+        "TypeScriptGenerator: Expected input object type to have been" +
+          " defined before calling `generateInputObjectTypes`"
+      );
+    } else {
+      return exportType(typeIdentifier, inputObjectType);
+    }
+  });
+}
+
+function generateInputVariablesType(
+  node: GraphQLCompilerTypes.Root,
+  state: State
+) {
   return exportType(
     `${node.name}Variables`,
     exactObjectTypeAnnotation(
@@ -456,7 +516,7 @@ function groupRefs(props: Selection[]): Selection[] {
       )
     );
     result.push({
-      key: " $fragments",
+      key: FRAGMENT_REFS,
       conditional: false,
       value
     });
@@ -481,6 +541,7 @@ function getFragmentImports(state: State) {
     for (const usedFragment of usedFragments) {
       const refTypeName = getRefTypeName(usedFragment);
       if (
+        !state.generatedFragments.has(usedFragment) &&
         state.useSingleArtifactDirectory &&
         state.existingFragmentNames.has(usedFragment)
       ) {
@@ -529,7 +590,7 @@ function stringLiteralTypeAnnotation(name: string): ts.TypeNode {
 }
 
 function getRefTypeName(name: string): string {
-  return `${name}_ref`;
+  return `${name}$ref`;
 }
 
 export const transforms: TypeGenerator["transforms"] = [

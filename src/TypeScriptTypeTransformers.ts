@@ -2,8 +2,8 @@ import * as ts from "typescript";
 
 import {
   GraphQLEnumType,
-  GraphQLInputType,
   GraphQLInputObjectType,
+  GraphQLInputType,
   GraphQLInterfaceType,
   GraphQLList,
   GraphQLNonNull,
@@ -22,7 +22,15 @@ export type ScalarTypeMapping = {
 export type State = {
   usedEnums: { [name: string]: GraphQLEnumType };
   usedFragments: Set<string>;
+  generatedInputObjectTypes: {
+    [name: string]: ts.TypeNode | "pending";
+  };
+  generatedFragments: Set<string>;
 } & TypeGeneratorOptions;
+
+function getInputObjectTypeIdentifier(type: GraphQLInputObjectType): string {
+  return type.name;
+}
 
 export function transformScalarType(
   type: GraphQLType,
@@ -114,6 +122,14 @@ function transformNonNullableInputType(type: GraphQLInputType, state: State) {
   } else if (type instanceof GraphQLEnumType) {
     return transformGraphQLEnumType(type, state);
   } else if (type instanceof GraphQLInputObjectType) {
+    const typeIdentifier = getInputObjectTypeIdentifier(type);
+    if (state.generatedInputObjectTypes[typeIdentifier]) {
+      return ts.createTypeReferenceNode(
+        ts.createIdentifier(typeIdentifier),
+        []
+      );
+    }
+    state.generatedInputObjectTypes[typeIdentifier] = "pending";
     const fields = type.getFields();
 
     const props = Object.keys(fields)
@@ -123,7 +139,7 @@ function transformNonNullableInputType(type: GraphQLInputType, state: State) {
         const property = ts.createPropertySignature(
           [ts.createToken(ts.SyntaxKind.ReadonlyKeyword)],
           ts.createIdentifier(field.name),
-          field.type instanceof GraphQLNonNull
+          !(field.type instanceof GraphQLNonNull)
             ? ts.createToken(ts.SyntaxKind.QuestionToken)
             : undefined,
           transformInputType(field.type, state),
@@ -131,7 +147,10 @@ function transformNonNullableInputType(type: GraphQLInputType, state: State) {
         );
         return property;
       });
-    return ts.createTypeLiteralNode(props);
+    state.generatedInputObjectTypes[typeIdentifier] = ts.createTypeLiteralNode(
+      props
+    );
+    return ts.createTypeReferenceNode(ts.createIdentifier(typeIdentifier), []);
   } else {
     throw new Error(
       `Could not convert from GraphQL type ${(type as GraphQLInputType).toString()}`

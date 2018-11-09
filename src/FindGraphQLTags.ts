@@ -1,10 +1,10 @@
-import * as ts from "typescript";
 import * as path from "path";
+import * as ts from "typescript";
 import * as util from "util";
 
 import { GraphQLTag, GraphQLTagFinder } from "relay-compiler";
-import { callbackify } from "util";
 import { isPropertyAccessOrQualifiedName } from "typescript";
+import { callbackify } from "util";
 
 interface Location {
   line: number;
@@ -171,7 +171,7 @@ function getSourceLocationOffset(quasi: ts.TaggedTemplateExpression) {
   const pos = getTemplateNode(quasi).pos;
   const loc = quasi.getSourceFile().getLineAndCharacterOfPosition(pos);
   return {
-    line: loc.line,
+    line: loc.line + 1,
     column: loc.character + 1
   };
 }
