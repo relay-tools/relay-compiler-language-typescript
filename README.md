@@ -5,8 +5,6 @@
 A language plugin for [Relay](https://facebook.github.io/relay/) that adds TypeScript support, including emitting type
 definitions.
 
-⚠️ As of this writing, the stable version of relay with this plugin isn't released yet so you will need to use 1.7.0 release candidate eg.: `yarn add relay-runtime@1.7.0-rc.1`.
-
 ## Installation
 
 Add the package to your dev dependencies:
