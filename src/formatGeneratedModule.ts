@@ -7,7 +7,7 @@ export const formatGeneratedModule: FormatModule = ({
   concreteText,
   typeText,
   hash,
-  relayRuntimeModule,
+  relayRuntimeModule = "relay-runtime",
   sourceHash
 }) => {
   const documentTypeImport = documentType
