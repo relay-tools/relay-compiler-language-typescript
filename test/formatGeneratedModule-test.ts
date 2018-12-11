@@ -48,4 +48,16 @@ describe('formatGeneratedModule', () => {
       sourceHash: 'edcba',
     })).toMatchFile(join(__dirname, 'fixtures/generated-module/complete-example.ts'))
   })
+
+  it('works without passing relay runtime module explicitly', () => {
+    expect(formatGeneratedModule({
+      moduleName: 'complete-example',
+      documentType: 'ConcreteFragment',
+      docText: null,
+      concreteText: JSON.stringify({ the: { fragment: { data: 42 } }}),
+      typeText: 'export type CompleteExample = { readonly id: string }',
+      hash: 'abcde',
+      sourceHash: 'edcba',
+    })).toMatchFile(join(__dirname, 'fixtures/generated-module/complete-example.ts'))
+  })
 })
