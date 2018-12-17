@@ -134,7 +134,11 @@ function transformNonNullableInputType(type: GraphQLInputType, state: State) {
 
     const props = Object.keys(fields)
       .map(key => fields[key])
-      .filter(field => state.inputFieldWhiteList.indexOf(field.name) < 0)
+      .filter(
+        field =>
+          state.optionalInputFields &&
+          state.optionalInputFields.indexOf(field.name) < 0
+      )
       .map(field => {
         const property = ts.createPropertySignature(
           [ts.createToken(ts.SyntaxKind.ReadonlyKeyword)],

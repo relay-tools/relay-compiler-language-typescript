@@ -1,5 +1,5 @@
 import { RelayConcreteNode } from "relay-runtime";
-import { Root, Fragment, IRTransform } from "../../graphql-compiler";
+import { Fragment, IRTransform, Root } from "../../graphql-compiler";
 
 export type GraphQLTag = {
   keyName: string | null;
@@ -33,23 +33,20 @@ export type FormatModule = (
   }
 ) => string;
 
-export type GraphQLTagFinder = (
-  text: string,
-  filePath: string
-) => Array<GraphQLTag>;
+export type GraphQLTagFinder = (text: string, filePath: string) => GraphQLTag[];
 
 export interface TypeGeneratorOptions {
   readonly customScalars: { [type: string]: string };
   readonly useHaste: boolean;
   readonly enumsHasteModule: string | null;
   readonly existingFragmentNames: Set<string>;
-  readonly inputFieldWhiteList: ReadonlyArray<string>;
+  readonly optionalInputFields: ReadonlyArray<string>;
   readonly relayRuntimeModule: string;
   readonly useSingleArtifactDirectory: boolean;
 }
 
 export interface TypeGenerator {
-  transforms: Array<IRTransform>;
+  transforms: IRTransform[];
   generate: (node: Root | Fragment, options: TypeGeneratorOptions) => string;
 }
 

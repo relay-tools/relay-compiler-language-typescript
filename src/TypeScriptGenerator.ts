@@ -285,7 +285,7 @@ function createVisitor(options: TypeGeneratorOptions) {
     existingFragmentNames: options.existingFragmentNames,
     generatedInputObjectTypes: {},
     generatedFragments: new Set(),
-    inputFieldWhiteList: options.inputFieldWhiteList,
+    optionalInputFields: options.optionalInputFields,
     relayRuntimeModule: options.relayRuntimeModule,
     usedEnums: {},
     usedFragments: new Set(),
