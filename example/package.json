@@ -5,7 +5,7 @@
     "build":
       "relay-compiler --src ./ts/ --schema ./data/schema.graphql --language typescript --artifactDirectory ./ts/__relay_artifacts__",
     "update-schema": "babel-node ./scripts/updateSchema.js",
-    "lint": "eslint ./js",
+    "lint": "tslint --project tsconfig.json",
     "type-check": "tsc --noEmit --pretty"
   },
   "resolutions": {
@@ -48,7 +48,6 @@
     "babel-cli": "^6.26.0",
     "babel-eslint": "6.1.2",
     "csstype": "^2.5.6",
-    "eslint": "3.19.0",
     "eslint-config-fbjs": "1.1.1",
     "eslint-plugin-babel": "3.3.0",
     "eslint-plugin-flowtype": "2.15.0",
@@ -58,6 +57,8 @@
     "relay-compiler-language-typescript":
       "file:../relay-compiler-language-typescript-1.1.1-alpha.1.tgz",
     "ts-loader": "^3.2.0",
+    "tslint": "^5.12.0",
+    "tslint-plugin-relay": "^0.0.3",
     "typescript": "2.9.1"
   }
 }
