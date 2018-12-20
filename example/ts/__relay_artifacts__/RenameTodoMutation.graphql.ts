@@ -1,11 +1,7 @@
 /* tslint:disable */
 
 import { ConcreteRequest } from "relay-runtime";
-export type RenameTodoInput = {
-    readonly id: string;
-    readonly text: string;
-    readonly clientMutationId?: string | null;
-};
+export type RenameTodoInput = {};
 export type RenameTodoMutationVariables = {
     readonly input: RenameTodoInput;
 };

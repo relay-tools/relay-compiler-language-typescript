@@ -1,10 +1,7 @@
 /* tslint:disable */
 
 import { ConcreteRequest } from "relay-runtime";
-export type MarkAllTodosInput = {
-    readonly complete: boolean;
-    readonly clientMutationId?: string | null;
-};
+export type MarkAllTodosInput = {};
 export type MarkAllTodosMutationVariables = {
     readonly input: MarkAllTodosInput;
 };
