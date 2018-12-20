@@ -1,7 +1,11 @@
 /* tslint:disable */
 
 import { ConcreteRequest } from "relay-runtime";
-export type ChangeTodoStatusInput = {};
+export type ChangeTodoStatusInput = {
+    readonly complete: boolean;
+    readonly id: string;
+    readonly clientMutationId?: string | null;
+};
 export type ChangeTodoStatusMutationVariables = {
     readonly input: ChangeTodoStatusInput;
 };
