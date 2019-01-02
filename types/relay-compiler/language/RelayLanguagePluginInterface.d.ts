@@ -43,6 +43,7 @@ export interface TypeGeneratorOptions {
   readonly optionalInputFields: ReadonlyArray<string>;
   readonly relayRuntimeModule: string;
   readonly useSingleArtifactDirectory: boolean;
+  readonly noFutureProofEnums: boolean;
 }
 
 export interface TypeGenerator {
