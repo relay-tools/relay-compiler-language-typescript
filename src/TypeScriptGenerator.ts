@@ -290,7 +290,8 @@ function createVisitor(options: TypeGeneratorOptions) {
     usedEnums: {},
     usedFragments: new Set(),
     useHaste: options.useHaste,
-    useSingleArtifactDirectory: options.useSingleArtifactDirectory
+    useSingleArtifactDirectory: options.useSingleArtifactDirectory,
+    noFutureProofEnums: options.noFutureProofEnums
   };
 
   return {
@@ -564,7 +565,11 @@ function anyTypeAlias(typeName: string): ts.Statement {
   );
 }
 
-function getEnumDefinitions({ enumsHasteModule, usedEnums }: State) {
+function getEnumDefinitions({
+  enumsHasteModule,
+  usedEnums,
+  noFutureProofEnums
+}: State) {
   const enumNames = Object.keys(usedEnums).sort();
   if (enumNames.length === 0) {
     return [];
@@ -575,7 +580,9 @@ function getEnumDefinitions({ enumsHasteModule, usedEnums }: State) {
   return enumNames.map(name => {
     const values = usedEnums[name].getValues().map(({ value }) => value);
     values.sort();
-    values.push("%future added value");
+    if (!noFutureProofEnums) {
+      values.push("%future added value");
+    }
     return exportType(
       name,
       ts.createUnionTypeNode(
