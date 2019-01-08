@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 
 export const loadCompilerOptions = (): ts.CompilerOptions => {
-  const configFileName = ts.findConfigFile("", ts.sys.fileExists);
+  const configFileName = ts.findConfigFile(process.cwd(), ts.sys.fileExists);
   if (!configFileName) {
     throw new Error("Could not find config file!");
   }
