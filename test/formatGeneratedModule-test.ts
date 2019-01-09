@@ -3,7 +3,7 @@ import { join } from 'path'
 
 import * as diff from 'jest-diff'
 
-import { formatGeneratedModule } from '../src/formatGeneratedModule'
+import { formatterFactory } from '../src/formatGeneratedModule'
 
 expect.extend({
   toMatchFile(received, fixturePath) {
@@ -37,6 +37,7 @@ expect.extend({
 
 describe('formatGeneratedModule', () => {
   it('works', () => {
+    const formatGeneratedModule = formatterFactory({noImplicitAny: true});
     expect(formatGeneratedModule({
       moduleName: 'complete-example',
       documentType: 'ConcreteFragment',
@@ -50,6 +51,7 @@ describe('formatGeneratedModule', () => {
   })
 
   it('works without passing relay runtime module explicitly', () => {
+    const formatGeneratedModule = formatterFactory({noImplicitAny: true});
     expect(formatGeneratedModule({
       moduleName: 'complete-example',
       documentType: 'ConcreteFragment',
@@ -59,5 +61,18 @@ describe('formatGeneratedModule', () => {
       hash: 'abcde',
       sourceHash: 'edcba',
     })).toMatchFile(join(__dirname, 'fixtures/generated-module/complete-example.ts'))
+  })
+
+  it('doesn\'t add a typecast if noImplicitAny is not set', () => {
+    const formatGeneratedModule = formatterFactory();
+    expect(formatGeneratedModule({
+      moduleName: 'complete-example',
+      documentType: 'ConcreteFragment',
+      docText: null,
+      concreteText: JSON.stringify({ the: { fragment: { data: 42 } }}),
+      typeText: 'export type CompleteExample = { readonly id: string }',
+      hash: 'abcde',
+      sourceHash: 'edcba',
+    })).toMatchFile(join(__dirname, 'fixtures/generated-module/complete-example-no-cast.ts'))
   })
 })

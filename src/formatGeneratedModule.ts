@@ -1,6 +1,10 @@
 import { FormatModule } from "relay-compiler";
+import * as ts from "typescript";
+import addAnyTypeCast from "./addAnyTypeCast";
 
-export const formatGeneratedModule: FormatModule = ({
+export const formatterFactory = (
+  compilerOptions: ts.CompilerOptions = {}
+): FormatModule => ({
   moduleName,
   documentType,
   docText,
@@ -14,13 +18,18 @@ export const formatGeneratedModule: FormatModule = ({
     ? `import { ${documentType} } from "${relayRuntimeModule}";`
     : "";
   const docTextComment = docText ? "\n/*\n" + docText.trim() + "\n*/\n" : "";
+  let nodeStatement = `const node: ${documentType ||
+    "never"} = ${concreteText};`;
+  if (compilerOptions.noImplicitAny) {
+    nodeStatement = addAnyTypeCast(nodeStatement).trim();
+  }
   return `/* tslint:disable */
 
 ${documentTypeImport}
 ${typeText || ""}
 
 ${docTextComment}
-const node: ${documentType || "never"} = ${concreteText};
+${nodeStatement}
 (node as any).hash = '${sourceHash}';
 export default node;
 `;
