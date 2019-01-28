@@ -8,7 +8,8 @@ import * as TypeScriptGenerator from '../src/TypeScriptGenerator'
 
 function generate(text, options) {
   const schema = transformASTSchema(RelayTestSchema, [
-    IRTransforms.schemaExtensions[1], // RelayRelayDirectiveTransform.SCHEMA_EXTENSION,
+    IRTransforms.schemaExtensions[1], // RelayMatchTransform.SCHEMA_EXTENSION,
+    IRTransforms.schemaExtensions[2], // RelayRelayDirectiveTransform.SCHEMA_EXTENSION,
   ]);
   const {definitions} = parseGraphQLText(schema, text);
   return new GraphQLCompilerContext(RelayTestSchema, schema)
@@ -42,6 +43,7 @@ describe('TypeScriptGenerator without a single artifact directory', () => {
       optionalInputFields: [],
       relayRuntimeModule: 'relay-runtime',
       useHaste: false,
+      useSingleArtifactDirectory: false,
     }),
   );
 });

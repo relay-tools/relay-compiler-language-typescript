@@ -293,6 +293,135 @@ export type UnionTypeTest = {
 
 `;
 
+exports[`TypeScriptGenerator with a single artifact directory matches expected output: match-field.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+fragment NameRendererFragment on User {
+  id
+  nameRenderer @match {
+    ...PlainUserNameRenderer_name @module(name: "PlainUserNameRenderer.react")
+    ...MarkdownUserNameRenderer_name
+      @module(name: "MarkdownUserNameRenderer.react")
+  }
+}
+
+fragment PlainUserNameRenderer_name on PlainUserNameRenderer {
+  plaintext
+  data {
+    text
+  }
+}
+
+fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
+  markdown
+  data {
+    markup
+  }
+}
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+type MarkdownUserNameRenderer_name$ref = any;
+type PlainUserNameRenderer_name$ref = any;
+declare const _NameRendererFragment$ref: unique symbol;
+export type NameRendererFragment$ref = typeof _NameRendererFragment$ref;
+export type NameRendererFragment = {
+    readonly id: string;
+    readonly nameRenderer: ({
+        readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
+    }) | null;
+    readonly " $refType": NameRendererFragment$ref;
+};
+
+
+declare const _PlainUserNameRenderer_name$ref: unique symbol;
+export type PlainUserNameRenderer_name$ref = typeof _PlainUserNameRenderer_name$ref;
+export type PlainUserNameRenderer_name = {
+    readonly plaintext: string | null;
+    readonly data: ({
+        readonly text: string | null;
+    }) | null;
+    readonly " $refType": PlainUserNameRenderer_name$ref;
+};
+
+
+declare const _MarkdownUserNameRenderer_name$ref: unique symbol;
+export type MarkdownUserNameRenderer_name$ref = typeof _MarkdownUserNameRenderer_name$ref;
+export type MarkdownUserNameRenderer_name = {
+    readonly markdown: string | null;
+    readonly data: ({
+        readonly markup: string | null;
+    }) | null;
+    readonly " $refType": MarkdownUserNameRenderer_name$ref;
+};
+
+`;
+
+exports[`TypeScriptGenerator with a single artifact directory matches expected output: match-field-in-query.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+query NameRendererQuery {
+  me {
+    nameRenderer @match {
+      ...PlainUserNameRenderer_name @module(name: "PlainUserNameRenderer.react")
+      ...MarkdownUserNameRenderer_name
+        @module(name: "MarkdownUserNameRenderer.react")
+    }
+  }
+}
+
+fragment PlainUserNameRenderer_name on PlainUserNameRenderer {
+  plaintext
+  data {
+    text
+  }
+}
+
+fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
+  markdown
+  data {
+    markup
+  }
+}
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+type MarkdownUserNameRenderer_name$ref = any;
+type PlainUserNameRenderer_name$ref = any;
+export type NameRendererQueryVariables = {
+};
+export type NameRendererQueryResponse = {
+    readonly me: ({
+        readonly nameRenderer: ({
+            readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
+        }) | null;
+    }) | null;
+};
+export type NameRendererQuery = {
+    readonly response: NameRendererQueryResponse;
+    readonly variables: NameRendererQueryVariables;
+};
+
+
+declare const _PlainUserNameRenderer_name$ref: unique symbol;
+export type PlainUserNameRenderer_name$ref = typeof _PlainUserNameRenderer_name$ref;
+export type PlainUserNameRenderer_name = {
+    readonly plaintext: string | null;
+    readonly data: ({
+        readonly text: string | null;
+    }) | null;
+    readonly " $refType": PlainUserNameRenderer_name$ref;
+};
+
+
+declare const _MarkdownUserNameRenderer_name$ref: unique symbol;
+export type MarkdownUserNameRenderer_name$ref = typeof _MarkdownUserNameRenderer_name$ref;
+export type MarkdownUserNameRenderer_name = {
+    readonly markdown: string | null;
+    readonly data: ({
+        readonly markup: string | null;
+    }) | null;
+    readonly " $refType": MarkdownUserNameRenderer_name$ref;
+};
+
+`;
+
 exports[`TypeScriptGenerator with a single artifact directory matches expected output: mutation.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation CommentCreateMutation(
@@ -397,11 +526,11 @@ export type PluralFragment = ReadonlyArray<{
 exports[`TypeScriptGenerator with a single artifact directory matches expected output: recursive-fragments.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment FragmentSpread on Node {
-   id
-   ... @include(if: $condition) {
-     ...FragmentSpread
-   }
- }
+  id
+  ... @include(if: $condition) {
+    ...FragmentSpread
+  }
+}
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 type FragmentSpread$ref = any;
@@ -614,6 +743,27 @@ fragment TypenameWithCommonSelections on Actor {
   }
 }
 
+fragment TypenameAlias on Actor {
+  _typeAlias: __typename
+  ... on User {
+    firstName
+  }
+  ... on Page {
+    username
+  }
+}
+
+fragment TypenameAliases on Actor {
+  _typeAlias1: __typename
+  _typeAlias2: __typename
+  ... on User {
+    firstName
+  }
+  ... on Page {
+    username
+  }
+}
+
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 declare const _TypenameInside$ref: unique symbol;
 export type TypenameInside$ref = typeof _TypenameInside$ref;
@@ -694,6 +844,44 @@ export type TypenameWithCommonSelections = {
     readonly " $refType": TypenameWithCommonSelections$ref;
 };
 
+
+declare const _TypenameAlias$ref: unique symbol;
+export type TypenameAlias$ref = typeof _TypenameAlias$ref;
+export type TypenameAlias = {
+    readonly _typeAlias: "User";
+    readonly firstName: string | null;
+    readonly " $refType": TypenameAlias$ref;
+} | {
+    readonly _typeAlias: "Page";
+    readonly username: string | null;
+    readonly " $refType": TypenameAlias$ref;
+} | {
+    /*This will never be '% other', but we need some
+    value in case none of the concrete values match.*/
+    readonly __typename: "%other";
+    readonly " $refType": TypenameAlias$ref;
+};
+
+
+declare const _TypenameAliases$ref: unique symbol;
+export type TypenameAliases$ref = typeof _TypenameAliases$ref;
+export type TypenameAliases = {
+    readonly _typeAlias1: "User";
+    readonly _typeAlias2: "User";
+    readonly firstName: string | null;
+    readonly " $refType": TypenameAliases$ref;
+} | {
+    readonly _typeAlias1: "Page";
+    readonly _typeAlias2: "Page";
+    readonly username: string | null;
+    readonly " $refType": TypenameAliases$ref;
+} | {
+    /*This will never be '% other', but we need some
+    value in case none of the concrete values match.*/
+    readonly __typename: "%other";
+    readonly " $refType": TypenameAliases$ref;
+};
+
 `;
 
 exports[`TypeScriptGenerator with a single artifact directory matches expected output: unmasked-fragment-spreads.graphql 1`] = `
@@ -715,7 +903,7 @@ fragment PhotoFragment on Image {
   ...RecursiveFragment @relay(mask: false)
 }
 
-fragment RecursiveFragment on Image {
+fragment RecursiveFragment on Image @relay(mask: false) {
   uri
   width
 }
@@ -1052,6 +1240,130 @@ export type UnionTypeTest = {
 
 `;
 
+exports[`TypeScriptGenerator without a single artifact directory matches expected output: match-field.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+fragment NameRendererFragment on User {
+  id
+  nameRenderer @match {
+    ...PlainUserNameRenderer_name @module(name: "PlainUserNameRenderer.react")
+    ...MarkdownUserNameRenderer_name
+      @module(name: "MarkdownUserNameRenderer.react")
+  }
+}
+
+fragment PlainUserNameRenderer_name on PlainUserNameRenderer {
+  plaintext
+  data {
+    text
+  }
+}
+
+fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
+  markdown
+  data {
+    markup
+  }
+}
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+type MarkdownUserNameRenderer_name$ref = any;
+type PlainUserNameRenderer_name$ref = any;
+export type NameRendererFragment$ref = any;
+export type NameRendererFragment = {
+    readonly id: string;
+    readonly nameRenderer: ({
+        readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
+    }) | null;
+    readonly " $refType": NameRendererFragment$ref;
+};
+
+
+export type PlainUserNameRenderer_name$ref = any;
+export type PlainUserNameRenderer_name = {
+    readonly plaintext: string | null;
+    readonly data: ({
+        readonly text: string | null;
+    }) | null;
+    readonly " $refType": PlainUserNameRenderer_name$ref;
+};
+
+
+export type MarkdownUserNameRenderer_name$ref = any;
+export type MarkdownUserNameRenderer_name = {
+    readonly markdown: string | null;
+    readonly data: ({
+        readonly markup: string | null;
+    }) | null;
+    readonly " $refType": MarkdownUserNameRenderer_name$ref;
+};
+
+`;
+
+exports[`TypeScriptGenerator without a single artifact directory matches expected output: match-field-in-query.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+query NameRendererQuery {
+  me {
+    nameRenderer @match {
+      ...PlainUserNameRenderer_name @module(name: "PlainUserNameRenderer.react")
+      ...MarkdownUserNameRenderer_name
+        @module(name: "MarkdownUserNameRenderer.react")
+    }
+  }
+}
+
+fragment PlainUserNameRenderer_name on PlainUserNameRenderer {
+  plaintext
+  data {
+    text
+  }
+}
+
+fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
+  markdown
+  data {
+    markup
+  }
+}
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+type MarkdownUserNameRenderer_name$ref = any;
+type PlainUserNameRenderer_name$ref = any;
+export type NameRendererQueryVariables = {
+};
+export type NameRendererQueryResponse = {
+    readonly me: ({
+        readonly nameRenderer: ({
+            readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
+        }) | null;
+    }) | null;
+};
+export type NameRendererQuery = {
+    readonly response: NameRendererQueryResponse;
+    readonly variables: NameRendererQueryVariables;
+};
+
+
+export type PlainUserNameRenderer_name$ref = any;
+export type PlainUserNameRenderer_name = {
+    readonly plaintext: string | null;
+    readonly data: ({
+        readonly text: string | null;
+    }) | null;
+    readonly " $refType": PlainUserNameRenderer_name$ref;
+};
+
+
+export type MarkdownUserNameRenderer_name$ref = any;
+export type MarkdownUserNameRenderer_name = {
+    readonly markdown: string | null;
+    readonly data: ({
+        readonly markup: string | null;
+    }) | null;
+    readonly " $refType": MarkdownUserNameRenderer_name$ref;
+};
+
+`;
+
 exports[`TypeScriptGenerator without a single artifact directory matches expected output: mutation.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation CommentCreateMutation(
@@ -1155,11 +1467,11 @@ export type PluralFragment = ReadonlyArray<{
 exports[`TypeScriptGenerator without a single artifact directory matches expected output: recursive-fragments.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment FragmentSpread on Node {
-   id
-   ... @include(if: $condition) {
-     ...FragmentSpread
-   }
- }
+  id
+  ... @include(if: $condition) {
+    ...FragmentSpread
+  }
+}
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 type FragmentSpread$ref = any;
@@ -1369,6 +1681,27 @@ fragment TypenameWithCommonSelections on Actor {
   }
 }
 
+fragment TypenameAlias on Actor {
+  _typeAlias: __typename
+  ... on User {
+    firstName
+  }
+  ... on Page {
+    username
+  }
+}
+
+fragment TypenameAliases on Actor {
+  _typeAlias1: __typename
+  _typeAlias2: __typename
+  ... on User {
+    firstName
+  }
+  ... on Page {
+    username
+  }
+}
+
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 export type TypenameInside$ref = any;
 export type TypenameInside = {
@@ -1443,6 +1776,42 @@ export type TypenameWithCommonSelections = {
     readonly " $refType": TypenameWithCommonSelections$ref;
 };
 
+
+export type TypenameAlias$ref = any;
+export type TypenameAlias = {
+    readonly _typeAlias: "User";
+    readonly firstName: string | null;
+    readonly " $refType": TypenameAlias$ref;
+} | {
+    readonly _typeAlias: "Page";
+    readonly username: string | null;
+    readonly " $refType": TypenameAlias$ref;
+} | {
+    /*This will never be '% other', but we need some
+    value in case none of the concrete values match.*/
+    readonly __typename: "%other";
+    readonly " $refType": TypenameAlias$ref;
+};
+
+
+export type TypenameAliases$ref = any;
+export type TypenameAliases = {
+    readonly _typeAlias1: "User";
+    readonly _typeAlias2: "User";
+    readonly firstName: string | null;
+    readonly " $refType": TypenameAliases$ref;
+} | {
+    readonly _typeAlias1: "Page";
+    readonly _typeAlias2: "Page";
+    readonly username: string | null;
+    readonly " $refType": TypenameAliases$ref;
+} | {
+    /*This will never be '% other', but we need some
+    value in case none of the concrete values match.*/
+    readonly __typename: "%other";
+    readonly " $refType": TypenameAliases$ref;
+};
+
 `;
 
 exports[`TypeScriptGenerator without a single artifact directory matches expected output: unmasked-fragment-spreads.graphql 1`] = `
@@ -1464,7 +1833,7 @@ fragment PhotoFragment on Image {
   ...RecursiveFragment @relay(mask: false)
 }
 
-fragment RecursiveFragment on Image {
+fragment RecursiveFragment on Image @relay(mask: false) {
   uri
   width
 }
