@@ -1,17 +1,14 @@
-import { IRTransforms, TypeGenerator } from "relay-compiler";
+import {
+  IRTransforms,
+  TypeGenerator,
+  TypeGeneratorOptions
+} from "relay-compiler";
+import * as RelayCompilerPublic from "relay-compiler/lib/RelayCompilerPublic";
 
-import * as path from "path";
+import { GraphQLNonNull } from "graphql";
 import * as ts from "typescript";
 
 import {
-  GraphQLEnumType,
-  GraphQLNamedType,
-  GraphQLNonNull,
-  GraphQLScalarType,
-  GraphQLType
-} from "graphql";
-import {
-  ScalarTypeMapping,
   State,
   transformInputType,
   transformScalarType
@@ -19,16 +16,10 @@ import {
 
 // Get the types
 import * as GraphQLCompilerTypes from "graphql-compiler";
-// Load the actual code with a fallback to < Relay 1.6 which changed graphql-compiler to an actual package.
-let GraphQLCompiler: typeof GraphQLCompilerTypes;
-try {
-  GraphQLCompiler = require("relay-compiler/lib/GraphQLCompilerPublic");
-} catch (err) {
-  GraphQLCompiler = require("graphql-compiler");
-}
-const { IRVisitor, SchemaUtils } = GraphQLCompiler;
 
-import { TypeGeneratorOptions } from "relay-compiler";
+const GraphQLCompiler: typeof GraphQLCompilerTypes = RelayCompilerPublic;
+
+const { IRVisitor, SchemaUtils } = GraphQLCompiler;
 
 const { isAbstractType } = SchemaUtils;
 
