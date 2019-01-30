@@ -55,6 +55,7 @@
     "typescript": ">=2.9.1"
   },
   "devDependencies": {
+    "@artsy/auto-config": "^0.0.8",
     "@types/graphql": "^0.12.1",
     "@types/invariant": "2.2.29",
     "@types/jest": "^22.0.1",
