@@ -17,6 +17,9 @@
   ],
   "homepage":
     "https://github.com/relay-tools/relay-compiler-language-typescript",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "repository": {
     "type": "git",
     "url":
