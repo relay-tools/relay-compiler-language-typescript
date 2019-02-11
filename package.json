@@ -17,6 +17,9 @@
   ],
   "homepage":
     "https://github.com/relay-tools/relay-compiler-language-typescript",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "repository": {
     "type": "git",
     "url":
@@ -39,7 +42,9 @@
     "prettier": "prettier --write '{src,types}/**/*.ts'",
     "sync-fixtures":
       "rsync -avh --delete --stats --progress ../relay/packages/relay-compiler/language/javascript/__tests__/fixtures/flow-generator/*.graphql test/fixtures/type-generator",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "pr-check": "scripts/pr-check.sh",
+    "deploy": "scripts/deploy.sh"
   },
   "dependencies": {
     "immutable": "^3.8.2",
@@ -53,6 +58,7 @@
     "typescript": ">=2.9.1"
   },
   "devDependencies": {
+    "@artsy/auto-config": "^0.0.8",
     "@types/graphql": "^0.12.1",
     "@types/invariant": "2.2.29",
     "@types/jest": "^22.0.1",
