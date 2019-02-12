@@ -43,8 +43,7 @@
     "sync-fixtures":
       "rsync -avh --delete --stats --progress ../relay/packages/relay-compiler/language/javascript/__tests__/fixtures/flow-generator/*.graphql test/fixtures/type-generator",
     "precommit": "lint-staged",
-    "pr-check": "scripts/pr-check.sh",
-    "deploy": "scripts/deploy.sh"
+    "pr-check": "scripts/pr-check.sh"
   },
   "dependencies": {
     "immutable": "^3.8.2",
