@@ -60,3 +60,5 @@ typings/
 .vscode
 /lib
 /bin
+
+.npmrc
