@@ -18,8 +18,8 @@ export const formatterFactory = (
     ? `import { ${documentType} } from "${relayRuntimeModule}";`
     : "";
   const docTextComment = docText ? "\n/*\n" + docText.trim() + "\n*/\n" : "";
-  let nodeStatement = `const node: ${documentType ||
-    "never"} = ${concreteText};`;
+  let nodeStatement = `const node = ${concreteText} as ${documentType ||
+    "never"};`;
   if (compilerOptions.noImplicitAny) {
     nodeStatement = addAnyTypeCast(nodeStatement).trim();
   }
