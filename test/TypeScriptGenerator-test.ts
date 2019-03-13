@@ -27,7 +27,6 @@ describe('TypeScriptGenerator with a single artifact directory', () => {
       enumsHasteModule: null,
       existingFragmentNames: new Set(['PhotoFragment']),
       optionalInputFields: [],
-      relayRuntimeModule: 'relay-runtime',
       useHaste: false,
       useSingleArtifactDirectory: true,
     }),
@@ -41,7 +40,6 @@ describe('TypeScriptGenerator without a single artifact directory', () => {
       enumsHasteModule: null,
       existingFragmentNames: new Set(['PhotoFragment']),
       optionalInputFields: [],
-      relayRuntimeModule: 'relay-runtime',
       useHaste: false,
       useSingleArtifactDirectory: false,
     }),
@@ -59,7 +57,6 @@ describe('Does not add `%future added values` when the noFutureProofEnums option
     enumsHasteModule: null,
     existingFragmentNames: new Set(['PhotoFragment']),
     optionalInputFields: [],
-    relayRuntimeModule: 'relay-runtime',
     useHaste: false,
     noFutureProofEnums: true,
   });

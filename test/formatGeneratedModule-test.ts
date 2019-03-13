@@ -44,7 +44,8 @@ describe('formatGeneratedModule', () => {
       docText: null,
       concreteText: JSON.stringify({ the: { fragment: { data: 42 } }}),
       typeText: 'export type CompleteExample = { readonly id: string }',
-      relayRuntimeModule: 'relay-runtime',
+      hash: '',
+      devOnlyAssignments: undefined,
       sourceHash: 'edcba',
     })).toMatchFile(join(__dirname, 'fixtures/generated-module/complete-example.ts'))
   })
@@ -57,7 +58,8 @@ describe('formatGeneratedModule', () => {
       docText: null,
       concreteText: JSON.stringify({ the: { fragment: { data: 42 } }}),
       typeText: 'export type CompleteExample = { readonly id: string }',
-      relayRuntimeModule: 'relay-runtime',
+      hash: '',
+      devOnlyAssignments: undefined,
       sourceHash: 'edcba',
     })).toMatchFile(join(__dirname, 'fixtures/generated-module/complete-example.ts'))
   })
@@ -70,7 +72,8 @@ describe('formatGeneratedModule', () => {
       docText: null,
       concreteText: JSON.stringify({ the: { fragment: { data: 42 } }}),
       typeText: 'export type CompleteExample = { readonly id: string }',
-      relayRuntimeModule: 'relay-runtime',
+      hash: '',
+      devOnlyAssignments: undefined,
       sourceHash: 'edcba',
     })).toMatchFile(join(__dirname, 'fixtures/generated-module/complete-example-no-cast.ts'))
   })

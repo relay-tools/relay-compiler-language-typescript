@@ -277,7 +277,6 @@ function createVisitor(options: TypeGeneratorOptions) {
     generatedInputObjectTypes: {},
     generatedFragments: new Set(),
     optionalInputFields: options.optionalInputFields,
-    relayRuntimeModule: options.relayRuntimeModule,
     usedEnums: {},
     usedFragments: new Set(),
     useHaste: options.useHaste,

@@ -29,8 +29,8 @@ export type FormatModule = (
     docText: string | null;
     concreteText: string;
     typeText: string;
-    devOnlyAssignments?: string | null;
-    relayRuntimeModule: string;
+    devOnlyAssignments: string | null | undefined;
+    hash: string | null | undefined;
     sourceHash: string;
   }
 ) => string;
@@ -43,7 +43,6 @@ export interface TypeGeneratorOptions {
   readonly enumsHasteModule: string | null;
   readonly existingFragmentNames: Set<string>;
   readonly optionalInputFields: ReadonlyArray<string>;
-  readonly relayRuntimeModule: string;
   readonly useSingleArtifactDirectory: boolean;
   readonly noFutureProofEnums: boolean;
 }
