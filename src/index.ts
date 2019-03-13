@@ -2,7 +2,6 @@ import { PluginInterface } from "relay-compiler";
 
 import { find } from "./FindGraphQLTags";
 import { formatterFactory } from "./formatGeneratedModule";
-import { loadCompilerOptions } from "./loadCompilerOptions";
 import * as TypeScriptGenerator from "./TypeScriptGenerator";
 
 export default function plugin(): PluginInterface {
@@ -10,7 +9,7 @@ export default function plugin(): PluginInterface {
     inputExtensions: ["ts", "tsx"],
     outputExtension: "ts",
     findGraphQLTags: find,
-    formatModule: formatterFactory(loadCompilerOptions()),
+    formatModule: formatterFactory(),
     typeGenerator: TypeScriptGenerator
   };
 }

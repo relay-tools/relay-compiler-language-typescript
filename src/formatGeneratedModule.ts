@@ -1,16 +1,11 @@
 import { FormatModule } from "relay-compiler";
-import * as ts from "typescript";
-import addAnyTypeCast from "./addAnyTypeCast";
 
-export const formatterFactory = (
-  compilerOptions: ts.CompilerOptions = {}
-): FormatModule => ({
+export const formatterFactory = (): FormatModule => ({
   moduleName,
   documentType,
   docText,
   concreteText,
   typeText,
-  hash,
   relayRuntimeModule = "relay-runtime",
   sourceHash
 }) => {
@@ -18,11 +13,8 @@ export const formatterFactory = (
     ? `import { ${documentType} } from "${relayRuntimeModule}";`
     : "";
   const docTextComment = docText ? "\n/*\n" + docText.trim() + "\n*/\n" : "";
-  let nodeStatement = `const node = (${concreteText}) as ${documentType ||
+  const nodeStatement = `const node = (${concreteText}) as ${documentType ||
     "never"};`;
-  if (compilerOptions.noImplicitAny) {
-    nodeStatement = addAnyTypeCast(nodeStatement).trim();
-  }
   return `/* tslint:disable */
 
 ${documentTypeImport}

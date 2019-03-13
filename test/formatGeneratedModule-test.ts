@@ -37,28 +37,27 @@ expect.extend({
 
 describe('formatGeneratedModule', () => {
   it('works', () => {
-    const formatGeneratedModule = formatterFactory({noImplicitAny: true});
+    const formatGeneratedModule = formatterFactory();
     expect(formatGeneratedModule({
       moduleName: 'complete-example',
       documentType: 'ConcreteFragment',
       docText: null,
       concreteText: JSON.stringify({ the: { fragment: { data: 42 } }}),
       typeText: 'export type CompleteExample = { readonly id: string }',
-      hash: 'abcde',
       relayRuntimeModule: 'relay-runtime',
       sourceHash: 'edcba',
     })).toMatchFile(join(__dirname, 'fixtures/generated-module/complete-example.ts'))
   })
 
   it('works without passing relay runtime module explicitly', () => {
-    const formatGeneratedModule = formatterFactory({noImplicitAny: true});
+    const formatGeneratedModule = formatterFactory();
     expect(formatGeneratedModule({
       moduleName: 'complete-example',
       documentType: 'ConcreteFragment',
       docText: null,
       concreteText: JSON.stringify({ the: { fragment: { data: 42 } }}),
       typeText: 'export type CompleteExample = { readonly id: string }',
-      hash: 'abcde',
+      relayRuntimeModule: 'relay-runtime',
       sourceHash: 'edcba',
     })).toMatchFile(join(__dirname, 'fixtures/generated-module/complete-example.ts'))
   })
@@ -71,7 +70,7 @@ describe('formatGeneratedModule', () => {
       docText: null,
       concreteText: JSON.stringify({ the: { fragment: { data: 42 } }}),
       typeText: 'export type CompleteExample = { readonly id: string }',
-      hash: 'abcde',
+      relayRuntimeModule: 'relay-runtime',
       sourceHash: 'edcba',
     })).toMatchFile(join(__dirname, 'fixtures/generated-module/complete-example-no-cast.ts'))
   })

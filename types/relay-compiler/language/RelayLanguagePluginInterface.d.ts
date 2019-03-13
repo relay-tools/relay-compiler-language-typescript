@@ -22,12 +22,14 @@ export type FormatModule = (
       | typeof RelayConcreteNode.FRAGMENT
       | typeof RelayConcreteNode.REQUEST
       | typeof RelayConcreteNode.BATCH_REQUEST
+      | "ConcreteFragment"
+      | "ConcreteRequest"
+      | "ReaderFragment"
       | null;
     docText: string | null;
     concreteText: string;
     typeText: string;
-    hash: string | null;
-    devOnlyAssignments: string | null;
+    devOnlyAssignments?: string | null;
     relayRuntimeModule: string;
     sourceHash: string;
   }
