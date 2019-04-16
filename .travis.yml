@@ -10,7 +10,6 @@ script:
   - yarn lint
   - yarn test
   - yarn build
-  - yarn pr-check
 
 before_deploy:
   - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
