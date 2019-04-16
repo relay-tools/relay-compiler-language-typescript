@@ -51,8 +51,8 @@ fragment FragmentSpread on Node {
 fragment ConcreateTypes on Viewer {
   actor {
     __typename
+    id
     ... on Page {
-      id
       ...PageFragment
     }
     ... on User {
@@ -70,16 +70,22 @@ declare const _FragmentSpread$ref: unique symbol;
 export type FragmentSpread$ref = typeof _FragmentSpread$ref;
 export type FragmentSpread = {
     readonly id: string;
-    readonly justFrag: ({
+    readonly justFrag: {
         readonly " $fragmentRefs": PictureFragment$ref;
-    }) | null;
-    readonly fragAndField: ({
+    } | null;
+    readonly fragAndField: {
         readonly uri: string | null;
         readonly " $fragmentRefs": PictureFragment$ref;
-    }) | null;
+    } | null;
     readonly " $fragmentRefs": OtherFragment$ref & UserFrag1$ref & UserFrag2$ref;
     readonly " $refType": FragmentSpread$ref;
-};
+} & ({
+    readonly " $fragmentRefs": UserFrag1$ref & UserFrag2$ref;
+} | {
+    /*This will never be '% other', but we need some
+    value in case none of the concrete values match.*/
+    readonly __typename: "%other";
+});
 
 
 type PageFragment$ref = any;
@@ -87,8 +93,12 @@ declare const _ConcreateTypes$ref: unique symbol;
 export type ConcreateTypes$ref = typeof _ConcreateTypes$ref;
 export type ConcreateTypes = {
     readonly actor: ({
-        readonly __typename: "Page";
+        readonly __typename: string;
         readonly id: string;
+        readonly name?: string | null;
+        readonly " $fragmentRefs": PageFragment$ref;
+    } & ({
+        readonly __typename: "Page";
         readonly " $fragmentRefs": PageFragment$ref;
     } | {
         readonly __typename: "User";
@@ -97,7 +107,7 @@ export type ConcreateTypes = {
         /*This will never be '% other', but we need some
         value in case none of the concrete values match.*/
         readonly __typename: "%other";
-    }) | null;
+    })) | null;
     readonly " $refType": ConcreateTypes$ref;
 };
 
@@ -172,26 +182,51 @@ export type InlineFragment$ref = typeof _InlineFragment$ref;
 export type InlineFragment = {
     readonly id: string;
     readonly name?: string | null;
-    readonly message?: ({
+    readonly message?: {
         readonly text: string | null;
-    }) | null;
+    } | null;
     readonly " $refType": InlineFragment$ref;
-};
+} & ({
+    readonly message: {
+        readonly text: string | null;
+    } | null;
+} | {
+    /*This will never be '% other', but we need some
+    value in case none of the concrete values match.*/
+    readonly __typename: "%other";
+});
 
 
 declare const _InlineFragmentWithOverlappingFields$ref: unique symbol;
 export type InlineFragmentWithOverlappingFields$ref = typeof _InlineFragmentWithOverlappingFields$ref;
 export type InlineFragmentWithOverlappingFields = {
-    readonly hometown?: ({
+    readonly hometown?: {
         readonly id: string;
         readonly name: string | null;
-        readonly message?: ({
+        readonly message?: {
             readonly text: string | null;
-        }) | null;
-    }) | null;
+        } | null;
+    } | null;
     readonly name?: string | null;
     readonly " $refType": InlineFragmentWithOverlappingFields$ref;
-};
+} & ({
+    readonly hometown: {
+        readonly id: string;
+        readonly name: string | null;
+    } | null;
+} | {
+    readonly name: string | null;
+    readonly hometown: {
+        readonly id: string;
+        readonly message: {
+            readonly text: string | null;
+        } | null;
+    } | null;
+} | {
+    /*This will never be '% other', but we need some
+    value in case none of the concrete values match.*/
+    readonly __typename: "%other";
+});
 
 
 declare const _InlineFragmentConditionalID$ref: unique symbol;
@@ -209,14 +244,21 @@ export type InlineFragmentKitchenSink$ref = typeof _InlineFragmentKitchenSink$re
 export type InlineFragmentKitchenSink = {
     readonly actor: ({
         readonly id: string;
-        readonly profilePicture: ({
+        readonly profilePicture: {
             readonly uri: string | null;
             readonly width?: number | null;
             readonly height?: number | null;
-        }) | null;
+        } | null;
         readonly name?: string | null;
         readonly " $fragmentRefs": SomeFragment$ref;
-    }) | null;
+    } & ({
+        readonly name: string | null;
+        readonly " $fragmentRefs": SomeFragment$ref;
+    } | {
+        /*This will never be '% other', but we need some
+        value in case none of the concrete values match.*/
+        readonly __typename: "%other";
+    })) | null;
     readonly " $refType": InlineFragmentKitchenSink$ref;
 };
 
@@ -256,20 +298,20 @@ query UnionTypeTest {
 declare const _LinkedField$ref: unique symbol;
 export type LinkedField$ref = typeof _LinkedField$ref;
 export type LinkedField = {
-    readonly profilePicture: ({
+    readonly profilePicture: {
         readonly uri: string | null;
         readonly width: number | null;
         readonly height: number | null;
-    }) | null;
-    readonly hometown: ({
+    } | null;
+    readonly hometown: {
         readonly id: string;
-        readonly profilePicture: ({
+        readonly profilePicture: {
             readonly uri: string | null;
-        }) | null;
-    }) | null;
-    readonly actor: ({
+        } | null;
+    } | null;
+    readonly actor: {
         readonly id: string;
-    }) | null;
+    } | null;
     readonly " $refType": LinkedField$ref;
 };
 
@@ -278,13 +320,16 @@ export type UnionTypeTestVariables = {
 };
 export type UnionTypeTestResponse = {
     readonly neverNode: ({
+        readonly __typename: string;
+        readonly id?: string;
+    } & ({
         readonly __typename: "FakeNode";
         readonly id: string;
     } | {
         /*This will never be '% other', but we need some
         value in case none of the concrete values match.*/
         readonly __typename: "%other";
-    }) | null;
+    })) | null;
 };
 export type UnionTypeTest = {
     readonly response: UnionTypeTestResponse;
@@ -325,9 +370,9 @@ declare const _NameRendererFragment$ref: unique symbol;
 export type NameRendererFragment$ref = typeof _NameRendererFragment$ref;
 export type NameRendererFragment = {
     readonly id: string;
-    readonly nameRenderer: ({
+    readonly nameRenderer: {
         readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
-    }) | null;
+    } | null;
     readonly " $refType": NameRendererFragment$ref;
 };
 
@@ -336,9 +381,9 @@ declare const _PlainUserNameRenderer_name$ref: unique symbol;
 export type PlainUserNameRenderer_name$ref = typeof _PlainUserNameRenderer_name$ref;
 export type PlainUserNameRenderer_name = {
     readonly plaintext: string | null;
-    readonly data: ({
+    readonly data: {
         readonly text: string | null;
-    }) | null;
+    } | null;
     readonly " $refType": PlainUserNameRenderer_name$ref;
 };
 
@@ -347,9 +392,9 @@ declare const _MarkdownUserNameRenderer_name$ref: unique symbol;
 export type MarkdownUserNameRenderer_name$ref = typeof _MarkdownUserNameRenderer_name$ref;
 export type MarkdownUserNameRenderer_name = {
     readonly markdown: string | null;
-    readonly data: ({
+    readonly data: {
         readonly markup: string | null;
-    }) | null;
+    } | null;
     readonly " $refType": MarkdownUserNameRenderer_name$ref;
 };
 
@@ -387,11 +432,11 @@ type PlainUserNameRenderer_name$ref = any;
 export type NameRendererQueryVariables = {
 };
 export type NameRendererQueryResponse = {
-    readonly me: ({
-        readonly nameRenderer: ({
+    readonly me: {
+        readonly nameRenderer: {
             readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
-        }) | null;
-    }) | null;
+        } | null;
+    } | null;
 };
 export type NameRendererQuery = {
     readonly response: NameRendererQueryResponse;
@@ -403,9 +448,9 @@ declare const _PlainUserNameRenderer_name$ref: unique symbol;
 export type PlainUserNameRenderer_name$ref = typeof _PlainUserNameRenderer_name$ref;
 export type PlainUserNameRenderer_name = {
     readonly plaintext: string | null;
-    readonly data: ({
+    readonly data: {
         readonly text: string | null;
-    }) | null;
+    } | null;
     readonly " $refType": PlainUserNameRenderer_name$ref;
 };
 
@@ -414,9 +459,9 @@ declare const _MarkdownUserNameRenderer_name$ref: unique symbol;
 export type MarkdownUserNameRenderer_name$ref = typeof _MarkdownUserNameRenderer_name$ref;
 export type MarkdownUserNameRenderer_name = {
     readonly markdown: string | null;
-    readonly data: ({
+    readonly data: {
         readonly markup: string | null;
-    }) | null;
+    } | null;
     readonly " $refType": MarkdownUserNameRenderer_name$ref;
 };
 
@@ -458,15 +503,15 @@ export type CommentCreateMutationVariables = {
     readonly orderBy?: ReadonlyArray<string> | null;
 };
 export type CommentCreateMutationResponse = {
-    readonly commentCreate: ({
-        readonly comment: ({
+    readonly commentCreate: {
+        readonly comment: {
             readonly id: string;
             readonly name: string | null;
-            readonly friends: ({
+            readonly friends: {
                 readonly count: number | null;
-            }) | null;
-        }) | null;
-    }) | null;
+            } | null;
+        } | null;
+    } | null;
 };
 export type CommentCreateMutation = {
     readonly response: CommentCreateMutationResponse;
@@ -494,11 +539,11 @@ export type InputHasArrayVariables = {
     readonly input?: UpdateAllSeenStateInput | null;
 };
 export type InputHasArrayResponse = {
-    readonly viewerNotificationsUpdateAllSeenState: ({
-        readonly stories: ReadonlyArray<({
+    readonly viewerNotificationsUpdateAllSeenState: {
+        readonly stories: ReadonlyArray<{
             readonly actorCount: number | null;
-        }) | null> | null;
-    }) | null;
+        } | null> | null;
+    } | null;
 };
 export type InputHasArray = {
     readonly response: InputHasArrayResponse;
@@ -577,9 +622,9 @@ export type ExampleQueryVariables = {
     readonly id: string;
 };
 export type ExampleQueryResponse = {
-    readonly node: ({
+    readonly node: {
         readonly id: string;
-    }) | null;
+    } | null;
 };
 export type ExampleQuery = {
     readonly response: ExampleQueryResponse;
@@ -610,11 +655,11 @@ export type TestMutationVariables = {
     readonly input: CommentCreateInput;
 };
 export type TestMutationResponse = {
-    readonly commentCreate: ({
-        readonly comment: ({
+    readonly commentCreate: {
+        readonly comment: {
             readonly id: string;
-        }) | null;
-    }) | null;
+        } | null;
+    } | null;
 };
 export type TestMutation = {
     readonly response: TestMutationResponse;
@@ -630,11 +675,11 @@ export type TestSubscriptionVariables = {
     readonly input?: FeedbackLikeInput | null;
 };
 export type TestSubscriptionResponse = {
-    readonly feedbackLikeSubscribe: ({
-        readonly feedback: ({
+    readonly feedbackLikeSubscribe: {
+        readonly feedback: {
             readonly id: string;
-        }) | null;
-    }) | null;
+        } | null;
+    } | null;
 };
 export type TestSubscription = {
     readonly response: TestSubscriptionResponse;
@@ -668,13 +713,13 @@ export type ScalarField = {
     readonly name: string | null;
     readonly websites: ReadonlyArray<string | null> | null;
     readonly traits: ReadonlyArray<PersonalityTraits | null> | null;
-    readonly aliasedLinkedField: ({
+    readonly aliasedLinkedField: {
         readonly aliasedField: number | null;
-    }) | null;
-    readonly screennames: ReadonlyArray<({
+    } | null;
+    readonly screennames: ReadonlyArray<{
         readonly name: string | null;
         readonly service: string | null;
-    }) | null> | null;
+    } | null> | null;
     readonly " $refType": ScalarField$ref;
 };
 
@@ -769,36 +814,40 @@ declare const _TypenameInside$ref: unique symbol;
 export type TypenameInside$ref = typeof _TypenameInside$ref;
 export type TypenameInside = {
     readonly __typename: "User";
-    readonly firstName: string | null;
+    readonly firstName?: string | null;
+    readonly username?: string | null;
     readonly " $refType": TypenameInside$ref;
+} & ({
+    readonly __typename: "User";
+    readonly firstName: string | null;
 } | {
     readonly __typename: "Page";
     readonly username: string | null;
-    readonly " $refType": TypenameInside$ref;
 } | {
     /*This will never be '% other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": TypenameInside$ref;
-};
+});
 
 
 declare const _TypenameOutside$ref: unique symbol;
 export type TypenameOutside$ref = typeof _TypenameOutside$ref;
 export type TypenameOutside = {
+    readonly __typename: string;
+    readonly firstName?: string | null;
+    readonly username?: string | null;
+    readonly " $refType": TypenameOutside$ref;
+} & ({
     readonly __typename: "User";
     readonly firstName: string | null;
-    readonly " $refType": TypenameOutside$ref;
 } | {
     readonly __typename: "Page";
     readonly username: string | null;
-    readonly " $refType": TypenameOutside$ref;
 } | {
     /*This will never be '% other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": TypenameOutside$ref;
-};
+});
 
 
 declare const _TypenameOutsideWithAbstractType$ref: unique symbol;
@@ -806,14 +855,25 @@ export type TypenameOutsideWithAbstractType$ref = typeof _TypenameOutsideWithAbs
 export type TypenameOutsideWithAbstractType = {
     readonly __typename: string;
     readonly username?: string | null;
-    readonly address?: ({
+    readonly address?: {
         readonly city: string | null;
         readonly country: string | null;
         readonly street?: string | null;
-    }) | null;
+    } | null;
     readonly firstName?: string | null;
     readonly " $refType": TypenameOutsideWithAbstractType$ref;
-};
+} & ({
+    readonly __typename: "User";
+    readonly firstName: string | null;
+    readonly address: {
+        readonly street: string | null;
+        readonly city: string | null;
+    } | null;
+} | {
+    /*This will never be '% other', but we need some
+    value in case none of the concrete values match.*/
+    readonly __typename: "%other";
+});
 
 
 declare const _TypenameWithoutSpreads$ref: unique symbol;
@@ -822,7 +882,13 @@ export type TypenameWithoutSpreads = {
     readonly firstName: string | null;
     readonly __typename: "User";
     readonly " $refType": TypenameWithoutSpreads$ref;
-};
+} & ({
+    readonly __typename: "User";
+} | {
+    /*This will never be '% other', but we need some
+    value in case none of the concrete values match.*/
+    readonly __typename: "%other";
+});
 
 
 declare const _TypenameWithoutSpreadsAbstractType$ref: unique symbol;
@@ -842,45 +908,60 @@ export type TypenameWithCommonSelections = {
     readonly firstName?: string | null;
     readonly username?: string | null;
     readonly " $refType": TypenameWithCommonSelections$ref;
-};
+} & ({
+    readonly __typename: "User";
+    readonly firstName: string | null;
+} | {
+    readonly __typename: "Page";
+    readonly username: string | null;
+} | {
+    /*This will never be '% other', but we need some
+    value in case none of the concrete values match.*/
+    readonly __typename: "%other";
+});
 
 
 declare const _TypenameAlias$ref: unique symbol;
 export type TypenameAlias$ref = typeof _TypenameAlias$ref;
 export type TypenameAlias = {
+    readonly _typeAlias: string;
+    readonly firstName?: string | null;
+    readonly username?: string | null;
+    readonly " $refType": TypenameAlias$ref;
+} & ({
     readonly _typeAlias: "User";
     readonly firstName: string | null;
-    readonly " $refType": TypenameAlias$ref;
 } | {
     readonly _typeAlias: "Page";
     readonly username: string | null;
-    readonly " $refType": TypenameAlias$ref;
 } | {
     /*This will never be '% other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": TypenameAlias$ref;
-};
+});
 
 
 declare const _TypenameAliases$ref: unique symbol;
 export type TypenameAliases$ref = typeof _TypenameAliases$ref;
 export type TypenameAliases = {
+    readonly _typeAlias1: string;
+    readonly _typeAlias2: string;
+    readonly firstName?: string | null;
+    readonly username?: string | null;
+    readonly " $refType": TypenameAliases$ref;
+} & ({
     readonly _typeAlias1: "User";
     readonly _typeAlias2: "User";
     readonly firstName: string | null;
-    readonly " $refType": TypenameAliases$ref;
 } | {
     readonly _typeAlias1: "Page";
     readonly _typeAlias2: "Page";
     readonly username: string | null;
-    readonly " $refType": TypenameAliases$ref;
 } | {
     /*This will never be '% other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": TypenameAliases$ref;
-};
+});
 
 `;
 
@@ -918,12 +999,12 @@ import { PhotoFragment$ref } from "./PhotoFragment.graphql";
 declare const _UserProfile$ref: unique symbol;
 export type UserProfile$ref = typeof _UserProfile$ref;
 export type UserProfile = {
-    readonly profilePicture: ({
+    readonly profilePicture: {
         readonly uri: string | null;
         readonly width: number | null;
         readonly height: number | null;
         readonly " $fragmentRefs": PhotoFragment$ref;
-    }) | null;
+    } | null;
     readonly " $refType": UserProfile$ref;
 };
 
@@ -1005,8 +1086,8 @@ fragment FragmentSpread on Node {
 fragment ConcreateTypes on Viewer {
   actor {
     __typename
+    id
     ... on Page {
-      id
       ...PageFragment
     }
     ... on User {
@@ -1023,24 +1104,34 @@ type UserFrag2$ref = any;
 export type FragmentSpread$ref = any;
 export type FragmentSpread = {
     readonly id: string;
-    readonly justFrag: ({
+    readonly justFrag: {
         readonly " $fragmentRefs": PictureFragment$ref;
-    }) | null;
-    readonly fragAndField: ({
+    } | null;
+    readonly fragAndField: {
         readonly uri: string | null;
         readonly " $fragmentRefs": PictureFragment$ref;
-    }) | null;
+    } | null;
     readonly " $fragmentRefs": OtherFragment$ref & UserFrag1$ref & UserFrag2$ref;
     readonly " $refType": FragmentSpread$ref;
-};
+} & ({
+    readonly " $fragmentRefs": UserFrag1$ref & UserFrag2$ref;
+} | {
+    /*This will never be '% other', but we need some
+    value in case none of the concrete values match.*/
+    readonly __typename: "%other";
+});
 
 
 type PageFragment$ref = any;
 export type ConcreateTypes$ref = any;
 export type ConcreateTypes = {
     readonly actor: ({
-        readonly __typename: "Page";
+        readonly __typename: string;
         readonly id: string;
+        readonly name?: string | null;
+        readonly " $fragmentRefs": PageFragment$ref;
+    } & ({
+        readonly __typename: "Page";
         readonly " $fragmentRefs": PageFragment$ref;
     } | {
         readonly __typename: "User";
@@ -1049,7 +1140,7 @@ export type ConcreateTypes = {
         /*This will never be '% other', but we need some
         value in case none of the concrete values match.*/
         readonly __typename: "%other";
-    }) | null;
+    })) | null;
     readonly " $refType": ConcreateTypes$ref;
 };
 
@@ -1123,25 +1214,50 @@ export type InlineFragment$ref = any;
 export type InlineFragment = {
     readonly id: string;
     readonly name?: string | null;
-    readonly message?: ({
+    readonly message?: {
         readonly text: string | null;
-    }) | null;
+    } | null;
     readonly " $refType": InlineFragment$ref;
-};
+} & ({
+    readonly message: {
+        readonly text: string | null;
+    } | null;
+} | {
+    /*This will never be '% other', but we need some
+    value in case none of the concrete values match.*/
+    readonly __typename: "%other";
+});
 
 
 export type InlineFragmentWithOverlappingFields$ref = any;
 export type InlineFragmentWithOverlappingFields = {
-    readonly hometown?: ({
+    readonly hometown?: {
         readonly id: string;
         readonly name: string | null;
-        readonly message?: ({
+        readonly message?: {
             readonly text: string | null;
-        }) | null;
-    }) | null;
+        } | null;
+    } | null;
     readonly name?: string | null;
     readonly " $refType": InlineFragmentWithOverlappingFields$ref;
-};
+} & ({
+    readonly hometown: {
+        readonly id: string;
+        readonly name: string | null;
+    } | null;
+} | {
+    readonly name: string | null;
+    readonly hometown: {
+        readonly id: string;
+        readonly message: {
+            readonly text: string | null;
+        } | null;
+    } | null;
+} | {
+    /*This will never be '% other', but we need some
+    value in case none of the concrete values match.*/
+    readonly __typename: "%other";
+});
 
 
 export type InlineFragmentConditionalID$ref = any;
@@ -1157,14 +1273,21 @@ export type InlineFragmentKitchenSink$ref = any;
 export type InlineFragmentKitchenSink = {
     readonly actor: ({
         readonly id: string;
-        readonly profilePicture: ({
+        readonly profilePicture: {
             readonly uri: string | null;
             readonly width?: number | null;
             readonly height?: number | null;
-        }) | null;
+        } | null;
         readonly name?: string | null;
         readonly " $fragmentRefs": SomeFragment$ref;
-    }) | null;
+    } & ({
+        readonly name: string | null;
+        readonly " $fragmentRefs": SomeFragment$ref;
+    } | {
+        /*This will never be '% other', but we need some
+        value in case none of the concrete values match.*/
+        readonly __typename: "%other";
+    })) | null;
     readonly " $refType": InlineFragmentKitchenSink$ref;
 };
 
@@ -1203,20 +1326,20 @@ query UnionTypeTest {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 export type LinkedField$ref = any;
 export type LinkedField = {
-    readonly profilePicture: ({
+    readonly profilePicture: {
         readonly uri: string | null;
         readonly width: number | null;
         readonly height: number | null;
-    }) | null;
-    readonly hometown: ({
+    } | null;
+    readonly hometown: {
         readonly id: string;
-        readonly profilePicture: ({
+        readonly profilePicture: {
             readonly uri: string | null;
-        }) | null;
-    }) | null;
-    readonly actor: ({
+        } | null;
+    } | null;
+    readonly actor: {
         readonly id: string;
-    }) | null;
+    } | null;
     readonly " $refType": LinkedField$ref;
 };
 
@@ -1225,13 +1348,16 @@ export type UnionTypeTestVariables = {
 };
 export type UnionTypeTestResponse = {
     readonly neverNode: ({
+        readonly __typename: string;
+        readonly id?: string;
+    } & ({
         readonly __typename: "FakeNode";
         readonly id: string;
     } | {
         /*This will never be '% other', but we need some
         value in case none of the concrete values match.*/
         readonly __typename: "%other";
-    }) | null;
+    })) | null;
 };
 export type UnionTypeTest = {
     readonly response: UnionTypeTestResponse;
@@ -1271,9 +1397,9 @@ type PlainUserNameRenderer_name$ref = any;
 export type NameRendererFragment$ref = any;
 export type NameRendererFragment = {
     readonly id: string;
-    readonly nameRenderer: ({
+    readonly nameRenderer: {
         readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
-    }) | null;
+    } | null;
     readonly " $refType": NameRendererFragment$ref;
 };
 
@@ -1281,9 +1407,9 @@ export type NameRendererFragment = {
 export type PlainUserNameRenderer_name$ref = any;
 export type PlainUserNameRenderer_name = {
     readonly plaintext: string | null;
-    readonly data: ({
+    readonly data: {
         readonly text: string | null;
-    }) | null;
+    } | null;
     readonly " $refType": PlainUserNameRenderer_name$ref;
 };
 
@@ -1291,9 +1417,9 @@ export type PlainUserNameRenderer_name = {
 export type MarkdownUserNameRenderer_name$ref = any;
 export type MarkdownUserNameRenderer_name = {
     readonly markdown: string | null;
-    readonly data: ({
+    readonly data: {
         readonly markup: string | null;
-    }) | null;
+    } | null;
     readonly " $refType": MarkdownUserNameRenderer_name$ref;
 };
 
@@ -1331,11 +1457,11 @@ type PlainUserNameRenderer_name$ref = any;
 export type NameRendererQueryVariables = {
 };
 export type NameRendererQueryResponse = {
-    readonly me: ({
-        readonly nameRenderer: ({
+    readonly me: {
+        readonly nameRenderer: {
             readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
-        }) | null;
-    }) | null;
+        } | null;
+    } | null;
 };
 export type NameRendererQuery = {
     readonly response: NameRendererQueryResponse;
@@ -1346,9 +1472,9 @@ export type NameRendererQuery = {
 export type PlainUserNameRenderer_name$ref = any;
 export type PlainUserNameRenderer_name = {
     readonly plaintext: string | null;
-    readonly data: ({
+    readonly data: {
         readonly text: string | null;
-    }) | null;
+    } | null;
     readonly " $refType": PlainUserNameRenderer_name$ref;
 };
 
@@ -1356,9 +1482,9 @@ export type PlainUserNameRenderer_name = {
 export type MarkdownUserNameRenderer_name$ref = any;
 export type MarkdownUserNameRenderer_name = {
     readonly markdown: string | null;
-    readonly data: ({
+    readonly data: {
         readonly markup: string | null;
-    }) | null;
+    } | null;
     readonly " $refType": MarkdownUserNameRenderer_name$ref;
 };
 
@@ -1400,15 +1526,15 @@ export type CommentCreateMutationVariables = {
     readonly orderBy?: ReadonlyArray<string> | null;
 };
 export type CommentCreateMutationResponse = {
-    readonly commentCreate: ({
-        readonly comment: ({
+    readonly commentCreate: {
+        readonly comment: {
             readonly id: string;
             readonly name: string | null;
-            readonly friends: ({
+            readonly friends: {
                 readonly count: number | null;
-            }) | null;
-        }) | null;
-    }) | null;
+            } | null;
+        } | null;
+    } | null;
 };
 export type CommentCreateMutation = {
     readonly response: CommentCreateMutationResponse;
@@ -1436,11 +1562,11 @@ export type InputHasArrayVariables = {
     readonly input?: UpdateAllSeenStateInput | null;
 };
 export type InputHasArrayResponse = {
-    readonly viewerNotificationsUpdateAllSeenState: ({
-        readonly stories: ReadonlyArray<({
+    readonly viewerNotificationsUpdateAllSeenState: {
+        readonly stories: ReadonlyArray<{
             readonly actorCount: number | null;
-        }) | null> | null;
-    }) | null;
+        } | null> | null;
+    } | null;
 };
 export type InputHasArray = {
     readonly response: InputHasArrayResponse;
@@ -1517,9 +1643,9 @@ export type ExampleQueryVariables = {
     readonly id: string;
 };
 export type ExampleQueryResponse = {
-    readonly node: ({
+    readonly node: {
         readonly id: string;
-    }) | null;
+    } | null;
 };
 export type ExampleQuery = {
     readonly response: ExampleQueryResponse;
@@ -1549,11 +1675,11 @@ export type TestMutationVariables = {
     readonly input: CommentCreateInput;
 };
 export type TestMutationResponse = {
-    readonly commentCreate: ({
-        readonly comment: ({
+    readonly commentCreate: {
+        readonly comment: {
             readonly id: string;
-        }) | null;
-    }) | null;
+        } | null;
+    } | null;
 };
 export type TestMutation = {
     readonly response: TestMutationResponse;
@@ -1569,11 +1695,11 @@ export type TestSubscriptionVariables = {
     readonly input?: FeedbackLikeInput | null;
 };
 export type TestSubscriptionResponse = {
-    readonly feedbackLikeSubscribe: ({
-        readonly feedback: ({
+    readonly feedbackLikeSubscribe: {
+        readonly feedback: {
             readonly id: string;
-        }) | null;
-    }) | null;
+        } | null;
+    } | null;
 };
 export type TestSubscription = {
     readonly response: TestSubscriptionResponse;
@@ -1606,13 +1732,13 @@ export type ScalarField = {
     readonly name: string | null;
     readonly websites: ReadonlyArray<string | null> | null;
     readonly traits: ReadonlyArray<PersonalityTraits | null> | null;
-    readonly aliasedLinkedField: ({
+    readonly aliasedLinkedField: {
         readonly aliasedField: number | null;
-    }) | null;
-    readonly screennames: ReadonlyArray<({
+    } | null;
+    readonly screennames: ReadonlyArray<{
         readonly name: string | null;
         readonly service: string | null;
-    }) | null> | null;
+    } | null> | null;
     readonly " $refType": ScalarField$ref;
 };
 
@@ -1706,49 +1832,64 @@ fragment TypenameAliases on Actor {
 export type TypenameInside$ref = any;
 export type TypenameInside = {
     readonly __typename: "User";
-    readonly firstName: string | null;
+    readonly firstName?: string | null;
+    readonly username?: string | null;
     readonly " $refType": TypenameInside$ref;
+} & ({
+    readonly __typename: "User";
+    readonly firstName: string | null;
 } | {
     readonly __typename: "Page";
     readonly username: string | null;
-    readonly " $refType": TypenameInside$ref;
 } | {
     /*This will never be '% other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": TypenameInside$ref;
-};
+});
 
 
 export type TypenameOutside$ref = any;
 export type TypenameOutside = {
+    readonly __typename: string;
+    readonly firstName?: string | null;
+    readonly username?: string | null;
+    readonly " $refType": TypenameOutside$ref;
+} & ({
     readonly __typename: "User";
     readonly firstName: string | null;
-    readonly " $refType": TypenameOutside$ref;
 } | {
     readonly __typename: "Page";
     readonly username: string | null;
-    readonly " $refType": TypenameOutside$ref;
 } | {
     /*This will never be '% other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": TypenameOutside$ref;
-};
+});
 
 
 export type TypenameOutsideWithAbstractType$ref = any;
 export type TypenameOutsideWithAbstractType = {
     readonly __typename: string;
     readonly username?: string | null;
-    readonly address?: ({
+    readonly address?: {
         readonly city: string | null;
         readonly country: string | null;
         readonly street?: string | null;
-    }) | null;
+    } | null;
     readonly firstName?: string | null;
     readonly " $refType": TypenameOutsideWithAbstractType$ref;
-};
+} & ({
+    readonly __typename: "User";
+    readonly firstName: string | null;
+    readonly address: {
+        readonly street: string | null;
+        readonly city: string | null;
+    } | null;
+} | {
+    /*This will never be '% other', but we need some
+    value in case none of the concrete values match.*/
+    readonly __typename: "%other";
+});
 
 
 export type TypenameWithoutSpreads$ref = any;
@@ -1756,7 +1897,13 @@ export type TypenameWithoutSpreads = {
     readonly firstName: string | null;
     readonly __typename: "User";
     readonly " $refType": TypenameWithoutSpreads$ref;
-};
+} & ({
+    readonly __typename: "User";
+} | {
+    /*This will never be '% other', but we need some
+    value in case none of the concrete values match.*/
+    readonly __typename: "%other";
+});
 
 
 export type TypenameWithoutSpreadsAbstractType$ref = any;
@@ -1774,43 +1921,58 @@ export type TypenameWithCommonSelections = {
     readonly firstName?: string | null;
     readonly username?: string | null;
     readonly " $refType": TypenameWithCommonSelections$ref;
-};
+} & ({
+    readonly __typename: "User";
+    readonly firstName: string | null;
+} | {
+    readonly __typename: "Page";
+    readonly username: string | null;
+} | {
+    /*This will never be '% other', but we need some
+    value in case none of the concrete values match.*/
+    readonly __typename: "%other";
+});
 
 
 export type TypenameAlias$ref = any;
 export type TypenameAlias = {
+    readonly _typeAlias: string;
+    readonly firstName?: string | null;
+    readonly username?: string | null;
+    readonly " $refType": TypenameAlias$ref;
+} & ({
     readonly _typeAlias: "User";
     readonly firstName: string | null;
-    readonly " $refType": TypenameAlias$ref;
 } | {
     readonly _typeAlias: "Page";
     readonly username: string | null;
-    readonly " $refType": TypenameAlias$ref;
 } | {
     /*This will never be '% other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": TypenameAlias$ref;
-};
+});
 
 
 export type TypenameAliases$ref = any;
 export type TypenameAliases = {
+    readonly _typeAlias1: string;
+    readonly _typeAlias2: string;
+    readonly firstName?: string | null;
+    readonly username?: string | null;
+    readonly " $refType": TypenameAliases$ref;
+} & ({
     readonly _typeAlias1: "User";
     readonly _typeAlias2: "User";
     readonly firstName: string | null;
-    readonly " $refType": TypenameAliases$ref;
 } | {
     readonly _typeAlias1: "Page";
     readonly _typeAlias2: "Page";
     readonly username: string | null;
-    readonly " $refType": TypenameAliases$ref;
 } | {
     /*This will never be '% other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": TypenameAliases$ref;
-};
+});
 
 `;
 
@@ -1847,12 +2009,12 @@ fragment AnotherRecursiveFragment on Image {
 type PhotoFragment$ref = any;
 export type UserProfile$ref = any;
 export type UserProfile = {
-    readonly profilePicture: ({
+    readonly profilePicture: {
         readonly uri: string | null;
         readonly width: number | null;
         readonly height: number | null;
         readonly " $fragmentRefs": PhotoFragment$ref;
-    }) | null;
+    } | null;
     readonly " $refType": UserProfile$ref;
 };
 
