@@ -13,6 +13,8 @@ script:
 
 before_deploy:
   - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
+  - git checkout master && git pull origin
+  - yarn build
 deploy:
   skip_cleanup: true
   provider: script
