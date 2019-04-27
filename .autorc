@@ -1,3 +1,5 @@
 {
-  "extends": "@artsy"
+  "extends": "@artsy",
+  "name": "Eloy Durán",
+  "email": "eloy.de.enige@gmail.com",
 }
