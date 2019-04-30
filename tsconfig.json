@@ -58,9 +58,7 @@
       "relay-compiler/lib/writeRelayGeneratedFile": [
         "types/relay-compiler/codegen/writeRelayGeneratedFile.d.ts"
       ],
-      "relay-compiler/lib/RelayCompilerPublic": [
-        "types/relay-compiler/lib/RelayCompilerPublic.d.ts"
-      ],
+      "relay-compiler/lib": ["types/relay-compiler/lib/index.d.ts"],
       "relay-compiler": ["types/relay-compiler.d.ts"],
       "relay-runtime": ["types/relay-runtime.d.ts"],
       "immutable": ["node_modules/immutable/dist/immutable.d.ts"]
