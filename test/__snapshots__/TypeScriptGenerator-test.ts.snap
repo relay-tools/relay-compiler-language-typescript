@@ -71,21 +71,12 @@ export type FragmentSpread$ref = typeof _FragmentSpread$ref;
 export type FragmentSpread = {
     readonly id: string;
     readonly justFrag: {
-        readonly " $fragmentRefs": PictureFragment$ref;
     } | null;
     readonly fragAndField: {
         readonly uri: string | null;
-        readonly " $fragmentRefs": PictureFragment$ref;
     } | null;
-    readonly " $fragmentRefs": OtherFragment$ref & UserFrag1$ref & UserFrag2$ref;
     readonly " $refType": FragmentSpread$ref;
-} & ({
-    readonly " $fragmentRefs": UserFrag1$ref & UserFrag2$ref;
-} | {
-    /*This will never be '% other', but we need some
-    value in case none of the concrete values match.*/
-    readonly __typename: "%other";
-});
+};
 
 
 type PageFragment$ref = any;
@@ -96,11 +87,7 @@ export type ConcreateTypes = {
         readonly __typename: string;
         readonly id: string;
         readonly name?: string | null;
-        readonly " $fragmentRefs": PageFragment$ref;
     } & ({
-        readonly __typename: "Page";
-        readonly " $fragmentRefs": PageFragment$ref;
-    } | {
         readonly __typename: "User";
         readonly name: string | null;
     } | {
@@ -250,10 +237,8 @@ export type InlineFragmentKitchenSink = {
             readonly height?: number | null;
         } | null;
         readonly name?: string | null;
-        readonly " $fragmentRefs": SomeFragment$ref;
     } & ({
         readonly name: string | null;
-        readonly " $fragmentRefs": SomeFragment$ref;
     } | {
         /*This will never be '% other', but we need some
         value in case none of the concrete values match.*/
@@ -370,9 +355,15 @@ declare const _NameRendererFragment$ref: unique symbol;
 export type NameRendererFragment$ref = typeof _NameRendererFragment$ref;
 export type NameRendererFragment = {
     readonly id: string;
-    readonly nameRenderer: {
-        readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
-    } | null;
+    readonly nameRenderer: ({
+        readonly __module_component?: any | null;
+    } & ({
+        readonly __module_component: any | null;
+    } | {
+        /*This will never be '% other', but we need some
+        value in case none of the concrete values match.*/
+        readonly __typename: "%other";
+    })) | null;
     readonly " $refType": NameRendererFragment$ref;
 };
 
@@ -433,9 +424,15 @@ export type NameRendererQueryVariables = {
 };
 export type NameRendererQueryResponse = {
     readonly me: {
-        readonly nameRenderer: {
-            readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
-        } | null;
+        readonly nameRenderer: ({
+            readonly __module_component?: any | null;
+        } & ({
+            readonly __module_component: any | null;
+        } | {
+            /*This will never be '% other', but we need some
+            value in case none of the concrete values match.*/
+            readonly __typename: "%other";
+        })) | null;
     } | null;
 };
 export type NameRendererQuery = {
@@ -561,10 +558,10 @@ fragment PluralFragment on Node @relay(plural: true) {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 declare const _PluralFragment$ref: unique symbol;
 export type PluralFragment$ref = typeof _PluralFragment$ref;
-export type PluralFragment = ReadonlyArray<{
+export type PluralFragment = {
     readonly id: string;
     readonly " $refType": PluralFragment$ref;
-}>;
+};
 
 `;
 
@@ -995,25 +992,24 @@ fragment AnotherRecursiveFragment on Image {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+type AnotherRecursiveFragment$ref = any;
 import { PhotoFragment$ref } from "./PhotoFragment.graphql";
 declare const _UserProfile$ref: unique symbol;
 export type UserProfile$ref = typeof _UserProfile$ref;
 export type UserProfile = {
     readonly profilePicture: {
-        readonly uri: string | null;
-        readonly width: number | null;
-        readonly height: number | null;
-        readonly " $fragmentRefs": PhotoFragment$ref;
+        readonly " $fragmentRefs": PhotoFragment$ref & AnotherRecursiveFragment$ref;
     } | null;
     readonly " $refType": UserProfile$ref;
 };
 
 
+type RecursiveFragment$ref = any;
 declare const _PhotoFragment$ref: unique symbol;
 export type PhotoFragment$ref = typeof _PhotoFragment$ref;
 export type PhotoFragment = {
     readonly uri: string | null;
-    readonly width: number | null;
+    readonly " $fragmentRefs": RecursiveFragment$ref;
     readonly " $refType": PhotoFragment$ref;
 };
 
@@ -1105,21 +1101,12 @@ export type FragmentSpread$ref = any;
 export type FragmentSpread = {
     readonly id: string;
     readonly justFrag: {
-        readonly " $fragmentRefs": PictureFragment$ref;
     } | null;
     readonly fragAndField: {
         readonly uri: string | null;
-        readonly " $fragmentRefs": PictureFragment$ref;
     } | null;
-    readonly " $fragmentRefs": OtherFragment$ref & UserFrag1$ref & UserFrag2$ref;
     readonly " $refType": FragmentSpread$ref;
-} & ({
-    readonly " $fragmentRefs": UserFrag1$ref & UserFrag2$ref;
-} | {
-    /*This will never be '% other', but we need some
-    value in case none of the concrete values match.*/
-    readonly __typename: "%other";
-});
+};
 
 
 type PageFragment$ref = any;
@@ -1129,11 +1116,7 @@ export type ConcreateTypes = {
         readonly __typename: string;
         readonly id: string;
         readonly name?: string | null;
-        readonly " $fragmentRefs": PageFragment$ref;
     } & ({
-        readonly __typename: "Page";
-        readonly " $fragmentRefs": PageFragment$ref;
-    } | {
         readonly __typename: "User";
         readonly name: string | null;
     } | {
@@ -1279,10 +1262,8 @@ export type InlineFragmentKitchenSink = {
             readonly height?: number | null;
         } | null;
         readonly name?: string | null;
-        readonly " $fragmentRefs": SomeFragment$ref;
     } & ({
         readonly name: string | null;
-        readonly " $fragmentRefs": SomeFragment$ref;
     } | {
         /*This will never be '% other', but we need some
         value in case none of the concrete values match.*/
@@ -1397,9 +1378,15 @@ type PlainUserNameRenderer_name$ref = any;
 export type NameRendererFragment$ref = any;
 export type NameRendererFragment = {
     readonly id: string;
-    readonly nameRenderer: {
-        readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
-    } | null;
+    readonly nameRenderer: ({
+        readonly __module_component?: any | null;
+    } & ({
+        readonly __module_component: any | null;
+    } | {
+        /*This will never be '% other', but we need some
+        value in case none of the concrete values match.*/
+        readonly __typename: "%other";
+    })) | null;
     readonly " $refType": NameRendererFragment$ref;
 };
 
@@ -1458,9 +1445,15 @@ export type NameRendererQueryVariables = {
 };
 export type NameRendererQueryResponse = {
     readonly me: {
-        readonly nameRenderer: {
-            readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
-        } | null;
+        readonly nameRenderer: ({
+            readonly __module_component?: any | null;
+        } & ({
+            readonly __module_component: any | null;
+        } | {
+            /*This will never be '% other', but we need some
+            value in case none of the concrete values match.*/
+            readonly __typename: "%other";
+        })) | null;
     } | null;
 };
 export type NameRendererQuery = {
@@ -1583,10 +1576,10 @@ fragment PluralFragment on Node @relay(plural: true) {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 export type PluralFragment$ref = any;
-export type PluralFragment = ReadonlyArray<{
+export type PluralFragment = {
     readonly id: string;
     readonly " $refType": PluralFragment$ref;
-}>;
+};
 
 `;
 
@@ -2006,23 +1999,22 @@ fragment AnotherRecursiveFragment on Image {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+type AnotherRecursiveFragment$ref = any;
 type PhotoFragment$ref = any;
 export type UserProfile$ref = any;
 export type UserProfile = {
     readonly profilePicture: {
-        readonly uri: string | null;
-        readonly width: number | null;
-        readonly height: number | null;
-        readonly " $fragmentRefs": PhotoFragment$ref;
+        readonly " $fragmentRefs": PhotoFragment$ref & AnotherRecursiveFragment$ref;
     } | null;
     readonly " $refType": UserProfile$ref;
 };
 
 
+type RecursiveFragment$ref = any;
 export type PhotoFragment$ref = any;
 export type PhotoFragment = {
     readonly uri: string | null;
-    readonly width: number | null;
+    readonly " $fragmentRefs": RecursiveFragment$ref;
     readonly " $refType": PhotoFragment$ref;
 };
 
