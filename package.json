@@ -71,7 +71,7 @@
     "prettier": "^1.10.2",
     "relay-compiler": "^4.0.0",
     "relay-runtime": "^2.0.0",
-    "relay-test-utils": "^2.0.0",
+    "relay-test-utils": "^4.0.0",
     "ts-jest": "^22.0.1",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.15.0",
