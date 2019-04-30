@@ -3,7 +3,7 @@ import {
   TypeGenerator,
   TypeGeneratorOptions
 } from "relay-compiler";
-import * as RelayCompilerPublic from "relay-compiler/lib/RelayCompilerPublic";
+import * as RelayCompilerPublic from "relay-compiler/lib";
 
 import { GraphQLNonNull } from "graphql";
 import * as ts from "typescript";
