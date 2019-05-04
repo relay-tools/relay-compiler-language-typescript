@@ -594,7 +594,9 @@ function getRefTypeName(name: string): string {
 }
 
 export const transforms: TypeGenerator["transforms"] = [
-  IRTransforms.commonTransforms[2], // RelayRelayDirectiveTransform.transform
-  IRTransforms.commonTransforms[3], // RelayMaskTransform.transform
-  IRTransforms.printTransforms[0] // FlattenTransform.transformWithOptions({})
+  IRTransforms.commonTransforms[1], // RelayRelayDirectiveTransform.transform
+  IRTransforms.commonTransforms[2], // RelayMaskTransform.transform
+  IRTransforms.commonTransforms[3], // RelayMatchTransform.transform
+  IRTransforms.printTransforms[3], // FlattenTransform.transformWithOptions({})
+  IRTransforms.commonTransforms[4], // RelayRefetchableFragmentTransform.transform
 ];
