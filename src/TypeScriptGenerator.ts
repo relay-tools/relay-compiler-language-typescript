@@ -588,7 +588,7 @@ function getRefTypeName(name: string): string {
 }
 
 // Should match FLOW_TRANSFORMS array
-// https://github.com/facebook/relay/blob/master/packages/relay-compiler/language/javascript/RelayFlowGenerator.js#L660
+// https://github.com/facebook/relay/blob/v4.0.0/packages/relay-compiler/language/javascript/RelayFlowGenerator.js#L621-L627
 export const transforms: TypeGenerator["transforms"] = [
   IRTransforms.commonTransforms[1], // RelayRelayDirectiveTransform.transform,
   IRTransforms.commonTransforms[2], // RelayMaskTransform.transform,
