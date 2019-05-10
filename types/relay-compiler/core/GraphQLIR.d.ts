@@ -1,10 +1,10 @@
 import {
   GraphQLCompositeType,
-  GraphQLOutputType,
   GraphQLInputType,
   GraphQLLeafType,
   GraphQLList,
-  GraphQLNonNull
+  GraphQLNonNull,
+  GraphQLOutputType
 } from "graphql";
 
 export interface Argument {
@@ -36,7 +36,7 @@ export interface Batch {
   fragment: Fragment;
   metadata: { [key: string]: any };
   name: string;
-  requests: Array<Request>;
+  requests: Request[];
 }
 
 export type Condition = {
@@ -44,31 +44,31 @@ export type Condition = {
   condition: Literal | Variable;
   metadata: { [key: string]: any } | null;
   passingValue: boolean;
-  selections: Array<Selection>;
+  selections: Selection[];
 };
 export type DependentRequest = {
   operationName: string;
-  argumentDependencies: Array<ArgumentDependency>;
+  argumentDependencies: ArgumentDependency[];
 };
 export type Directive = {
-  args: Array<Argument>;
+  args: Argument[];
   kind: "Directive";
   metadata: { [key: string]: any } | null;
   name: string;
 };
 export type Field = LinkedField | ScalarField;
 export type Fragment = {
-  argumentDefinitions: Array<ArgumentDefinition>;
-  directives: Array<Directive>;
+  argumentDefinitions: ArgumentDefinition[];
+  directives: Directive[];
   kind: "Fragment";
   metadata: { [key: string]: any } | null;
   name: string;
-  selections: Array<Selection>;
+  selections: Selection[];
   type: GraphQLCompositeType;
 };
 export type FragmentSpread = {
-  args: Array<Argument>;
-  directives: Array<Directive>;
+  args: Argument[];
+  directives: Directive[];
   kind: "FragmentSpread";
   metadata: { [key: string]: any } | null;
   name: string;
@@ -99,31 +99,31 @@ export type RootArgumentDefinition = {
   type: GraphQLInputType;
 };
 export type InlineFragment = {
-  directives: Array<Directive>;
+  directives: Directive[];
   kind: "InlineFragment";
   metadata: { [key: string]: any } | null;
-  selections: Array<Selection>;
+  selections: Selection[];
   typeCondition: GraphQLCompositeType;
 };
 export type Handle = {
   name: string;
   key: string;
-  filters: Array<string> | null;
+  filters: string[] | null;
 };
 export type LinkedField = {
   alias: string | null;
-  args: Array<Argument>;
-  directives: Array<Directive>;
-  handles: Array<Handle> | null;
+  args: Argument[];
+  directives: Directive[];
+  handles: Handle[] | null;
   kind: "LinkedField";
   metadata: { [key: string]: any } | null;
   name: string;
-  selections: Array<Selection>;
+  selections: Selection[];
   type: GraphQLOutputType;
 };
 export type ListValue = {
   kind: "ListValue";
-  items: Array<ArgumentValue>;
+  items: ArgumentValue[];
   metadata: { [key: string]: any } | null;
 };
 export type Literal = {
@@ -147,26 +147,26 @@ export type ObjectFieldValue = {
 };
 export type ObjectValue = {
   kind: "ObjectValue";
-  fields: Array<ObjectFieldValue>;
+  fields: ObjectFieldValue[];
   metadata: { [key: string]: any } | null;
 };
 export type Request = {
   kind: "Request";
-  argumentDependencies: Array<ArgumentDependency>;
+  argumentDependencies: ArgumentDependency[];
   id: string | null;
   name: string;
   root: Root;
   text: string | null;
 };
 export type Root = {
-  argumentDefinitions: Array<LocalArgumentDefinition>;
-  directives: Array<Directive>;
-  dependentRequests: Array<DependentRequest>;
+  argumentDefinitions: LocalArgumentDefinition[];
+  directives: Directive[];
+  dependentRequests: DependentRequest[];
   kind: "Root";
   metadata: { [key: string]: any } | null;
   name: string;
   operation: "query" | "mutation" | "subscription";
-  selections: Array<Selection>;
+  selections: Selection[];
   type: GraphQLCompositeType;
 };
 export type ScalarFieldType =
@@ -175,9 +175,9 @@ export type ScalarFieldType =
   | GraphQLNonNull<GraphQLLeafType | GraphQLList<any>>;
 export type ScalarField = {
   alias: string | null;
-  args: Array<Argument>;
-  directives: Array<Directive>;
-  handles: Array<Handle> | null;
+  args: Argument[];
+  directives: Directive[];
+  handles: Handle[] | null;
   kind: "ScalarField";
   metadata: { [key: string]: any } | null;
   name: string;

@@ -1,4 +1,4 @@
-import { IRTransform } from "graphql-compiler";
+import { IRTransform } from "./GraphQLIRTransformer";
 
 export const commonTransforms: IRTransform[];
 export const codegenTransforms: IRTransform[];

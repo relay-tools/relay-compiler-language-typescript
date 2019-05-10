@@ -1,8 +1,8 @@
 import { OrderedMap as ImmutableOrderedMap } from "immutable";
 
+import { GraphQLSchema } from "graphql";
 import { GraphQLReporter } from "../reporters/GraphQLReporter";
 import { Fragment, Root } from "./GraphQLIR";
-import { GraphQLSchema } from "graphql";
 /**
  * An immutable representation of a corpus of documents being compiled together.
  * For each document, the context stores the IR and any validation errors.
@@ -30,7 +30,7 @@ export class GraphQLCompilerContext {
    * Apply a list of compiler transforms and return a new compiler context.
    */
   applyTransforms(
-    transforms: Array<IRTransform>,
+    transforms: IRTransform[],
     reporter?: GraphQLReporter
   ): GraphQLCompilerContext;
 

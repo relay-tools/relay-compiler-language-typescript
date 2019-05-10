@@ -17,8 +17,8 @@ fragment FragmentSpread on Node {
 fragment ConcreateTypes on Viewer {
   actor {
     __typename
-    id
     ... on Page {
+      id
       ...PageFragment
     }
     ... on User {

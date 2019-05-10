@@ -1,9 +1,9 @@
 declare namespace CodegenDirectory {
   export interface Changes {
-    deleted: Array<string>;
-    updated: Array<string>;
-    created: Array<string>;
-    unchanged: Array<string>;
+    deleted: string[];
+    updated: string[];
+    created: string[];
+    unchanged: string[];
   }
 }
 
@@ -44,9 +44,7 @@ declare class CodegenDirectory {
     }
   );
 
-  static combineChanges(
-    dirs: Array<CodegenDirectory>
-  ): CodegenDirectory.Changes;
+  static combineChanges(dirs: CodegenDirectory[]): CodegenDirectory.Changes;
 
   static hasChanges(changes: CodegenDirectory.Changes): boolean;
 
