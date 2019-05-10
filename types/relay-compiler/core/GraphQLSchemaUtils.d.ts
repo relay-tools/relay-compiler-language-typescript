@@ -1,6 +1,9 @@
 import {
   assertAbstractType,
   ASTNode,
+  DirectiveDefinitionNode,
+  EnumTypeDefinitionNode,
+  FragmentDefinitionNode,
   getNamedType,
   getNullableType,
   GraphQLCompositeType,
@@ -15,20 +18,17 @@ import {
   GraphQLSchema,
   GraphQLType,
   GraphQLUnionType,
+  InputObjectTypeDefinitionNode,
+  InterfaceTypeDefinitionNode,
   isType,
-  print,
-  typeFromAST,
-  TypeNode,
-  FragmentDefinitionNode,
+  ObjectTypeDefinitionNode,
   OperationDefinitionNode,
+  print,
   ScalarTypeDefinitionNode,
   SchemaDefinitionNode,
-  ObjectTypeDefinitionNode,
-  InterfaceTypeDefinitionNode,
-  UnionTypeDefinitionNode,
-  EnumTypeDefinitionNode,
-  InputObjectTypeDefinitionNode,
-  DirectiveDefinitionNode
+  typeFromAST,
+  TypeNode,
+  UnionTypeDefinitionNode
 } from "graphql";
 
 type GraphQLSingularType =

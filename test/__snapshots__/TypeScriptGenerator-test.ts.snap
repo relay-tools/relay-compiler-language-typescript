@@ -51,8 +51,8 @@ fragment FragmentSpread on Node {
 fragment ConcreateTypes on Viewer {
   actor {
     __typename
-    id
     ... on Page {
+      id
       ...PageFragment
     }
     ... on User {
@@ -94,11 +94,12 @@ export type ConcreateTypes$ref = typeof _ConcreateTypes$ref;
 export type ConcreateTypes = {
     readonly actor: ({
         readonly __typename: string;
-        readonly id: string;
+        readonly id?: string;
         readonly name?: string | null;
         readonly " $fragmentRefs": PageFragment$ref;
     } & ({
         readonly __typename: "Page";
+        readonly id: string;
         readonly " $fragmentRefs": PageFragment$ref;
     } | {
         readonly __typename: "User";
@@ -370,9 +371,15 @@ declare const _NameRendererFragment$ref: unique symbol;
 export type NameRendererFragment$ref = typeof _NameRendererFragment$ref;
 export type NameRendererFragment = {
     readonly id: string;
-    readonly nameRenderer: {
-        readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
-    } | null;
+    readonly nameRenderer: ({
+        readonly __module_component?: any | null;
+    } & ({
+        readonly __module_component: any | null;
+    } | {
+        /*This will never be '% other', but we need some
+        value in case none of the concrete values match.*/
+        readonly __typename: "%other";
+    })) | null;
     readonly " $refType": NameRendererFragment$ref;
 };
 
@@ -433,9 +440,15 @@ export type NameRendererQueryVariables = {
 };
 export type NameRendererQueryResponse = {
     readonly me: {
-        readonly nameRenderer: {
-            readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
-        } | null;
+        readonly nameRenderer: ({
+            readonly __module_component?: any | null;
+        } & ({
+            readonly __module_component: any | null;
+        } | {
+            /*This will never be '% other', but we need some
+            value in case none of the concrete values match.*/
+            readonly __typename: "%other";
+        })) | null;
     } | null;
 };
 export type NameRendererQuery = {
@@ -723,6 +736,92 @@ export type ScalarField = {
     readonly " $refType": ScalarField$ref;
 };
 
+`;
+
+exports[`TypeScriptGenerator with a single artifact directory matches expected output: typename-inside-with-overlapping-fields.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+fragment TypenameInsideWithOverlappingFields on Viewer {
+  actor {
+    __typename
+    ... on Page {
+      id
+      name
+    }
+    ... on User {
+      id
+      name
+      profile_picture {
+        uri
+      }
+    }
+  }
+}
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+declare const _TypenameInsideWithOverlappingFields$ref: unique symbol;
+export type TypenameInsideWithOverlappingFields$ref = typeof _TypenameInsideWithOverlappingFields$ref;
+export type TypenameInsideWithOverlappingFields = {
+    readonly actor: ({
+        readonly __typename: string;
+        readonly id?: string;
+        readonly name?: string | null;
+        readonly profile_picture?: {
+            readonly uri: string | null;
+        } | null;
+    } & ({
+        readonly __typename: "Page";
+        readonly id: string;
+        readonly name: string | null;
+    } | {
+        readonly __typename: "User";
+        readonly profile_picture: {
+            readonly uri: string | null;
+        } | null;
+    } | {
+        /*This will never be '% other', but we need some
+        value in case none of the concrete values match.*/
+        readonly __typename: "%other";
+    })) | null;
+    readonly " $refType": TypenameInsideWithOverlappingFields$ref;
+};
+
+`;
+
+exports[`TypeScriptGenerator with a single artifact directory matches expected output: typename-inside-with-overlapping-fields-full.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+fragment TypenameInsideWithOverlappingFieldsFull on Viewer {
+  actor {
+    __typename
+    ... on Page {
+      id
+      name
+    }
+    ... on User {
+      id
+      name
+      profile_picture {
+        uri
+      }
+    }
+    ... on ExtraUser {
+      id
+      name
+    }
+  }
+}
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+THROWN EXCEPTION:
+
+Error: RelayParser: Encountered 1 error(s):
+- Unknown type: 'ExtraUser'.
+  
+  GraphQL request (15:12)
+  14:     }
+  15:     ... on ExtraUser {
+                 ^
+  16:       id
+  
 `;
 
 exports[`TypeScriptGenerator with a single artifact directory matches expected output: typename-on-union.graphql 1`] = `
@@ -1086,8 +1185,8 @@ fragment FragmentSpread on Node {
 fragment ConcreateTypes on Viewer {
   actor {
     __typename
-    id
     ... on Page {
+      id
       ...PageFragment
     }
     ... on User {
@@ -1127,11 +1226,12 @@ export type ConcreateTypes$ref = any;
 export type ConcreateTypes = {
     readonly actor: ({
         readonly __typename: string;
-        readonly id: string;
+        readonly id?: string;
         readonly name?: string | null;
         readonly " $fragmentRefs": PageFragment$ref;
     } & ({
         readonly __typename: "Page";
+        readonly id: string;
         readonly " $fragmentRefs": PageFragment$ref;
     } | {
         readonly __typename: "User";
@@ -1397,9 +1497,15 @@ type PlainUserNameRenderer_name$ref = any;
 export type NameRendererFragment$ref = any;
 export type NameRendererFragment = {
     readonly id: string;
-    readonly nameRenderer: {
-        readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
-    } | null;
+    readonly nameRenderer: ({
+        readonly __module_component?: any | null;
+    } & ({
+        readonly __module_component: any | null;
+    } | {
+        /*This will never be '% other', but we need some
+        value in case none of the concrete values match.*/
+        readonly __typename: "%other";
+    })) | null;
     readonly " $refType": NameRendererFragment$ref;
 };
 
@@ -1458,9 +1564,15 @@ export type NameRendererQueryVariables = {
 };
 export type NameRendererQueryResponse = {
     readonly me: {
-        readonly nameRenderer: {
-            readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
-        } | null;
+        readonly nameRenderer: ({
+            readonly __module_component?: any | null;
+        } & ({
+            readonly __module_component: any | null;
+        } | {
+            /*This will never be '% other', but we need some
+            value in case none of the concrete values match.*/
+            readonly __typename: "%other";
+        })) | null;
     } | null;
 };
 export type NameRendererQuery = {
@@ -1742,6 +1854,91 @@ export type ScalarField = {
     readonly " $refType": ScalarField$ref;
 };
 
+`;
+
+exports[`TypeScriptGenerator without a single artifact directory matches expected output: typename-inside-with-overlapping-fields.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+fragment TypenameInsideWithOverlappingFields on Viewer {
+  actor {
+    __typename
+    ... on Page {
+      id
+      name
+    }
+    ... on User {
+      id
+      name
+      profile_picture {
+        uri
+      }
+    }
+  }
+}
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+export type TypenameInsideWithOverlappingFields$ref = any;
+export type TypenameInsideWithOverlappingFields = {
+    readonly actor: ({
+        readonly __typename: string;
+        readonly id?: string;
+        readonly name?: string | null;
+        readonly profile_picture?: {
+            readonly uri: string | null;
+        } | null;
+    } & ({
+        readonly __typename: "Page";
+        readonly id: string;
+        readonly name: string | null;
+    } | {
+        readonly __typename: "User";
+        readonly profile_picture: {
+            readonly uri: string | null;
+        } | null;
+    } | {
+        /*This will never be '% other', but we need some
+        value in case none of the concrete values match.*/
+        readonly __typename: "%other";
+    })) | null;
+    readonly " $refType": TypenameInsideWithOverlappingFields$ref;
+};
+
+`;
+
+exports[`TypeScriptGenerator without a single artifact directory matches expected output: typename-inside-with-overlapping-fields-full.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+fragment TypenameInsideWithOverlappingFieldsFull on Viewer {
+  actor {
+    __typename
+    ... on Page {
+      id
+      name
+    }
+    ... on User {
+      id
+      name
+      profile_picture {
+        uri
+      }
+    }
+    ... on ExtraUser {
+      id
+      name
+    }
+  }
+}
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+THROWN EXCEPTION:
+
+Error: RelayParser: Encountered 1 error(s):
+- Unknown type: 'ExtraUser'.
+  
+  GraphQL request (15:12)
+  14:     }
+  15:     ... on ExtraUser {
+                 ^
+  16:       id
+  
 `;
 
 exports[`TypeScriptGenerator without a single artifact directory matches expected output: typename-on-union.graphql 1`] = `

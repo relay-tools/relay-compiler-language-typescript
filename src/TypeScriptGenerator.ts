@@ -1,9 +1,13 @@
 import {
+  Fragment,
   IRTransforms,
+  IRVisitor,
+  Root,
+  SchemaUtils,
   TypeGenerator,
   TypeGeneratorOptions
 } from "relay-compiler";
-import * as RelayCompilerPublic from "relay-compiler/lib/RelayCompilerPublic";
+import * as RelayCompilerPublic from "relay-compiler";
 
 import { GraphQLNonNull } from "graphql";
 import * as ts from "typescript";
@@ -13,13 +17,6 @@ import {
   transformInputType,
   transformScalarType
 } from "./TypeScriptTypeTransformers";
-
-// Get the types
-import * as GraphQLCompilerTypes from "graphql-compiler";
-
-const GraphQLCompiler: typeof GraphQLCompilerTypes = RelayCompilerPublic;
-
-const { IRVisitor, SchemaUtils } = GraphQLCompiler;
 
 const { isAbstractType } = SchemaUtils;
 
@@ -241,7 +238,7 @@ function mergeSelections(a: SelectionMap, b: SelectionMap): SelectionMap {
   return merged;
 }
 
-function isPlural(node: GraphQLCompilerTypes.Fragment): boolean {
+function isPlural(node: Fragment): boolean {
   return Boolean(node.metadata && node.metadata.plural);
 }
 
@@ -472,10 +469,7 @@ function generateInputObjectTypes(state: State) {
   });
 }
 
-function generateInputVariablesType(
-  node: GraphQLCompilerTypes.Root,
-  state: State
-) {
+function generateInputVariablesType(node: Root, state: State) {
   return exportType(
     `${node.name}Variables`,
     exactObjectTypeAnnotation(
@@ -593,8 +587,12 @@ function getRefTypeName(name: string): string {
   return `${name}$ref`;
 }
 
+// Should match FLOW_TRANSFORMS array
+// https://github.com/facebook/relay/blob/master/packages/relay-compiler/language/javascript/RelayFlowGenerator.js#L660
 export const transforms: TypeGenerator["transforms"] = [
-  IRTransforms.commonTransforms[2], // RelayRelayDirectiveTransform.transform
-  IRTransforms.commonTransforms[3], // RelayMaskTransform.transform
-  IRTransforms.printTransforms[0] // FlattenTransform.transformWithOptions({})
+  IRTransforms.commonTransforms[1], // RelayRelayDirectiveTransform.transform,
+  IRTransforms.commonTransforms[2], // RelayMaskTransform.transform,
+  IRTransforms.commonTransforms[3], // RelayMatchTransform.transform,
+  IRTransforms.printTransforms[3], // FlattenTransform.transformWithOptions({}),
+  IRTransforms.commonTransforms[4] // RelayRefetchableFragmentTransform.transform,
 ];
