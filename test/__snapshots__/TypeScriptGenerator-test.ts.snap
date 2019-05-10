@@ -811,17 +811,33 @@ fragment TypenameInsideWithOverlappingFieldsFull on Viewer {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+declare const _TypenameInsideWithOverlappingFieldsFull$ref: unique symbol;
+export type TypenameInsideWithOverlappingFieldsFull$ref = typeof _TypenameInsideWithOverlappingFieldsFull$ref;
+export type TypenameInsideWithOverlappingFieldsFull = {
+    readonly actor: ({
+        readonly __typename: string;
+        readonly id?: string;
+        readonly name?: string | null;
+        readonly profile_picture?: {
+            readonly uri: string | null;
+        } | null;
+    } & ({
+        readonly __typename: "Page";
+        readonly id: string;
+        readonly name: string | null;
+    } | {
+        readonly __typename: "User";
+        readonly profile_picture: {
+            readonly uri: string | null;
+        } | null;
+    } | {
+        /*This will never be '% other', but we need some
+        value in case none of the concrete values match.*/
+        readonly __typename: "%other";
+    })) | null;
+    readonly " $refType": TypenameInsideWithOverlappingFieldsFull$ref;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown type: 'ExtraUser'.
-  
-  GraphQL request (15:12)
-  14:     }
-  15:     ... on ExtraUser {
-                 ^
-  16:       id
-  
 `;
 
 exports[`TypeScriptGenerator with a single artifact directory matches expected output: typename-on-union.graphql 1`] = `
@@ -1928,17 +1944,32 @@ fragment TypenameInsideWithOverlappingFieldsFull on Viewer {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+export type TypenameInsideWithOverlappingFieldsFull$ref = any;
+export type TypenameInsideWithOverlappingFieldsFull = {
+    readonly actor: ({
+        readonly __typename: string;
+        readonly id?: string;
+        readonly name?: string | null;
+        readonly profile_picture?: {
+            readonly uri: string | null;
+        } | null;
+    } & ({
+        readonly __typename: "Page";
+        readonly id: string;
+        readonly name: string | null;
+    } | {
+        readonly __typename: "User";
+        readonly profile_picture: {
+            readonly uri: string | null;
+        } | null;
+    } | {
+        /*This will never be '% other', but we need some
+        value in case none of the concrete values match.*/
+        readonly __typename: "%other";
+    })) | null;
+    readonly " $refType": TypenameInsideWithOverlappingFieldsFull$ref;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown type: 'ExtraUser'.
-  
-  GraphQL request (15:12)
-  14:     }
-  15:     ... on ExtraUser {
-                 ^
-  16:       id
-  
 `;
 
 exports[`TypeScriptGenerator without a single artifact directory matches expected output: typename-on-union.graphql 1`] = `
