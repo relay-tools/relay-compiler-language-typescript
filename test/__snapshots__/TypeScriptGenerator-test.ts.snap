@@ -372,9 +372,15 @@ export type NameRendererFragment$ref = typeof _NameRendererFragment$ref;
 export type NameRendererFragment = {
     readonly id: string;
     readonly nameRenderer: ({
-        readonly __module_component?: any | null;
+        readonly __fragmentPropName?: string | null;
+        readonly __module_component?: string | null;
+        readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
     } & ({
-        readonly __module_component: any | null;
+        readonly __fragmentPropName?: string | null;
+        readonly __module_component: string | null;
+        readonly " $fragmentRefs": PlainUserNameRenderer_name$ref;
+    } | {
+        readonly " $fragmentRefs": MarkdownUserNameRenderer_name$ref;
     } | {
         /*This will never be '% other', but we need some
         value in case none of the concrete values match.*/
@@ -441,9 +447,15 @@ export type NameRendererQueryVariables = {
 export type NameRendererQueryResponse = {
     readonly me: {
         readonly nameRenderer: ({
-            readonly __module_component?: any | null;
+            readonly __fragmentPropName?: string | null;
+            readonly __module_component?: string | null;
+            readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
         } & ({
-            readonly __module_component: any | null;
+            readonly __fragmentPropName?: string | null;
+            readonly __module_component: string | null;
+            readonly " $fragmentRefs": PlainUserNameRenderer_name$ref;
+        } | {
+            readonly " $fragmentRefs": MarkdownUserNameRenderer_name$ref;
         } | {
             /*This will never be '% other', but we need some
             value in case none of the concrete values match.*/
@@ -1514,9 +1526,15 @@ export type NameRendererFragment$ref = any;
 export type NameRendererFragment = {
     readonly id: string;
     readonly nameRenderer: ({
-        readonly __module_component?: any | null;
+        readonly __fragmentPropName?: string | null;
+        readonly __module_component?: string | null;
+        readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
     } & ({
-        readonly __module_component: any | null;
+        readonly __fragmentPropName?: string | null;
+        readonly __module_component: string | null;
+        readonly " $fragmentRefs": PlainUserNameRenderer_name$ref;
+    } | {
+        readonly " $fragmentRefs": MarkdownUserNameRenderer_name$ref;
     } | {
         /*This will never be '% other', but we need some
         value in case none of the concrete values match.*/
@@ -1581,9 +1599,15 @@ export type NameRendererQueryVariables = {
 export type NameRendererQueryResponse = {
     readonly me: {
         readonly nameRenderer: ({
-            readonly __module_component?: any | null;
+            readonly __fragmentPropName?: string | null;
+            readonly __module_component?: string | null;
+            readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
         } & ({
-            readonly __module_component: any | null;
+            readonly __fragmentPropName?: string | null;
+            readonly __module_component: string | null;
+            readonly " $fragmentRefs": PlainUserNameRenderer_name$ref;
+        } | {
+            readonly " $fragmentRefs": MarkdownUserNameRenderer_name$ref;
         } | {
             /*This will never be '% other', but we need some
             value in case none of the concrete values match.*/
