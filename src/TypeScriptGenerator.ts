@@ -9,7 +9,7 @@ import {
 } from "relay-compiler";
 import * as RelayCompilerPublic from "relay-compiler";
 
-import { GraphQLNonNull } from "graphql";
+import { GraphQLNonNull, GraphQLString } from "graphql";
 import * as ts from "typescript";
 
 import {
@@ -421,6 +421,24 @@ function createVisitor(options: TypeGeneratorOptions) {
             schemaName: node.name,
             nodeType: node.type,
             nodeSelections: selectionsToMap(flattenArray(node.selections))
+          }
+        ];
+      },
+      ModuleImport(node: any) {
+        return [
+          {
+            key: "__fragmentPropName",
+            conditional: true,
+            value: transformScalarType(GraphQLString, state)
+          },
+          {
+            key: "__module_component",
+            conditional: true,
+            value: transformScalarType(GraphQLString, state)
+          },
+          {
+            key: "__fragments_" + node.name,
+            ref: node.name
           }
         ];
       },
