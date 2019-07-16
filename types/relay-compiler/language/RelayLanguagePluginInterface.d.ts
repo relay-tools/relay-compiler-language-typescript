@@ -26,6 +26,7 @@ export type FormatModule = (
       | "ConcreteFragment"
       | "ConcreteRequest"
       | "ReaderFragment"
+      | "RelayConcreteNode"
       | null;
     docText: string | null;
     concreteText: string;

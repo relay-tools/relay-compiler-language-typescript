@@ -1,6 +1,6 @@
 /* tslint:disable */
 
-import {RelayConcreteNode}  from "relay-runtime";
+import { RelayConcreteNode } from "relay-runtime";
 export type CompleteExample = { readonly id: string }
 
 

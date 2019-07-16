@@ -40,7 +40,7 @@ describe('formatGeneratedModule', () => {
     const formatGeneratedModule = formatterFactory();
     expect(formatGeneratedModule({
       moduleName: 'complete-example',
-      documentType: 'ConcreteFragment',
+      documentType: 'RelayConcreteNode',
       docText: null,
       concreteText: JSON.stringify({ the: { fragment: { data: 42 } }}),
       typeText: 'export type CompleteExample = { readonly id: string }',
@@ -54,7 +54,7 @@ describe('formatGeneratedModule', () => {
     const formatGeneratedModule = formatterFactory();
     expect(formatGeneratedModule({
       moduleName: 'complete-example',
-      documentType: 'ConcreteFragment',
+      documentType: 'RelayConcreteNode',
       docText: null,
       concreteText: JSON.stringify({ the: { fragment: { data: 42 } }}),
       typeText: 'export type CompleteExample = { readonly id: string }',
@@ -68,7 +68,7 @@ describe('formatGeneratedModule', () => {
     const formatGeneratedModule = formatterFactory();
     expect(formatGeneratedModule({
       moduleName: 'complete-example',
-      documentType: 'ConcreteFragment',
+      documentType: 'RelayConcreteNode',
       docText: null,
       concreteText: JSON.stringify({ the: { fragment: { data: 42 } }}),
       typeText: 'export type CompleteExample = { readonly id: string }',
