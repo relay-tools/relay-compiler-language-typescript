@@ -5,16 +5,20 @@ env:
   global:
     - secure: Jwf6eHnVf1Wb1n6RUmnRoBeH6McHNMKN+tnXlMP3RGIpEXR4rz5QlLByBTT/X6FcVD8o7gUzsHeYuFQeOWvflpLjAe7i87c8cts3OFyA9XUhW3vLUaK/046E7l7wkLgojseD3IoqIchJVk3ByjKjp9q3vLhbgS72izEXs4eoFdAp0uP8fVT+Xya/a2+Eqz9QuSXGSyWa8nW+HkOEO16rqntGLinc72acC1yrfXoOmFgrrnKsOsvqh8XlaE1XhrRkMwG3xPjSTp/IJQPzua5zAIxhO2lw/OmYWoKZgYeT6o7uwcwJA0xLPrYLjs2X37Lyvtc+nc1gu/HHqEMLlayMr8DwiYrbT2WP3D1m0N3cjsPmkIWf9mhgtL9u99k1XziumN0BnUoplGSik/ZS/QTGx2S4K+7OiQG/9gU4zH3gvuGC0QeblRVS7ieOppi6+dKAbBzAiN5sZGRN5EtJ1tSyV1IcqJY2ygMSAT3C/FG7Uy5RIDpESEr44nUDw7AZS648rhXCOAC1OVdoluZdNk89mHsPptHVcfWMtmrvSKl5RUMEh9n5GvG2H9ftWu2tlvKyyf30FgSfX9ny/0DUajcW5vEFSJiwZrkqnWhbIguFS0JJgf3Js42Tmo83NRISW7z6wbPG+bjhvJX9vAEjnvPkk/K+AppSEx/dMAbkZ1VANVg=
     - secure: Ku5K+jFld9CUHtLpSsJKGvhacuEyPi/J/YYvgRoCM5Ejw3JdT9S55+OlQB3pVGcwD0IZ0uect1AgoCM+eAlrk/yi4y1zpED/NhAMIPfZ205hw4BJlckhGdVRpqXEjRiWnvwTMkeOaE7DdsZb/v8g7s+tPblx74hKKTsm//DhwHsOy3NJXq4YEVwWy+TG0AbXDkv7ozuIyOl8PV+Ql7Z5i3kuyjXTfjObyFQOujS2HhEPnvYPEJXYo+AzZkflxUlSatREv+e2uv3QkywBJZMFG5xAsIeWrRT9r27kr7NmQx4yj9uaF44FVBKfYcnKQlkGPPsvTt4WMBOfvPFaZcvZQBLHkxxsuLr5Dv4FyERtN3Y47BdJg+dPA1Alik5WUsCuShsEdfTN4BA0j+DYvKKgIL0dEVhKYqHVaZ3/SksxGKW6DeZyTABwJZukw2QZGlNVxbdFJyxZ4m4f8efD7lcRDTs0Zo+yePhszzKRf1sLadJJDevR68JdkuPNMP370y2oLWYw63LF9dZFJwhqQWUtC7Ec8OmKPsr4OVcfFbmlK45Vfab1Rjx99e4UpVb3c5PIug4TBjLfckYW4eW2MZjTlWq5AUYLduHDDEfb0C2KuQZAHhthRWEREx0Ap2N4rIVnbQZFqVSTRrH3PGa4RGOhWdO4NKPW3HlTS4ZeBQEmYZg=
+    - GIT_NAME="Eloy Durán"
+    - GIT_EMAIL="eloy.de.enige@gmail.com"
 
 script:
   - yarn lint
   - yarn test
   - yarn build
-  - yarn pr-check
 
 before_deploy:
   - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
+  - git checkout master && git pull origin
+  - yarn build
 deploy:
+  skip_cleanup: true
   provider: script
   script: bash scripts/deploy.sh
   on:

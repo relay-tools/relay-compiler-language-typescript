@@ -1,11 +1,15 @@
 import {
+  Fragment,
   IRTransforms,
+  IRVisitor,
+  Root,
+  SchemaUtils,
   TypeGenerator,
   TypeGeneratorOptions
 } from "relay-compiler";
-import * as RelayCompilerPublic from "relay-compiler/lib/RelayCompilerPublic";
+import * as RelayCompilerPublic from "relay-compiler";
 
-import { GraphQLNonNull } from "graphql";
+import { GraphQLNonNull, GraphQLString } from "graphql";
 import * as ts from "typescript";
 
 import {
@@ -13,13 +17,6 @@ import {
   transformInputType,
   transformScalarType
 } from "./TypeScriptTypeTransformers";
-
-// Get the types
-import * as GraphQLCompilerTypes from "graphql-compiler";
-
-const GraphQLCompiler: typeof GraphQLCompilerTypes = RelayCompilerPublic;
-
-const { IRVisitor, SchemaUtils } = GraphQLCompiler;
 
 const { isAbstractType } = SchemaUtils;
 
@@ -93,7 +90,7 @@ function selectionsToAST(
   state: State,
   refTypeName?: string
 ): ts.TypeNode {
-  const baseFields = new Map();
+  const baseFields = new Map<string, Selection>();
   const byConcreteType: { [type: string]: Selection[] } = {};
 
   flattenArray(selections).forEach(selection => {
@@ -112,26 +109,21 @@ function selectionsToAST(
   });
 
   const types: ts.PropertySignature[][] = [];
+  const discriminators = Array.from(baseFields.values()).filter(
+    isTypenameSelection
+  );
+  for (const concreteType in byConcreteType) {
+    types.push(
+      groupRefs([...discriminators, ...byConcreteType[concreteType]]).map(
+        selection => makeProp(selection, state, concreteType)
+      )
+    );
+  }
 
-  if (
-    Object.keys(byConcreteType).length &&
-    onlySelectsTypename(Array.from(baseFields.values())) &&
-    (hasTypenameSelection(Array.from(baseFields.values())) ||
-      Object.keys(byConcreteType).every(type =>
-        hasTypenameSelection(byConcreteType[type])
-      ))
-  ) {
-    for (const concreteType in byConcreteType) {
-      types.push(
-        groupRefs([
-          ...Array.from(baseFields.values()),
-          ...byConcreteType[concreteType]
-        ]).map(selection => makeProp(selection, state, concreteType))
-      );
-    }
-    // It might be some other type than the listed concrete types. Ideally, we
-    // would set the type to diff(string, set of listed concrete types), but
-    // this doesn't exist in Flow at the time.
+  if (types.length) {
+    // It might be some other type than the listed concrete types.
+    // Ideally, we would set the type to Exclude<string, set of listed concrete types>,
+    // but this doesn't work with TypeScript's discriminated unions.
     const otherProp = readOnlyObjectTypeProperty(
       "__typename",
       ts.createLiteralTypeNode(ts.createLiteral("%other"))
@@ -144,44 +136,51 @@ function selectionsToAST(
       true
     );
     types.push([otherPropWithComment]);
-  } else {
-    let selectionMap = selectionsToMap(Array.from(baseFields.values()));
-    for (const concreteType in byConcreteType) {
-      selectionMap = mergeSelections(
-        selectionMap,
-        selectionsToMap(
-          byConcreteType[concreteType].map(sel => ({
-            ...sel,
-            conditional: true
-          }))
-        )
-      );
-    }
-    const selectionMapValues = groupRefs(Array.from(selectionMap.values())).map(
-      sel =>
-        isTypenameSelection(sel) && sel.concreteType
-          ? makeProp({ ...sel, conditional: false }, state, sel.concreteType)
-          : makeProp(sel, state)
-    );
-    types.push(selectionMapValues);
   }
 
-  return ts.createUnionTypeNode(
-    types.map(props => {
-      if (refTypeName) {
-        props.push(
-          readOnlyObjectTypeProperty(
-            REF_TYPE,
-            ts.createTypeReferenceNode(
-              ts.createIdentifier(refTypeName),
-              undefined
-            )
-          )
-        );
-      }
-      return exactObjectTypeAnnotation(props);
-    })
+  let selectionMap = selectionsToMap(Array.from(baseFields.values()));
+  for (const concreteType in byConcreteType) {
+    selectionMap = mergeSelections(
+      selectionMap,
+      selectionsToMap(
+        byConcreteType[concreteType].map(sel => ({
+          ...sel,
+          conditional: true
+        }))
+      )
+    );
+  }
+  const baseProps: ts.PropertySignature[] = groupRefs(
+    Array.from(selectionMap.values())
+  ).map(
+    sel =>
+      isTypenameSelection(sel) && sel.concreteType
+        ? makeProp({ ...sel, conditional: false }, state, sel.concreteType)
+        : makeProp(sel, state)
   );
+
+  if (refTypeName) {
+    baseProps.push(
+      readOnlyObjectTypeProperty(
+        REF_TYPE,
+        ts.createTypeReferenceNode(ts.createIdentifier(refTypeName), undefined)
+      )
+    );
+  }
+
+  if (types.length > 0) {
+    const unionType = ts.createUnionTypeNode(
+      types.map(props => {
+        return exactObjectTypeAnnotation(props);
+      })
+    );
+    return ts.createIntersectionTypeNode([
+      exactObjectTypeAnnotation(baseProps),
+      unionType
+    ]);
+  } else {
+    return exactObjectTypeAnnotation(baseProps);
+  }
 }
 
 // We don't have exact object types in typescript.
@@ -239,7 +238,7 @@ function mergeSelections(a: SelectionMap, b: SelectionMap): SelectionMap {
   return merged;
 }
 
-function isPlural(node: GraphQLCompilerTypes.Fragment): boolean {
+function isPlural(node: Fragment): boolean {
   return Boolean(node.metadata && node.metadata.plural);
 }
 
@@ -424,6 +423,24 @@ function createVisitor(options: TypeGeneratorOptions) {
           }
         ];
       },
+      ModuleImport(node: any) {
+        return [
+          {
+            key: "__fragmentPropName",
+            conditional: true,
+            value: transformScalarType(GraphQLString, state)
+          },
+          {
+            key: "__module_component",
+            conditional: true,
+            value: transformScalarType(GraphQLString, state)
+          },
+          {
+            key: "__fragments_" + node.name,
+            ref: node.name
+          }
+        ];
+      },
       FragmentSpread(node: any) {
         state.usedFragments.add(node.name);
         return [
@@ -469,10 +486,7 @@ function generateInputObjectTypes(state: State) {
   });
 }
 
-function generateInputVariablesType(
-  node: GraphQLCompilerTypes.Root,
-  state: State
-) {
+function generateInputVariablesType(node: Root, state: State) {
   return exportType(
     `${node.name}Variables`,
     exactObjectTypeAnnotation(
@@ -590,8 +604,12 @@ function getRefTypeName(name: string): string {
   return `${name}$ref`;
 }
 
+// Should match FLOW_TRANSFORMS array
+// https://github.com/facebook/relay/blob/v4.0.0/packages/relay-compiler/language/javascript/RelayFlowGenerator.js#L621-L627
 export const transforms: TypeGenerator["transforms"] = [
-  IRTransforms.commonTransforms[2], // RelayRelayDirectiveTransform.transform
-  IRTransforms.commonTransforms[3], // RelayMaskTransform.transform
-  IRTransforms.printTransforms[0] // FlattenTransform.transformWithOptions({})
+  IRTransforms.commonTransforms[1], // RelayRelayDirectiveTransform.transform,
+  IRTransforms.commonTransforms[2], // RelayMaskTransform.transform,
+  IRTransforms.commonTransforms[3], // RelayMatchTransform.transform,
+  IRTransforms.printTransforms[3], // FlattenTransform.transformWithOptions({}),
+  IRTransforms.commonTransforms[4] // RelayRefetchableFragmentTransform.transform,
 ];

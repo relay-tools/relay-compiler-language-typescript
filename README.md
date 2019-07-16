@@ -10,7 +10,7 @@ TypeScript support, including emitting type definitions.
 Add the package to your dev dependencies:
 
 ```
-yarn add graphql-compiler --dev
+yarn add graphql graphql-compiler --dev
 yarn add typescript relay-compiler-language-typescript --dev
 ```
 

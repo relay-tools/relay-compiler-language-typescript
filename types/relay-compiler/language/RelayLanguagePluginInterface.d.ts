@@ -1,5 +1,6 @@
 import { RelayConcreteNode } from "relay-runtime";
-import { Fragment, IRTransform, Root } from "../../graphql-compiler";
+import { Fragment, Root } from "../core/GraphQLIR";
+import { IRTransform } from "../core/GraphQLIRTransformer";
 
 export type GraphQLTag = {
   keyName: string | null;
