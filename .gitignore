@@ -58,6 +58,7 @@ typings/
 .env
 
 .vscode
+.idea/
 /lib
 /bin
 
