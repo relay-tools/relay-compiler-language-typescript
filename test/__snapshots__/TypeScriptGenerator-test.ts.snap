@@ -1090,6 +1090,22 @@ export type TypenameAliases = {
 
 `;
 
+exports[`TypeScriptGenerator with a single artifact directory matches expected output: unknown-scalar.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+fragment Test on User {
+    color
+}
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+declare const _Test$ref: unique symbol;
+export type Test$ref = typeof _Test$ref;
+export type Test = {
+    readonly color: unknown | null;
+    readonly " $refType": Test$ref;
+};
+
+`;
+
 exports[`TypeScriptGenerator with a single artifact directory matches expected output: unmasked-fragment-spreads.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment UserProfile on User {
@@ -2221,6 +2237,21 @@ export type TypenameAliases = {
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
 });
+
+`;
+
+exports[`TypeScriptGenerator without a single artifact directory matches expected output: unknown-scalar.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+fragment Test on User {
+    color
+}
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+export type Test$ref = any;
+export type Test = {
+    readonly color: unknown | null;
+    readonly " $refType": Test$ref;
+};
 
 `;
 
