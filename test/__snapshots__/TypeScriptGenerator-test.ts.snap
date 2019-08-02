@@ -317,8 +317,7 @@ export type LinkedField = {
 };
 
 
-export type UnionTypeTestVariables = {
-};
+export type UnionTypeTestVariables = {};
 export type UnionTypeTestResponse = {
     readonly neverNode: ({
         readonly __typename: string;
@@ -442,8 +441,7 @@ fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 type MarkdownUserNameRenderer_name$ref = any;
 type PlainUserNameRenderer_name$ref = any;
-export type NameRendererQueryVariables = {
-};
+export type NameRendererQueryVariables = {};
 export type NameRendererQueryResponse = {
     readonly me: {
         readonly nameRenderer: ({
@@ -1472,8 +1470,7 @@ export type LinkedField = {
 };
 
 
-export type UnionTypeTestVariables = {
-};
+export type UnionTypeTestVariables = {};
 export type UnionTypeTestResponse = {
     readonly neverNode: ({
         readonly __typename: string;
@@ -1594,8 +1591,7 @@ fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 type MarkdownUserNameRenderer_name$ref = any;
 type PlainUserNameRenderer_name$ref = any;
-export type NameRendererQueryVariables = {
-};
+export type NameRendererQueryVariables = {};
 export type NameRendererQueryResponse = {
     readonly me: {
         readonly nameRenderer: ({
