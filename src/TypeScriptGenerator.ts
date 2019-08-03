@@ -318,12 +318,12 @@ function createVisitor(options: TypeGeneratorOptions) {
 
       Fragment(node: any) {
         const flattenedSelections: Selection[] = flattenArray(node.selections);
-        const numConecreteSelections = flattenedSelections.filter(
+        const numConcreteSelections = flattenedSelections.filter(
           s => s.concreteType
         ).length;
         const selections = flattenedSelections.map(selection => {
           if (
-            numConecreteSelections <= 1 &&
+            numConcreteSelections <= 1 &&
             isTypenameSelection(selection) &&
             !isAbstractType(node.type)
           ) {
