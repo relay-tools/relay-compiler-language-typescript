@@ -1,9 +1,11 @@
-import {generateTestsFromFixtures} from 'relay-test-utils/lib/RelayModernTestUtils'
+import {
+  GraphQLCompilerContext,
+  IRTransforms,
+  transformASTSchema,
+} from 'relay-compiler'
+import { generateTestsFromFixtures } from 'relay-test-utils/lib/RelayModernTestUtils'
 import * as RelayTestSchema from 'relay-test-utils/lib/RelayTestSchema'
 import * as parseGraphQLText from 'relay-test-utils/lib/parseGraphQLText'
-
-import {GraphQLCompilerContext, IRTransforms, transformASTSchema} from 'relay-compiler'
-
 import * as TypeScriptGenerator from '../src/TypeScriptGenerator'
 
 function generate(text, options) {
@@ -37,17 +39,19 @@ function generate(text, options) {
         username: String
       }
     `,
-  ]);
-  const {definitions} = parseGraphQLText(schema, text);
+  ])
+  const { definitions } = parseGraphQLText(schema, text)
   return new GraphQLCompilerContext(RelayTestSchema, schema)
     .addAll(definitions)
     .applyTransforms(TypeScriptGenerator.transforms)
     .documents()
-    .map(doc => TypeScriptGenerator.generate(doc, {
-      ...options,
-      schema,
-    }))
-    .join('\n\n');
+    .map(doc =>
+      TypeScriptGenerator.generate(doc, {
+        ...options,
+        schema,
+      })
+    )
+    .join('\n\n')
 }
 
 describe('TypeScriptGenerator with a single artifact directory', () => {
@@ -60,9 +64,9 @@ describe('TypeScriptGenerator with a single artifact directory', () => {
       relayRuntimeModule: 'relay-runtime',
       useHaste: false,
       useSingleArtifactDirectory: true,
-    }),
-  );
-});
+    })
+  )
+})
 
 describe('TypeScriptGenerator without a single artifact directory', () => {
   generateTestsFromFixtures(`${__dirname}/fixtures/type-generator`, text =>
@@ -74,16 +78,16 @@ describe('TypeScriptGenerator without a single artifact directory', () => {
       relayRuntimeModule: 'relay-runtime',
       useHaste: false,
       useSingleArtifactDirectory: false,
-    }),
-  );
-});
+    })
+  )
+})
 
 describe('Does not add `%future added values` when the noFutureProofEnums option is set', () => {
   const text = `
     fragment ScalarField on User {
       traits
     }
-  `;
+  `
   const types = generate(text, {
     customScalars: {},
     enumsHasteModule: null,
@@ -92,10 +96,40 @@ describe('Does not add `%future added values` when the noFutureProofEnums option
     relayRuntimeModule: 'relay-runtime',
     useHaste: false,
     noFutureProofEnums: true,
-  });
+  })
 
   // Without the option, PersonalityTraits would be `"CHEERFUL" | ... | "%future added value");`
   expect(types).toContain(
-    'export type PersonalityTraits = "CHEERFUL" | "DERISIVE" | "HELPFUL" | "SNARKY";',
-  );
-});
+    'export type PersonalityTraits = "CHEERFUL" | "DERISIVE" | "HELPFUL" | "SNARKY";'
+  )
+})
+
+describe.each`
+  mapping     | type
+  ${'String'} | ${'string'}
+  ${'Url'}    | ${'string'}
+  ${'ID'}     | ${'string'}
+  ${'Int'}    | ${'number'}
+  ${'Color'}  | ${'Color'}
+  ${'{}'}     | ${'{}'}
+  ${'[]'}     | ${'[]'}
+`('Custom scalar mapping $mapping to $type', ({ mapping, type }) => {
+  const text = `
+    fragment Test on User {
+        color
+    }
+  `
+  const types = generate(text, {
+    customScalars: {
+      Color: mapping,
+    },
+    enumsHasteModule: null,
+    existingFragmentNames: new Set(['PhotoFragment']),
+    optionalInputFields: [],
+    relayRuntimeModule: 'relay-runtime',
+    useHaste: false,
+    useSingleArtifactDirectory: true,
+  })
+
+  expect(types).toContain(`color: ${type} | null`)
+})

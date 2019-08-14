@@ -1,5 +1,3 @@
-import * as ts from "typescript";
-
 import {
   GraphQLEnumType,
   GraphQLInputObjectType,
@@ -12,8 +10,8 @@ import {
   GraphQLType,
   GraphQLUnionType
 } from "graphql";
-
 import { TypeGeneratorOptions } from "relay-compiler";
+import * as ts from "typescript";
 
 export type ScalarTypeMapping = {
   [type: string]: string;
@@ -75,6 +73,7 @@ function transformGraphQLScalarType(
   type: GraphQLScalarType,
   state: State
 ): ts.TypeNode {
+  const customType = state.customScalars[type.name];
   switch (state.customScalars[type.name] || type.name) {
     case "ID":
     case "String":
@@ -85,8 +84,11 @@ function transformGraphQLScalarType(
       return ts.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword);
     case "Boolean":
       return ts.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword);
+
     default:
-      return ts.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword);
+      return customType
+        ? ts.createTypeReferenceNode(customType, undefined)
+        : ts.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword);
   }
 }
 
