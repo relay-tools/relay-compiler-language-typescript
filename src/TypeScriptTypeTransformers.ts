@@ -74,7 +74,7 @@ function transformGraphQLScalarType(
   state: State
 ): ts.TypeNode {
   const customType = state.customScalars[type.name];
-  switch (state.customScalars[type.name] || type.name) {
+  switch (customType || type.name) {
     case "ID":
     case "String":
     case "Url":
