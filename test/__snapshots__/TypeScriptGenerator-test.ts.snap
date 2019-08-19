@@ -711,6 +711,8 @@ export type TypenameInsideWithOverlappingFields = {
         readonly name: string | null;
     } | {
         readonly __typename: "User";
+        readonly id: string;
+        readonly name: string | null;
         readonly profile_picture: {
             readonly uri: string | null;
         } | null;
@@ -757,9 +759,15 @@ export type TypenameInsideWithOverlappingFieldsFull = {
         readonly name: string | null;
     } | {
         readonly __typename: "User";
+        readonly id: string;
+        readonly name: string | null;
         readonly profile_picture: {
             readonly uri: string | null;
         } | null;
+    } | {
+        readonly __typename: "ExtraUser";
+        readonly id: string;
+        readonly name: string | null;
     } | {
         /*This will never be '%other', but we need some
         value in case none of the concrete values match.*/
@@ -1051,7 +1059,6 @@ export type RecursiveFragment$ref = typeof _RecursiveFragment$ref;
 export type RecursiveFragment = {
     readonly uri: string | null;
     readonly width: number | null;
-    readonly " $refType": RecursiveFragment$ref;
 };
 
 
@@ -1757,6 +1764,8 @@ export type TypenameInsideWithOverlappingFields = {
         readonly name: string | null;
     } | {
         readonly __typename: "User";
+        readonly id: string;
+        readonly name: string | null;
         readonly profile_picture: {
             readonly uri: string | null;
         } | null;
@@ -1802,9 +1811,15 @@ export type TypenameInsideWithOverlappingFieldsFull = {
         readonly name: string | null;
     } | {
         readonly __typename: "User";
+        readonly id: string;
+        readonly name: string | null;
         readonly profile_picture: {
             readonly uri: string | null;
         } | null;
+    } | {
+        readonly __typename: "ExtraUser";
+        readonly id: string;
+        readonly name: string | null;
     } | {
         /*This will never be '%other', but we need some
         value in case none of the concrete values match.*/
@@ -2084,7 +2099,6 @@ export type RecursiveFragment$ref = any;
 export type RecursiveFragment = {
     readonly uri: string | null;
     readonly width: number | null;
-    readonly " $refType": RecursiveFragment$ref;
 };
 
 

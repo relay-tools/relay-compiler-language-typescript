@@ -1,11 +1,13 @@
+import * as parseGraphQLText from "relay-test-utils/lib/parseGraphQLText";
+import { generateTestsFromFixtures } from "relay-test-utils/lib/RelayModernTestUtils";
+import * as RelayTestSchema from "relay-test-utils/lib/RelayTestSchema";
+
 import {
   GraphQLCompilerContext,
   IRTransforms,
   transformASTSchema
 } from "relay-compiler";
-import { generateTestsFromFixtures } from "relay-test-utils/lib/RelayModernTestUtils";
-import * as RelayTestSchema from "relay-test-utils/lib/RelayTestSchema";
-import * as parseGraphQLText from "relay-test-utils/lib/parseGraphQLText";
+
 import * as TypeScriptGenerator from "../src/TypeScriptGenerator";
 
 function generate(text, options) {

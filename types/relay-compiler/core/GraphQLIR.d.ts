@@ -83,6 +83,7 @@ export type IR =
   | InlineFragment
   | LinkedField
   | ListValue
+  | ModuleImport
   | Literal
   | LocalArgumentDefinition
   | ObjectFieldValue
@@ -120,6 +121,10 @@ export type LinkedField = {
   name: string;
   selections: Selection[];
   type: GraphQLOutputType;
+};
+export type ModuleImport = {
+  name: string;
+  selections: Selection[];
 };
 export type ListValue = {
   kind: "ListValue";

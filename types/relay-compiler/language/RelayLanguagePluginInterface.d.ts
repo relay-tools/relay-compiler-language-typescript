@@ -37,7 +37,7 @@ export type GraphQLTagFinder = (text: string, filePath: string) => GraphQLTag[];
 export interface TypeGeneratorOptions {
   readonly customScalars: { [type: string]: string };
   readonly useHaste: boolean;
-  readonly enumsHasteModule: string | null;
+  readonly enumsHasteModule: string | ((enumName: string) => string) | null;
   readonly existingFragmentNames: Set<string>;
   readonly optionalInputFields: ReadonlyArray<string>;
   readonly relayRuntimeModule: string;
