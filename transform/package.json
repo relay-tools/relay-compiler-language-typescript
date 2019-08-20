@@ -1,47 +1,50 @@
 {
-  "name": "typescript-transform-relay",
-  "version": "1.0.0",
-  "description": "A transformer for use with TypeScript when using relay (modern/compat/classic)",
-  "main": "lib/index.js",
-  "scripts": {
-    "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kastermester/relay-compiler-language-typescript.git"
-  },
-  "keywords": [
-    "relay",
-    "typescript"
-  ],
-  "author": "Kaare Hoff Skovgaard <kaare@kaareskovgaard.net>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/kastermester/relay-compiler-language-typescript/issues"
-  },
-  "homepage": "https://github.com/kastermester/relay-compiler-language-typescript#readme",
-  "dependencies": {
-    "graphql": "^14.0.2",
-    "typescript": "^2.9.2"
-  },
-  "devDependencies": {
-    "@types/jest": "^22.0.1",
-    "@types/node": "^10.10.0",
-    "@types/graphql": "^14.0.0",
-    "jest": "^23.6.0",
-    "relay-test-utils": "^1.6.0",
-    "ts-jest": "^23.1.4"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testURL": "http://localhost",
-    "testRegex": "test/.+?-test\\.tsx?$",
-    "moduleFileExtensions": [
-      "js",
-      "ts",
-      "tsx"
-    ]
-  }
+	"name": "typescript-transform-relay",
+	"version": "1.0.0",
+	"description": "A transformer for use with TypeScript when using relay (modern/compat/classic)",
+	"main": "lib/index.js",
+	"scripts": {
+		"test": "jest"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kastermester/relay-compiler-language-typescript.git"
+	},
+	"keywords": [
+		"relay",
+		"typescript"
+	],
+	"author": "Kaare Hoff Skovgaard <kaare@kaareskovgaard.net>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/kastermester/relay-compiler-language-typescript/issues"
+	},
+	"homepage": "https://github.com/kastermester/relay-compiler-language-typescript#readme",
+	"dependencies": {
+		"graphql": "^14.0.2"
+	},
+	"devDependencies": {
+		"@types/graphql": "^14.0.0",
+		"@types/jest": "^22.0.1",
+		"@types/node": "^10.10.0",
+		"jest": "^23.6.0",
+		"relay-test-utils": "^1.6.0",
+		"ts-jest": "^23.1.4",
+		"typescript": "^2.9.2"
+	},
+	"peerDependencies": {
+		"typescript": "^2.9.2 || >3.0.0"
+	},
+	"jest": {
+		"transform": {
+			"^.+\\.tsx?$": "ts-jest"
+		},
+		"testURL": "http://localhost",
+		"testRegex": "test/.+?-test\\.tsx?$",
+		"moduleFileExtensions": [
+			"js",
+			"ts",
+			"tsx"
+		]
+	}
 }
