@@ -85,6 +85,8 @@ function transformGraphQLScalarType(
       return ts.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword);
     case "Boolean":
       return ts.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword);
+    case "any":
+      return ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
     default:
       return ts.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword);
   }
