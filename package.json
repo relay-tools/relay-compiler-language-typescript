@@ -77,7 +77,7 @@
     "@artsy/auto-config": "^1.0.0",
     "@types/graphql": "^14.2.3",
     "@types/invariant": "2.2.30",
-    "@types/jest": "^22.0.1",
+    "@types/jest": "^24.0.18",
     "@types/node": "8.10.51",
     "@types/relay-runtime": "^5.0.3",
     "graphql": "^14.4.2",
