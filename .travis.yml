@@ -14,7 +14,8 @@ script:
   - yarn build
 
 before_deploy:
-  - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
+  - echo "NPM_TOKEN=${NPM_TOKEN}" >> .env
+  - echo "GH_TOKEN=${GH_TOKEN}" >> .env
   - git checkout master && git pull origin
   - yarn build
 deploy:
