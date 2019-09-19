@@ -24,6 +24,7 @@ export type State = {
     [name: string]: ts.TypeNode | "pending";
   };
   generatedFragments: Set<string>;
+  matchFields: Map<string, ts.TypeNode>;
 } & TypeGeneratorOptions;
 
 function getInputObjectTypeIdentifier(type: GraphQLInputObjectType): string {

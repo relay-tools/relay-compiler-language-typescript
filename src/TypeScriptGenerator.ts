@@ -1,3 +1,4 @@
+import { GraphQLNonNull, GraphQLString } from "graphql";
 import {
   Fragment,
   IRTransforms,
@@ -7,11 +8,15 @@ import {
   TypeGenerator,
   TypeGeneratorOptions
 } from "relay-compiler";
-import * as RelayCompilerPublic from "relay-compiler";
-
-import { GraphQLNonNull, GraphQLString } from "graphql";
+import {
+  Condition,
+  FragmentSpread,
+  InlineFragment,
+  LinkedField,
+  ModuleImport,
+  ScalarField
+} from "types/relay-compiler/core/GraphQLIR";
 import * as ts from "typescript";
-
 import {
   State,
   transformInputType,
@@ -22,6 +27,7 @@ const { isAbstractType } = SchemaUtils;
 
 const REF_TYPE = " $refType";
 const FRAGMENT_REFS = " $fragmentRefs";
+const DATA = " $data";
 
 export const generate: TypeGenerator["generate"] = (node, options) => {
   const ast: ts.Statement[] = IRVisitor.visit(node, createVisitor(options));
@@ -61,6 +67,7 @@ function nullthrows<T>(obj: T | null | undefined): T {
 function makeProp(
   selection: Selection,
   state: State,
+  unmasked: boolean,
   concreteType?: string
 ): ts.PropertySignature {
   let { value } = selection;
@@ -69,7 +76,11 @@ function makeProp(
     value = transformScalarType(
       nodeType,
       state,
-      selectionsToAST([Array.from(nullthrows(nodeSelections).values())], state)
+      selectionsToAST(
+        [Array.from(nullthrows(nodeSelections).values())],
+        state,
+        unmasked
+      )
     );
   }
   if (schemaName === "__typename" && concreteType) {
@@ -88,7 +99,8 @@ const onlySelectsTypename = (selections: Selection[]) =>
 function selectionsToAST(
   selections: Selection[][],
   state: State,
-  refTypeName?: string
+  unmasked: boolean,
+  fragmentTypeName?: string
 ): ts.TypeNode {
   const baseFields = new Map<string, Selection>();
   const byConcreteType: { [type: string]: Selection[] } = {};
@@ -109,77 +121,99 @@ function selectionsToAST(
   });
 
   const types: ts.PropertySignature[][] = [];
-  const discriminators = Array.from(baseFields.values()).filter(
-    isTypenameSelection
-  );
-  for (const concreteType in byConcreteType) {
+
+  if (
+    Object.keys(byConcreteType).length > 0 &&
+    onlySelectsTypename(Array.from(baseFields.values())) &&
+    (hasTypenameSelection(Array.from(baseFields.values())) ||
+      Object.keys(byConcreteType).every(type =>
+        hasTypenameSelection(byConcreteType[type])
+      ))
+  ) {
+    const typenameAliases = new Set<string>();
+    for (const concreteType in byConcreteType) {
+      types.push(
+        groupRefs([
+          ...Array.from(baseFields.values()),
+          ...byConcreteType[concreteType]
+        ]).map(selection => {
+          if (selection.schemaName === "__typename") {
+            typenameAliases.add(selection.key);
+          }
+          return makeProp(selection, state, unmasked, concreteType);
+        })
+      );
+    }
+
+    // It might be some other type then the listed concrete types. Ideally, we
+    // would set the type to diff(string, set of listed concrete types), but
+    // this doesn't exist in Flow at the time.
     types.push(
-      groupRefs([...discriminators, ...byConcreteType[concreteType]]).map(
-        selection => makeProp(selection, state, concreteType)
-      )
-    );
-  }
-
-  if (types.length) {
-    // It might be some other type than the listed concrete types.
-    // Ideally, we would set the type to Exclude<string, set of listed concrete types>,
-    // but this doesn't work with TypeScript's discriminated unions.
-    const otherProp = readOnlyObjectTypeProperty(
-      "__typename",
-      ts.createLiteralTypeNode(ts.createLiteral("%other"))
-    );
-    const otherPropWithComment = ts.addSyntheticLeadingComment(
-      otherProp,
-      ts.SyntaxKind.MultiLineCommentTrivia,
-      "This will never be '% other', but we need some\n" +
-        "value in case none of the concrete values match.",
-      true
-    );
-    types.push([otherPropWithComment]);
-  }
-
-  let selectionMap = selectionsToMap(Array.from(baseFields.values()));
-  for (const concreteType in byConcreteType) {
-    selectionMap = mergeSelections(
-      selectionMap,
-      selectionsToMap(
-        byConcreteType[concreteType].map(sel => ({
-          ...sel,
-          conditional: true
-        }))
-      )
-    );
-  }
-  const baseProps: ts.PropertySignature[] = groupRefs(
-    Array.from(selectionMap.values())
-  ).map(sel =>
-    isTypenameSelection(sel) && sel.concreteType
-      ? makeProp({ ...sel, conditional: false }, state, sel.concreteType)
-      : makeProp(sel, state)
-  );
-
-  if (refTypeName) {
-    baseProps.push(
-      readOnlyObjectTypeProperty(
-        REF_TYPE,
-        ts.createTypeReferenceNode(ts.createIdentifier(refTypeName), undefined)
-      )
-    );
-  }
-
-  if (types.length > 0) {
-    const unionType = ts.createUnionTypeNode(
-      types.map(props => {
-        return exactObjectTypeAnnotation(props);
+      Array.from(typenameAliases).map(typenameAlias => {
+        const otherProp = readOnlyObjectTypeProperty(
+          typenameAlias,
+          ts.createLiteralTypeNode(ts.createLiteral("%other"))
+        );
+        const otherPropWithComment = ts.addSyntheticLeadingComment(
+          otherProp,
+          ts.SyntaxKind.MultiLineCommentTrivia,
+          "This will never be '%other', but we need some\n" +
+            "value in case none of the concrete values match.",
+          true
+        );
+        return otherPropWithComment;
       })
     );
-    return ts.createIntersectionTypeNode([
-      exactObjectTypeAnnotation(baseProps),
-      unionType
-    ]);
   } else {
-    return exactObjectTypeAnnotation(baseProps);
+    let selectionMap = selectionsToMap(Array.from(baseFields.values()));
+    for (const concreteType in byConcreteType) {
+      selectionMap = mergeSelections(
+        selectionMap,
+        selectionsToMap(
+          byConcreteType[concreteType].map(sel => ({
+            ...sel,
+            conditional: true
+          }))
+        )
+      );
+    }
+    const selectionMapValues = groupRefs(Array.from(selectionMap.values())).map(
+      sel =>
+        isTypenameSelection(sel) && sel.concreteType
+          ? makeProp(
+              {
+                ...sel,
+                conditional: false
+              },
+              state,
+              unmasked,
+              sel.concreteType
+            )
+          : makeProp(sel, state, unmasked)
+    );
+    types.push(selectionMapValues);
   }
+
+  const typeElements = types.map(props => {
+    if (fragmentTypeName) {
+      props.push(
+        readOnlyObjectTypeProperty(
+          REF_TYPE,
+          ts.createTypeReferenceNode(
+            ts.createIdentifier(fragmentTypeName),
+            undefined
+          )
+        )
+      );
+    }
+    return unmasked
+      ? ts.createTypeLiteralNode(props)
+      : exactObjectTypeAnnotation(props);
+  });
+  if (typeElements.length === 1) {
+    return typeElements[0];
+  }
+  return ts.createUnionTypeNode(typeElements);
 }
 
 // We don't have exact object types in typescript.
@@ -280,21 +314,27 @@ function createVisitor(options: TypeGeneratorOptions) {
     usedFragments: new Set(),
     useHaste: options.useHaste,
     useSingleArtifactDirectory: options.useSingleArtifactDirectory,
-    noFutureProofEnums: options.noFutureProofEnums
+    noFutureProofEnums: options.noFutureProofEnums,
+    matchFields: new Map()
   };
 
   return {
     leave: {
-      Root(node: any) {
+      Root(node: Root) {
         const inputVariablesType = generateInputVariablesType(node, state);
         const inputObjectTypes = generateInputObjectTypes(state);
         const responseType = exportType(
           `${node.name}Response`,
-          selectionsToAST(node.selections, state)
+          // From flow code: $FlowFixMe: selections have already been transformed
+          selectionsToAST(
+            (node.selections as any) as Selection[][],
+            state,
+            false
+          )
         );
         const operationType = exportType(
           node.name,
-          exactObjectTypeAnnotation([
+          ts.createTypeLiteralNode([
             readOnlyObjectTypeProperty(
               "response",
               ts.createTypeReferenceNode(responseType.name, undefined)
@@ -315,8 +355,11 @@ function createVisitor(options: TypeGeneratorOptions) {
         ];
       },
 
-      Fragment(node: any) {
-        const flattenedSelections: Selection[] = flattenArray(node.selections);
+      Fragment(node: Fragment) {
+        // From flow code: $FlowFixMe: selections have already been transformed
+        const flattenedSelections: Selection[] = flattenArray(
+          (node.selections as any) as Selection[][]
+        );
         const numConcreteSelections = flattenedSelections.filter(
           s => s.concreteType
         ).length;
@@ -336,94 +379,87 @@ function createVisitor(options: TypeGeneratorOptions) {
           return [selection];
         });
         state.generatedFragments.add(node.name);
-        const refTypeName = getRefTypeName(node.name);
-        const refTypeNodes: ts.Node[] = [];
-        if (options.useSingleArtifactDirectory) {
-          const _refTypeName = `_${refTypeName}`;
-          const _refType = ts.createVariableStatement(
-            [ts.createToken(ts.SyntaxKind.DeclareKeyword)],
-            ts.createVariableDeclarationList(
-              [
-                ts.createVariableDeclaration(
-                  _refTypeName,
-                  ts.createTypeOperatorNode(
-                    ts.SyntaxKind.UniqueKeyword,
-                    ts.createKeywordTypeNode(ts.SyntaxKind.SymbolKeyword)
-                  )
-                )
-              ],
-              ts.NodeFlags.Const
-            )
-          );
-          const refType = exportType(
-            refTypeName,
-            ts.createTypeQueryNode(ts.createIdentifier(_refTypeName))
-          );
-          refTypeNodes.push(_refType);
-          refTypeNodes.push(refType);
-        } else {
-          const refType = exportType(
-            refTypeName,
-            ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
-          );
-          refTypeNodes.push(refType);
-        }
-        const baseType = selectionsToAST(selections, state, refTypeName);
+        const fragmentTypes = getFragmentTypes(
+          node.name,
+          options.useSingleArtifactDirectory
+        );
+
+        const dataType = ts.createTypeReferenceNode(node.name, undefined);
+
+        const unmasked = node.metadata != null && node.metadata.mask === false;
+        const baseType = selectionsToAST(
+          selections,
+          state,
+          unmasked,
+          unmasked ? undefined : getOldFragmentTypeName(node.name)
+        );
         const type = isPlural(node)
           ? ts.createTypeReferenceNode(ts.createIdentifier("ReadonlyArray"), [
               baseType
             ])
           : baseType;
+
         return [
           ...getFragmentImports(state),
           ...getEnumDefinitions(state),
-          ...refTypeNodes,
+          ...fragmentTypes,
           exportType(node.name, type)
         ];
       },
-
-      InlineFragment(node: any) {
+      InlineFragment(node: InlineFragment) {
         const typeCondition = node.typeCondition;
-        return flattenArray(node.selections).map(typeSelection => {
-          return isAbstractType(typeCondition)
-            ? {
-                ...typeSelection,
-                conditional: true
-              }
-            : {
-                ...typeSelection,
-                concreteType: typeCondition.toString()
-              };
-        });
+        // From flow code: $FlowFixMe: selections have already been transformed
+        return flattenArray((node.selections as any) as Selection[][]).map(
+          typeSelection => {
+            return isAbstractType(typeCondition)
+              ? {
+                  ...typeSelection,
+                  conditional: true
+                }
+              : {
+                  ...typeSelection,
+                  concreteType: typeCondition.toString()
+                };
+          }
+        );
       },
-      Condition(node: any) {
-        return flattenArray(node.selections).map(selection => {
-          return {
-            ...selection,
-            conditional: true
-          };
-        });
+      Condition(node: Condition) {
+        return flattenArray((node.selections as any) as Selection[][]).map(
+          selection => {
+            return {
+              ...selection,
+              conditional: true
+            };
+          }
+        );
       },
-      ScalarField(node: any) {
+      ScalarField(node: ScalarField) {
         return [
           {
-            key: node.alias || node.name,
+            key: node.alias == null ? node.name : node.alias,
             schemaName: node.name,
             value: transformScalarType(node.type, state)
           }
         ];
       },
-      LinkedField(node: any) {
+      LinkedField(node: LinkedField) {
         return [
           {
-            key: node.alias || node.name,
+            key: node.alias == null ? node.name : node.alias,
             schemaName: node.name,
             nodeType: node.type,
-            nodeSelections: selectionsToMap(flattenArray(node.selections))
+            nodeSelections: selectionsToMap(
+              flattenArray((node.selections as any) as Selection[][]),
+              /*
+               * append concreteType to key so overlapping fields with different
+               * concreteTypes don't get overwritten by each other
+               */
+              true
+            )
           }
         ];
       },
-      ModuleImport(node: any) {
+      ModuleImport(node: ModuleImport) {
         return [
           {
             key: "__fragmentPropName",
@@ -441,7 +477,7 @@ function createVisitor(options: TypeGeneratorOptions) {
           }
         ];
       },
-      FragmentSpread(node: any) {
+      FragmentSpread(node: FragmentSpread) {
         state.usedFragments.add(node.name);
         return [
           {
@@ -454,12 +490,19 @@ function createVisitor(options: TypeGeneratorOptions) {
   };
 }
 
-function selectionsToMap(selections: Selection[]): SelectionMap {
+function selectionsToMap(
+  selections: Selection[],
+  appendType?: boolean
+): SelectionMap {
   const map = new Map();
   selections.forEach(selection => {
-    const previousSel = map.get(selection.key);
+    const key =
+      appendType && selection.concreteType
+        ? `${selection.key}::${selection.concreteType}`
+        : selection.key;
+    const previousSel = map.get(key);
     map.set(
-      selection.key,
+      key,
       previousSel ? mergeSelection(previousSel, selection) : selection
     );
   });
@@ -515,7 +558,7 @@ function groupRefs(props: Selection[]): Selection[] {
     const value = ts.createIntersectionTypeNode(
       refs.map(ref =>
         ts.createTypeReferenceNode(
-          ts.createIdentifier(getRefTypeName(ref)),
+          ts.createIdentifier(getOldFragmentTypeName(ref)),
           undefined
         )
       )
@@ -544,29 +587,21 @@ function getFragmentImports(state: State) {
   if (state.usedFragments.size > 0) {
     const usedFragments = Array.from(state.usedFragments).sort();
     for (const usedFragment of usedFragments) {
-      const refTypeName = getRefTypeName(usedFragment);
+      const fragmentTypeName = getOldFragmentTypeName(usedFragment);
       if (
         !state.generatedFragments.has(usedFragment) &&
         state.useSingleArtifactDirectory &&
         state.existingFragmentNames.has(usedFragment)
       ) {
-        imports.push(importTypes([refTypeName], `./${usedFragment}.graphql`));
+        imports.push(
+          importTypes([fragmentTypeName], `./${usedFragment}.graphql`)
+        );
       } else {
-        imports.push(createAnyTypeAlias(refTypeName));
+        imports.push(createAnyTypeAlias(fragmentTypeName));
       }
     }
   }
   return imports;
-}
-
-function anyTypeAlias(typeName: string): ts.Statement {
-  return ts.createTypeAliasDeclaration(
-    undefined,
-    undefined,
-    ts.createIdentifier(typeName),
-    undefined,
-    ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
-  );
 }
 
 function getEnumDefinitions({
@@ -578,8 +613,13 @@ function getEnumDefinitions({
   if (enumNames.length === 0) {
     return [];
   }
-  if (enumsHasteModule) {
+  if (typeof enumsHasteModule === "string") {
     return [importTypes(enumNames, enumsHasteModule)];
+  }
+  if (typeof enumsHasteModule === "function") {
+    return enumNames.map(enumName =>
+      importTypes([enumName], enumsHasteModule(enumName))
+    );
   }
   return enumNames.map(name => {
     const values = usedEnums[name].getValues().map(({ value }) => value);
@@ -600,7 +640,45 @@ function stringLiteralTypeAnnotation(name: string): ts.TypeNode {
   return ts.createLiteralTypeNode(ts.createLiteral(name));
 }
 
-function getRefTypeName(name: string): string {
+function getFragmentTypes(name: string, useSingleArtifactDirectory: boolean) {
+  const oldFragmentTypeName = getOldFragmentTypeName(name);
+
+  if (!useSingleArtifactDirectory) {
+    return [
+      exportType(
+        oldFragmentTypeName,
+        ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+      )
+    ];
+  }
+
+  const _refTypeName = `_${oldFragmentTypeName}`;
+  const _refType = ts.createVariableStatement(
+    [ts.createToken(ts.SyntaxKind.DeclareKeyword)],
+    ts.createVariableDeclarationList(
+      [
+        ts.createVariableDeclaration(
+          _refTypeName,
+          ts.createTypeOperatorNode(
+            ts.SyntaxKind.UniqueKeyword,
+            ts.createKeywordTypeNode(ts.SyntaxKind.SymbolKeyword)
+          )
+        )
+      ],
+      ts.NodeFlags.Const
+    )
+  );
+
+  return [
+    _refType,
+    exportType(
+      oldFragmentTypeName,
+      ts.createTypeQueryNode(ts.createIdentifier(_refTypeName))
+    )
+  ];
+}
+
+function getOldFragmentTypeName(name: string) {
   return `${name}$ref`;
 }
 
@@ -609,6 +687,7 @@ function getRefTypeName(name: string): string {
 export const transforms: TypeGenerator["transforms"] = [
   IRTransforms.commonTransforms[1], // RelayRelayDirectiveTransform.transform,
   IRTransforms.commonTransforms[2], // RelayMaskTransform.transform,
+  IRTransforms.commonTransforms[0], // RelayConnectionTransform.transform,
   IRTransforms.commonTransforms[3], // RelayMatchTransform.transform,
   IRTransforms.printTransforms[3], // FlattenTransform.transformWithOptions({}),
   IRTransforms.commonTransforms[4] // RelayRefetchableFragmentTransform.transform,
