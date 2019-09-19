@@ -152,11 +152,10 @@ function selectionsToAST(
   }
   const baseProps: ts.PropertySignature[] = groupRefs(
     Array.from(selectionMap.values())
-  ).map(
-    sel =>
-      isTypenameSelection(sel) && sel.concreteType
-        ? makeProp({ ...sel, conditional: false }, state, sel.concreteType)
-        : makeProp(sel, state)
+  ).map(sel =>
+    isTypenameSelection(sel) && sel.concreteType
+      ? makeProp({ ...sel, conditional: false }, state, sel.concreteType)
+      : makeProp(sel, state)
   );
 
   if (refTypeName) {

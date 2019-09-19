@@ -16,23 +16,21 @@ export type GraphQLTag = {
 /**
  * Generate a module for the given document name/text.
  */
-export type FormatModule = (
-  args: {
-    moduleName: string;
-    documentType:
-      | typeof RelayConcreteNode.FRAGMENT
-      | typeof RelayConcreteNode.REQUEST
-      | typeof RelayConcreteNode.BATCH_REQUEST
-      | null;
-    docText: string | null;
-    concreteText: string;
-    typeText: string;
-    hash: string | null;
-    devOnlyAssignments: string | null;
-    relayRuntimeModule: string;
-    sourceHash: string;
-  }
-) => string;
+export type FormatModule = (args: {
+  moduleName: string;
+  documentType:
+    | typeof RelayConcreteNode.FRAGMENT
+    | typeof RelayConcreteNode.REQUEST
+    | typeof RelayConcreteNode.BATCH_REQUEST
+    | null;
+  docText: string | null;
+  concreteText: string;
+  typeText: string;
+  hash: string | null;
+  devOnlyAssignments: string | null;
+  relayRuntimeModule: string;
+  sourceHash: string;
+}) => string;
 
 export type GraphQLTagFinder = (text: string, filePath: string) => GraphQLTag[];
 

@@ -35,7 +35,7 @@
     "build": "rm -rf lib && tsc",
     "lint": "tslint -c tslint.json --project tsconfig.json",
     "pr-check": "scripts/pr-check.sh",
-    "prettier": "prettier --write '{src,types}/**/*.ts'",
+    "prettier": "prettier --write '{src,types,test}/**/*.ts'",
     "prepublish": "npm run build",
     "relay": "node bin/relay-compiler.js --schema test/schema.graphql --src test/ --outputDir __generated__",
     "sync-fixtures": "rsync -avh --delete --stats --progress ../relay/packages/relay-compiler/language/javascript/__tests__/fixtures/flow-generator/*.graphql test/fixtures/type-generator",
