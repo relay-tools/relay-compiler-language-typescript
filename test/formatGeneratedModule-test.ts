@@ -75,4 +75,18 @@ describe('formatGeneratedModule', () => {
       sourceHash: 'edcba',
     })).toMatchFile(join(__dirname, 'fixtures/generated-module/complete-example-no-cast.ts'))
   })
+
+  it('works with devOnlyAssignments', () => {
+    const formatGeneratedModule = formatterFactory();
+    expect(formatGeneratedModule({
+      moduleName: 'complete-example',
+      documentType: 'ConcreteFragment',
+      docText: null,
+      concreteText: JSON.stringify({ the: { fragment: { data: 42 } }}),
+      typeText: 'export type CompleteExample = { readonly id: string }',
+      hash: 'abcde',
+      sourceHash: 'edcba',
+      devOnlyAssignments: '(node/*: any*/).params.text = "query CompleteExampleQuery { id }";',
+    })).toMatchFile(join(__dirname, 'fixtures/generated-module/dev-only-assignments.ts'))
+  })
 })
