@@ -66,8 +66,8 @@ export type QueryWithConnectionFieldResponse = {
     } | null;
 };
 export type QueryWithConnectionField = {
-    readonly variables: QueryWithConnectionFieldVariables;
     readonly response: QueryWithConnectionFieldResponse;
+    readonly variables: QueryWithConnectionFieldVariables;
 };
 
 
@@ -457,8 +457,8 @@ export type UnionTypeTestResponse = {
     }) | null;
 };
 export type UnionTypeTest = {
-    readonly variables: UnionTypeTestVariables;
     readonly response: UnionTypeTestResponse;
+    readonly variables: UnionTypeTestVariables;
 };
 
 `;
@@ -571,8 +571,8 @@ export type NameRendererQueryResponse = {
     } | null;
 };
 export type NameRendererQuery = {
-    readonly variables: NameRendererQueryVariables;
     readonly response: NameRendererQueryResponse;
+    readonly variables: NameRendererQueryVariables;
 };
 
 
@@ -650,8 +650,8 @@ export type TestRawResponse = {
     }) | null;
 };
 export type Test = {
-    readonly variables: TestVariables;
     readonly response: TestResponse;
+    readonly variables: TestVariables;
     readonly rawResponse: TestRawResponse;
 };
 
@@ -741,8 +741,8 @@ export type TestMutationRawResponse = {
     }) | null;
 };
 export type TestMutation = {
-    readonly variables: TestMutationVariables;
     readonly response: TestMutationResponse;
+    readonly variables: TestMutationVariables;
     readonly rawResponse: TestMutationRawResponse;
 };
 
@@ -812,8 +812,8 @@ export type CommentCreateMutationResponse = {
     } | null;
 };
 export type CommentCreateMutation = {
-    readonly variables: CommentCreateMutationVariables;
     readonly response: CommentCreateMutationResponse;
+    readonly variables: CommentCreateMutationVariables;
 };
 
 `;
@@ -853,8 +853,8 @@ export type InputHasArrayRawResponse = {
     }) | null;
 };
 export type InputHasArray = {
-    readonly variables: InputHasArrayVariables;
     readonly response: InputHasArrayResponse;
+    readonly variables: InputHasArrayVariables;
     readonly rawResponse: InputHasArrayRawResponse;
 };
 
@@ -946,8 +946,8 @@ export type CommentCreateMutationRawResponse = {
     }) | null;
 };
 export type CommentCreateMutation = {
-    readonly variables: CommentCreateMutationVariables;
     readonly response: CommentCreateMutationResponse;
+    readonly variables: CommentCreateMutationVariables;
     readonly rawResponse: CommentCreateMutationRawResponse;
 };
 
@@ -1055,8 +1055,8 @@ export type CommentCreateMutationRawResponse = {
     }) | null;
 };
 export type CommentCreateMutation = {
-    readonly variables: CommentCreateMutationVariables;
     readonly response: CommentCreateMutationResponse;
+    readonly variables: CommentCreateMutationVariables;
     readonly rawResponse: CommentCreateMutationRawResponse;
 };
 
@@ -1158,8 +1158,8 @@ export type TestDeferRawResponse = {
     }) | null;
 };
 export type TestDefer = {
-    readonly variables: TestDeferVariables;
     readonly response: TestDeferResponse;
+    readonly variables: TestDeferVariables;
     readonly rawResponse: TestDeferRawResponse;
 };
 
@@ -1210,8 +1210,8 @@ export type LinkedHandleFieldRawResponse = {
     }) | null;
 };
 export type LinkedHandleField = {
-    readonly variables: LinkedHandleFieldVariables;
     readonly response: LinkedHandleFieldResponse;
+    readonly variables: LinkedHandleFieldVariables;
     readonly rawResponse: LinkedHandleFieldRawResponse;
 };
 
@@ -1236,8 +1236,8 @@ export type ScalarHandleFieldRawResponse = {
     }) | null;
 };
 export type ScalarHandleField = {
-    readonly variables: ScalarHandleFieldVariables;
     readonly response: ScalarHandleFieldResponse;
+    readonly variables: ScalarHandleFieldVariables;
     readonly rawResponse: ScalarHandleFieldRawResponse;
 };
 
@@ -1290,8 +1290,8 @@ export type ExampleQueryRawResponse = {
     }) | null;
 };
 export type ExampleQuery = {
-    readonly variables: ExampleQueryVariables;
     readonly response: ExampleQueryResponse;
+    readonly variables: ExampleQueryVariables;
     readonly rawResponse: ExampleQueryRawResponse;
 };
 
@@ -1371,8 +1371,8 @@ export type TestStreamRawResponse = {
     }) | null;
 };
 export type TestStream = {
-    readonly variables: TestStreamVariables;
     readonly response: TestStreamResponse;
+    readonly variables: TestStreamVariables;
     readonly rawResponse: TestStreamRawResponse;
 };
 
@@ -1435,8 +1435,8 @@ export type RefetchableFragmentQueryResponse = {
     } | null;
 };
 export type RefetchableFragmentQuery = {
-    readonly variables: RefetchableFragmentQueryVariables;
     readonly response: RefetchableFragmentQueryResponse;
+    readonly variables: RefetchableFragmentQueryVariables;
 };
 
 `;
@@ -1480,8 +1480,8 @@ export type ExampleQueryResponse = {
     } | null;
 };
 export type ExampleQuery = {
-    readonly variables: ExampleQueryVariables;
     readonly response: ExampleQueryResponse;
+    readonly variables: ExampleQueryVariables;
 };
 
 
@@ -1517,8 +1517,8 @@ export type TestMutationResponse = {
     } | null;
 };
 export type TestMutation = {
-    readonly variables: TestMutationVariables;
     readonly response: TestMutationResponse;
+    readonly variables: TestMutationVariables;
 };
 
 
@@ -1538,8 +1538,8 @@ export type TestSubscriptionResponse = {
     } | null;
 };
 export type TestSubscription = {
-    readonly variables: TestSubscriptionVariables;
     readonly response: TestSubscriptionResponse;
+    readonly variables: TestSubscriptionVariables;
 };
 
 `;
@@ -1980,8 +1980,8 @@ export type QueryWithConnectionFieldResponse = {
     } | null;
 };
 export type QueryWithConnectionField = {
-    readonly variables: QueryWithConnectionFieldVariables;
     readonly response: QueryWithConnectionFieldResponse;
+    readonly variables: QueryWithConnectionFieldVariables;
 };
 
 
@@ -2357,8 +2357,8 @@ export type UnionTypeTestResponse = {
     }) | null;
 };
 export type UnionTypeTest = {
-    readonly variables: UnionTypeTestVariables;
     readonly response: UnionTypeTestResponse;
+    readonly variables: UnionTypeTestVariables;
 };
 
 `;
@@ -2468,8 +2468,8 @@ export type NameRendererQueryResponse = {
     } | null;
 };
 export type NameRendererQuery = {
-    readonly variables: NameRendererQueryVariables;
     readonly response: NameRendererQueryResponse;
+    readonly variables: NameRendererQueryVariables;
 };
 
 
@@ -2545,8 +2545,8 @@ export type TestRawResponse = {
     }) | null;
 };
 export type Test = {
-    readonly variables: TestVariables;
     readonly response: TestResponse;
+    readonly variables: TestVariables;
     readonly rawResponse: TestRawResponse;
 };
 
@@ -2636,8 +2636,8 @@ export type TestMutationRawResponse = {
     }) | null;
 };
 export type TestMutation = {
-    readonly variables: TestMutationVariables;
     readonly response: TestMutationResponse;
+    readonly variables: TestMutationVariables;
     readonly rawResponse: TestMutationRawResponse;
 };
 
@@ -2706,8 +2706,8 @@ export type CommentCreateMutationResponse = {
     } | null;
 };
 export type CommentCreateMutation = {
-    readonly variables: CommentCreateMutationVariables;
     readonly response: CommentCreateMutationResponse;
+    readonly variables: CommentCreateMutationVariables;
 };
 
 `;
@@ -2747,8 +2747,8 @@ export type InputHasArrayRawResponse = {
     }) | null;
 };
 export type InputHasArray = {
-    readonly variables: InputHasArrayVariables;
     readonly response: InputHasArrayResponse;
+    readonly variables: InputHasArrayVariables;
     readonly rawResponse: InputHasArrayRawResponse;
 };
 
@@ -2840,8 +2840,8 @@ export type CommentCreateMutationRawResponse = {
     }) | null;
 };
 export type CommentCreateMutation = {
-    readonly variables: CommentCreateMutationVariables;
     readonly response: CommentCreateMutationResponse;
+    readonly variables: CommentCreateMutationVariables;
     readonly rawResponse: CommentCreateMutationRawResponse;
 };
 
@@ -2948,8 +2948,8 @@ export type CommentCreateMutationRawResponse = {
     }) | null;
 };
 export type CommentCreateMutation = {
-    readonly variables: CommentCreateMutationVariables;
     readonly response: CommentCreateMutationResponse;
+    readonly variables: CommentCreateMutationVariables;
     readonly rawResponse: CommentCreateMutationRawResponse;
 };
 
@@ -3048,8 +3048,8 @@ export type TestDeferRawResponse = {
     }) | null;
 };
 export type TestDefer = {
-    readonly variables: TestDeferVariables;
     readonly response: TestDeferResponse;
+    readonly variables: TestDeferVariables;
     readonly rawResponse: TestDeferRawResponse;
 };
 
@@ -3100,8 +3100,8 @@ export type LinkedHandleFieldRawResponse = {
     }) | null;
 };
 export type LinkedHandleField = {
-    readonly variables: LinkedHandleFieldVariables;
     readonly response: LinkedHandleFieldResponse;
+    readonly variables: LinkedHandleFieldVariables;
     readonly rawResponse: LinkedHandleFieldRawResponse;
 };
 
@@ -3126,8 +3126,8 @@ export type ScalarHandleFieldRawResponse = {
     }) | null;
 };
 export type ScalarHandleField = {
-    readonly variables: ScalarHandleFieldVariables;
     readonly response: ScalarHandleFieldResponse;
+    readonly variables: ScalarHandleFieldVariables;
     readonly rawResponse: ScalarHandleFieldRawResponse;
 };
 
@@ -3180,8 +3180,8 @@ export type ExampleQueryRawResponse = {
     }) | null;
 };
 export type ExampleQuery = {
-    readonly variables: ExampleQueryVariables;
     readonly response: ExampleQueryResponse;
+    readonly variables: ExampleQueryVariables;
     readonly rawResponse: ExampleQueryRawResponse;
 };
 
@@ -3260,8 +3260,8 @@ export type TestStreamRawResponse = {
     }) | null;
 };
 export type TestStream = {
-    readonly variables: TestStreamVariables;
     readonly response: TestStreamResponse;
+    readonly variables: TestStreamVariables;
     readonly rawResponse: TestStreamRawResponse;
 };
 
@@ -3321,8 +3321,8 @@ export type RefetchableFragmentQueryResponse = {
     } | null;
 };
 export type RefetchableFragmentQuery = {
-    readonly variables: RefetchableFragmentQueryVariables;
     readonly response: RefetchableFragmentQueryResponse;
+    readonly variables: RefetchableFragmentQueryVariables;
 };
 
 `;
@@ -3366,8 +3366,8 @@ export type ExampleQueryResponse = {
     } | null;
 };
 export type ExampleQuery = {
-    readonly variables: ExampleQueryVariables;
     readonly response: ExampleQueryResponse;
+    readonly variables: ExampleQueryVariables;
 };
 
 
@@ -3402,8 +3402,8 @@ export type TestMutationResponse = {
     } | null;
 };
 export type TestMutation = {
-    readonly variables: TestMutationVariables;
     readonly response: TestMutationResponse;
+    readonly variables: TestMutationVariables;
 };
 
 
@@ -3423,8 +3423,8 @@ export type TestSubscriptionResponse = {
     } | null;
 };
 export type TestSubscription = {
-    readonly variables: TestSubscriptionVariables;
     readonly response: TestSubscriptionResponse;
+    readonly variables: TestSubscriptionVariables;
 };
 
 `;

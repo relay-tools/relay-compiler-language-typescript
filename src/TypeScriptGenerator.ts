@@ -361,12 +361,12 @@ function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
         );
         const operationTypes = [
           readOnlyObjectTypeProperty(
-            "variables",
-            ts.createTypeReferenceNode(inputVariablesType.name, undefined)
-          ),
-          readOnlyObjectTypeProperty(
             "response",
             ts.createTypeReferenceNode(responseType.name, undefined)
+          ),
+          readOnlyObjectTypeProperty(
+            "variables",
+            ts.createTypeReferenceNode(inputVariablesType.name, undefined)
           )
         ];
         // Generate raw response type
