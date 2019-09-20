@@ -11,11 +11,10 @@ export const formatterFactory = (
   concreteText,
   typeText,
   hash,
-  relayRuntimeModule = "relay-runtime",
   sourceHash
 }) => {
   const documentTypeImport = documentType
-    ? `import { ${documentType} } from "${relayRuntimeModule}";`
+    ? `import { ${documentType} } from "relay-runtime";`
     : "";
   const docTextComment = docText ? "\n/*\n" + docText.trim() + "\n*/\n" : "";
   let nodeStatement = `const node: ${documentType ||

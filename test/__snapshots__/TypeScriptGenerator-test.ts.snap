@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: conditional.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: conditional.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment ConditionField on Node {
   id @include(if: $condition)
@@ -13,6 +13,7 @@ fragment NestedCondition on Node {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// ConditionField.graphql
 declare const _ConditionField$ref: unique symbol;
 export type ConditionField$ref = typeof _ConditionField$ref;
 export type ConditionField = {
@@ -21,6 +22,7 @@ export type ConditionField = {
 };
 
 
+// NestedCondition.graphql
 declare const _NestedCondition$ref: unique symbol;
 export type NestedCondition$ref = typeof _NestedCondition$ref;
 export type NestedCondition = {
@@ -30,7 +32,7 @@ export type NestedCondition = {
 
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: derived-field.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: derived-field.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 query QueryWithConnectionField($id: ID!) {
   feedback: node(id: $id) {
@@ -53,19 +55,42 @@ fragment FeedbackComments_feedback on Feedback {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// QueryWithConnectionField.graphql
+type FeedbackComments_feedback$ref = any;
+export type QueryWithConnectionFieldVariables = {
+    readonly id: string;
+};
+export type QueryWithConnectionFieldResponse = {
+    readonly feedback: {
+        readonly " $fragmentRefs": FeedbackComments_feedback$ref;
+    } | null;
+};
+export type QueryWithConnectionField = {
+    readonly variables: QueryWithConnectionFieldVariables;
+    readonly response: QueryWithConnectionFieldResponse;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'connection_resolver'. Source: document \`FeedbackComments_feedback\` file: \`GraphQL request\`
-  
-  GraphQL request:9:5
-   8 |   comments(first: 10)
-   9 |     @connection_resolver(resolver: "FeedbackCommentsResolver") {
-     |     ^
-  10 |     edges {
+
+// FeedbackComments_feedback.graphql
+declare const _FeedbackComments_feedback$ref: unique symbol;
+export type FeedbackComments_feedback$ref = typeof _FeedbackComments_feedback$ref;
+export type FeedbackComments_feedback = {
+    readonly comments: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly id: string;
+            } | null;
+        } | null> | null;
+        readonly pageInfo: {
+            readonly hasNextPage: boolean | null;
+        } | null;
+    } | null;
+    readonly " $refType": FeedbackComments_feedback$ref;
+};
+
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: fragment-spread.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: fragment-spread.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment FragmentSpread on Node {
   id
@@ -117,6 +142,7 @@ fragment UserFrag2 on Page {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// FragmentSpread.graphql
 type OtherFragment$ref = any;
 type PictureFragment$ref = any;
 type UserFrag1$ref = any;
@@ -137,6 +163,7 @@ export type FragmentSpread = {
 };
 
 
+// ConcreateTypes.graphql
 type PageFragment$ref = any;
 declare const _ConcreateTypes$ref: unique symbol;
 export type ConcreateTypes$ref = typeof _ConcreateTypes$ref;
@@ -157,20 +184,21 @@ export type ConcreateTypes = {
 };
 
 
+// PictureFragment.graphql
 declare const _PictureFragment$ref: unique symbol;
 export type PictureFragment$ref = typeof _PictureFragment$ref;
 export type PictureFragment = {
     readonly __typename: "Image";
     readonly " $refType": PictureFragment$ref;
-} & ({
-    readonly __typename: "Image";
 } | {
-    /*This will never be '% other', but we need some
+    /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-});
+    readonly " $refType": PictureFragment$ref;
+};
 
 
+// OtherFragment.graphql
 declare const _OtherFragment$ref: unique symbol;
 export type OtherFragment$ref = typeof _OtherFragment$ref;
 export type OtherFragment = {
@@ -179,50 +207,50 @@ export type OtherFragment = {
 };
 
 
+// PageFragment.graphql
 declare const _PageFragment$ref: unique symbol;
 export type PageFragment$ref = typeof _PageFragment$ref;
 export type PageFragment = {
     readonly __typename: "Page";
     readonly " $refType": PageFragment$ref;
-} & ({
-    readonly __typename: "Page";
 } | {
-    /*This will never be '% other', but we need some
+    /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-});
+    readonly " $refType": PageFragment$ref;
+};
 
 
+// UserFrag1.graphql
 declare const _UserFrag1$ref: unique symbol;
 export type UserFrag1$ref = typeof _UserFrag1$ref;
 export type UserFrag1 = {
     readonly __typename: "Page";
     readonly " $refType": UserFrag1$ref;
-} & ({
-    readonly __typename: "Page";
 } | {
-    /*This will never be '% other', but we need some
+    /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-});
+    readonly " $refType": UserFrag1$ref;
+};
 
 
+// UserFrag2.graphql
 declare const _UserFrag2$ref: unique symbol;
 export type UserFrag2$ref = typeof _UserFrag2$ref;
 export type UserFrag2 = {
     readonly __typename: "Page";
     readonly " $refType": UserFrag2$ref;
-} & ({
-    readonly __typename: "Page";
 } | {
-    /*This will never be '% other', but we need some
+    /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-});
+    readonly " $refType": UserFrag2$ref;
+};
 
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: inline-fragment.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: inline-fragment.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment InlineFragment on Node {
   id
@@ -290,6 +318,7 @@ fragment SomeFragment on User {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// InlineFragment.graphql
 declare const _InlineFragment$ref: unique symbol;
 export type InlineFragment$ref = typeof _InlineFragment$ref;
 export type InlineFragment = {
@@ -302,6 +331,7 @@ export type InlineFragment = {
 };
 
 
+// InlineFragmentWithOverlappingFields.graphql
 declare const _InlineFragmentWithOverlappingFields$ref: unique symbol;
 export type InlineFragmentWithOverlappingFields$ref = typeof _InlineFragmentWithOverlappingFields$ref;
 export type InlineFragmentWithOverlappingFields = {
@@ -317,6 +347,7 @@ export type InlineFragmentWithOverlappingFields = {
 };
 
 
+// InlineFragmentConditionalID.graphql
 declare const _InlineFragmentConditionalID$ref: unique symbol;
 export type InlineFragmentConditionalID$ref = typeof _InlineFragmentConditionalID$ref;
 export type InlineFragmentConditionalID = {
@@ -326,6 +357,7 @@ export type InlineFragmentConditionalID = {
 };
 
 
+// InlineFragmentKitchenSink.graphql
 type SomeFragment$ref = any;
 declare const _InlineFragmentKitchenSink$ref: unique symbol;
 export type InlineFragmentKitchenSink$ref = typeof _InlineFragmentKitchenSink$ref;
@@ -344,22 +376,22 @@ export type InlineFragmentKitchenSink = {
 };
 
 
+// SomeFragment.graphql
 declare const _SomeFragment$ref: unique symbol;
 export type SomeFragment$ref = typeof _SomeFragment$ref;
 export type SomeFragment = {
     readonly __typename: "User";
     readonly " $refType": SomeFragment$ref;
-} & ({
-    readonly __typename: "User";
 } | {
-    /*This will never be '% other', but we need some
+    /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-});
+    readonly " $refType": SomeFragment$ref;
+};
 
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: linked-field.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: linked-field.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment LinkedField on User {
   profilePicture {
@@ -390,6 +422,7 @@ query UnionTypeTest {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// LinkedField.graphql
 declare const _LinkedField$ref: unique symbol;
 export type LinkedField$ref = typeof _LinkedField$ref;
 export type LinkedField = {
@@ -411,6 +444,7 @@ export type LinkedField = {
 };
 
 
+// UnionTypeTest.graphql
 export type UnionTypeTestVariables = {};
 export type UnionTypeTestResponse = {
     readonly neverNode: ({
@@ -423,13 +457,13 @@ export type UnionTypeTestResponse = {
     }) | null;
 };
 export type UnionTypeTest = {
-    readonly response: UnionTypeTestResponse;
     readonly variables: UnionTypeTestVariables;
+    readonly response: UnionTypeTestResponse;
 };
 
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: match-field.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: match-field.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment NameRendererFragment on User {
   id
@@ -455,6 +489,7 @@ fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// NameRendererFragment.graphql
 type MarkdownUserNameRenderer_name$ref = any;
 type PlainUserNameRenderer_name$ref = any;
 declare const _NameRendererFragment$ref: unique symbol;
@@ -470,6 +505,7 @@ export type NameRendererFragment = {
 };
 
 
+// PlainUserNameRenderer_name.graphql
 declare const _PlainUserNameRenderer_name$ref: unique symbol;
 export type PlainUserNameRenderer_name$ref = typeof _PlainUserNameRenderer_name$ref;
 export type PlainUserNameRenderer_name = {
@@ -481,6 +517,7 @@ export type PlainUserNameRenderer_name = {
 };
 
 
+// MarkdownUserNameRenderer_name.graphql
 declare const _MarkdownUserNameRenderer_name$ref: unique symbol;
 export type MarkdownUserNameRenderer_name$ref = typeof _MarkdownUserNameRenderer_name$ref;
 export type MarkdownUserNameRenderer_name = {
@@ -493,7 +530,7 @@ export type MarkdownUserNameRenderer_name = {
 
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: match-field-in-query.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: match-field-in-query.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 query NameRendererQuery {
   me {
@@ -520,6 +557,7 @@ fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// NameRendererQuery.graphql
 type MarkdownUserNameRenderer_name$ref = any;
 type PlainUserNameRenderer_name$ref = any;
 export type NameRendererQueryVariables = {};
@@ -533,11 +571,12 @@ export type NameRendererQueryResponse = {
     } | null;
 };
 export type NameRendererQuery = {
-    readonly response: NameRendererQueryResponse;
     readonly variables: NameRendererQueryVariables;
+    readonly response: NameRendererQueryResponse;
 };
 
 
+// PlainUserNameRenderer_name.graphql
 declare const _PlainUserNameRenderer_name$ref: unique symbol;
 export type PlainUserNameRenderer_name$ref = typeof _PlainUserNameRenderer_name$ref;
 export type PlainUserNameRenderer_name = {
@@ -549,6 +588,7 @@ export type PlainUserNameRenderer_name = {
 };
 
 
+// MarkdownUserNameRenderer_name.graphql
 declare const _MarkdownUserNameRenderer_name$ref: unique symbol;
 export type MarkdownUserNameRenderer_name$ref = typeof _MarkdownUserNameRenderer_name$ref;
 export type MarkdownUserNameRenderer_name = {
@@ -561,7 +601,7 @@ export type MarkdownUserNameRenderer_name = {
 
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: mutaion-with-client-extension.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: mutaion-with-client-extension.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation Test($input: UpdateAllSeenStateInput) @raw_response_type {
   viewerNotificationsUpdateAllSeenState(input: $input) {
@@ -582,18 +622,42 @@ type Foo {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// Test.graphql
+export type UpdateAllSeenStateInput = {
+    readonly clientMutationId?: string | null;
+    readonly storyIds?: ReadonlyArray<string | null> | null;
+};
+export type TestVariables = {
+    readonly input?: UpdateAllSeenStateInput | null;
+};
+export type TestResponse = {
+    readonly viewerNotificationsUpdateAllSeenState: {
+        readonly stories: ReadonlyArray<{
+            readonly foos: ReadonlyArray<{
+                readonly bar: string | null;
+            } | null> | null;
+        } | null> | null;
+    } | null;
+};
+export type TestRawResponse = {
+    readonly viewerNotificationsUpdateAllSeenState: ({
+        readonly stories: ReadonlyArray<({
+            readonly id: string | null;
+            readonly foos?: ReadonlyArray<({
+                readonly bar: string | null;
+            }) | null> | null;
+        }) | null> | null;
+    }) | null;
+};
+export type Test = {
+    readonly variables: TestVariables;
+    readonly response: TestResponse;
+    readonly rawResponse: TestRawResponse;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`Test\` file: \`GraphQL request\`
-  
-  GraphQL request:1:48
-  1 | mutation Test($input: UpdateAllSeenStateInput) @raw_response_type {
-    |                                                ^
-  2 |   viewerNotificationsUpdateAllSeenState(input: $input) {
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: mutaion-with-response-on-inline-fragments.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: mutaion-with-response-on-inline-fragments.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation TestMutation($input: CommentCreateInput!) @raw_response_type {
   commentCreate(input: $input) {
@@ -624,18 +688,83 @@ fragment InlineFragmentWithOverlappingFields on Actor {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// TestMutation.graphql
+type InlineFragmentWithOverlappingFields$ref = any;
+export type CommentCreateInput = {
+    readonly clientMutationId?: string | null;
+    readonly feedbackId?: string | null;
+    readonly feedback?: CommentfeedbackFeedback | null;
+};
+export type CommentfeedbackFeedback = {
+    readonly comment?: FeedbackcommentComment | null;
+};
+export type FeedbackcommentComment = {
+    readonly feedback?: CommentfeedbackFeedback | null;
+};
+export type TestMutationVariables = {
+    readonly input: CommentCreateInput;
+};
+export type TestMutationResponse = {
+    readonly commentCreate: {
+        readonly viewer: {
+            readonly actor: {
+                readonly " $fragmentRefs": InlineFragmentWithOverlappingFields$ref;
+            } | null;
+        } | null;
+    } | null;
+};
+export type TestMutationRawResponse = {
+    readonly commentCreate: ({
+        readonly viewer: ({
+            readonly actor: ({
+                readonly __typename: "User";
+                readonly id: string | null;
+                readonly hometown: ({
+                    readonly id: string;
+                    readonly name: string | null;
+                }) | null;
+            } | {
+                readonly __typename: "Page";
+                readonly id: string | null;
+                readonly name: string | null;
+                readonly hometown: ({
+                    readonly id: string;
+                    readonly message: ({
+                        readonly text: string | null;
+                    }) | null;
+                }) | null;
+            } | {
+                readonly __typename: string | null;
+                readonly id: string | null;
+            }) | null;
+        }) | null;
+    }) | null;
+};
+export type TestMutation = {
+    readonly variables: TestMutationVariables;
+    readonly response: TestMutationResponse;
+    readonly rawResponse: TestMutationRawResponse;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`TestMutation\` file: \`GraphQL request\`
-  
-  GraphQL request:1:52
-  1 | mutation TestMutation($input: CommentCreateInput!) @raw_response_type {
-    |                                                    ^
-  2 |   commentCreate(input: $input) {
+
+// InlineFragmentWithOverlappingFields.graphql
+declare const _InlineFragmentWithOverlappingFields$ref: unique symbol;
+export type InlineFragmentWithOverlappingFields$ref = typeof _InlineFragmentWithOverlappingFields$ref;
+export type InlineFragmentWithOverlappingFields = {
+    readonly hometown?: {
+        readonly id: string;
+        readonly name: string | null;
+        readonly message?: {
+            readonly text: string | null;
+        } | null;
+    } | null;
+    readonly name?: string | null;
+    readonly " $refType": InlineFragmentWithOverlappingFields$ref;
+};
+
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: mutation.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: mutation.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation CommentCreateMutation(
   $input: CommentCreateInput!
@@ -654,6 +783,7 @@ mutation CommentCreateMutation(
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// CommentCreateMutation.graphql
 export type CommentCreateInput = {
     readonly clientMutationId?: string | null;
     readonly feedbackId?: string | null;
@@ -682,13 +812,13 @@ export type CommentCreateMutationResponse = {
     } | null;
 };
 export type CommentCreateMutation = {
-    readonly response: CommentCreateMutationResponse;
     readonly variables: CommentCreateMutationVariables;
+    readonly response: CommentCreateMutationResponse;
 };
 
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: mutation-input-has-array.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: mutation-input-has-array.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation InputHasArray($input: UpdateAllSeenStateInput) @raw_response_type {
   viewerNotificationsUpdateAllSeenState(input: $input) {
@@ -699,18 +829,38 @@ mutation InputHasArray($input: UpdateAllSeenStateInput) @raw_response_type {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// InputHasArray.graphql
+export type UpdateAllSeenStateInput = {
+    readonly clientMutationId?: string | null;
+    readonly storyIds?: ReadonlyArray<string | null> | null;
+};
+export type InputHasArrayVariables = {
+    readonly input?: UpdateAllSeenStateInput | null;
+};
+export type InputHasArrayResponse = {
+    readonly viewerNotificationsUpdateAllSeenState: {
+        readonly stories: ReadonlyArray<{
+            readonly actorCount: number | null;
+        } | null> | null;
+    } | null;
+};
+export type InputHasArrayRawResponse = {
+    readonly viewerNotificationsUpdateAllSeenState: ({
+        readonly stories: ReadonlyArray<({
+            readonly actorCount: number | null;
+            readonly id: string | null;
+        }) | null> | null;
+    }) | null;
+};
+export type InputHasArray = {
+    readonly variables: InputHasArrayVariables;
+    readonly response: InputHasArrayResponse;
+    readonly rawResponse: InputHasArrayRawResponse;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`InputHasArray\` file: \`GraphQL request\`
-  
-  GraphQL request:1:57
-  1 | mutation InputHasArray($input: UpdateAllSeenStateInput) @raw_response_type {
-    |                                                         ^
-  2 |   viewerNotificationsUpdateAllSeenState(input: $input) {
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: mutation-with-enums-on-fragment.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: mutation-with-enums-on-fragment.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation CommentCreateMutation(
   $input: CommentCreateInput!
@@ -741,26 +891,83 @@ fragment FriendFragment on User {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// CommentCreateMutation.graphql
+type FriendFragment$ref = any;
+export type TestEnums = "mark" | "zuck" | "%future added value";
+export type CommentCreateInput = {
+    readonly clientMutationId?: string | null;
+    readonly feedbackId?: string | null;
+    readonly feedback?: CommentfeedbackFeedback | null;
+};
+export type CommentfeedbackFeedback = {
+    readonly comment?: FeedbackcommentComment | null;
+};
+export type FeedbackcommentComment = {
+    readonly feedback?: CommentfeedbackFeedback | null;
+};
+export type CommentCreateMutationVariables = {
+    readonly input: CommentCreateInput;
+    readonly first?: number | null;
+    readonly orderBy?: ReadonlyArray<string> | null;
+};
+export type CommentCreateMutationResponse = {
+    readonly commentCreate: {
+        readonly comment: {
+            readonly friends: {
+                readonly edges: ReadonlyArray<{
+                    readonly node: {
+                        readonly id: string;
+                        readonly __typename: string;
+                        readonly " $fragmentRefs": FriendFragment$ref;
+                    } | null;
+                } | null> | null;
+            } | null;
+        } | null;
+    } | null;
+};
+export type CommentCreateMutationRawResponse = {
+    readonly commentCreate: ({
+        readonly comment: ({
+            readonly friends: ({
+                readonly edges: ReadonlyArray<({
+                    readonly node: ({
+                        readonly id: string;
+                        readonly __typename: "User";
+                        readonly name: string | null;
+                        readonly lastName: string | null;
+                        readonly profilePicture2: ({
+                            readonly test_enums: TestEnums | null;
+                        }) | null;
+                    }) | null;
+                }) | null> | null;
+            }) | null;
+            readonly id: string | null;
+        }) | null;
+    }) | null;
+};
+export type CommentCreateMutation = {
+    readonly variables: CommentCreateMutationVariables;
+    readonly response: CommentCreateMutationResponse;
+    readonly rawResponse: CommentCreateMutationRawResponse;
+};
 
-Error: RelayParser: Encountered 2 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`CommentCreateMutation\` file: \`GraphQL request\`
-  
-  GraphQL request:5:3
-  4 |   $orderBy: [String!]
-  5 | ) @raw_response_type {
-    |   ^
-  6 |   commentCreate(input: $input) {
-- Unknown field 'test_enums' on type 'Image'. Source: document \`FriendFragment\` file: \`GraphQL request\`
-  
-  GraphQL request:25:5
-  24 |   profilePicture2 {
-  25 |     test_enums
-     |     ^
-  26 |   }
+
+// FriendFragment.graphql
+export type TestEnums = "mark" | "zuck" | "%future added value";
+declare const _FriendFragment$ref: unique symbol;
+export type FriendFragment$ref = typeof _FriendFragment$ref;
+export type FriendFragment = {
+    readonly name: string | null;
+    readonly lastName: string | null;
+    readonly profilePicture2: {
+        readonly test_enums: TestEnums | null;
+    } | null;
+    readonly " $refType": FriendFragment$ref;
+};
+
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: mutation-with-nested-fragments.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: mutation-with-nested-fragments.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation CommentCreateMutation(
   $input: CommentCreateInput!
@@ -795,25 +1002,98 @@ fragment FeedbackFragment on Feedback {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// CommentCreateMutation.graphql
+type FriendFragment$ref = any;
+export type CommentCreateInput = {
+    readonly clientMutationId?: string | null;
+    readonly feedbackId?: string | null;
+    readonly feedback?: CommentfeedbackFeedback | null;
+};
+export type CommentfeedbackFeedback = {
+    readonly comment?: FeedbackcommentComment | null;
+};
+export type FeedbackcommentComment = {
+    readonly feedback?: CommentfeedbackFeedback | null;
+};
+export type CommentCreateMutationVariables = {
+    readonly input: CommentCreateInput;
+    readonly first?: number | null;
+    readonly orderBy?: ReadonlyArray<string> | null;
+};
+export type CommentCreateMutationResponse = {
+    readonly commentCreate: {
+        readonly comment: {
+            readonly friends: {
+                readonly edges: ReadonlyArray<{
+                    readonly node: {
+                        readonly lastName: string | null;
+                        readonly " $fragmentRefs": FriendFragment$ref;
+                    } | null;
+                } | null> | null;
+            } | null;
+        } | null;
+    } | null;
+};
+export type CommentCreateMutationRawResponse = {
+    readonly commentCreate: ({
+        readonly comment: ({
+            readonly friends: ({
+                readonly edges: ReadonlyArray<({
+                    readonly node: ({
+                        readonly lastName: string | null;
+                        readonly name: string | null;
+                        readonly feedback: ({
+                            readonly id: string;
+                            readonly name: string | null;
+                        }) | null;
+                        readonly id: string | null;
+                    }) | null;
+                }) | null> | null;
+            }) | null;
+            readonly id: string | null;
+        }) | null;
+    }) | null;
+};
+export type CommentCreateMutation = {
+    readonly variables: CommentCreateMutationVariables;
+    readonly response: CommentCreateMutationResponse;
+    readonly rawResponse: CommentCreateMutationRawResponse;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`CommentCreateMutation\` file: \`GraphQL request\`
-  
-  GraphQL request:5:3
-  4 |   $orderBy: [String!]
-  5 | ) @raw_response_type {
-    |   ^
-  6 |   commentCreate(input: $input) {
+
+// FriendFragment.graphql
+type FeedbackFragment$ref = any;
+declare const _FriendFragment$ref: unique symbol;
+export type FriendFragment$ref = typeof _FriendFragment$ref;
+export type FriendFragment = {
+    readonly name: string | null;
+    readonly lastName: string | null;
+    readonly feedback: {
+        readonly " $fragmentRefs": FeedbackFragment$ref;
+    } | null;
+    readonly " $refType": FriendFragment$ref;
+};
+
+
+// FeedbackFragment.graphql
+declare const _FeedbackFragment$ref: unique symbol;
+export type FeedbackFragment$ref = typeof _FeedbackFragment$ref;
+export type FeedbackFragment = {
+    readonly id: string;
+    readonly name: string | null;
+    readonly " $refType": FeedbackFragment$ref;
+};
+
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: plural-fragment.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: plural-fragment.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment PluralFragment on Node @relay(plural: true) {
   id
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// PluralFragment.graphql
 declare const _PluralFragment$ref: unique symbol;
 export type PluralFragment$ref = typeof _PluralFragment$ref;
 export type PluralFragment = ReadonlyArray<{
@@ -823,7 +1103,7 @@ export type PluralFragment = ReadonlyArray<{
 
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: query-with-defer.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: query-with-defer.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 query TestDefer @raw_response_type {
   node(id: "1") {
@@ -844,18 +1124,48 @@ query TestDefer @raw_response_type {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// TestDefer.graphql
+export type TestDeferVariables = {};
+export type TestDeferResponse = {
+    readonly node: {
+        readonly name?: string | null;
+        readonly friends?: {
+            readonly edges: ReadonlyArray<{
+                readonly pageInfo?: {
+                    readonly endCursor: string | null;
+                    readonly hasNextPage: boolean | null;
+                } | null;
+            } | null> | null;
+        } | null;
+    } | null;
+};
+export type TestDeferRawResponse = {
+    readonly node: ({
+        readonly __typename: "User";
+        readonly id: string | null;
+        readonly name: string | null;
+        readonly friends: ({
+            readonly edges: ReadonlyArray<({
+                readonly pageInfo: ({
+                    readonly endCursor: string | null;
+                    readonly hasNextPage: boolean | null;
+                }) | null;
+            }) | null> | null;
+        }) | null;
+    } | {
+        readonly __typename: string | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type TestDefer = {
+    readonly variables: TestDeferVariables;
+    readonly response: TestDeferResponse;
+    readonly rawResponse: TestDeferRawResponse;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`TestDefer\` file: \`GraphQL request\`
-  
-  GraphQL request:1:17
-  1 | query TestDefer @raw_response_type {
-    |                 ^
-  2 |   node(id: "1") {
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: query-with-handles.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: query-with-handles.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 query LinkedHandleField($id: ID!) @raw_response_type {
   node(id: $id) {
@@ -876,129 +1186,64 @@ query ScalarHandleField($id: ID!) @raw_response_type {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// LinkedHandleField.graphql
+export type LinkedHandleFieldVariables = {
+    readonly id: string;
+};
+export type LinkedHandleFieldResponse = {
+    readonly node: {
+        readonly friends?: {
+            readonly count: number | null;
+        } | null;
+    } | null;
+};
+export type LinkedHandleFieldRawResponse = {
+    readonly node: ({
+        readonly __typename: "User";
+        readonly id: string | null;
+        readonly friends: ({
+            readonly count: number | null;
+        }) | null;
+    } | {
+        readonly __typename: string | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type LinkedHandleField = {
+    readonly variables: LinkedHandleFieldVariables;
+    readonly response: LinkedHandleFieldResponse;
+    readonly rawResponse: LinkedHandleFieldRawResponse;
+};
 
-Error: RelayParser: Encountered 2 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`LinkedHandleField\` file: \`GraphQL request\`
-  
-  GraphQL request:1:35
-  1 | query LinkedHandleField($id: ID!) @raw_response_type {
-    |                                   ^
-  2 |   node(id: $id) {
-- Unknown directive 'raw_response_type'. Source: document \`ScalarHandleField\` file: \`GraphQL request\`
-  
-  GraphQL request:11:35
-  10 | 
-  11 | query ScalarHandleField($id: ID!) @raw_response_type {
-     |                                   ^
-  12 |   node(id: $id) {
+
+// ScalarHandleField.graphql
+export type ScalarHandleFieldVariables = {
+    readonly id: string;
+};
+export type ScalarHandleFieldResponse = {
+    readonly node: {
+        readonly name?: string | null;
+    } | null;
+};
+export type ScalarHandleFieldRawResponse = {
+    readonly node: ({
+        readonly __typename: "User";
+        readonly id: string | null;
+        readonly name: string | null;
+    } | {
+        readonly __typename: string | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type ScalarHandleField = {
+    readonly variables: ScalarHandleFieldVariables;
+    readonly response: ScalarHandleFieldResponse;
+    readonly rawResponse: ScalarHandleFieldRawResponse;
+};
+
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: query-with-match-fields.graphql 1`] = `
-~~~~~~~~~~ INPUT ~~~~~~~~~~
-query Test @raw_response_type {
-  node(id: "1") {
-    ...NameRendererFragment
-  }
-}
-
-fragment NameRendererFragment on User {
-  id
-  nameRenderer @match {
-    ...PlainUserNameRenderer_name @module(name: "PlainUserNameRenderer.react")
-    ...MarkdownUserNameRenderer_name
-      @module(name: "MarkdownUserNameRenderer.react")
-  }
-}
-
-fragment PlainUserNameRenderer_name on PlainUserNameRenderer {
-  plaintext
-  data {
-    text
-  }
-}
-
-fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
-  markdown
-  data {
-    markup
-  }
-}
-
-~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
-
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`Test\` file: \`GraphQL request\`
-  
-  GraphQL request:1:12
-  1 | query Test @raw_response_type {
-    |            ^
-  2 |   node(id: "1") {
-`;
-
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: query-with-multiple-match-fields.graphql 1`] = `
-~~~~~~~~~~ INPUT ~~~~~~~~~~
-query Test @raw_response_type {
-  node(id: "1") {
-    ... on User {
-      username
-      ...NameRendererFragment
-    }
-  }
-  viewer {
-    ... on User {
-      name
-      ...AnotherNameRendererFragment
-    }
-  }
-}
-
-fragment NameRendererFragment on User {
-  id
-  nameRenderer @match {
-    ...PlainUserNameRenderer_name @module(name: "PlainUserNameRenderer.react")
-    ...MarkdownUserNameRenderer_name
-      @module(name: "MarkdownUserNameRenderer.react")
-  }
-}
-
-fragment AnotherNameRendererFragment on User {
-  name
-  nameRenderer @match {
-    ...PlainUserNameRenderer_name @module(name: "PlainUserNameRenderer.react")
-    ...MarkdownUserNameRenderer_name
-      @module(name: "MarkdownUserNameRenderer.react")
-  }
-}
-
-fragment PlainUserNameRenderer_name on PlainUserNameRenderer {
-  plaintext
-  data {
-    text
-  }
-}
-
-fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
-  markdown
-  data {
-    markup
-  }
-}
-
-~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
-
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`Test\` file: \`GraphQL request\`
-  
-  GraphQL request:1:12
-  1 | query Test @raw_response_type {
-    |            ^
-  2 |   node(id: "1") {
-`;
-
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: query-with-raw-response-on-conditional.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: query-with-raw-response-on-conditional.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 query ExampleQuery($id: ID!, $condition: Boolean!) @raw_response_type {
   node(id: $id) {
@@ -1018,18 +1263,55 @@ fragment FriendFragment on User {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// ExampleQuery.graphql
+type FriendFragment$ref = any;
+export type ExampleQueryVariables = {
+    readonly id: string;
+    readonly condition: boolean;
+};
+export type ExampleQueryResponse = {
+    readonly node: {
+        readonly " $fragmentRefs": FriendFragment$ref;
+    } | null;
+};
+export type ExampleQueryRawResponse = {
+    readonly node: ({
+        readonly __typename: "User";
+        readonly id: string | null;
+        readonly name?: string | null;
+        readonly lastName?: string | null;
+        readonly feedback?: ({
+            readonly id: string;
+            readonly name: string | null;
+        }) | null;
+    } | {
+        readonly __typename: string | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type ExampleQuery = {
+    readonly variables: ExampleQueryVariables;
+    readonly response: ExampleQueryResponse;
+    readonly rawResponse: ExampleQueryRawResponse;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`ExampleQuery\` file: \`GraphQL request\`
-  
-  GraphQL request:1:52
-  1 | query ExampleQuery($id: ID!, $condition: Boolean!) @raw_response_type {
-    |                                                    ^
-  2 |   node(id: $id) {
+
+// FriendFragment.graphql
+declare const _FriendFragment$ref: unique symbol;
+export type FriendFragment$ref = typeof _FriendFragment$ref;
+export type FriendFragment = {
+    readonly name?: string | null;
+    readonly lastName?: string | null;
+    readonly feedback?: {
+        readonly id: string;
+        readonly name: string | null;
+    } | null;
+    readonly " $refType": FriendFragment$ref;
+};
+
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: query-with-stream.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: query-with-stream.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 query TestStream @raw_response_type {
   node(id: "1") {
@@ -1051,18 +1333,52 @@ query TestStream @raw_response_type {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// TestStream.graphql
+export type TestStreamVariables = {};
+export type TestStreamResponse = {
+    readonly node: {
+        readonly name?: string | null;
+        readonly friends?: {
+            readonly edges: ReadonlyArray<{
+                readonly node: {
+                    readonly id: string;
+                } | null;
+            } | null> | null;
+        } | null;
+    } | null;
+};
+export type TestStreamRawResponse = {
+    readonly node: ({
+        readonly __typename: "User";
+        readonly id: string | null;
+        readonly name: string | null;
+        readonly friends: ({
+            readonly edges: ReadonlyArray<({
+                readonly node: ({
+                    readonly id: string;
+                    readonly __typename: "User";
+                }) | null;
+                readonly cursor: string | null;
+            }) | null> | null;
+            readonly pageInfo: ({
+                readonly endCursor: string | null;
+                readonly hasNextPage: boolean | null;
+            }) | null;
+        }) | null;
+    } | {
+        readonly __typename: string | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type TestStream = {
+    readonly variables: TestStreamVariables;
+    readonly response: TestStreamResponse;
+    readonly rawResponse: TestStreamRawResponse;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`TestStream\` file: \`GraphQL request\`
-  
-  GraphQL request:1:18
-  1 | query TestStream @raw_response_type {
-    |                  ^
-  2 |   node(id: "1") {
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: recursive-fragments.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: recursive-fragments.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment FragmentSpread on Node {
   id
@@ -1072,6 +1388,7 @@ fragment FragmentSpread on Node {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// FragmentSpread.graphql
 type FragmentSpread$ref = any;
 declare const _FragmentSpread$ref: unique symbol;
 export type FragmentSpread$ref = typeof _FragmentSpread$ref;
@@ -1083,7 +1400,7 @@ export type FragmentSpread = {
 
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: refetchable-fragment.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: refetchable-fragment.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment RefetchableFragment on Node
   @refetchable(queryName: "RefetchableFragmentQuery") {
@@ -1094,19 +1411,37 @@ fragment RefetchableFragment on Node
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// RefetchableFragment.graphql
+import { RefetchableFragment$ref } from "./RefetchableFragmentQuery.graphql";
+export { RefetchableFragment$ref };
+export type RefetchableFragment = {
+    readonly id: string;
+    readonly fragAndField: {
+        readonly uri: string | null;
+    } | null;
+    readonly " $refType": RefetchableFragment$ref;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'refetchable'. Source: document \`RefetchableFragment\` file: \`GraphQL request\`
-  
-  GraphQL request:2:3
-  1 | fragment RefetchableFragment on Node
-  2 |   @refetchable(queryName: "RefetchableFragmentQuery") {
-    |   ^
-  3 |   id
+
+// RefetchableFragmentQuery.graphql
+declare const _RefetchableFragment$ref: unique symbol;
+export type RefetchableFragment$ref = typeof _RefetchableFragment$ref;
+export type RefetchableFragmentQueryVariables = {
+    readonly id: string;
+};
+export type RefetchableFragmentQueryResponse = {
+    readonly node: {
+        readonly " $fragmentRefs": RefetchableFragment$ref;
+    } | null;
+};
+export type RefetchableFragmentQuery = {
+    readonly variables: RefetchableFragmentQueryVariables;
+    readonly response: RefetchableFragmentQueryResponse;
+};
+
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: roots.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: roots.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 query ExampleQuery($id: ID!) {
   node(id: $id) {
@@ -1135,6 +1470,7 @@ subscription TestSubscription($input: FeedbackLikeInput) {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// ExampleQuery.graphql
 export type ExampleQueryVariables = {
     readonly id: string;
 };
@@ -1144,11 +1480,12 @@ export type ExampleQueryResponse = {
     } | null;
 };
 export type ExampleQuery = {
-    readonly response: ExampleQueryResponse;
     readonly variables: ExampleQueryVariables;
+    readonly response: ExampleQueryResponse;
 };
 
 
+// ExampleFragment.graphql
 declare const _ExampleFragment$ref: unique symbol;
 export type ExampleFragment$ref = typeof _ExampleFragment$ref;
 export type ExampleFragment = {
@@ -1157,6 +1494,7 @@ export type ExampleFragment = {
 };
 
 
+// TestMutation.graphql
 export type CommentCreateInput = {
     readonly clientMutationId?: string | null;
     readonly feedbackId?: string | null;
@@ -1179,11 +1517,12 @@ export type TestMutationResponse = {
     } | null;
 };
 export type TestMutation = {
-    readonly response: TestMutationResponse;
     readonly variables: TestMutationVariables;
+    readonly response: TestMutationResponse;
 };
 
 
+// TestSubscription.graphql
 export type FeedbackLikeInput = {
     readonly clientMutationId?: string | null;
     readonly feedbackId?: string | null;
@@ -1199,13 +1538,13 @@ export type TestSubscriptionResponse = {
     } | null;
 };
 export type TestSubscription = {
-    readonly response: TestSubscriptionResponse;
     readonly variables: TestSubscriptionVariables;
+    readonly response: TestSubscriptionResponse;
 };
 
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: scalar-field.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: scalar-field.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment ScalarField on User {
   id
@@ -1222,6 +1561,7 @@ fragment ScalarField on User {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// ScalarField.graphql
 export type PersonalityTraits = "CHEERFUL" | "DERISIVE" | "HELPFUL" | "SNARKY" | "%future added value";
 declare const _ScalarField$ref: unique symbol;
 export type ScalarField$ref = typeof _ScalarField$ref;
@@ -1242,7 +1582,7 @@ export type ScalarField = {
 
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: typename-inside-with-overlapping-fields.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: typename-inside-with-overlapping-fields.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment TypenameInsideWithOverlappingFields on Viewer {
   actor {
@@ -1262,6 +1602,7 @@ fragment TypenameInsideWithOverlappingFields on Viewer {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// TypenameInsideWithOverlappingFields.graphql
 declare const _TypenameInsideWithOverlappingFields$ref: unique symbol;
 export type TypenameInsideWithOverlappingFields$ref = typeof _TypenameInsideWithOverlappingFields$ref;
 export type TypenameInsideWithOverlappingFields = {
@@ -1286,59 +1627,7 @@ export type TypenameInsideWithOverlappingFields = {
 
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: typename-inside-with-overlapping-fields-full.graphql 1`] = `
-~~~~~~~~~~ INPUT ~~~~~~~~~~
-fragment TypenameInsideWithOverlappingFieldsFull on Viewer {
-  actor {
-    __typename
-    ... on Page {
-      id
-      name
-    }
-    ... on User {
-      id
-      name
-      profile_picture {
-        uri
-      }
-    }
-    ... on ExtraUser {
-      id
-      name
-    }
-  }
-}
-
-~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-declare const _TypenameInsideWithOverlappingFieldsFull$ref: unique symbol;
-export type TypenameInsideWithOverlappingFieldsFull$ref = typeof _TypenameInsideWithOverlappingFieldsFull$ref;
-export type TypenameInsideWithOverlappingFieldsFull = {
-    readonly actor: ({
-        readonly __typename: "Page";
-        readonly id: string;
-        readonly name: string | null;
-    } | {
-        readonly __typename: "User";
-        readonly id: string;
-        readonly name: string | null;
-        readonly profile_picture: {
-            readonly uri: string | null;
-        } | null;
-    } | {
-        readonly __typename: "ExtraUser";
-        readonly id: string;
-        readonly name: string | null;
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
-    }) | null;
-    readonly " $refType": TypenameInsideWithOverlappingFieldsFull$ref;
-};
-
-`;
-
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: typename-on-union.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: typename-on-union.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment TypenameInside on Actor {
   ... on User {
@@ -1422,6 +1711,7 @@ fragment TypenameAliases on Actor {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// TypenameInside.graphql
 declare const _TypenameInside$ref: unique symbol;
 export type TypenameInside$ref = typeof _TypenameInside$ref;
 export type TypenameInside = {
@@ -1440,6 +1730,7 @@ export type TypenameInside = {
 };
 
 
+// TypenameOutside.graphql
 declare const _TypenameOutside$ref: unique symbol;
 export type TypenameOutside$ref = typeof _TypenameOutside$ref;
 export type TypenameOutside = {
@@ -1458,6 +1749,7 @@ export type TypenameOutside = {
 };
 
 
+// TypenameOutsideWithAbstractType.graphql
 declare const _TypenameOutsideWithAbstractType$ref: unique symbol;
 export type TypenameOutsideWithAbstractType$ref = typeof _TypenameOutsideWithAbstractType$ref;
 export type TypenameOutsideWithAbstractType = {
@@ -1473,6 +1765,7 @@ export type TypenameOutsideWithAbstractType = {
 };
 
 
+// TypenameWithoutSpreads.graphql
 declare const _TypenameWithoutSpreads$ref: unique symbol;
 export type TypenameWithoutSpreads$ref = typeof _TypenameWithoutSpreads$ref;
 export type TypenameWithoutSpreads = {
@@ -1482,6 +1775,7 @@ export type TypenameWithoutSpreads = {
 };
 
 
+// TypenameWithoutSpreadsAbstractType.graphql
 declare const _TypenameWithoutSpreadsAbstractType$ref: unique symbol;
 export type TypenameWithoutSpreadsAbstractType$ref = typeof _TypenameWithoutSpreadsAbstractType$ref;
 export type TypenameWithoutSpreadsAbstractType = {
@@ -1491,6 +1785,7 @@ export type TypenameWithoutSpreadsAbstractType = {
 };
 
 
+// TypenameWithCommonSelections.graphql
 declare const _TypenameWithCommonSelections$ref: unique symbol;
 export type TypenameWithCommonSelections$ref = typeof _TypenameWithCommonSelections$ref;
 export type TypenameWithCommonSelections = {
@@ -1502,6 +1797,7 @@ export type TypenameWithCommonSelections = {
 };
 
 
+// TypenameAlias.graphql
 declare const _TypenameAlias$ref: unique symbol;
 export type TypenameAlias$ref = typeof _TypenameAlias$ref;
 export type TypenameAlias = {
@@ -1520,6 +1816,7 @@ export type TypenameAlias = {
 };
 
 
+// TypenameAliases.graphql
 declare const _TypenameAliases$ref: unique symbol;
 export type TypenameAliases$ref = typeof _TypenameAliases$ref;
 export type TypenameAliases = {
@@ -1544,7 +1841,7 @@ export type TypenameAliases = {
 
 `;
 
-exports[`TypeScriptGenerator with a single artifact directory matches expected output: unmasked-fragment-spreads.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: unmasked-fragment-spreads.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment UserProfile on User {
   profilePicture(size: $ProfilePicture_SIZE) {
@@ -1574,6 +1871,7 @@ fragment AnotherRecursiveFragment on Image {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// UserProfile.graphql
 import { PhotoFragment$ref } from "./PhotoFragment.graphql";
 declare const _UserProfile$ref: unique symbol;
 export type UserProfile$ref = typeof _UserProfile$ref;
@@ -1588,6 +1886,7 @@ export type UserProfile = {
 };
 
 
+// PhotoFragment.graphql
 declare const _PhotoFragment$ref: unique symbol;
 export type PhotoFragment$ref = typeof _PhotoFragment$ref;
 export type PhotoFragment = {
@@ -1597,6 +1896,7 @@ export type PhotoFragment = {
 };
 
 
+// RecursiveFragment.graphql
 declare const _RecursiveFragment$ref: unique symbol;
 export type RecursiveFragment$ref = typeof _RecursiveFragment$ref;
 export type RecursiveFragment = {
@@ -1605,6 +1905,7 @@ export type RecursiveFragment = {
 };
 
 
+// AnotherRecursiveFragment.graphql
 declare const _AnotherRecursiveFragment$ref: unique symbol;
 export type AnotherRecursiveFragment$ref = typeof _AnotherRecursiveFragment$ref;
 export type AnotherRecursiveFragment = {
@@ -1615,7 +1916,7 @@ export type AnotherRecursiveFragment = {
 
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: conditional.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: conditional.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment ConditionField on Node {
   id @include(if: $condition)
@@ -1628,6 +1929,7 @@ fragment NestedCondition on Node {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// ConditionField.graphql
 export type ConditionField$ref = any;
 export type ConditionField = {
     readonly id?: string;
@@ -1635,6 +1937,7 @@ export type ConditionField = {
 };
 
 
+// NestedCondition.graphql
 export type NestedCondition$ref = any;
 export type NestedCondition = {
     readonly id?: string;
@@ -1643,7 +1946,7 @@ export type NestedCondition = {
 
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: derived-field.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: derived-field.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 query QueryWithConnectionField($id: ID!) {
   feedback: node(id: $id) {
@@ -1666,19 +1969,41 @@ fragment FeedbackComments_feedback on Feedback {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// QueryWithConnectionField.graphql
+type FeedbackComments_feedback$ref = any;
+export type QueryWithConnectionFieldVariables = {
+    readonly id: string;
+};
+export type QueryWithConnectionFieldResponse = {
+    readonly feedback: {
+        readonly " $fragmentRefs": FeedbackComments_feedback$ref;
+    } | null;
+};
+export type QueryWithConnectionField = {
+    readonly variables: QueryWithConnectionFieldVariables;
+    readonly response: QueryWithConnectionFieldResponse;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'connection_resolver'. Source: document \`FeedbackComments_feedback\` file: \`GraphQL request\`
-  
-  GraphQL request:9:5
-   8 |   comments(first: 10)
-   9 |     @connection_resolver(resolver: "FeedbackCommentsResolver") {
-     |     ^
-  10 |     edges {
+
+// FeedbackComments_feedback.graphql
+export type FeedbackComments_feedback$ref = any;
+export type FeedbackComments_feedback = {
+    readonly comments: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly id: string;
+            } | null;
+        } | null> | null;
+        readonly pageInfo: {
+            readonly hasNextPage: boolean | null;
+        } | null;
+    } | null;
+    readonly " $refType": FeedbackComments_feedback$ref;
+};
+
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: fragment-spread.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: fragment-spread.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment FragmentSpread on Node {
   id
@@ -1730,6 +2055,7 @@ fragment UserFrag2 on Page {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// FragmentSpread.graphql
 type OtherFragment$ref = any;
 type PictureFragment$ref = any;
 type UserFrag1$ref = any;
@@ -1749,6 +2075,7 @@ export type FragmentSpread = {
 };
 
 
+// ConcreateTypes.graphql
 type PageFragment$ref = any;
 export type ConcreateTypes$ref = any;
 export type ConcreateTypes = {
@@ -1768,19 +2095,20 @@ export type ConcreateTypes = {
 };
 
 
+// PictureFragment.graphql
 export type PictureFragment$ref = any;
 export type PictureFragment = {
     readonly __typename: "Image";
     readonly " $refType": PictureFragment$ref;
-} & ({
-    readonly __typename: "Image";
 } | {
-    /*This will never be '% other', but we need some
+    /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-});
+    readonly " $refType": PictureFragment$ref;
+};
 
 
+// OtherFragment.graphql
 export type OtherFragment$ref = any;
 export type OtherFragment = {
     readonly __typename: string;
@@ -1788,47 +2116,47 @@ export type OtherFragment = {
 };
 
 
+// PageFragment.graphql
 export type PageFragment$ref = any;
 export type PageFragment = {
     readonly __typename: "Page";
     readonly " $refType": PageFragment$ref;
-} & ({
-    readonly __typename: "Page";
 } | {
-    /*This will never be '% other', but we need some
+    /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-});
+    readonly " $refType": PageFragment$ref;
+};
 
 
+// UserFrag1.graphql
 export type UserFrag1$ref = any;
 export type UserFrag1 = {
     readonly __typename: "Page";
     readonly " $refType": UserFrag1$ref;
-} & ({
-    readonly __typename: "Page";
 } | {
-    /*This will never be '% other', but we need some
+    /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-});
+    readonly " $refType": UserFrag1$ref;
+};
 
 
+// UserFrag2.graphql
 export type UserFrag2$ref = any;
 export type UserFrag2 = {
     readonly __typename: "Page";
     readonly " $refType": UserFrag2$ref;
-} & ({
-    readonly __typename: "Page";
 } | {
-    /*This will never be '% other', but we need some
+    /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-});
+    readonly " $refType": UserFrag2$ref;
+};
 
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: inline-fragment.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: inline-fragment.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment InlineFragment on Node {
   id
@@ -1896,6 +2224,7 @@ fragment SomeFragment on User {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// InlineFragment.graphql
 export type InlineFragment$ref = any;
 export type InlineFragment = {
     readonly id: string;
@@ -1907,6 +2236,7 @@ export type InlineFragment = {
 };
 
 
+// InlineFragmentWithOverlappingFields.graphql
 export type InlineFragmentWithOverlappingFields$ref = any;
 export type InlineFragmentWithOverlappingFields = {
     readonly hometown?: {
@@ -1921,6 +2251,7 @@ export type InlineFragmentWithOverlappingFields = {
 };
 
 
+// InlineFragmentConditionalID.graphql
 export type InlineFragmentConditionalID$ref = any;
 export type InlineFragmentConditionalID = {
     readonly id?: string;
@@ -1929,6 +2260,7 @@ export type InlineFragmentConditionalID = {
 };
 
 
+// InlineFragmentKitchenSink.graphql
 type SomeFragment$ref = any;
 export type InlineFragmentKitchenSink$ref = any;
 export type InlineFragmentKitchenSink = {
@@ -1946,21 +2278,21 @@ export type InlineFragmentKitchenSink = {
 };
 
 
+// SomeFragment.graphql
 export type SomeFragment$ref = any;
 export type SomeFragment = {
     readonly __typename: "User";
     readonly " $refType": SomeFragment$ref;
-} & ({
-    readonly __typename: "User";
 } | {
-    /*This will never be '% other', but we need some
+    /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-});
+    readonly " $refType": SomeFragment$ref;
+};
 
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: linked-field.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: linked-field.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment LinkedField on User {
   profilePicture {
@@ -1991,6 +2323,7 @@ query UnionTypeTest {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// LinkedField.graphql
 export type LinkedField$ref = any;
 export type LinkedField = {
     readonly profilePicture: {
@@ -2011,6 +2344,7 @@ export type LinkedField = {
 };
 
 
+// UnionTypeTest.graphql
 export type UnionTypeTestVariables = {};
 export type UnionTypeTestResponse = {
     readonly neverNode: ({
@@ -2023,13 +2357,13 @@ export type UnionTypeTestResponse = {
     }) | null;
 };
 export type UnionTypeTest = {
-    readonly response: UnionTypeTestResponse;
     readonly variables: UnionTypeTestVariables;
+    readonly response: UnionTypeTestResponse;
 };
 
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: match-field.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: match-field.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment NameRendererFragment on User {
   id
@@ -2055,6 +2389,7 @@ fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// NameRendererFragment.graphql
 type MarkdownUserNameRenderer_name$ref = any;
 type PlainUserNameRenderer_name$ref = any;
 export type NameRendererFragment$ref = any;
@@ -2069,6 +2404,7 @@ export type NameRendererFragment = {
 };
 
 
+// PlainUserNameRenderer_name.graphql
 export type PlainUserNameRenderer_name$ref = any;
 export type PlainUserNameRenderer_name = {
     readonly plaintext: string | null;
@@ -2079,6 +2415,7 @@ export type PlainUserNameRenderer_name = {
 };
 
 
+// MarkdownUserNameRenderer_name.graphql
 export type MarkdownUserNameRenderer_name$ref = any;
 export type MarkdownUserNameRenderer_name = {
     readonly markdown: string | null;
@@ -2090,7 +2427,7 @@ export type MarkdownUserNameRenderer_name = {
 
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: match-field-in-query.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: match-field-in-query.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 query NameRendererQuery {
   me {
@@ -2117,6 +2454,7 @@ fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// NameRendererQuery.graphql
 type MarkdownUserNameRenderer_name$ref = any;
 type PlainUserNameRenderer_name$ref = any;
 export type NameRendererQueryVariables = {};
@@ -2130,11 +2468,12 @@ export type NameRendererQueryResponse = {
     } | null;
 };
 export type NameRendererQuery = {
-    readonly response: NameRendererQueryResponse;
     readonly variables: NameRendererQueryVariables;
+    readonly response: NameRendererQueryResponse;
 };
 
 
+// PlainUserNameRenderer_name.graphql
 export type PlainUserNameRenderer_name$ref = any;
 export type PlainUserNameRenderer_name = {
     readonly plaintext: string | null;
@@ -2145,6 +2484,7 @@ export type PlainUserNameRenderer_name = {
 };
 
 
+// MarkdownUserNameRenderer_name.graphql
 export type MarkdownUserNameRenderer_name$ref = any;
 export type MarkdownUserNameRenderer_name = {
     readonly markdown: string | null;
@@ -2156,7 +2496,7 @@ export type MarkdownUserNameRenderer_name = {
 
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: mutaion-with-client-extension.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: mutaion-with-client-extension.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation Test($input: UpdateAllSeenStateInput) @raw_response_type {
   viewerNotificationsUpdateAllSeenState(input: $input) {
@@ -2177,18 +2517,42 @@ type Foo {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// Test.graphql
+export type UpdateAllSeenStateInput = {
+    readonly clientMutationId?: string | null;
+    readonly storyIds?: ReadonlyArray<string | null> | null;
+};
+export type TestVariables = {
+    readonly input?: UpdateAllSeenStateInput | null;
+};
+export type TestResponse = {
+    readonly viewerNotificationsUpdateAllSeenState: {
+        readonly stories: ReadonlyArray<{
+            readonly foos: ReadonlyArray<{
+                readonly bar: string | null;
+            } | null> | null;
+        } | null> | null;
+    } | null;
+};
+export type TestRawResponse = {
+    readonly viewerNotificationsUpdateAllSeenState: ({
+        readonly stories: ReadonlyArray<({
+            readonly id: string | null;
+            readonly foos?: ReadonlyArray<({
+                readonly bar: string | null;
+            }) | null> | null;
+        }) | null> | null;
+    }) | null;
+};
+export type Test = {
+    readonly variables: TestVariables;
+    readonly response: TestResponse;
+    readonly rawResponse: TestRawResponse;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`Test\` file: \`GraphQL request\`
-  
-  GraphQL request:1:48
-  1 | mutation Test($input: UpdateAllSeenStateInput) @raw_response_type {
-    |                                                ^
-  2 |   viewerNotificationsUpdateAllSeenState(input: $input) {
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: mutaion-with-response-on-inline-fragments.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: mutaion-with-response-on-inline-fragments.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation TestMutation($input: CommentCreateInput!) @raw_response_type {
   commentCreate(input: $input) {
@@ -2219,18 +2583,82 @@ fragment InlineFragmentWithOverlappingFields on Actor {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// TestMutation.graphql
+type InlineFragmentWithOverlappingFields$ref = any;
+export type CommentCreateInput = {
+    readonly clientMutationId?: string | null;
+    readonly feedbackId?: string | null;
+    readonly feedback?: CommentfeedbackFeedback | null;
+};
+export type CommentfeedbackFeedback = {
+    readonly comment?: FeedbackcommentComment | null;
+};
+export type FeedbackcommentComment = {
+    readonly feedback?: CommentfeedbackFeedback | null;
+};
+export type TestMutationVariables = {
+    readonly input: CommentCreateInput;
+};
+export type TestMutationResponse = {
+    readonly commentCreate: {
+        readonly viewer: {
+            readonly actor: {
+                readonly " $fragmentRefs": InlineFragmentWithOverlappingFields$ref;
+            } | null;
+        } | null;
+    } | null;
+};
+export type TestMutationRawResponse = {
+    readonly commentCreate: ({
+        readonly viewer: ({
+            readonly actor: ({
+                readonly __typename: "User";
+                readonly id: string | null;
+                readonly hometown: ({
+                    readonly id: string;
+                    readonly name: string | null;
+                }) | null;
+            } | {
+                readonly __typename: "Page";
+                readonly id: string | null;
+                readonly name: string | null;
+                readonly hometown: ({
+                    readonly id: string;
+                    readonly message: ({
+                        readonly text: string | null;
+                    }) | null;
+                }) | null;
+            } | {
+                readonly __typename: string | null;
+                readonly id: string | null;
+            }) | null;
+        }) | null;
+    }) | null;
+};
+export type TestMutation = {
+    readonly variables: TestMutationVariables;
+    readonly response: TestMutationResponse;
+    readonly rawResponse: TestMutationRawResponse;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`TestMutation\` file: \`GraphQL request\`
-  
-  GraphQL request:1:52
-  1 | mutation TestMutation($input: CommentCreateInput!) @raw_response_type {
-    |                                                    ^
-  2 |   commentCreate(input: $input) {
+
+// InlineFragmentWithOverlappingFields.graphql
+export type InlineFragmentWithOverlappingFields$ref = any;
+export type InlineFragmentWithOverlappingFields = {
+    readonly hometown?: {
+        readonly id: string;
+        readonly name: string | null;
+        readonly message?: {
+            readonly text: string | null;
+        } | null;
+    } | null;
+    readonly name?: string | null;
+    readonly " $refType": InlineFragmentWithOverlappingFields$ref;
+};
+
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: mutation.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: mutation.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation CommentCreateMutation(
   $input: CommentCreateInput!
@@ -2249,6 +2677,7 @@ mutation CommentCreateMutation(
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// CommentCreateMutation.graphql
 export type CommentCreateInput = {
     readonly clientMutationId?: string | null;
     readonly feedbackId?: string | null;
@@ -2277,13 +2706,13 @@ export type CommentCreateMutationResponse = {
     } | null;
 };
 export type CommentCreateMutation = {
-    readonly response: CommentCreateMutationResponse;
     readonly variables: CommentCreateMutationVariables;
+    readonly response: CommentCreateMutationResponse;
 };
 
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: mutation-input-has-array.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: mutation-input-has-array.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation InputHasArray($input: UpdateAllSeenStateInput) @raw_response_type {
   viewerNotificationsUpdateAllSeenState(input: $input) {
@@ -2294,18 +2723,38 @@ mutation InputHasArray($input: UpdateAllSeenStateInput) @raw_response_type {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// InputHasArray.graphql
+export type UpdateAllSeenStateInput = {
+    readonly clientMutationId?: string | null;
+    readonly storyIds?: ReadonlyArray<string | null> | null;
+};
+export type InputHasArrayVariables = {
+    readonly input?: UpdateAllSeenStateInput | null;
+};
+export type InputHasArrayResponse = {
+    readonly viewerNotificationsUpdateAllSeenState: {
+        readonly stories: ReadonlyArray<{
+            readonly actorCount: number | null;
+        } | null> | null;
+    } | null;
+};
+export type InputHasArrayRawResponse = {
+    readonly viewerNotificationsUpdateAllSeenState: ({
+        readonly stories: ReadonlyArray<({
+            readonly actorCount: number | null;
+            readonly id: string | null;
+        }) | null> | null;
+    }) | null;
+};
+export type InputHasArray = {
+    readonly variables: InputHasArrayVariables;
+    readonly response: InputHasArrayResponse;
+    readonly rawResponse: InputHasArrayRawResponse;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`InputHasArray\` file: \`GraphQL request\`
-  
-  GraphQL request:1:57
-  1 | mutation InputHasArray($input: UpdateAllSeenStateInput) @raw_response_type {
-    |                                                         ^
-  2 |   viewerNotificationsUpdateAllSeenState(input: $input) {
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: mutation-with-enums-on-fragment.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: mutation-with-enums-on-fragment.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation CommentCreateMutation(
   $input: CommentCreateInput!
@@ -2336,26 +2785,82 @@ fragment FriendFragment on User {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// CommentCreateMutation.graphql
+type FriendFragment$ref = any;
+export type TestEnums = "mark" | "zuck" | "%future added value";
+export type CommentCreateInput = {
+    readonly clientMutationId?: string | null;
+    readonly feedbackId?: string | null;
+    readonly feedback?: CommentfeedbackFeedback | null;
+};
+export type CommentfeedbackFeedback = {
+    readonly comment?: FeedbackcommentComment | null;
+};
+export type FeedbackcommentComment = {
+    readonly feedback?: CommentfeedbackFeedback | null;
+};
+export type CommentCreateMutationVariables = {
+    readonly input: CommentCreateInput;
+    readonly first?: number | null;
+    readonly orderBy?: ReadonlyArray<string> | null;
+};
+export type CommentCreateMutationResponse = {
+    readonly commentCreate: {
+        readonly comment: {
+            readonly friends: {
+                readonly edges: ReadonlyArray<{
+                    readonly node: {
+                        readonly id: string;
+                        readonly __typename: string;
+                        readonly " $fragmentRefs": FriendFragment$ref;
+                    } | null;
+                } | null> | null;
+            } | null;
+        } | null;
+    } | null;
+};
+export type CommentCreateMutationRawResponse = {
+    readonly commentCreate: ({
+        readonly comment: ({
+            readonly friends: ({
+                readonly edges: ReadonlyArray<({
+                    readonly node: ({
+                        readonly id: string;
+                        readonly __typename: "User";
+                        readonly name: string | null;
+                        readonly lastName: string | null;
+                        readonly profilePicture2: ({
+                            readonly test_enums: TestEnums | null;
+                        }) | null;
+                    }) | null;
+                }) | null> | null;
+            }) | null;
+            readonly id: string | null;
+        }) | null;
+    }) | null;
+};
+export type CommentCreateMutation = {
+    readonly variables: CommentCreateMutationVariables;
+    readonly response: CommentCreateMutationResponse;
+    readonly rawResponse: CommentCreateMutationRawResponse;
+};
 
-Error: RelayParser: Encountered 2 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`CommentCreateMutation\` file: \`GraphQL request\`
-  
-  GraphQL request:5:3
-  4 |   $orderBy: [String!]
-  5 | ) @raw_response_type {
-    |   ^
-  6 |   commentCreate(input: $input) {
-- Unknown field 'test_enums' on type 'Image'. Source: document \`FriendFragment\` file: \`GraphQL request\`
-  
-  GraphQL request:25:5
-  24 |   profilePicture2 {
-  25 |     test_enums
-     |     ^
-  26 |   }
+
+// FriendFragment.graphql
+export type TestEnums = "mark" | "zuck" | "%future added value";
+export type FriendFragment$ref = any;
+export type FriendFragment = {
+    readonly name: string | null;
+    readonly lastName: string | null;
+    readonly profilePicture2: {
+        readonly test_enums: TestEnums | null;
+    } | null;
+    readonly " $refType": FriendFragment$ref;
+};
+
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: mutation-with-nested-fragments.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: mutation-with-nested-fragments.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation CommentCreateMutation(
   $input: CommentCreateInput!
@@ -2390,25 +2895,96 @@ fragment FeedbackFragment on Feedback {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// CommentCreateMutation.graphql
+type FriendFragment$ref = any;
+export type CommentCreateInput = {
+    readonly clientMutationId?: string | null;
+    readonly feedbackId?: string | null;
+    readonly feedback?: CommentfeedbackFeedback | null;
+};
+export type CommentfeedbackFeedback = {
+    readonly comment?: FeedbackcommentComment | null;
+};
+export type FeedbackcommentComment = {
+    readonly feedback?: CommentfeedbackFeedback | null;
+};
+export type CommentCreateMutationVariables = {
+    readonly input: CommentCreateInput;
+    readonly first?: number | null;
+    readonly orderBy?: ReadonlyArray<string> | null;
+};
+export type CommentCreateMutationResponse = {
+    readonly commentCreate: {
+        readonly comment: {
+            readonly friends: {
+                readonly edges: ReadonlyArray<{
+                    readonly node: {
+                        readonly lastName: string | null;
+                        readonly " $fragmentRefs": FriendFragment$ref;
+                    } | null;
+                } | null> | null;
+            } | null;
+        } | null;
+    } | null;
+};
+export type CommentCreateMutationRawResponse = {
+    readonly commentCreate: ({
+        readonly comment: ({
+            readonly friends: ({
+                readonly edges: ReadonlyArray<({
+                    readonly node: ({
+                        readonly lastName: string | null;
+                        readonly name: string | null;
+                        readonly feedback: ({
+                            readonly id: string;
+                            readonly name: string | null;
+                        }) | null;
+                        readonly id: string | null;
+                    }) | null;
+                }) | null> | null;
+            }) | null;
+            readonly id: string | null;
+        }) | null;
+    }) | null;
+};
+export type CommentCreateMutation = {
+    readonly variables: CommentCreateMutationVariables;
+    readonly response: CommentCreateMutationResponse;
+    readonly rawResponse: CommentCreateMutationRawResponse;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`CommentCreateMutation\` file: \`GraphQL request\`
-  
-  GraphQL request:5:3
-  4 |   $orderBy: [String!]
-  5 | ) @raw_response_type {
-    |   ^
-  6 |   commentCreate(input: $input) {
+
+// FriendFragment.graphql
+type FeedbackFragment$ref = any;
+export type FriendFragment$ref = any;
+export type FriendFragment = {
+    readonly name: string | null;
+    readonly lastName: string | null;
+    readonly feedback: {
+        readonly " $fragmentRefs": FeedbackFragment$ref;
+    } | null;
+    readonly " $refType": FriendFragment$ref;
+};
+
+
+// FeedbackFragment.graphql
+export type FeedbackFragment$ref = any;
+export type FeedbackFragment = {
+    readonly id: string;
+    readonly name: string | null;
+    readonly " $refType": FeedbackFragment$ref;
+};
+
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: plural-fragment.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: plural-fragment.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment PluralFragment on Node @relay(plural: true) {
   id
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// PluralFragment.graphql
 export type PluralFragment$ref = any;
 export type PluralFragment = ReadonlyArray<{
     readonly id: string;
@@ -2417,7 +2993,7 @@ export type PluralFragment = ReadonlyArray<{
 
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: query-with-defer.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: query-with-defer.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 query TestDefer @raw_response_type {
   node(id: "1") {
@@ -2438,18 +3014,48 @@ query TestDefer @raw_response_type {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// TestDefer.graphql
+export type TestDeferVariables = {};
+export type TestDeferResponse = {
+    readonly node: {
+        readonly name?: string | null;
+        readonly friends?: {
+            readonly edges: ReadonlyArray<{
+                readonly pageInfo?: {
+                    readonly endCursor: string | null;
+                    readonly hasNextPage: boolean | null;
+                } | null;
+            } | null> | null;
+        } | null;
+    } | null;
+};
+export type TestDeferRawResponse = {
+    readonly node: ({
+        readonly __typename: "User";
+        readonly id: string | null;
+        readonly name: string | null;
+        readonly friends: ({
+            readonly edges: ReadonlyArray<({
+                readonly pageInfo: ({
+                    readonly endCursor: string | null;
+                    readonly hasNextPage: boolean | null;
+                }) | null;
+            }) | null> | null;
+        }) | null;
+    } | {
+        readonly __typename: string | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type TestDefer = {
+    readonly variables: TestDeferVariables;
+    readonly response: TestDeferResponse;
+    readonly rawResponse: TestDeferRawResponse;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`TestDefer\` file: \`GraphQL request\`
-  
-  GraphQL request:1:17
-  1 | query TestDefer @raw_response_type {
-    |                 ^
-  2 |   node(id: "1") {
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: query-with-handles.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: query-with-handles.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 query LinkedHandleField($id: ID!) @raw_response_type {
   node(id: $id) {
@@ -2470,129 +3076,64 @@ query ScalarHandleField($id: ID!) @raw_response_type {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// LinkedHandleField.graphql
+export type LinkedHandleFieldVariables = {
+    readonly id: string;
+};
+export type LinkedHandleFieldResponse = {
+    readonly node: {
+        readonly friends?: {
+            readonly count: number | null;
+        } | null;
+    } | null;
+};
+export type LinkedHandleFieldRawResponse = {
+    readonly node: ({
+        readonly __typename: "User";
+        readonly id: string | null;
+        readonly friends: ({
+            readonly count: number | null;
+        }) | null;
+    } | {
+        readonly __typename: string | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type LinkedHandleField = {
+    readonly variables: LinkedHandleFieldVariables;
+    readonly response: LinkedHandleFieldResponse;
+    readonly rawResponse: LinkedHandleFieldRawResponse;
+};
 
-Error: RelayParser: Encountered 2 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`LinkedHandleField\` file: \`GraphQL request\`
-  
-  GraphQL request:1:35
-  1 | query LinkedHandleField($id: ID!) @raw_response_type {
-    |                                   ^
-  2 |   node(id: $id) {
-- Unknown directive 'raw_response_type'. Source: document \`ScalarHandleField\` file: \`GraphQL request\`
-  
-  GraphQL request:11:35
-  10 | 
-  11 | query ScalarHandleField($id: ID!) @raw_response_type {
-     |                                   ^
-  12 |   node(id: $id) {
+
+// ScalarHandleField.graphql
+export type ScalarHandleFieldVariables = {
+    readonly id: string;
+};
+export type ScalarHandleFieldResponse = {
+    readonly node: {
+        readonly name?: string | null;
+    } | null;
+};
+export type ScalarHandleFieldRawResponse = {
+    readonly node: ({
+        readonly __typename: "User";
+        readonly id: string | null;
+        readonly name: string | null;
+    } | {
+        readonly __typename: string | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type ScalarHandleField = {
+    readonly variables: ScalarHandleFieldVariables;
+    readonly response: ScalarHandleFieldResponse;
+    readonly rawResponse: ScalarHandleFieldRawResponse;
+};
+
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: query-with-match-fields.graphql 1`] = `
-~~~~~~~~~~ INPUT ~~~~~~~~~~
-query Test @raw_response_type {
-  node(id: "1") {
-    ...NameRendererFragment
-  }
-}
-
-fragment NameRendererFragment on User {
-  id
-  nameRenderer @match {
-    ...PlainUserNameRenderer_name @module(name: "PlainUserNameRenderer.react")
-    ...MarkdownUserNameRenderer_name
-      @module(name: "MarkdownUserNameRenderer.react")
-  }
-}
-
-fragment PlainUserNameRenderer_name on PlainUserNameRenderer {
-  plaintext
-  data {
-    text
-  }
-}
-
-fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
-  markdown
-  data {
-    markup
-  }
-}
-
-~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
-
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`Test\` file: \`GraphQL request\`
-  
-  GraphQL request:1:12
-  1 | query Test @raw_response_type {
-    |            ^
-  2 |   node(id: "1") {
-`;
-
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: query-with-multiple-match-fields.graphql 1`] = `
-~~~~~~~~~~ INPUT ~~~~~~~~~~
-query Test @raw_response_type {
-  node(id: "1") {
-    ... on User {
-      username
-      ...NameRendererFragment
-    }
-  }
-  viewer {
-    ... on User {
-      name
-      ...AnotherNameRendererFragment
-    }
-  }
-}
-
-fragment NameRendererFragment on User {
-  id
-  nameRenderer @match {
-    ...PlainUserNameRenderer_name @module(name: "PlainUserNameRenderer.react")
-    ...MarkdownUserNameRenderer_name
-      @module(name: "MarkdownUserNameRenderer.react")
-  }
-}
-
-fragment AnotherNameRendererFragment on User {
-  name
-  nameRenderer @match {
-    ...PlainUserNameRenderer_name @module(name: "PlainUserNameRenderer.react")
-    ...MarkdownUserNameRenderer_name
-      @module(name: "MarkdownUserNameRenderer.react")
-  }
-}
-
-fragment PlainUserNameRenderer_name on PlainUserNameRenderer {
-  plaintext
-  data {
-    text
-  }
-}
-
-fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
-  markdown
-  data {
-    markup
-  }
-}
-
-~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
-
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`Test\` file: \`GraphQL request\`
-  
-  GraphQL request:1:12
-  1 | query Test @raw_response_type {
-    |            ^
-  2 |   node(id: "1") {
-`;
-
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: query-with-raw-response-on-conditional.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: query-with-raw-response-on-conditional.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 query ExampleQuery($id: ID!, $condition: Boolean!) @raw_response_type {
   node(id: $id) {
@@ -2612,18 +3153,54 @@ fragment FriendFragment on User {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// ExampleQuery.graphql
+type FriendFragment$ref = any;
+export type ExampleQueryVariables = {
+    readonly id: string;
+    readonly condition: boolean;
+};
+export type ExampleQueryResponse = {
+    readonly node: {
+        readonly " $fragmentRefs": FriendFragment$ref;
+    } | null;
+};
+export type ExampleQueryRawResponse = {
+    readonly node: ({
+        readonly __typename: "User";
+        readonly id: string | null;
+        readonly name?: string | null;
+        readonly lastName?: string | null;
+        readonly feedback?: ({
+            readonly id: string;
+            readonly name: string | null;
+        }) | null;
+    } | {
+        readonly __typename: string | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type ExampleQuery = {
+    readonly variables: ExampleQueryVariables;
+    readonly response: ExampleQueryResponse;
+    readonly rawResponse: ExampleQueryRawResponse;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`ExampleQuery\` file: \`GraphQL request\`
-  
-  GraphQL request:1:52
-  1 | query ExampleQuery($id: ID!, $condition: Boolean!) @raw_response_type {
-    |                                                    ^
-  2 |   node(id: $id) {
+
+// FriendFragment.graphql
+export type FriendFragment$ref = any;
+export type FriendFragment = {
+    readonly name?: string | null;
+    readonly lastName?: string | null;
+    readonly feedback?: {
+        readonly id: string;
+        readonly name: string | null;
+    } | null;
+    readonly " $refType": FriendFragment$ref;
+};
+
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: query-with-stream.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: query-with-stream.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 query TestStream @raw_response_type {
   node(id: "1") {
@@ -2645,18 +3222,52 @@ query TestStream @raw_response_type {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// TestStream.graphql
+export type TestStreamVariables = {};
+export type TestStreamResponse = {
+    readonly node: {
+        readonly name?: string | null;
+        readonly friends?: {
+            readonly edges: ReadonlyArray<{
+                readonly node: {
+                    readonly id: string;
+                } | null;
+            } | null> | null;
+        } | null;
+    } | null;
+};
+export type TestStreamRawResponse = {
+    readonly node: ({
+        readonly __typename: "User";
+        readonly id: string | null;
+        readonly name: string | null;
+        readonly friends: ({
+            readonly edges: ReadonlyArray<({
+                readonly node: ({
+                    readonly id: string;
+                    readonly __typename: "User";
+                }) | null;
+                readonly cursor: string | null;
+            }) | null> | null;
+            readonly pageInfo: ({
+                readonly endCursor: string | null;
+                readonly hasNextPage: boolean | null;
+            }) | null;
+        }) | null;
+    } | {
+        readonly __typename: string | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type TestStream = {
+    readonly variables: TestStreamVariables;
+    readonly response: TestStreamResponse;
+    readonly rawResponse: TestStreamRawResponse;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'raw_response_type'. Source: document \`TestStream\` file: \`GraphQL request\`
-  
-  GraphQL request:1:18
-  1 | query TestStream @raw_response_type {
-    |                  ^
-  2 |   node(id: "1") {
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: recursive-fragments.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: recursive-fragments.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment FragmentSpread on Node {
   id
@@ -2666,6 +3277,7 @@ fragment FragmentSpread on Node {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// FragmentSpread.graphql
 type FragmentSpread$ref = any;
 export type FragmentSpread$ref = any;
 export type FragmentSpread = {
@@ -2676,7 +3288,7 @@ export type FragmentSpread = {
 
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: refetchable-fragment.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: refetchable-fragment.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment RefetchableFragment on Node
   @refetchable(queryName: "RefetchableFragmentQuery") {
@@ -2687,19 +3299,35 @@ fragment RefetchableFragment on Node
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-THROWN EXCEPTION:
+// RefetchableFragment.graphql
+export type RefetchableFragment$ref = any;
+export type RefetchableFragment = {
+    readonly id: string;
+    readonly fragAndField: {
+        readonly uri: string | null;
+    } | null;
+    readonly " $refType": RefetchableFragment$ref;
+};
 
-Error: RelayParser: Encountered 1 error(s):
-- Unknown directive 'refetchable'. Source: document \`RefetchableFragment\` file: \`GraphQL request\`
-  
-  GraphQL request:2:3
-  1 | fragment RefetchableFragment on Node
-  2 |   @refetchable(queryName: "RefetchableFragmentQuery") {
-    |   ^
-  3 |   id
+
+// RefetchableFragmentQuery.graphql
+type RefetchableFragment$ref = any;
+export type RefetchableFragmentQueryVariables = {
+    readonly id: string;
+};
+export type RefetchableFragmentQueryResponse = {
+    readonly node: {
+        readonly " $fragmentRefs": RefetchableFragment$ref;
+    } | null;
+};
+export type RefetchableFragmentQuery = {
+    readonly variables: RefetchableFragmentQueryVariables;
+    readonly response: RefetchableFragmentQueryResponse;
+};
+
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: roots.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: roots.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 query ExampleQuery($id: ID!) {
   node(id: $id) {
@@ -2728,6 +3356,7 @@ subscription TestSubscription($input: FeedbackLikeInput) {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// ExampleQuery.graphql
 export type ExampleQueryVariables = {
     readonly id: string;
 };
@@ -2737,11 +3366,12 @@ export type ExampleQueryResponse = {
     } | null;
 };
 export type ExampleQuery = {
-    readonly response: ExampleQueryResponse;
     readonly variables: ExampleQueryVariables;
+    readonly response: ExampleQueryResponse;
 };
 
 
+// ExampleFragment.graphql
 export type ExampleFragment$ref = any;
 export type ExampleFragment = {
     readonly id: string;
@@ -2749,6 +3379,7 @@ export type ExampleFragment = {
 };
 
 
+// TestMutation.graphql
 export type CommentCreateInput = {
     readonly clientMutationId?: string | null;
     readonly feedbackId?: string | null;
@@ -2771,11 +3402,12 @@ export type TestMutationResponse = {
     } | null;
 };
 export type TestMutation = {
-    readonly response: TestMutationResponse;
     readonly variables: TestMutationVariables;
+    readonly response: TestMutationResponse;
 };
 
 
+// TestSubscription.graphql
 export type FeedbackLikeInput = {
     readonly clientMutationId?: string | null;
     readonly feedbackId?: string | null;
@@ -2791,13 +3423,13 @@ export type TestSubscriptionResponse = {
     } | null;
 };
 export type TestSubscription = {
-    readonly response: TestSubscriptionResponse;
     readonly variables: TestSubscriptionVariables;
+    readonly response: TestSubscriptionResponse;
 };
 
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: scalar-field.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: scalar-field.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment ScalarField on User {
   id
@@ -2814,6 +3446,7 @@ fragment ScalarField on User {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// ScalarField.graphql
 export type PersonalityTraits = "CHEERFUL" | "DERISIVE" | "HELPFUL" | "SNARKY" | "%future added value";
 export type ScalarField$ref = any;
 export type ScalarField = {
@@ -2833,7 +3466,7 @@ export type ScalarField = {
 
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: typename-inside-with-overlapping-fields.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: typename-inside-with-overlapping-fields.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment TypenameInsideWithOverlappingFields on Viewer {
   actor {
@@ -2853,6 +3486,7 @@ fragment TypenameInsideWithOverlappingFields on Viewer {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// TypenameInsideWithOverlappingFields.graphql
 export type TypenameInsideWithOverlappingFields$ref = any;
 export type TypenameInsideWithOverlappingFields = {
     readonly actor: ({
@@ -2876,61 +3510,7 @@ export type TypenameInsideWithOverlappingFields = {
 
 `;
 
-<<<<<<< HEAD
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: typename-inside-with-overlapping-fields-full.graphql 1`] = `
-~~~~~~~~~~ INPUT ~~~~~~~~~~
-fragment TypenameInsideWithOverlappingFieldsFull on Viewer {
-  actor {
-    __typename
-    ... on Page {
-      id
-      name
-    }
-    ... on User {
-      id
-      name
-      profile_picture {
-        uri
-      }
-    }
-    ... on ExtraUser {
-      id
-      name
-    }
-  }
-}
-
-~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-export type TypenameInsideWithOverlappingFieldsFull$ref = any;
-export type TypenameInsideWithOverlappingFieldsFull = {
-    readonly actor: ({
-        readonly __typename: "Page";
-        readonly id: string;
-        readonly name: string | null;
-    } | {
-        readonly __typename: "User";
-        readonly id: string;
-        readonly name: string | null;
-        readonly profile_picture: {
-            readonly uri: string | null;
-        } | null;
-    } | {
-        readonly __typename: "ExtraUser";
-        readonly id: string;
-        readonly name: string | null;
-    } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
-    }) | null;
-    readonly " $refType": TypenameInsideWithOverlappingFieldsFull$ref;
-};
-
-`;
-
-=======
->>>>>>> [test] Update fixtures to those of relay v6
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: typename-on-union.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: typename-on-union.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment TypenameInside on Actor {
   ... on User {
@@ -3014,6 +3594,7 @@ fragment TypenameAliases on Actor {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// TypenameInside.graphql
 export type TypenameInside$ref = any;
 export type TypenameInside = {
     readonly __typename: "User";
@@ -3031,6 +3612,7 @@ export type TypenameInside = {
 };
 
 
+// TypenameOutside.graphql
 export type TypenameOutside$ref = any;
 export type TypenameOutside = {
     readonly __typename: "User";
@@ -3048,6 +3630,7 @@ export type TypenameOutside = {
 };
 
 
+// TypenameOutsideWithAbstractType.graphql
 export type TypenameOutsideWithAbstractType$ref = any;
 export type TypenameOutsideWithAbstractType = {
     readonly __typename: string;
@@ -3062,6 +3645,7 @@ export type TypenameOutsideWithAbstractType = {
 };
 
 
+// TypenameWithoutSpreads.graphql
 export type TypenameWithoutSpreads$ref = any;
 export type TypenameWithoutSpreads = {
     readonly firstName: string | null;
@@ -3070,6 +3654,7 @@ export type TypenameWithoutSpreads = {
 };
 
 
+// TypenameWithoutSpreadsAbstractType.graphql
 export type TypenameWithoutSpreadsAbstractType$ref = any;
 export type TypenameWithoutSpreadsAbstractType = {
     readonly __typename: string;
@@ -3078,6 +3663,7 @@ export type TypenameWithoutSpreadsAbstractType = {
 };
 
 
+// TypenameWithCommonSelections.graphql
 export type TypenameWithCommonSelections$ref = any;
 export type TypenameWithCommonSelections = {
     readonly __typename: string;
@@ -3088,6 +3674,7 @@ export type TypenameWithCommonSelections = {
 };
 
 
+// TypenameAlias.graphql
 export type TypenameAlias$ref = any;
 export type TypenameAlias = {
     readonly _typeAlias: "User";
@@ -3105,6 +3692,7 @@ export type TypenameAlias = {
 };
 
 
+// TypenameAliases.graphql
 export type TypenameAliases$ref = any;
 export type TypenameAliases = {
     readonly _typeAlias1: "User";
@@ -3128,7 +3716,7 @@ export type TypenameAliases = {
 
 `;
 
-exports[`TypeScriptGenerator without a single artifact directory matches expected output: unmasked-fragment-spreads.graphql 1`] = `
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: unmasked-fragment-spreads.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment UserProfile on User {
   profilePicture(size: $ProfilePicture_SIZE) {
@@ -3158,6 +3746,7 @@ fragment AnotherRecursiveFragment on Image {
 }
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// UserProfile.graphql
 type PhotoFragment$ref = any;
 export type UserProfile$ref = any;
 export type UserProfile = {
@@ -3171,6 +3760,7 @@ export type UserProfile = {
 };
 
 
+// PhotoFragment.graphql
 export type PhotoFragment$ref = any;
 export type PhotoFragment = {
     readonly uri: string | null;
@@ -3179,6 +3769,7 @@ export type PhotoFragment = {
 };
 
 
+// RecursiveFragment.graphql
 export type RecursiveFragment$ref = any;
 export type RecursiveFragment = {
     readonly uri: string | null;
@@ -3186,6 +3777,7 @@ export type RecursiveFragment = {
 };
 
 
+// AnotherRecursiveFragment.graphql
 export type AnotherRecursiveFragment$ref = any;
 export type AnotherRecursiveFragment = {
     readonly uri: string | null;

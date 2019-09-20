@@ -1,15 +1,10 @@
-import * as path from "path";
 import * as ts from "typescript";
 import * as util from "util";
 
-import { GraphQLTag, GraphQLTagFinder } from "relay-compiler";
-import { isPropertyAccessOrQualifiedName } from "typescript";
-import { callbackify } from "util";
-
-interface Location {
-  line: number;
-  column: number;
-}
+import {
+  GraphQLTag,
+  GraphQLTagFinder
+} from "relay-compiler/lib/language/RelayLanguagePluginInterface";
 
 function isCreateContainerFunction(
   fnName: string

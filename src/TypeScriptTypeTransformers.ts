@@ -10,7 +10,7 @@ import {
   GraphQLType,
   GraphQLUnionType
 } from "graphql";
-import { TypeGeneratorOptions } from "relay-compiler";
+import { TypeGeneratorOptions } from "relay-compiler/lib/language/RelayLanguagePluginInterface";
 import * as ts from "typescript";
 
 export type ScalarTypeMapping = {
