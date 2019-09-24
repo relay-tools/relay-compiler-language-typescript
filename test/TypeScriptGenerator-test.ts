@@ -1,19 +1,22 @@
-import * as parseGraphQLText from "relay-test-utils/lib/parseGraphQLText";
-import { generateTestsFromFixtures } from "relay-test-utils/lib/RelayModernTestUtils";
-import * as RelayTestSchema from "relay-test-utils/lib/RelayTestSchema";
-
 import {
   GraphQLCompilerContext,
   IRTransforms,
+  Root,
   transformASTSchema
 } from "relay-compiler";
-
+import { TypeGeneratorOptions } from "relay-compiler/lib/language/RelayLanguagePluginInterface";
+import { generateTestsFromFixtures } from "relay-test-utils-internal/lib/generateTestsFromFixtures";
+import * as parseGraphQLText from "relay-test-utils-internal/lib/parseGraphQLText";
+import * as RelayTestSchema from "relay-test-utils-internal/lib/RelayTestSchema";
 import * as TypeScriptGenerator from "../src/TypeScriptGenerator";
 
-function generate(text, options) {
+function generate(
+  text,
+  options: TypeGeneratorOptions,
+  context?: GraphQLCompilerContext
+) {
   const schema = transformASTSchema(RelayTestSchema, [
-    IRTransforms.schemaExtensions[1], // RelayMatchTransform.SCHEMA_EXTENSION,
-    IRTransforms.schemaExtensions[2], // RelayRelayDirectiveTransform.SCHEMA_EXTENSION,
+    ...IRTransforms.schemaExtensions,
     `
       scalar Color
       extend type User {
@@ -30,8 +33,8 @@ function generate(text, options) {
         id: ID!
         lastName: String
         name: String
-        nameRenderer(supported: [String!]!): UserNameRenderer
-        nameRenderable(supported: [String!]!): UserNameRenderable
+        nameRenderer(supported: [String!]): UserNameRenderer
+        nameRenderable(supported: [String!]): UserNameRenderable
         profilePicture(size: [Int], preset: PhotoSize): Image
         screennames: [Screenname]
         subscribeStatus: String
@@ -47,41 +50,69 @@ function generate(text, options) {
     .addAll(definitions)
     .applyTransforms(TypeScriptGenerator.transforms)
     .documents()
-    .map(doc =>
-      TypeScriptGenerator.generate(doc, {
-        ...options,
-        schema
-      })
+    .map(
+      doc =>
+        `// ${doc.name}.graphql\n${TypeScriptGenerator.generate(doc as any, {
+          ...options,
+          normalizationIR: context ? (context.get(doc.name) as Root) : undefined
+        })}`
     )
     .join("\n\n");
 }
 
-describe("TypeScriptGenerator with a single artifact directory", () => {
-  generateTestsFromFixtures(`${__dirname}/fixtures/type-generator`, text =>
-    generate(text, {
-      customScalars: {},
-      enumsHasteModule: null,
-      existingFragmentNames: new Set(["PhotoFragment"]),
-      optionalInputFields: [],
-      relayRuntimeModule: "relay-runtime",
-      useHaste: false,
-      useSingleArtifactDirectory: true
-    })
-  );
-});
+describe("Snapshot tests", () => {
+  function generateContext(text) {
+    const schema = transformASTSchema(
+      RelayTestSchema,
+      IRTransforms.schemaExtensions
+    );
+    const { definitions } = parseGraphQLText(schema, text);
+    return new GraphQLCompilerContext(RelayTestSchema, schema)
+      .addAll(definitions)
+      .applyTransforms([
+        ...IRTransforms.commonTransforms,
+        ...IRTransforms.queryTransforms,
+        ...IRTransforms.codegenTransforms
+      ]);
+  }
 
-describe("TypeScriptGenerator without a single artifact directory", () => {
-  generateTestsFromFixtures(`${__dirname}/fixtures/type-generator`, text =>
-    generate(text, {
-      customScalars: {},
-      enumsHasteModule: null,
-      existingFragmentNames: new Set(["PhotoFragment"]),
-      optionalInputFields: [],
-      relayRuntimeModule: "relay-runtime",
-      useHaste: false,
-      useSingleArtifactDirectory: false
-    })
-  );
+  describe("TypeScriptGenerator with a single artifact directory", () => {
+    generateTestsFromFixtures(`${__dirname}/fixtures/type-generator`, text => {
+      const context = generateContext(text);
+      return generate(
+        text,
+        {
+          customScalars: {},
+          enumsHasteModule: null,
+          existingFragmentNames: new Set(["PhotoFragment"]),
+          optionalInputFields: [],
+          useHaste: false,
+          useSingleArtifactDirectory: true,
+          noFutureProofEnums: false
+        },
+        context
+      );
+    });
+  });
+
+  describe("TypeScriptGenerator without a single artifact directory", () => {
+    generateTestsFromFixtures(`${__dirname}/fixtures/type-generator`, text => {
+      const context = generateContext(text);
+      return generate(
+        text,
+        {
+          customScalars: {},
+          enumsHasteModule: null,
+          existingFragmentNames: new Set(["PhotoFragment"]),
+          optionalInputFields: [],
+          useHaste: false,
+          useSingleArtifactDirectory: false,
+          noFutureProofEnums: false
+        },
+        context
+      );
+    });
+  });
 });
 
 describe("Does not add `%future added values` when the noFutureProofEnums option is set", () => {
@@ -95,8 +126,8 @@ describe("Does not add `%future added values` when the noFutureProofEnums option
     enumsHasteModule: null,
     existingFragmentNames: new Set(["PhotoFragment"]),
     optionalInputFields: [],
-    relayRuntimeModule: "relay-runtime",
     useHaste: false,
+    useSingleArtifactDirectory: false,
     noFutureProofEnums: true
   });
 
@@ -128,9 +159,9 @@ describe.each`
     enumsHasteModule: null,
     existingFragmentNames: new Set(["PhotoFragment"]),
     optionalInputFields: [],
-    relayRuntimeModule: "relay-runtime",
     useHaste: false,
-    useSingleArtifactDirectory: true
+    useSingleArtifactDirectory: true,
+    noFutureProofEnums: false
   });
 
   expect(types).toContain(`color: ${type} | null`);

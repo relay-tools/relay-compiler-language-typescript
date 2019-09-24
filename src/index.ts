@@ -1,5 +1,4 @@
-import { PluginInterface } from "relay-compiler";
-
+import { PluginInterface } from "relay-compiler/lib/language/RelayLanguagePluginInterface";
 import { find } from "./FindGraphQLTags";
 import { formatterFactory } from "./formatGeneratedModule";
 import { loadCompilerOptions } from "./loadCompilerOptions";

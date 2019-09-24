@@ -1,21 +1,26 @@
-import { GraphQLNonNull, GraphQLString } from "graphql";
-import {
-  Fragment,
-  IRTransforms,
-  IRVisitor,
-  Root,
-  SchemaUtils,
-  TypeGenerator,
-  TypeGeneratorOptions
-} from "relay-compiler";
 import {
   Condition,
-  FragmentSpread,
-  InlineFragment,
+  Directive,
+  Fragment,
+  IRVisitor,
   LinkedField,
-  ModuleImport,
-  ScalarField
-} from "types/relay-compiler/core/GraphQLIR";
+  Metadata,
+  Root,
+  ScalarField,
+  SchemaUtils,
+  TypeGenerator
+} from "relay-compiler";
+import { ConnectionField } from "relay-compiler/lib/core/GraphQLIR";
+import { TypeGeneratorOptions } from "relay-compiler/lib/language/RelayLanguagePluginInterface";
+
+import * as ConnectionFieldTransform from "relay-compiler/lib/transforms/ConnectionFieldTransform";
+import * as FlattenTransform from "relay-compiler/lib/transforms/FlattenTransform";
+import * as RelayMaskTransform from "relay-compiler/lib/transforms/RelayMaskTransform";
+import * as RelayMatchTransform from "relay-compiler/lib/transforms/RelayMatchTransform";
+import * as RelayRefetchableFragmentTransform from "relay-compiler/lib/transforms/RelayRefetchableFragmentTransform";
+import * as RelayRelayDirectiveTransform from "relay-compiler/lib/transforms/RelayRelayDirectiveTransform";
+
+import { GraphQLNonNull, GraphQLString } from "graphql";
 import * as ts from "typescript";
 import {
   State,
@@ -27,7 +32,8 @@ const { isAbstractType } = SchemaUtils;
 
 const REF_TYPE = " $refType";
 const FRAGMENT_REFS = " $fragmentRefs";
-const DATA = " $data";
+const MODULE_IMPORT_FIELD = "MODULE_IMPORT_FIELD";
+const DIRECTIVE_NAME = "raw_response_type";
 
 export const generate: TypeGenerator["generate"] = (node, options) => {
   const ast: ts.Statement[] = IRVisitor.visit(node, createVisitor(options));
@@ -97,7 +103,7 @@ const onlySelectsTypename = (selections: Selection[]) =>
   selections.every(isTypenameSelection);
 
 function selectionsToAST(
-  selections: Selection[][],
+  selections: ReadonlyArray<ReadonlyArray<Selection>>,
   state: State,
   unmasked: boolean,
   fragmentTypeName?: string
@@ -243,30 +249,42 @@ function readOnlyObjectTypeProperty(
 
 function mergeSelection(
   a: Selection | null | undefined,
-  b: Selection
+  b: Selection,
+  shouldSetConditional: boolean = true
 ): Selection {
   if (!a) {
-    return {
-      ...b,
-      conditional: true
-    };
+    if (shouldSetConditional) {
+      return {
+        ...b,
+        conditional: true
+      };
+    }
+    return b;
   }
   return {
     ...a,
     nodeSelections: a.nodeSelections
-      ? mergeSelections(a.nodeSelections, nullthrows(b.nodeSelections))
+      ? mergeSelections(
+          a.nodeSelections,
+          nullthrows(b.nodeSelections),
+          shouldSetConditional
+        )
       : null,
     conditional: a.conditional && b.conditional
   };
 }
 
-function mergeSelections(a: SelectionMap, b: SelectionMap): SelectionMap {
+function mergeSelections(
+  a: SelectionMap,
+  b: SelectionMap,
+  shouldSetConditional: boolean = true
+): SelectionMap {
   const merged = new Map();
   for (const [key, value] of Array.from(a.entries())) {
     merged.set(key, value);
   }
   for (const [key, value] of Array.from(b.entries())) {
-    merged.set(key, mergeSelection(a.get(key), value));
+    merged.set(key, mergeSelection(a.get(key), value, shouldSetConditional));
   }
   return merged;
 }
@@ -282,6 +300,16 @@ function exportType(name: string, type: ts.TypeNode) {
     ts.createIdentifier(name),
     undefined,
     type
+  );
+}
+
+function exportTypes(types: string[]) {
+  return ts.createExportDeclaration(
+    undefined,
+    undefined,
+    ts.createNamedExports(
+      types.map(type => ts.createExportSpecifier(undefined, type))
+    )
   );
 }
 
@@ -301,7 +329,7 @@ function importTypes(names: string[], fromModule: string): ts.Statement {
   );
 }
 
-function createVisitor(options: TypeGeneratorOptions) {
+function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
   const state: State = {
     customScalars: options.customScalars,
     enumsHasteModule: options.enumsHasteModule,
@@ -309,7 +337,6 @@ function createVisitor(options: TypeGeneratorOptions) {
     generatedInputObjectTypes: {},
     generatedFragments: new Set(),
     optionalInputFields: options.optionalInputFields,
-    relayRuntimeModule: options.relayRuntimeModule,
     usedEnums: {},
     usedFragments: new Set(),
     useHaste: options.useHaste,
@@ -320,45 +347,83 @@ function createVisitor(options: TypeGeneratorOptions) {
 
   return {
     leave: {
-      Root(node: Root) {
+      Root(node) {
         const inputVariablesType = generateInputVariablesType(node, state);
         const inputObjectTypes = generateInputObjectTypes(state);
         const responseType = exportType(
           `${node.name}Response`,
-          // From flow code: $FlowFixMe: selections have already been transformed
           selectionsToAST(
-            (node.selections as any) as Selection[][],
+            /* $FlowFixMe: selections have already been transformed */
+            (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>,
             state,
             false
           )
         );
-        const operationType = exportType(
-          node.name,
-          ts.createTypeLiteralNode([
-            readOnlyObjectTypeProperty(
-              "response",
-              ts.createTypeReferenceNode(responseType.name, undefined)
-            ),
-            readOnlyObjectTypeProperty(
-              "variables",
-              ts.createTypeReferenceNode(inputVariablesType.name, undefined)
-            )
-          ])
+        const operationTypes = [
+          readOnlyObjectTypeProperty(
+            "response",
+            ts.createTypeReferenceNode(responseType.name, undefined)
+          ),
+          readOnlyObjectTypeProperty(
+            "variables",
+            ts.createTypeReferenceNode(inputVariablesType.name, undefined)
+          )
+        ];
+        // Generate raw response type
+        let rawResponseType;
+        const { normalizationIR } = options;
+        if (
+          normalizationIR &&
+          node.directives.some(d => d.name === DIRECTIVE_NAME)
+        ) {
+          rawResponseType = IRVisitor.visit(
+            normalizationIR,
+            createRawResponseTypeVisitor(state)
+          );
+        }
+        const refetchableFragmentName = getRefetchableQueryParentFragmentName(
+          state,
+          node.metadata
         );
-        return [
-          ...getFragmentImports(state),
+        const nodes = [
+          ...(refetchableFragmentName
+            ? generateFragmentRefsForRefetchable(refetchableFragmentName)
+            : getFragmentImports(state)),
           ...getEnumDefinitions(state),
           ...inputObjectTypes,
           inputVariablesType,
-          responseType,
-          operationType
+          responseType
         ];
+        if (rawResponseType) {
+          for (const [key, ast] of state.matchFields) {
+            nodes.push(
+              ts.createTypeAliasDeclaration(
+                undefined,
+                undefined,
+                key,
+                undefined,
+                ast
+              )
+            );
+          }
+          operationTypes.push(
+            readOnlyObjectTypeProperty(
+              "rawResponse",
+              ts.createTypeReferenceNode(`${node.name}RawResponse`, undefined)
+            )
+          );
+          nodes.push(rawResponseType);
+        }
+        nodes.push(
+          exportType(node.name, exactObjectTypeAnnotation(operationTypes))
+        );
+        return nodes;
       },
 
-      Fragment(node: Fragment) {
-        // From flow code: $FlowFixMe: selections have already been transformed
+      Fragment(node) {
         const flattenedSelections: Selection[] = flattenArray(
-          (node.selections as any) as Selection[][]
+          /* $FlowFixMe: selections have already been transformed */
+          (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
         );
         const numConcreteSelections = flattenedSelections.filter(
           s => s.concreteType
@@ -381,11 +446,9 @@ function createVisitor(options: TypeGeneratorOptions) {
         state.generatedFragments.add(node.name);
         const fragmentTypes = getFragmentTypes(
           node.name,
-          options.useSingleArtifactDirectory
+          getRefetchableQueryPath(state, node.directives),
+          state
         );
-
-        const dataType = ts.createTypeReferenceNode(node.name, undefined);
-
         const unmasked = node.metadata != null && node.metadata.mask === false;
         const baseType = selectionsToAST(
           selections,
@@ -406,60 +469,31 @@ function createVisitor(options: TypeGeneratorOptions) {
           exportType(node.name, type)
         ];
       },
-      InlineFragment(node: InlineFragment) {
+      InlineFragment(node) {
         const typeCondition = node.typeCondition;
-        // From flow code: $FlowFixMe: selections have already been transformed
-        return flattenArray((node.selections as any) as Selection[][]).map(
-          typeSelection => {
-            return isAbstractType(typeCondition)
-              ? {
-                  ...typeSelection,
-                  conditional: true
-                }
-              : {
-                  ...typeSelection,
-                  concreteType: typeCondition.toString()
-                };
-          }
-        );
+        return flattenArray(
+          /* $FlowFixMe: selections have already been transformed */
+          (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
+        ).map(typeSelection => {
+          return isAbstractType(typeCondition)
+            ? {
+                ...typeSelection,
+                conditional: true
+              }
+            : {
+                ...typeSelection,
+                concreteType: typeCondition.toString()
+              };
+        });
       },
-      Condition(node: Condition) {
-        return flattenArray((node.selections as any) as Selection[][]).map(
-          selection => {
-            return {
-              ...selection,
-              conditional: true
-            };
-          }
-        );
+      Condition: visitCondition,
+      // TODO: Why not inline it like others?
+      ScalarField(node) {
+        return visitScalarField(node, state);
       },
-      ScalarField(node: ScalarField) {
-        return [
-          {
-            key: node.alias == null ? node.name : node.alias,
-            schemaName: node.name,
-            value: transformScalarType(node.type, state)
-          }
-        ];
-      },
-      LinkedField(node: LinkedField) {
-        return [
-          {
-            key: node.alias == null ? node.name : node.alias,
-            schemaName: node.name,
-            nodeType: node.type,
-            nodeSelections: selectionsToMap(
-              flattenArray((node.selections as any) as Selection[][]),
-              /*
-               * append concreteType to key so overlapping fields with different
-               * concreteTypes don't get overwritten by each other
-               */
-              true
-            )
-          }
-        ];
-      },
-      ModuleImport(node: ModuleImport) {
+      LinkedField: visitLinkedField,
+      ConnectionField: visitConnectionField,
+      ModuleImport(node) {
         return [
           {
             key: "__fragmentPropName",
@@ -477,7 +511,7 @@ function createVisitor(options: TypeGeneratorOptions) {
           }
         ];
       },
-      FragmentSpread(node: FragmentSpread) {
+      FragmentSpread(node) {
         state.usedFragments.add(node.name);
         return [
           {
@@ -488,6 +522,101 @@ function createVisitor(options: TypeGeneratorOptions) {
       }
     }
   };
+}
+
+function visitCondition(node: Condition) {
+  return flattenArray(
+    /* $FlowFixMe: selections have already been transformed */
+    (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
+  ).map(selection => {
+    return {
+      ...selection,
+      conditional: true
+    };
+  });
+}
+
+function visitScalarField(node: ScalarField, state: State) {
+  return [
+    {
+      key: node.alias || node.name,
+      schemaName: node.name,
+      value: transformScalarType(node.type, state)
+    }
+  ];
+}
+
+function visitLinkedField(node: LinkedField) {
+  return [
+    {
+      key: node.alias || node.name,
+      schemaName: node.name,
+      nodeType: node.type,
+      nodeSelections: selectionsToMap(
+        flattenArray(
+          /* $FlowFixMe: selections have already been transformed */
+          (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
+        ),
+        /*
+         * append concreteType to key so overlapping fields with different
+         * concreteTypes don't get overwritten by each other
+         */
+        true
+      )
+    }
+  ];
+}
+
+function visitConnectionField(node: ConnectionField) {
+  return [
+    {
+      key: node.alias,
+      schemaName: node.name,
+      nodeType: node.type,
+      nodeSelections: selectionsToMap(
+        flattenArray(
+          /* $FlowFixMe: selections have already been transformed */
+          (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
+        ),
+        /*
+         * append concreteType to key so overlapping fields with different
+         * concreteTypes don't get overwritten by each other
+         */
+        true
+      )
+    }
+  ];
+}
+
+function makeRawResponseProp(
+  { key, schemaName, value, conditional, nodeType, nodeSelections }: Selection,
+  state: State,
+  concreteType: string | null
+) {
+  if (nodeType) {
+    if (nodeType === MODULE_IMPORT_FIELD) {
+      // TODO: In flow one can extend an object type with spread, with TS we need an intersection (&)
+      // return ts.createSpread(ts.createIdentifier(key));
+      throw new Error("TODO!");
+    }
+    value = transformScalarType(
+      nodeType,
+      state,
+      selectionsToRawResponseBabel(
+        [Array.from(nullthrows(nodeSelections).values())],
+        state,
+        isAbstractType(nodeType) ? null : nodeType.name
+      )
+    );
+  }
+  if (schemaName === "__typename" && concreteType) {
+    value = ts.createLiteralTypeNode(ts.createLiteral(concreteType));
+  }
+  const typeProperty = readOnlyObjectTypeProperty(key, value);
+  if (conditional) {
+    typeProperty.questionToken = ts.createToken(ts.SyntaxKind.QuestionToken);
+  }
+  return typeProperty;
 }
 
 function selectionsToMap(
@@ -509,8 +638,166 @@ function selectionsToMap(
   return map;
 }
 
-function flattenArray<T>(arrayOfArrays: T[][]): T[] {
-  const result: T[] = [];
+// Transform the codegen IR selections into TS types
+function selectionsToRawResponseBabel(
+  selections: ReadonlyArray<ReadonlyArray<Selection>>,
+  state: State,
+  nodeTypeName: string | null
+) {
+  const baseFields: any[] = [];
+  const byConcreteType: Record<string, any> = {};
+
+  flattenArray(selections).forEach(selection => {
+    const { concreteType } = selection;
+    if (concreteType) {
+      byConcreteType[concreteType] = byConcreteType[concreteType] || [];
+      byConcreteType[concreteType].push(selection);
+    } else {
+      baseFields.push(selection);
+    }
+  });
+
+  const types: ts.PropertySignature[][] = [];
+  if (Object.keys(byConcreteType).length) {
+    const baseFieldsMap = selectionsToMap(baseFields);
+    for (const concreteType in byConcreteType) {
+      types.push(
+        Array.from(
+          mergeSelections(
+            baseFieldsMap,
+            selectionsToMap(byConcreteType[concreteType]),
+            false
+          ).values()
+        ).map(selection => {
+          if (isTypenameSelection(selection)) {
+            return makeRawResponseProp(
+              { ...selection, conditional: false },
+              state,
+              concreteType
+            );
+          }
+          return makeRawResponseProp(selection, state, concreteType);
+        })
+      );
+    }
+  }
+  if (baseFields.length) {
+    types.push(
+      baseFields.map(selection => {
+        if (isTypenameSelection(selection)) {
+          return makeRawResponseProp(
+            { ...selection, conditional: false },
+            state,
+            nodeTypeName
+          );
+        }
+        return makeRawResponseProp(selection, state, null);
+      })
+    );
+  }
+  return ts.createUnionTypeNode(
+    types.map(props => exactObjectTypeAnnotation(props))
+  );
+}
+
+// Visitor for generating raw response type
+function createRawResponseTypeVisitor(state: State): IRVisitor.NodeVisitor {
+  return {
+    leave: {
+      Root(node) {
+        return exportType(
+          `${node.name}RawResponse`,
+          selectionsToRawResponseBabel(
+            /* $FlowFixMe: selections have already been transformed */
+            (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>,
+            state,
+            null
+          )
+        );
+      },
+      InlineFragment(node) {
+        const typeCondition = node.typeCondition;
+        return flattenArray(
+          /* $FlowFixMe: selections have already been transformed */
+          (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
+        ).map(typeSelection => {
+          return isAbstractType(typeCondition)
+            ? typeSelection
+            : {
+                ...typeSelection,
+                concreteType: typeCondition.toString()
+              };
+        });
+      },
+      Condition: visitCondition,
+      ScalarField(node) {
+        return visitScalarField(node, state);
+      },
+      ConnectionField: visitConnectionField,
+      LinkedField: visitLinkedField,
+      ClientExtension(node) {
+        return flattenArray(
+          /* $FlowFixMe: selections have already been transformed */
+          (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
+        ).map(sel => ({
+          ...sel,
+          conditional: true
+        }));
+      },
+      Defer(node) {
+        return flattenArray(
+          /* $FlowFixMe: selections have already been transformed */
+          (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
+        );
+      },
+      Stream(node) {
+        return flattenArray(
+          /* $FlowFixMe: selections have already been transformed */
+          (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
+        );
+      },
+      ModuleImport(node) {
+        return visitRawResponseModuleImport(node, state);
+      },
+      FragmentSpread(_node) {
+        throw new Error(
+          "A fragment spread is found when traversing the AST, " +
+            "make sure you are passing the codegen IR"
+        );
+      }
+    }
+  };
+}
+
+// Dedupe the generated type of module selections to reduce file size
+function visitRawResponseModuleImport(node: any, state: State): Selection[] {
+  const { selections, name: key } = node;
+  const moduleSelections = selections
+    .filter((sel: any) => sel.length && sel[0].schemaName === "js")
+    .map((arr: any[]) => arr[0]);
+  if (!state.matchFields.has(key)) {
+    const ast = selectionsToRawResponseBabel(
+      node.selections.filter(
+        (sel: any) => sel.length > 1 || sel[0].schemaName !== "js"
+      ),
+      state,
+      null
+    );
+    state.matchFields.set(key, ast);
+  }
+  return [
+    ...moduleSelections,
+    {
+      key,
+      nodeType: MODULE_IMPORT_FIELD
+    }
+  ];
+}
+
+function flattenArray(
+  arrayOfArrays: ReadonlyArray<ReadonlyArray<Selection>>
+): Selection[] {
+  const result: Selection[] = [];
   arrayOfArrays.forEach(array => result.push(...array));
   return result;
 }
@@ -542,6 +829,61 @@ function generateInputVariablesType(node: Root, state: State) {
       })
     )
   );
+}
+
+// If it's a @refetchable fragment, we generate the $fragmentRef in generated
+// query, and import it in the fragment to avoid circular dependencies
+function getRefetchableQueryParentFragmentName(
+  state: State,
+  metadata: Metadata
+): string | null {
+  if (
+    !(metadata && metadata.isRefetchableQuery) ||
+    (!state.useHaste && !state.useSingleArtifactDirectory)
+  ) {
+    return null;
+  }
+  const derivedFrom = metadata && metadata.derivedFrom;
+  if (derivedFrom != null && typeof derivedFrom === "string") {
+    return derivedFrom;
+  }
+  return null;
+}
+
+function getRefetchableQueryPath(
+  state: State,
+  directives: ReadonlyArray<Directive>
+): string | undefined {
+  let refetchableQuery: string | undefined;
+  if (!state.useHaste && !state.useSingleArtifactDirectory) {
+    return;
+  }
+  const directive = directives.find(d => d.name === "refetchable");
+  const refetchableArgs = directive && directive.args;
+  if (!refetchableArgs) {
+    return;
+  }
+  const argument = refetchableArgs.find(
+    arg => arg.kind === "Argument" && arg.name === "queryName"
+  );
+  if (
+    argument &&
+    argument.value &&
+    argument.value.kind === "Literal" &&
+    typeof argument.value.value === "string"
+  ) {
+    refetchableQuery = argument.value.value;
+    if (!state.useHaste) {
+      refetchableQuery = "./" + refetchableQuery;
+    }
+    refetchableQuery += ".graphql";
+  }
+  return refetchableQuery;
+}
+
+function generateFragmentRefsForRefetchable(name: string) {
+  const oldFragmentTypeName = getOldFragmentTypeName(name);
+  return declareExportOpaqueType(oldFragmentTypeName);
 }
 
 function groupRefs(props: Selection[]): Selection[] {
@@ -640,10 +982,14 @@ function stringLiteralTypeAnnotation(name: string): ts.TypeNode {
   return ts.createLiteralTypeNode(ts.createLiteral(name));
 }
 
-function getFragmentTypes(name: string, useSingleArtifactDirectory: boolean) {
+function getFragmentTypes(
+  name: string,
+  refetchableQueryPath: undefined | string,
+  state: State
+) {
   const oldFragmentTypeName = getOldFragmentTypeName(name);
 
-  if (!useSingleArtifactDirectory) {
+  if (!state.useSingleArtifactDirectory && !state.useHaste) {
     return [
       exportType(
         oldFragmentTypeName,
@@ -652,6 +998,17 @@ function getFragmentTypes(name: string, useSingleArtifactDirectory: boolean) {
     ];
   }
 
+  if (refetchableQueryPath) {
+    return [
+      importTypes([oldFragmentTypeName], refetchableQueryPath),
+      exportTypes([oldFragmentTypeName])
+    ];
+  }
+
+  return declareExportOpaqueType(oldFragmentTypeName);
+}
+
+function declareExportOpaqueType(oldFragmentTypeName: string) {
   const _refTypeName = `_${oldFragmentTypeName}`;
   const _refType = ts.createVariableStatement(
     [ts.createToken(ts.SyntaxKind.DeclareKeyword)],
@@ -683,12 +1040,12 @@ function getOldFragmentTypeName(name: string) {
 }
 
 // Should match FLOW_TRANSFORMS array
-// https://github.com/facebook/relay/blob/v4.0.0/packages/relay-compiler/language/javascript/RelayFlowGenerator.js#L621-L627
+// https://github.com/facebook/relay/blob/v6.0.0/packages/relay-compiler/language/javascript/RelayFlowGenerator.js#L621-L627
 export const transforms: TypeGenerator["transforms"] = [
-  IRTransforms.commonTransforms[1], // RelayRelayDirectiveTransform.transform,
-  IRTransforms.commonTransforms[2], // RelayMaskTransform.transform,
-  IRTransforms.commonTransforms[0], // RelayConnectionTransform.transform,
-  IRTransforms.commonTransforms[3], // RelayMatchTransform.transform,
-  IRTransforms.printTransforms[3], // FlattenTransform.transformWithOptions({}),
-  IRTransforms.commonTransforms[4] // RelayRefetchableFragmentTransform.transform,
+  RelayRelayDirectiveTransform.transform,
+  RelayMaskTransform.transform,
+  ConnectionFieldTransform.transform,
+  RelayMatchTransform.transform,
+  FlattenTransform.transformWithOptions({}),
+  RelayRefetchableFragmentTransform.transform
 ];
