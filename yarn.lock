@@ -746,17 +746,18 @@
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
   integrity sha512-f5j5b/Gf71L+dbqxIpQ4Z2WlmI/mPJ0fOkGGmFgtb6sAu97EPczzbS3/tJKxmcYDj55OX6ssqwDAWOHIYDRDGA==
 
-"@types/relay-compiler@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@types/relay-compiler/-/relay-compiler-6.0.0.tgz#622dda28d681dcf95e2d77b97b07899d6c0a8fb2"
-  integrity sha512-vFMaFBUidUg/XQMxvZgZUpfmdgaQUUz7pSL5iZiQFuLSAWo/NgD8AO8LpF9F2sn3sdxyrehusYM1OimN7wFjfQ==
+"@types/relay-compiler@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@types/relay-compiler/-/relay-compiler-6.0.1.tgz#c33dace63e70d33ecf932bfe6abe911b71c9839c"
+  integrity sha512-to0ntZAGmgQanFpBQHOuvpULJFATD5z7We+H2gM7QPNzK/0P4jScweBmTGKSd8idnFfemPdXbVNEfKL9Mjd26g==
   dependencies:
+    "@types/relay-runtime" "*"
     graphql "^14.5.3"
 
-"@types/relay-runtime@^5.0.5":
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-5.0.5.tgz#62fb80d4925a707583e535f6d0afdf0762467adb"
-  integrity sha512-ZfhRGH8kYnMUeV3NBSYsy99hvJ/GiWAZ4Kc7KG7SuKXdYAHNuHV69TJnHmnmuh54EZytu3NplYDwccerghykpQ==
+"@types/relay-runtime@*", "@types/relay-runtime@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-6.0.0.tgz#40c3548bec73d876be6de84fb4d2dd43ab19131f"
+  integrity sha512-KutuTFGau+gM9igWXlIwrL1HXerd1Ui20392OKSTU5CVEDoLx+d6qc6oMDFCm/3PuhyZ3Hc7vFVwMnYlwQSVJg==
 
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
