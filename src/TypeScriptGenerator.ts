@@ -1039,6 +1039,18 @@ function getOldFragmentTypeName(name: string) {
   return `${name}$ref`;
 }
 
+function getNewFragmentTypeName(name: string) {
+  return `${name}$fragmentType`;
+}
+
+function getRefTypeName(name: string): string {
+  return `${name}$key`;
+}
+
+function getDataTypeName(name: string): string {
+  return `${name}$data`;
+}
+
 // Should match FLOW_TRANSFORMS array
 // https://github.com/facebook/relay/blob/v6.0.0/packages/relay-compiler/language/javascript/RelayFlowGenerator.js#L621-L627
 export const transforms: TypeGenerator["transforms"] = [
