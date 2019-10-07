@@ -92,7 +92,7 @@ function makeProp(
   if (schemaName === "__typename" && concreteType) {
     value = ts.createLiteralTypeNode(ts.createLiteral(concreteType));
   }
-  return readOnlyObjectTypeProperty(key, value, conditional);
+  return objectTypeProperty(key, value, { optional: conditional });
 }
 
 const isTypenameSelection = (selection: Selection) =>
@@ -156,7 +156,7 @@ function selectionsToAST(
     // this doesn't exist in Flow at the time.
     types.push(
       Array.from(typenameAliases).map(typenameAlias => {
-        const otherProp = readOnlyObjectTypeProperty(
+        const otherProp = objectTypeProperty(
           typenameAlias,
           ts.createLiteralTypeNode(ts.createLiteral("%other"))
         );
@@ -203,7 +203,7 @@ function selectionsToAST(
   const typeElements = types.map(props => {
     if (fragmentTypeName) {
       props.push(
-        readOnlyObjectTypeProperty(
+        objectTypeProperty(
           REF_TYPE,
           ts.createTypeReferenceNode(
             ts.createIdentifier(fragmentTypeName),
@@ -231,13 +231,18 @@ function exactObjectTypeAnnotation(
 
 const idRegex = /^[$a-zA-Z_][$a-z0-9A-Z_]*$/;
 
-function readOnlyObjectTypeProperty(
+function objectTypeProperty(
   propertyName: string,
   type: ts.TypeNode,
-  optional?: boolean
+  options: { readonly?: boolean; optional?: boolean } = {}
 ): ts.PropertySignature {
+  const { optional, readonly = true } = options;
+  const modifiers = readonly
+    ? [ts.createToken(ts.SyntaxKind.ReadonlyKeyword)]
+    : undefined;
+
   return ts.createPropertySignature(
-    [ts.createToken(ts.SyntaxKind.ReadonlyKeyword)],
+    modifiers,
     idRegex.test(propertyName)
       ? ts.createIdentifier(propertyName)
       : ts.createLiteral(propertyName),
@@ -360,11 +365,11 @@ function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
           )
         );
         const operationTypes = [
-          readOnlyObjectTypeProperty(
+          objectTypeProperty(
             "response",
             ts.createTypeReferenceNode(responseType.name, undefined)
           ),
-          readOnlyObjectTypeProperty(
+          objectTypeProperty(
             "variables",
             ts.createTypeReferenceNode(inputVariablesType.name, undefined)
           )
@@ -407,7 +412,7 @@ function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
             );
           }
           operationTypes.push(
-            readOnlyObjectTypeProperty(
+            objectTypeProperty(
               "rawResponse",
               ts.createTypeReferenceNode(`${node.name}RawResponse`, undefined)
             )
@@ -612,7 +617,7 @@ function makeRawResponseProp(
   if (schemaName === "__typename" && concreteType) {
     value = ts.createLiteralTypeNode(ts.createLiteral(concreteType));
   }
-  const typeProperty = readOnlyObjectTypeProperty(key, value);
+  const typeProperty = objectTypeProperty(key, value);
   if (conditional) {
     typeProperty.questionToken = ts.createToken(ts.SyntaxKind.QuestionToken);
   }
@@ -821,10 +826,10 @@ function generateInputVariablesType(node: Root, state: State) {
     `${node.name}Variables`,
     exactObjectTypeAnnotation(
       node.argumentDefinitions.map(arg => {
-        return readOnlyObjectTypeProperty(
+        return objectTypeProperty(
           arg.name,
           transformInputType(arg.type, state),
-          !(arg.type instanceof GraphQLNonNull)
+          { readonly: false, optional: !(arg.type instanceof GraphQLNonNull) }
         );
       })
     )

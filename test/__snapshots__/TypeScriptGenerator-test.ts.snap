@@ -58,7 +58,7 @@ fragment FeedbackComments_feedback on Feedback {
 // QueryWithConnectionField.graphql
 type FeedbackComments_feedback$ref = any;
 export type QueryWithConnectionFieldVariables = {
-    readonly id: string;
+    id: string;
 };
 export type QueryWithConnectionFieldResponse = {
     readonly feedback: {
@@ -628,7 +628,7 @@ export type UpdateAllSeenStateInput = {
     readonly storyIds?: ReadonlyArray<string | null> | null;
 };
 export type TestVariables = {
-    readonly input?: UpdateAllSeenStateInput | null;
+    input?: UpdateAllSeenStateInput | null;
 };
 export type TestResponse = {
     readonly viewerNotificationsUpdateAllSeenState: {
@@ -702,7 +702,7 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type TestMutationVariables = {
-    readonly input: CommentCreateInput;
+    input: CommentCreateInput;
 };
 export type TestMutationResponse = {
     readonly commentCreate: {
@@ -796,9 +796,9 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentCreateMutationVariables = {
-    readonly input: CommentCreateInput;
-    readonly first?: number | null;
-    readonly orderBy?: ReadonlyArray<string> | null;
+    input: CommentCreateInput;
+    first?: number | null;
+    orderBy?: ReadonlyArray<string> | null;
 };
 export type CommentCreateMutationResponse = {
     readonly commentCreate: {
@@ -835,7 +835,7 @@ export type UpdateAllSeenStateInput = {
     readonly storyIds?: ReadonlyArray<string | null> | null;
 };
 export type InputHasArrayVariables = {
-    readonly input?: UpdateAllSeenStateInput | null;
+    input?: UpdateAllSeenStateInput | null;
 };
 export type InputHasArrayResponse = {
     readonly viewerNotificationsUpdateAllSeenState: {
@@ -906,9 +906,9 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentCreateMutationVariables = {
-    readonly input: CommentCreateInput;
-    readonly first?: number | null;
-    readonly orderBy?: ReadonlyArray<string> | null;
+    input: CommentCreateInput;
+    first?: number | null;
+    orderBy?: ReadonlyArray<string> | null;
 };
 export type CommentCreateMutationResponse = {
     readonly commentCreate: {
@@ -1016,9 +1016,9 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentCreateMutationVariables = {
-    readonly input: CommentCreateInput;
-    readonly first?: number | null;
-    readonly orderBy?: ReadonlyArray<string> | null;
+    input: CommentCreateInput;
+    first?: number | null;
+    orderBy?: ReadonlyArray<string> | null;
 };
 export type CommentCreateMutationResponse = {
     readonly commentCreate: {
@@ -1188,7 +1188,7 @@ query ScalarHandleField($id: ID!) @raw_response_type {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // LinkedHandleField.graphql
 export type LinkedHandleFieldVariables = {
-    readonly id: string;
+    id: string;
 };
 export type LinkedHandleFieldResponse = {
     readonly node: {
@@ -1218,7 +1218,7 @@ export type LinkedHandleField = {
 
 // ScalarHandleField.graphql
 export type ScalarHandleFieldVariables = {
-    readonly id: string;
+    id: string;
 };
 export type ScalarHandleFieldResponse = {
     readonly node: {
@@ -1266,8 +1266,8 @@ fragment FriendFragment on User {
 // ExampleQuery.graphql
 type FriendFragment$ref = any;
 export type ExampleQueryVariables = {
-    readonly id: string;
-    readonly condition: boolean;
+    id: string;
+    condition: boolean;
 };
 export type ExampleQueryResponse = {
     readonly node: {
@@ -1427,7 +1427,7 @@ export type RefetchableFragment = {
 declare const _RefetchableFragment$ref: unique symbol;
 export type RefetchableFragment$ref = typeof _RefetchableFragment$ref;
 export type RefetchableFragmentQueryVariables = {
-    readonly id: string;
+    id: string;
 };
 export type RefetchableFragmentQueryResponse = {
     readonly node: {
@@ -1472,7 +1472,7 @@ subscription TestSubscription($input: FeedbackLikeInput) {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // ExampleQuery.graphql
 export type ExampleQueryVariables = {
-    readonly id: string;
+    id: string;
 };
 export type ExampleQueryResponse = {
     readonly node: {
@@ -1507,7 +1507,7 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type TestMutationVariables = {
-    readonly input: CommentCreateInput;
+    input: CommentCreateInput;
 };
 export type TestMutationResponse = {
     readonly commentCreate: {
@@ -1528,7 +1528,7 @@ export type FeedbackLikeInput = {
     readonly feedbackId?: string | null;
 };
 export type TestSubscriptionVariables = {
-    readonly input?: FeedbackLikeInput | null;
+    input?: FeedbackLikeInput | null;
 };
 export type TestSubscriptionResponse = {
     readonly feedbackLikeSubscribe: {
@@ -1972,7 +1972,7 @@ fragment FeedbackComments_feedback on Feedback {
 // QueryWithConnectionField.graphql
 type FeedbackComments_feedback$ref = any;
 export type QueryWithConnectionFieldVariables = {
-    readonly id: string;
+    id: string;
 };
 export type QueryWithConnectionFieldResponse = {
     readonly feedback: {
@@ -2523,7 +2523,7 @@ export type UpdateAllSeenStateInput = {
     readonly storyIds?: ReadonlyArray<string | null> | null;
 };
 export type TestVariables = {
-    readonly input?: UpdateAllSeenStateInput | null;
+    input?: UpdateAllSeenStateInput | null;
 };
 export type TestResponse = {
     readonly viewerNotificationsUpdateAllSeenState: {
@@ -2597,7 +2597,7 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type TestMutationVariables = {
-    readonly input: CommentCreateInput;
+    input: CommentCreateInput;
 };
 export type TestMutationResponse = {
     readonly commentCreate: {
@@ -2690,9 +2690,9 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentCreateMutationVariables = {
-    readonly input: CommentCreateInput;
-    readonly first?: number | null;
-    readonly orderBy?: ReadonlyArray<string> | null;
+    input: CommentCreateInput;
+    first?: number | null;
+    orderBy?: ReadonlyArray<string> | null;
 };
 export type CommentCreateMutationResponse = {
     readonly commentCreate: {
@@ -2729,7 +2729,7 @@ export type UpdateAllSeenStateInput = {
     readonly storyIds?: ReadonlyArray<string | null> | null;
 };
 export type InputHasArrayVariables = {
-    readonly input?: UpdateAllSeenStateInput | null;
+    input?: UpdateAllSeenStateInput | null;
 };
 export type InputHasArrayResponse = {
     readonly viewerNotificationsUpdateAllSeenState: {
@@ -2800,9 +2800,9 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentCreateMutationVariables = {
-    readonly input: CommentCreateInput;
-    readonly first?: number | null;
-    readonly orderBy?: ReadonlyArray<string> | null;
+    input: CommentCreateInput;
+    first?: number | null;
+    orderBy?: ReadonlyArray<string> | null;
 };
 export type CommentCreateMutationResponse = {
     readonly commentCreate: {
@@ -2909,9 +2909,9 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentCreateMutationVariables = {
-    readonly input: CommentCreateInput;
-    readonly first?: number | null;
-    readonly orderBy?: ReadonlyArray<string> | null;
+    input: CommentCreateInput;
+    first?: number | null;
+    orderBy?: ReadonlyArray<string> | null;
 };
 export type CommentCreateMutationResponse = {
     readonly commentCreate: {
@@ -3078,7 +3078,7 @@ query ScalarHandleField($id: ID!) @raw_response_type {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // LinkedHandleField.graphql
 export type LinkedHandleFieldVariables = {
-    readonly id: string;
+    id: string;
 };
 export type LinkedHandleFieldResponse = {
     readonly node: {
@@ -3108,7 +3108,7 @@ export type LinkedHandleField = {
 
 // ScalarHandleField.graphql
 export type ScalarHandleFieldVariables = {
-    readonly id: string;
+    id: string;
 };
 export type ScalarHandleFieldResponse = {
     readonly node: {
@@ -3156,8 +3156,8 @@ fragment FriendFragment on User {
 // ExampleQuery.graphql
 type FriendFragment$ref = any;
 export type ExampleQueryVariables = {
-    readonly id: string;
-    readonly condition: boolean;
+    id: string;
+    condition: boolean;
 };
 export type ExampleQueryResponse = {
     readonly node: {
@@ -3313,7 +3313,7 @@ export type RefetchableFragment = {
 // RefetchableFragmentQuery.graphql
 type RefetchableFragment$ref = any;
 export type RefetchableFragmentQueryVariables = {
-    readonly id: string;
+    id: string;
 };
 export type RefetchableFragmentQueryResponse = {
     readonly node: {
@@ -3358,7 +3358,7 @@ subscription TestSubscription($input: FeedbackLikeInput) {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // ExampleQuery.graphql
 export type ExampleQueryVariables = {
-    readonly id: string;
+    id: string;
 };
 export type ExampleQueryResponse = {
     readonly node: {
@@ -3392,7 +3392,7 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type TestMutationVariables = {
-    readonly input: CommentCreateInput;
+    input: CommentCreateInput;
 };
 export type TestMutationResponse = {
     readonly commentCreate: {
@@ -3413,7 +3413,7 @@ export type FeedbackLikeInput = {
     readonly feedbackId?: string | null;
 };
 export type TestSubscriptionVariables = {
-    readonly input?: FeedbackLikeInput | null;
+    input?: FeedbackLikeInput | null;
 };
 export type TestSubscriptionResponse = {
     readonly feedbackLikeSubscribe: {
