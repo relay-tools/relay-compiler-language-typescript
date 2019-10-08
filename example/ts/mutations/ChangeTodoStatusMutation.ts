@@ -10,15 +10,12 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import {
-  commitMutation,
-  graphql,
-} from 'react-relay';
-import { Environment } from 'relay-runtime';
+import { commitMutation, graphql } from "react-relay"
+import { Environment } from "relay-runtime"
 
-import { Todo_todo } from '../__relay_artifacts__/Todo_todo.graphql';
-import { Todo_viewer } from '../__relay_artifacts__/Todo_viewer.graphql';
-import { ChangeTodoStatusMutation } from '../__relay_artifacts__/ChangeTodoStatusMutation.graphql';
+import { Todo_todo } from "../__relay_artifacts__/Todo_todo.graphql"
+import { Todo_viewer } from "../__relay_artifacts__/Todo_viewer.graphql"
+import { ChangeTodoStatusMutation } from "../__relay_artifacts__/ChangeTodoStatusMutation.graphql"
 
 const mutation = graphql`
   mutation ChangeTodoStatusMutation($input: ChangeTodoStatusInput!) {
@@ -33,14 +30,21 @@ const mutation = graphql`
       }
     }
   }
-`;
+`
 
-function getOptimisticResponse(complete: boolean, todo: Todo_todo, user: Todo_viewer) {
-  const viewerPayload: { id: string, completedCount: number | null } = { id: user.id, completedCount: null };
+function getOptimisticResponse(
+  complete: boolean,
+  todo: Todo_todo,
+  user: Todo_viewer,
+) {
+  const viewerPayload: { id: string; completedCount: number | null } = {
+    id: user.id,
+    completedCount: null,
+  }
   if (user.completedCount != null) {
-    viewerPayload.completedCount = complete ?
-      user.completedCount + 1 :
-      user.completedCount - 1;
+    viewerPayload.completedCount = complete
+      ? user.completedCount + 1
+      : user.completedCount - 1
   }
   return {
     changeTodoStatus: {
@@ -50,7 +54,7 @@ function getOptimisticResponse(complete: boolean, todo: Todo_todo, user: Todo_vi
       },
       viewer: viewerPayload,
     },
-  };
+  }
 }
 
 function commit(
@@ -59,16 +63,13 @@ function commit(
   todo: Todo_todo,
   user: Todo_viewer,
 ) {
-  return commitMutation<ChangeTodoStatusMutation>(
-    environment,
-    {
-      mutation,
-      variables: {
-        input: {complete, id: todo.id},
-      },
-      optimisticResponse: getOptimisticResponse(complete, todo, user),
-    }
-  );
+  return commitMutation<ChangeTodoStatusMutation>(environment, {
+    mutation,
+    variables: {
+      input: { complete, id: todo.id },
+    },
+    optimisticResponse: getOptimisticResponse(complete, todo, user),
+  })
 }
 
-export default {commit};
+export default { commit }

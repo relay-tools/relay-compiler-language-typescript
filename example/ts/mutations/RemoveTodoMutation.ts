@@ -10,62 +10,54 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import { commitMutation, graphql } from "react-relay"
 import {
-  commitMutation,
-  graphql,
-} from 'react-relay';
-import {ConnectionHandler, Environment, RecordSourceSelectorProxy} from 'relay-runtime';
+  ConnectionHandler,
+  Environment,
+  RecordSourceSelectorProxy,
+} from "relay-runtime"
 
-import { Todo_todo } from '../__relay_artifacts__/Todo_todo.graphql';
-import { Todo_viewer } from '../__relay_artifacts__/Todo_viewer.graphql';
-import { RemoveTodoMutation } from '../__relay_artifacts__/RemoveTodoMutation.graphql';
+import { Todo_todo } from "../__relay_artifacts__/Todo_todo.graphql"
+import { Todo_viewer } from "../__relay_artifacts__/Todo_viewer.graphql"
+import { RemoveTodoMutation } from "../__relay_artifacts__/RemoveTodoMutation.graphql"
 
 const mutation = graphql`
   mutation RemoveTodoMutation($input: RemoveTodoInput!) {
     removeTodo(input: $input) {
-      deletedTodoId,
+      deletedTodoId
       viewer {
-        completedCount,
-        totalCount,
-      },
+        completedCount
+        totalCount
+      }
     }
   }
-`;
+`
 
-function sharedUpdater(store: RecordSourceSelectorProxy, user: Todo_viewer, deletedID: string) {
-  const userProxy = store.get(user.id);
-  const conn = ConnectionHandler.getConnection(
-    userProxy,
-    'TodoList_todos',
-  );
-  ConnectionHandler.deleteNode(
-    conn,
-    deletedID,
-  );
-}
-
-function commit(
-  environment: Environment,
-  todo: Todo_todo,
+function sharedUpdater(
+  store: RecordSourceSelectorProxy,
   user: Todo_viewer,
+  deletedID: string,
 ) {
-  return commitMutation<RemoveTodoMutation>(
-    environment,
-    {
-      mutation,
-      variables: {
-        input: {id: todo.id},
-      },
-      updater: (store) => {
-        const payload = store.getRootField('removeTodo');
-        if (!payload) throw new Error('assertion failed')
-        sharedUpdater(store, user, payload.getValue('deletedTodoId'));
-      },
-      optimisticUpdater: (store) => {
-        sharedUpdater(store, user, todo.id);
-      },
-    }
-  );
+  const userProxy = store.get(user.id)
+  const conn = ConnectionHandler.getConnection(userProxy!, "TodoList_todos")
+  ConnectionHandler.deleteNode(conn!, deletedID)
 }
 
-export default {commit};
+function commit(environment: Environment, todo: Todo_todo, user: Todo_viewer) {
+  return commitMutation<RemoveTodoMutation>(environment, {
+    mutation,
+    variables: {
+      input: { id: todo.id },
+    },
+    updater: store => {
+      const payload = store.getRootField("removeTodo")
+      if (!payload) throw new Error("assertion failed")
+      sharedUpdater(store, user, payload.getValue("deletedTodoId") as string)
+    },
+    optimisticUpdater: store => {
+      sharedUpdater(store, user, todo.id)
+    },
+  })
+}
+
+export default { commit }

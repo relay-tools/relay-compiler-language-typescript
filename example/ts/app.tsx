@@ -10,45 +10,34 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import 'todomvc-common';
+import "todomvc-common";
 
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 
-import {installRelayDevTools} from 'relay-devtools';
+import { installRelayDevTools } from "relay-devtools";
 
-import {
-  QueryRenderer,
-  graphql,
-} from 'react-relay';
-import {
-  Environment,
-  Network,
-  RecordSource,
-  Store,
-} from 'relay-runtime';
+import { QueryRenderer, graphql } from "react-relay";
+import { Environment, Network, RecordSource, Store } from "relay-runtime";
 
-import TodoApp from './components/TodoApp';
-import { appQuery } from './__relay_artifacts__/appQuery.graphql';
+import TodoApp from "./components/TodoApp";
+import { appQuery } from "./__relay_artifacts__/appQuery.graphql";
 
 // Useful for debugging, but remember to remove for a production deploy.
 installRelayDevTools();
 
-const mountNode = document.getElementById('root');
+const mountNode = document.getElementById("root");
 
-function fetchQuery(
-  operation: any,
-  variables: any,
-) {
-  return fetch('/graphql', {
-    method: 'POST',
+function fetchQuery(operation: any, variables: any) {
+  return fetch("/graphql", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json"
     },
     body: JSON.stringify({
       query: operation.text,
-      variables,
-    }),
+      variables
+    })
   }).then(response => {
     return response.json();
   });
@@ -56,7 +45,7 @@ function fetchQuery(
 
 const modernEnvironment = new Environment({
   network: Network.create(fetchQuery),
-  store: new Store(new RecordSource()),
+  store: new Store(new RecordSource())
 });
 
 ReactDOM.render(
@@ -70,11 +59,11 @@ ReactDOM.render(
       }
     `}
     variables={{}}
-    render={({error, props}) => {
+    render={({ error, props }) => {
       if (props && props.viewer) {
         return <TodoApp viewer={props.viewer} />;
       } else if (props || error) {
-        console.error(`Unexpected data: ${props || error}`)
+        console.error(`Unexpected data: ${props || error}`);
       } else {
         return <div>Loading</div>;
       }

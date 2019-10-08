@@ -10,36 +10,39 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+import { commitMutation, graphql } from "react-relay"
 import {
-  commitMutation,
-  graphql,
-} from 'react-relay';
-import {ConnectionHandler, Environment, DataID, RecordSourceSelectorProxy} from 'relay-runtime';
+  ConnectionHandler,
+  Environment,
+  DataID,
+  RecordSourceSelectorProxy,
+} from "relay-runtime"
 
-import { TodoListFooter_viewer } from '../__relay_artifacts__/TodoListFooter_viewer.graphql'
-import { RemoveCompletedTodosMutation } from '../__relay_artifacts__/RemoveCompletedTodosMutation.graphql';
+import { TodoListFooter_viewer } from "../__relay_artifacts__/TodoListFooter_viewer.graphql"
+import { RemoveCompletedTodosMutation } from "../__relay_artifacts__/RemoveCompletedTodosMutation.graphql"
 
 const mutation = graphql`
   mutation RemoveCompletedTodosMutation($input: RemoveCompletedTodosInput!) {
     removeCompletedTodos(input: $input) {
-      deletedTodoIds,
+      deletedTodoIds
       viewer {
-        completedCount,
-        totalCount,
-      },
+        completedCount
+        totalCount
+      }
     }
   }
-`;
+`
 
-function sharedUpdater(store: RecordSourceSelectorProxy, user: TodoListFooter_viewer, deletedIDs: string[]) {
-  const userProxy = store.get(user.id);
-  const conn = ConnectionHandler.getConnection(
-    userProxy,
-    'TodoList_todos',
-  );
-  deletedIDs.forEach((deletedID) =>
-    ConnectionHandler.deleteNode(conn, deletedID)
-  );
+function sharedUpdater(
+  store: RecordSourceSelectorProxy,
+  user: TodoListFooter_viewer,
+  deletedIDs: string[],
+) {
+  const userProxy = store.get(user.id)
+  const conn = ConnectionHandler.getConnection(userProxy!, "TodoList_todos")
+  deletedIDs.forEach(deletedID =>
+    ConnectionHandler.deleteNode(conn!, deletedID),
+  )
 }
 
 function commit(
@@ -47,28 +50,25 @@ function commit(
   todos: TodoListFooter_viewer["completedTodos"],
   user: TodoListFooter_viewer,
 ) {
-  return commitMutation<RemoveCompletedTodosMutation>(
-    environment,
-    {
-      mutation,
-      variables: {
-        input: {},
-      },
-      updater: (store) => {
-        const payload = store.getRootField('removeCompletedTodos');
-        if (!payload) throw new Error('assertion failed')
-        sharedUpdater(store, user, payload.getValue('deletedTodoIds'));
-      },
-      optimisticUpdater: (store) => {
-        if (todos && todos.edges) {
-          const deletedIDs = todos.edges
-            .filter(edge => edge && edge.node && edge.node.complete)
-            .map(edge => (edge && edge.node && edge.node.id) as string);
-          sharedUpdater(store, user, deletedIDs);
-        }
-      },
-    }
-  );
+  return commitMutation<RemoveCompletedTodosMutation>(environment, {
+    mutation,
+    variables: {
+      input: {},
+    },
+    updater: store => {
+      const payload = store.getRootField("removeCompletedTodos")
+      if (!payload) throw new Error("assertion failed")
+      sharedUpdater(store, user, payload.getValue("deletedTodoIds") as string[])
+    },
+    optimisticUpdater: store => {
+      if (todos && todos.edges) {
+        const deletedIDs = todos.edges
+          .filter(edge => edge && edge.node && edge.node.complete)
+          .map(edge => (edge && edge.node && edge.node.id) as string)
+        sharedUpdater(store, user, deletedIDs)
+      }
+    },
+  })
 }
 
-export default {commit};
+export default { commit }

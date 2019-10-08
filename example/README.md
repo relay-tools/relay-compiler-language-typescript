@@ -1,5 +1,17 @@
 # Relay TodoMVC
 
+## Prerequisites
+
+```
+yarn global add yalc
+```
+
+And in the project root folder
+
+```
+yarn watch
+```
+
 ## Installation
 
 ```
