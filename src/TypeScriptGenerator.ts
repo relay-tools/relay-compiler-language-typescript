@@ -871,7 +871,7 @@ function stringLiteralTypeAnnotation(name: string): ts.TypeNode {
   return ts.createLiteralTypeNode(ts.createLiteral(name));
 }
 
-// type Fragments<Refs extends string> = null | {[ref in Refs]: true}
+// type Fragments<Refs extends string> = {[ref in Refs]: true}
 const fragmentRefsType = ts.createTypeAliasDeclaration(
   undefined,
   undefined,
@@ -883,19 +883,16 @@ const fragmentRefsType = ts.createTypeAliasDeclaration(
       undefined
     )
   ],
-  ts.createUnionTypeNode([
-    ts.createNull(),
-    ts.createMappedTypeNode(
-      undefined,
-      ts.createTypeParameterDeclaration(
-        "ref",
-        ts.createTypeReferenceNode("Refs", undefined),
-        undefined
-      ),
-      undefined,
-      ts.createLiteralTypeNode(ts.createTrue())
-    )
-  ])
+  ts.createMappedTypeNode(
+    undefined,
+    ts.createTypeParameterDeclaration(
+      "ref",
+      ts.createTypeReferenceNode("Refs", undefined),
+      undefined
+    ),
+    undefined,
+    ts.createLiteralTypeNode(ts.createTrue())
+  )
 );
 
 // Should match FLOW_TRANSFORMS array
