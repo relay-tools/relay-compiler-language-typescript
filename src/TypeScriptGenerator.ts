@@ -204,9 +204,7 @@ function selectionsToAST(
       props.push(
         readOnlyObjectTypeProperty(
           REF_TYPE,
-          ts.createLiteralTypeNode(
-            ts.createStringLiteral(`${fragmentTypeName}$ref`)
-          )
+          ts.createLiteralTypeNode(ts.createStringLiteral(fragmentTypeName))
         )
       );
     }
