@@ -437,7 +437,11 @@ function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
             ])
           : baseType;
 
-        return [...getEnumDefinitions(state), exportType(node.name, type)];
+        return [
+          ...getEnumDefinitions(state),
+          ...getFragmentDeclarations(state),
+          exportType(node.name, type)
+        ];
       },
       InlineFragment(node) {
         const typeCondition = node.typeCondition;
