@@ -52,9 +52,7 @@ fragment FeedbackComments_feedback on Feedback {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // QueryWithConnectionField.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type QueryWithConnectionFieldVariables = {
     readonly id: string;
 };
@@ -139,9 +137,7 @@ fragment UserFrag2 on Page {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // FragmentSpread.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type FragmentSpread = {
     readonly id: string;
     readonly justFrag: {
@@ -157,9 +153,7 @@ export type FragmentSpread = {
 
 
 // ConcreateTypes.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type ConcreateTypes = {
     readonly actor: ({
         readonly __typename: "Page";
@@ -335,9 +329,7 @@ export type InlineFragmentConditionalID = {
 
 
 // InlineFragmentKitchenSink.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type InlineFragmentKitchenSink = {
     readonly actor: {
         readonly id: string;
@@ -463,9 +455,7 @@ fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // NameRendererFragment.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type NameRendererFragment = {
     readonly id: string;
     readonly nameRenderer: {
@@ -526,9 +516,7 @@ fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // NameRendererQuery.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type NameRendererQueryVariables = {};
 export type NameRendererQueryResponse = {
     readonly me: {
@@ -654,9 +642,7 @@ fragment InlineFragmentWithOverlappingFields on Actor {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // TestMutation.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type CommentCreateInput = {
     readonly clientMutationId?: string | null;
     readonly feedbackId?: string | null;
@@ -857,9 +843,7 @@ fragment FriendFragment on User {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // CommentCreateMutation.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type TestEnums = "mark" | "zuck" | "%future added value";
 export type CommentCreateInput = {
     readonly clientMutationId?: string | null;
@@ -968,9 +952,7 @@ fragment FeedbackFragment on Feedback {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // CommentCreateMutation.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type CommentCreateInput = {
     readonly clientMutationId?: string | null;
     readonly feedbackId?: string | null;
@@ -1029,9 +1011,7 @@ export type CommentCreateMutation = {
 
 
 // FriendFragment.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type FriendFragment = {
     readonly name: string | null;
     readonly lastName: string | null;
@@ -1227,9 +1207,7 @@ fragment FriendFragment on User {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // ExampleQuery.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type ExampleQueryVariables = {
     readonly id: string;
     readonly condition: boolean;
@@ -1352,9 +1330,7 @@ fragment FragmentSpread on Node {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // FragmentSpread.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type FragmentSpread = {
     readonly id: string;
     readonly " $fragmentRefs": FragmentRefs<"FragmentSpread">;
@@ -1385,9 +1361,7 @@ export type RefetchableFragment = {
 
 
 // RefetchableFragmentQuery.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type RefetchableFragmentQueryVariables = {
     readonly id: string;
 };
@@ -1812,9 +1786,7 @@ fragment AnotherRecursiveFragment on Image {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // UserProfile.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type UserProfile = {
     readonly profilePicture: {
         readonly uri: string | null;
@@ -1902,9 +1874,7 @@ fragment FeedbackComments_feedback on Feedback {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // QueryWithConnectionField.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type QueryWithConnectionFieldVariables = {
     readonly id: string;
 };
@@ -1989,9 +1959,7 @@ fragment UserFrag2 on Page {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // FragmentSpread.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type FragmentSpread = {
     readonly id: string;
     readonly justFrag: {
@@ -2007,9 +1975,7 @@ export type FragmentSpread = {
 
 
 // ConcreateTypes.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type ConcreateTypes = {
     readonly actor: ({
         readonly __typename: "Page";
@@ -2185,9 +2151,7 @@ export type InlineFragmentConditionalID = {
 
 
 // InlineFragmentKitchenSink.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type InlineFragmentKitchenSink = {
     readonly actor: {
         readonly id: string;
@@ -2313,9 +2277,7 @@ fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // NameRendererFragment.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type NameRendererFragment = {
     readonly id: string;
     readonly nameRenderer: {
@@ -2376,9 +2338,7 @@ fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // NameRendererQuery.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type NameRendererQueryVariables = {};
 export type NameRendererQueryResponse = {
     readonly me: {
@@ -2504,9 +2464,7 @@ fragment InlineFragmentWithOverlappingFields on Actor {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // TestMutation.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type CommentCreateInput = {
     readonly clientMutationId?: string | null;
     readonly feedbackId?: string | null;
@@ -2707,9 +2665,7 @@ fragment FriendFragment on User {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // CommentCreateMutation.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type TestEnums = "mark" | "zuck" | "%future added value";
 export type CommentCreateInput = {
     readonly clientMutationId?: string | null;
@@ -2818,9 +2774,7 @@ fragment FeedbackFragment on Feedback {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // CommentCreateMutation.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type CommentCreateInput = {
     readonly clientMutationId?: string | null;
     readonly feedbackId?: string | null;
@@ -2879,9 +2833,7 @@ export type CommentCreateMutation = {
 
 
 // FriendFragment.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type FriendFragment = {
     readonly name: string | null;
     readonly lastName: string | null;
@@ -3077,9 +3029,7 @@ fragment FriendFragment on User {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // ExampleQuery.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type ExampleQueryVariables = {
     readonly id: string;
     readonly condition: boolean;
@@ -3202,9 +3152,7 @@ fragment FragmentSpread on Node {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // FragmentSpread.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type FragmentSpread = {
     readonly id: string;
     readonly " $fragmentRefs": FragmentRefs<"FragmentSpread">;
@@ -3235,9 +3183,7 @@ export type RefetchableFragment = {
 
 
 // RefetchableFragmentQuery.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type RefetchableFragmentQueryVariables = {
     readonly id: string;
 };
@@ -3662,9 +3608,7 @@ fragment AnotherRecursiveFragment on Image {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // UserProfile.graphql
-type FragmentRefs<Refs extends string> = {
-    [ref in Refs]: true;
-};
+import { FragmentRefs } from "relay-runtime";
 export type UserProfile = {
     readonly profilePicture: {
         readonly uri: string | null;
