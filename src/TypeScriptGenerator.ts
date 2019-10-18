@@ -850,13 +850,6 @@ function getFragmentRefsTypeImport(state: State): ts.Statement[] {
   return [];
 }
 
-// function getFragmentDeclarations(state: State): ts.Statement[] {
-//   if (state.usedFragments.size > 0) {
-//     return [fragmentRefsType];
-//   }
-//   return [];
-// }
-
 function getEnumDefinitions({
   enumsHasteModule,
   usedEnums,
@@ -892,30 +885,6 @@ function getEnumDefinitions({
 function stringLiteralTypeAnnotation(name: string): ts.TypeNode {
   return ts.createLiteralTypeNode(ts.createLiteral(name));
 }
-
-// type FragmentRefs<Refs extends string> = {[ref in Refs]: true}
-// const fragmentRefsType = ts.createTypeAliasDeclaration(
-//   undefined,
-//   undefined,
-//   FRAGMENT_REFS_TYPE_NAME,
-//   [
-//     ts.createTypeParameterDeclaration(
-//       "Refs",
-//       ts.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-//       undefined
-//     )
-//   ],
-//   ts.createMappedTypeNode(
-//     undefined,
-//     ts.createTypeParameterDeclaration(
-//       "ref",
-//       ts.createTypeReferenceNode("Refs", undefined),
-//       undefined
-//     ),
-//     undefined,
-//     ts.createLiteralTypeNode(ts.createTrue())
-//   )
-// );
 
 // Should match FLOW_TRANSFORMS array
 // https://github.com/facebook/relay/blob/v6.0.0/packages/relay-compiler/language/javascript/RelayFlowGenerator.js#L621-L627
