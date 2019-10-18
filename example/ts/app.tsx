@@ -15,16 +15,11 @@ import "todomvc-common";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { installRelayDevTools } from "relay-devtools";
-
 import { QueryRenderer, graphql } from "react-relay";
 import { Environment, Network, RecordSource, Store } from "relay-runtime";
 
 import TodoApp from "./components/TodoApp";
 import { appQuery } from "./__relay_artifacts__/appQuery.graphql";
-
-// Useful for debugging, but remember to remove for a production deploy.
-installRelayDevTools();
 
 const mountNode = document.getElementById("root");
 

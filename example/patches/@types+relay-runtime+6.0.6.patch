@@ -1,8 +1,8 @@
 diff --git a/node_modules/@types/relay-runtime/index.d.ts b/node_modules/@types/relay-runtime/index.d.ts
-index 18ff05e..3cd7622 100644
+index 18ff05e..1ab09b6 100644
 --- a/node_modules/@types/relay-runtime/index.d.ts
 +++ b/node_modules/@types/relay-runtime/index.d.ts
-@@ -193,12 +193,14 @@ export { createRelayNetworkLogger } from './lib/network/createRelayNetworkLogger
+@@ -193,12 +193,20 @@ export { createRelayNetworkLogger } from './lib/network/createRelayNetworkLogger
  export { deepFreeze } from './lib/util/deepFreeze';
  
  // These match the output of relay-compiler-language-typescript.
@@ -13,8 +13,13 @@ index 18ff05e..3cd7622 100644
  }
 -export interface _FragmentRefs<T> {
 -    ' $fragmentRefs': T;
-+export interface _FragmentRefs<T extends string> {
-+  " $fragmentRefs": { [k in T]: true }
++
++export type FragmentRefs<Refs extends string> = {
++  [ref in Refs]: true
++}
++
++export interface _FragmentRefs<Refs extends string> {
++  " $fragmentRefs": FragmentRefs<Refs>
  }
  
  // This is a utility type for converting from a data type to a fragment reference that will resolve to that data type.
@@ -22,3 +27,4 @@ index 18ff05e..3cd7622 100644
 +export type FragmentRef<T> = T extends _RefType<infer U>
 +  ? _FragmentRefs<U>
 +  : never;
++

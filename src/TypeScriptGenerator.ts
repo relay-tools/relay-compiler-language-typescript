@@ -368,7 +368,7 @@ function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
           );
         }
         const nodes = [
-          ...getFragmentDeclarations(state),
+          ...getFragmentRefsTypeImport(state),
           ...getEnumDefinitions(state),
           ...inputObjectTypes,
           inputVariablesType,
@@ -438,8 +438,8 @@ function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
           : baseType;
 
         return [
+          ...getFragmentRefsTypeImport(state),
           ...getEnumDefinitions(state),
-          ...getFragmentDeclarations(state),
           exportType(node.name, type)
         ];
       },
@@ -828,12 +828,34 @@ function groupRefs(props: Selection[]): Selection[] {
   return result;
 }
 
-function getFragmentDeclarations(state: State): ts.Statement[] {
+function getFragmentRefsTypeImport(state: State): ts.Statement[] {
   if (state.usedFragments.size > 0) {
-    return [fragmentRefsType];
+    return [
+      ts.createImportDeclaration(
+        undefined,
+        undefined,
+        ts.createImportClause(
+          undefined,
+          ts.createNamedImports([
+            ts.createImportSpecifier(
+              undefined,
+              ts.createIdentifier("FragmentRefs")
+            )
+          ])
+        ),
+        ts.createStringLiteral("relay-runtime")
+      )
+    ];
   }
   return [];
 }
+
+// function getFragmentDeclarations(state: State): ts.Statement[] {
+//   if (state.usedFragments.size > 0) {
+//     return [fragmentRefsType];
+//   }
+//   return [];
+// }
 
 function getEnumDefinitions({
   enumsHasteModule,
@@ -871,29 +893,29 @@ function stringLiteralTypeAnnotation(name: string): ts.TypeNode {
   return ts.createLiteralTypeNode(ts.createLiteral(name));
 }
 
-// type Fragments<Refs extends string> = {[ref in Refs]: true}
-const fragmentRefsType = ts.createTypeAliasDeclaration(
-  undefined,
-  undefined,
-  FRAGMENT_REFS_TYPE_NAME,
-  [
-    ts.createTypeParameterDeclaration(
-      "Refs",
-      ts.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-      undefined
-    )
-  ],
-  ts.createMappedTypeNode(
-    undefined,
-    ts.createTypeParameterDeclaration(
-      "ref",
-      ts.createTypeReferenceNode("Refs", undefined),
-      undefined
-    ),
-    undefined,
-    ts.createLiteralTypeNode(ts.createTrue())
-  )
-);
+// type FragmentRefs<Refs extends string> = {[ref in Refs]: true}
+// const fragmentRefsType = ts.createTypeAliasDeclaration(
+//   undefined,
+//   undefined,
+//   FRAGMENT_REFS_TYPE_NAME,
+//   [
+//     ts.createTypeParameterDeclaration(
+//       "Refs",
+//       ts.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+//       undefined
+//     )
+//   ],
+//   ts.createMappedTypeNode(
+//     undefined,
+//     ts.createTypeParameterDeclaration(
+//       "ref",
+//       ts.createTypeReferenceNode("Refs", undefined),
+//       undefined
+//     ),
+//     undefined,
+//     ts.createLiteralTypeNode(ts.createTrue())
+//   )
+// );
 
 // Should match FLOW_TRANSFORMS array
 // https://github.com/facebook/relay/blob/v6.0.0/packages/relay-compiler/language/javascript/RelayFlowGenerator.js#L621-L627
