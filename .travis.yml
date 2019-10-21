@@ -21,6 +21,7 @@ before_deploy:
   - git config --local user.email "${GIT_EMAIL}"
   - git remote rm origin
   - git remote add origin https://${GH_USER}:${GH_TOKEN}@github.com/relay-tools/relay-compiler-language-typescript.git
+  - git fetch origin --tags
   - git checkout master && git pull origin master
   - git branch --set-upstream-to origin/master master
   - yarn build
