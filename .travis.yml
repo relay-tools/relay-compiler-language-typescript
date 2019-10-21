@@ -17,7 +17,12 @@ script:
 before_deploy:
   - echo "NPM_TOKEN=${NPM_TOKEN}" >> .env
   - echo "GH_TOKEN=${GH_TOKEN}" >> .env
-  - git checkout master && git pull origin
+  - git config --local user.name "${GIT_NAME}"
+  - git config --local user.email "${GIT_EMAIL}"
+  - git remote rm origin
+  - git remote add origin https://${GH_USER}:${GH_TOKEN}@github.com/relay-tools/relay-compiler-language-typescript.git
+  - git pull origin master
+  - git branch --set-upstream-to origin/master
   - yarn build
 deploy:
   skip_cleanup: true
