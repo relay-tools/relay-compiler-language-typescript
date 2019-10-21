@@ -1,26 +1,24 @@
 /* tslint:disable */
 
-import { ConcreteFragment } from "relay-runtime";
-declare const _TodoListFooter_viewer$ref: unique symbol;
-export type TodoListFooter_viewer$ref = typeof _TodoListFooter_viewer$ref;
+import { ReaderFragment } from "relay-runtime";
 export type TodoListFooter_viewer = {
     readonly id: string;
     readonly completedCount: number | null;
-    readonly completedTodos: ({
-        readonly edges: ReadonlyArray<({
-            readonly node: ({
+    readonly completedTodos: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
                 readonly id: string;
                 readonly complete: boolean | null;
-            }) | null;
-        }) | null> | null;
-    }) | null;
+            } | null;
+        } | null> | null;
+    } | null;
     readonly totalCount: number | null;
-    readonly " $refType": TodoListFooter_viewer$ref;
+    readonly " $refType": "TodoListFooter_viewer";
 };
 
 
 
-const node: ConcreteFragment = (function(){
+const node: ReaderFragment = (function(){
 var v0 = {
   "kind": "ScalarField",
   "alias": null,
@@ -35,7 +33,7 @@ return {
   "metadata": null,
   "argumentDefinitions": [],
   "selections": [
-    v0,
+    (v0/*: any*/),
     {
       "kind": "ScalarField",
       "alias": null,
@@ -52,14 +50,12 @@ return {
         {
           "kind": "Literal",
           "name": "first",
-          "value": 2147483647,
-          "type": "Int"
+          "value": 2147483647
         },
         {
           "kind": "Literal",
           "name": "status",
-          "value": "completed",
-          "type": "String"
+          "value": "completed"
         }
       ],
       "concreteType": "TodoConnection",
@@ -83,7 +79,7 @@ return {
               "concreteType": "Todo",
               "plural": false,
               "selections": [
-                v0,
+                (v0/*: any*/),
                 {
                   "kind": "ScalarField",
                   "alias": null,

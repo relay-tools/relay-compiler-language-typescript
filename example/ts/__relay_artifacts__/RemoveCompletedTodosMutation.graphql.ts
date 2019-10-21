@@ -8,13 +8,13 @@ export type RemoveCompletedTodosMutationVariables = {
     readonly input: RemoveCompletedTodosInput;
 };
 export type RemoveCompletedTodosMutationResponse = {
-    readonly removeCompletedTodos: ({
+    readonly removeCompletedTodos: {
         readonly deletedTodoIds: ReadonlyArray<string | null> | null;
-        readonly viewer: ({
+        readonly viewer: {
             readonly completedCount: number | null;
             readonly totalCount: number | null;
-        }) | null;
-    }) | null;
+        } | null;
+    } | null;
 };
 export type RemoveCompletedTodosMutation = {
     readonly response: RemoveCompletedTodosMutationResponse;
@@ -51,8 +51,7 @@ v1 = [
   {
     "kind": "Variable",
     "name": "input",
-    "variableName": "input",
-    "type": "RemoveCompletedTodosInput!"
+    "variableName": "input"
   }
 ],
 v2 = {
@@ -78,28 +77,23 @@ v4 = {
 };
 return {
   "kind": "Request",
-  "operationKind": "mutation",
-  "name": "RemoveCompletedTodosMutation",
-  "id": null,
-  "text": "mutation RemoveCompletedTodosMutation(\n  $input: RemoveCompletedTodosInput!\n) {\n  removeCompletedTodos(input: $input) {\n    deletedTodoIds\n    viewer {\n      completedCount\n      totalCount\n      id\n    }\n  }\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "RemoveCompletedTodosMutation",
     "type": "Mutation",
     "metadata": null,
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "removeCompletedTodos",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "RemoveCompletedTodosPayload",
         "plural": false,
         "selections": [
-          v2,
+          (v2/*: any*/),
           {
             "kind": "LinkedField",
             "alias": null,
@@ -109,8 +103,8 @@ return {
             "concreteType": "User",
             "plural": false,
             "selections": [
-              v3,
-              v4
+              (v3/*: any*/),
+              (v4/*: any*/)
             ]
           }
         ]
@@ -120,18 +114,18 @@ return {
   "operation": {
     "kind": "Operation",
     "name": "RemoveCompletedTodosMutation",
-    "argumentDefinitions": v0,
+    "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
         "name": "removeCompletedTodos",
         "storageKey": null,
-        "args": v1,
+        "args": (v1/*: any*/),
         "concreteType": "RemoveCompletedTodosPayload",
         "plural": false,
         "selections": [
-          v2,
+          (v2/*: any*/),
           {
             "kind": "LinkedField",
             "alias": null,
@@ -141,8 +135,8 @@ return {
             "concreteType": "User",
             "plural": false,
             "selections": [
-              v3,
-              v4,
+              (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "kind": "ScalarField",
                 "alias": null,
@@ -155,6 +149,13 @@ return {
         ]
       }
     ]
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "RemoveCompletedTodosMutation",
+    "id": null,
+    "text": "mutation RemoveCompletedTodosMutation(\n  $input: RemoveCompletedTodosInput!\n) {\n  removeCompletedTodos(input: $input) {\n    deletedTodoIds\n    viewer {\n      completedCount\n      totalCount\n      id\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

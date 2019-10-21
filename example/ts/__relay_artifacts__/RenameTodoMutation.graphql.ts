@@ -10,12 +10,12 @@ export type RenameTodoMutationVariables = {
     readonly input: RenameTodoInput;
 };
 export type RenameTodoMutationResponse = {
-    readonly renameTodo: ({
-        readonly todo: ({
+    readonly renameTodo: {
+        readonly todo: {
             readonly id: string;
             readonly text: string | null;
-        }) | null;
-    }) | null;
+        } | null;
+    } | null;
 };
 export type RenameTodoMutation = {
     readonly response: RenameTodoMutationResponse;
@@ -56,8 +56,7 @@ v1 = [
       {
         "kind": "Variable",
         "name": "input",
-        "variableName": "input",
-        "type": "RenameTodoInput!"
+        "variableName": "input"
       }
     ],
     "concreteType": "RenameTodoPayload",
@@ -93,24 +92,26 @@ v1 = [
 ];
 return {
   "kind": "Request",
-  "operationKind": "mutation",
-  "name": "RenameTodoMutation",
-  "id": null,
-  "text": "mutation RenameTodoMutation(\n  $input: RenameTodoInput!\n) {\n  renameTodo(input: $input) {\n    todo {\n      id\n      text\n    }\n  }\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "RenameTodoMutation",
     "type": "Mutation",
     "metadata": null,
-    "argumentDefinitions": v0,
-    "selections": v1
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
   },
   "operation": {
     "kind": "Operation",
     "name": "RenameTodoMutation",
-    "argumentDefinitions": v0,
-    "selections": v1
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v1/*: any*/)
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "RenameTodoMutation",
+    "id": null,
+    "text": "mutation RenameTodoMutation(\n  $input: RenameTodoInput!\n) {\n  renameTodo(input: $input) {\n    todo {\n      id\n      text\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();
