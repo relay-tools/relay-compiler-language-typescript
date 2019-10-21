@@ -1,3 +1,23 @@
+# v8.0.1 (Mon Oct 21 2019)
+
+#### 🐛  Bug Fix
+
+- Ensure on master, and that upstream is pointed at master [#146](https://github.com/relay-tools/relay-compiler-language-typescript/pull/146) ([@zephraph](https://github.com/zephraph))
+- Fix deployment issue by pulling before setting upstream [#145](https://github.com/relay-tools/relay-compiler-language-typescript/pull/145) ([@zephraph](https://github.com/zephraph))
+- Fix failing deployments by adding the proper  git upstream [#144](https://github.com/relay-tools/relay-compiler-language-typescript/pull/144) ([@zephraph](https://github.com/zephraph))
+- Ensure CI can push to GitHub [#143](https://github.com/relay-tools/relay-compiler-language-typescript/pull/143) ([@zephraph](https://github.com/zephraph))
+- Verify the release process doesn't throw errors [#142](https://github.com/relay-tools/relay-compiler-language-typescript/pull/142) ([@zephraph](https://github.com/zephraph))
+
+#### 🏠  Internal
+
+- Add the ability to configure auto deploys [#141](https://github.com/relay-tools/relay-compiler-language-typescript/pull/141) ([@zephraph](https://github.com/zephraph))
+
+#### Authors: 1
+
+- Justin Bennett ([@zephraph](https://github.com/zephraph))
+
+---
+
 # v4.1.0 (Fri May 10 2019)
 
 #### 🚀  Enhancement
