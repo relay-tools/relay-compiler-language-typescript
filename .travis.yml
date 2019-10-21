@@ -7,6 +7,7 @@ env:
     - secure: RQjCgMg2NHtjP7qZDNSXjcX0wKm9A9NVcnszamDNp79ljUK9s8JmBUEF/nmraoV38a5WrrfQvvBJGY3kTm/UFdItblcsmNm2fWixuRhc1QPtOhB765SKYVus4v87cN/CI4teUmDC118gQHVfg/elkqUjbFg5nmhcSK1V+wQi3DIdRDtmmob4VcBKimQHGHYQgXx0Am16BnVcVeLV28U77hp9f4Cle4vEn0n3Waaum2upaoF/WQGzFHap9yRKghARSZ8Rxd2CgGFbFQuXlll7evV21RHmOTmef4ENZ27KuWiBBnxosALnOqc+J/ah00HoNHcswgjuQdWWXhM8pUAr3oP9dciJcaf77jkpB6ICxsj/k0Ykl7crJuKQYO2MmYi4Hx9FX+wfaxIPxmApErxGDqFb8ornY277iW7REaBykml5BqPENS607KWYmpSFNduMC7HK15ntaeOCWV0isLc0TMkcENdepA5s7llViOhO2dfn0flrZtAZ5NdGbIcspF8rg+vnA42VJJ2VEh2VWyGveYkcUcJiYVRh1srycAc8uJYzj65fuUOLzzGkJh/q7gh2HrofBk5fD50tbKFHCf+3+nG8D7Tt6vWzpJ4I1gadyjtMeiIK3tmwUDfAl7sHkmC4pOlqZA1pMiPqgxLrER672QLYmD2AjvdS3hqGExCZVi0=
     - GIT_NAME="Eloy Durán"
     - GIT_EMAIL="eloy.de.enige@gmail.com"
+    - GH_USER="alloy"
 
 script:
   - yarn lint
