@@ -1,3 +1,20 @@
+# v9.0.0 (Mon Oct 21 2019)
+
+#### 💥  Breaking Change
+
+- Fix opaque types [#139](https://github.com/relay-tools/relay-compiler-language-typescript/pull/139) ([@ds300](https://github.com/ds300))
+
+#### 🏠  Internal
+
+- Correct version number [skip-ci] [#147](https://github.com/relay-tools/relay-compiler-language-typescript/pull/147) ([@zephraph](https://github.com/zephraph))
+
+#### Authors: 2
+
+- David Sheldrick ([@ds300](https://github.com/ds300))
+- Justin Bennett ([@zephraph](https://github.com/zephraph))
+
+---
+
 # v8.0.3 (Mon Oct 21 2019)
 
 #### 🐛  Bug Fix
