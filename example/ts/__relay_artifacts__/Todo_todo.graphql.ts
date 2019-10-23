@@ -1,6 +1,7 @@
 /* tslint:disable */
 
 import { ReaderFragment } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type Todo_todo = {
     readonly complete: boolean | null;
     readonly id: string;

@@ -25,6 +25,7 @@ export type State = {
   };
   generatedFragments: Set<string>;
   matchFields: Map<string, ts.TypeNode>;
+  runtimeImports: Set<string>;
 } & TypeGeneratorOptions;
 
 function getInputObjectTypeIdentifier(type: GraphQLInputObjectType): string {

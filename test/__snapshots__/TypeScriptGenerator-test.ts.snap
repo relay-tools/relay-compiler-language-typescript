@@ -14,6 +14,7 @@ fragment NestedCondition on Node {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // ConditionField.graphql
+import { FragmentRefs } from "relay-runtime";
 export type ConditionField = {
     readonly id?: string;
     readonly " $refType": "ConditionField";
@@ -26,6 +27,7 @@ export type ConditionField$key = {
 
 
 // NestedCondition.graphql
+import { FragmentRefs } from "relay-runtime";
 export type NestedCondition = {
     readonly id?: string;
     readonly " $refType": "NestedCondition";
@@ -78,6 +80,7 @@ export type QueryWithConnectionField = {
 
 
 // FeedbackComments_feedback.graphql
+import { FragmentRefs } from "relay-runtime";
 export type FeedbackComments_feedback = {
     readonly comments: {
         readonly edges: ReadonlyArray<{
@@ -197,6 +200,7 @@ export type ConcreateTypes$key = {
 
 
 // PictureFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type PictureFragment = {
     readonly __typename: "Image";
     readonly " $refType": "PictureFragment";
@@ -214,6 +218,7 @@ export type PictureFragment$key = {
 
 
 // OtherFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type OtherFragment = {
     readonly __typename: string;
     readonly " $refType": "OtherFragment";
@@ -226,6 +231,7 @@ export type OtherFragment$key = {
 
 
 // PageFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type PageFragment = {
     readonly __typename: "Page";
     readonly " $refType": "PageFragment";
@@ -243,6 +249,7 @@ export type PageFragment$key = {
 
 
 // UserFrag1.graphql
+import { FragmentRefs } from "relay-runtime";
 export type UserFrag1 = {
     readonly __typename: "Page";
     readonly " $refType": "UserFrag1";
@@ -260,6 +267,7 @@ export type UserFrag1$key = {
 
 
 // UserFrag2.graphql
+import { FragmentRefs } from "relay-runtime";
 export type UserFrag2 = {
     readonly __typename: "Page";
     readonly " $refType": "UserFrag2";
@@ -346,6 +354,7 @@ fragment SomeFragment on User {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // InlineFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type InlineFragment = {
     readonly id: string;
     readonly name?: string | null;
@@ -362,6 +371,7 @@ export type InlineFragment$key = {
 
 
 // InlineFragmentWithOverlappingFields.graphql
+import { FragmentRefs } from "relay-runtime";
 export type InlineFragmentWithOverlappingFields = {
     readonly hometown?: {
         readonly id: string;
@@ -381,6 +391,7 @@ export type InlineFragmentWithOverlappingFields$key = {
 
 
 // InlineFragmentConditionalID.graphql
+import { FragmentRefs } from "relay-runtime";
 export type InlineFragmentConditionalID = {
     readonly id?: string;
     readonly name?: string | null;
@@ -416,6 +427,7 @@ export type InlineFragmentKitchenSink$key = {
 
 
 // SomeFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type SomeFragment = {
     readonly __typename: "User";
     readonly " $refType": "SomeFragment";
@@ -465,6 +477,7 @@ query UnionTypeTest {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // LinkedField.graphql
+import { FragmentRefs } from "relay-runtime";
 export type LinkedField = {
     readonly profilePicture: {
         readonly uri: string | null;
@@ -553,6 +566,7 @@ export type NameRendererFragment$key = {
 
 
 // PlainUserNameRenderer_name.graphql
+import { FragmentRefs } from "relay-runtime";
 export type PlainUserNameRenderer_name = {
     readonly plaintext: string | null;
     readonly data: {
@@ -568,6 +582,7 @@ export type PlainUserNameRenderer_name$key = {
 
 
 // MarkdownUserNameRenderer_name.graphql
+import { FragmentRefs } from "relay-runtime";
 export type MarkdownUserNameRenderer_name = {
     readonly markdown: string | null;
     readonly data: {
@@ -629,6 +644,7 @@ export type NameRendererQuery = {
 
 
 // PlainUserNameRenderer_name.graphql
+import { FragmentRefs } from "relay-runtime";
 export type PlainUserNameRenderer_name = {
     readonly plaintext: string | null;
     readonly data: {
@@ -644,6 +660,7 @@ export type PlainUserNameRenderer_name$key = {
 
 
 // MarkdownUserNameRenderer_name.graphql
+import { FragmentRefs } from "relay-runtime";
 export type MarkdownUserNameRenderer_name = {
     readonly markdown: string | null;
     readonly data: {
@@ -806,6 +823,7 @@ export type TestMutation = {
 
 
 // InlineFragmentWithOverlappingFields.graphql
+import { FragmentRefs } from "relay-runtime";
 export type InlineFragmentWithOverlappingFields = {
     readonly hometown?: {
         readonly id: string;
@@ -1015,6 +1033,7 @@ export type CommentCreateMutation = {
 
 // FriendFragment.graphql
 export type TestEnums = "mark" | "zuck" | "%future added value";
+import { FragmentRefs } from "relay-runtime";
 export type FriendFragment = {
     readonly name: string | null;
     readonly lastName: string | null;
@@ -1143,6 +1162,7 @@ export type FriendFragment$key = {
 
 
 // FeedbackFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type FeedbackFragment = {
     readonly id: string;
     readonly name: string | null;
@@ -1164,6 +1184,7 @@ fragment PluralFragment on Node @relay(plural: true) {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // PluralFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type PluralFragment = ReadonlyArray<{
     readonly id: string;
     readonly " $refType": "PluralFragment";
@@ -1370,6 +1391,7 @@ export type ExampleQuery = {
 
 
 // FriendFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type FriendFragment = {
     readonly name?: string | null;
     readonly lastName?: string | null;
@@ -1491,6 +1513,7 @@ fragment RefetchableFragment on Node
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // RefetchableFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type RefetchableFragment = {
     readonly id: string;
     readonly fragAndField: {
@@ -1567,6 +1590,7 @@ export type ExampleQuery = {
 
 
 // ExampleFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type ExampleFragment = {
     readonly id: string;
     readonly " $refType": "ExampleFragment";
@@ -1647,6 +1671,7 @@ fragment ScalarField on User {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // ScalarField.graphql
 export type PersonalityTraits = "CHEERFUL" | "DERISIVE" | "HELPFUL" | "SNARKY" | "%future added value";
+import { FragmentRefs } from "relay-runtime";
 export type ScalarField = {
     readonly id: string;
     readonly name: string | null;
@@ -1690,6 +1715,7 @@ fragment TypenameInsideWithOverlappingFields on Viewer {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // TypenameInsideWithOverlappingFields.graphql
+import { FragmentRefs } from "relay-runtime";
 export type TypenameInsideWithOverlappingFields = {
     readonly actor: ({
         readonly __typename: "Page";
@@ -1802,6 +1828,7 @@ fragment TypenameAliases on Actor {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // TypenameInside.graphql
+import { FragmentRefs } from "relay-runtime";
 export type TypenameInside = {
     readonly __typename: "User";
     readonly firstName: string | null;
@@ -1824,6 +1851,7 @@ export type TypenameInside$key = {
 
 
 // TypenameOutside.graphql
+import { FragmentRefs } from "relay-runtime";
 export type TypenameOutside = {
     readonly __typename: "User";
     readonly firstName: string | null;
@@ -1846,6 +1874,7 @@ export type TypenameOutside$key = {
 
 
 // TypenameOutsideWithAbstractType.graphql
+import { FragmentRefs } from "relay-runtime";
 export type TypenameOutsideWithAbstractType = {
     readonly __typename: string;
     readonly username?: string | null;
@@ -1865,6 +1894,7 @@ export type TypenameOutsideWithAbstractType$key = {
 
 
 // TypenameWithoutSpreads.graphql
+import { FragmentRefs } from "relay-runtime";
 export type TypenameWithoutSpreads = {
     readonly firstName: string | null;
     readonly __typename: "User";
@@ -1878,6 +1908,7 @@ export type TypenameWithoutSpreads$key = {
 
 
 // TypenameWithoutSpreadsAbstractType.graphql
+import { FragmentRefs } from "relay-runtime";
 export type TypenameWithoutSpreadsAbstractType = {
     readonly __typename: string;
     readonly id: string;
@@ -1891,6 +1922,7 @@ export type TypenameWithoutSpreadsAbstractType$key = {
 
 
 // TypenameWithCommonSelections.graphql
+import { FragmentRefs } from "relay-runtime";
 export type TypenameWithCommonSelections = {
     readonly __typename: string;
     readonly name: string | null;
@@ -1906,6 +1938,7 @@ export type TypenameWithCommonSelections$key = {
 
 
 // TypenameAlias.graphql
+import { FragmentRefs } from "relay-runtime";
 export type TypenameAlias = {
     readonly _typeAlias: "User";
     readonly firstName: string | null;
@@ -1928,6 +1961,7 @@ export type TypenameAlias$key = {
 
 
 // TypenameAliases.graphql
+import { FragmentRefs } from "relay-runtime";
 export type TypenameAliases = {
     readonly _typeAlias1: "User";
     readonly _typeAlias2: "User";
@@ -2004,6 +2038,7 @@ export type UserProfile$key = {
 
 
 // PhotoFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type PhotoFragment = {
     readonly uri: string | null;
     readonly width: number | null;
@@ -2017,6 +2052,7 @@ export type PhotoFragment$key = {
 
 
 // RecursiveFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type RecursiveFragment = {
     readonly uri: string | null;
     readonly width: number | null;
@@ -2029,6 +2065,7 @@ export type RecursiveFragment$key = {
 
 
 // AnotherRecursiveFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type AnotherRecursiveFragment = {
     readonly uri: string | null;
     readonly height: number | null;
@@ -2056,6 +2093,7 @@ fragment NestedCondition on Node {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // ConditionField.graphql
+import { FragmentRefs } from "relay-runtime";
 export type ConditionField = {
     readonly id?: string;
     readonly " $refType": "ConditionField";
@@ -2068,6 +2106,7 @@ export type ConditionField$key = {
 
 
 // NestedCondition.graphql
+import { FragmentRefs } from "relay-runtime";
 export type NestedCondition = {
     readonly id?: string;
     readonly " $refType": "NestedCondition";
@@ -2120,6 +2159,7 @@ export type QueryWithConnectionField = {
 
 
 // FeedbackComments_feedback.graphql
+import { FragmentRefs } from "relay-runtime";
 export type FeedbackComments_feedback = {
     readonly comments: {
         readonly edges: ReadonlyArray<{
@@ -2239,6 +2279,7 @@ export type ConcreateTypes$key = {
 
 
 // PictureFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type PictureFragment = {
     readonly __typename: "Image";
     readonly " $refType": "PictureFragment";
@@ -2256,6 +2297,7 @@ export type PictureFragment$key = {
 
 
 // OtherFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type OtherFragment = {
     readonly __typename: string;
     readonly " $refType": "OtherFragment";
@@ -2268,6 +2310,7 @@ export type OtherFragment$key = {
 
 
 // PageFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type PageFragment = {
     readonly __typename: "Page";
     readonly " $refType": "PageFragment";
@@ -2285,6 +2328,7 @@ export type PageFragment$key = {
 
 
 // UserFrag1.graphql
+import { FragmentRefs } from "relay-runtime";
 export type UserFrag1 = {
     readonly __typename: "Page";
     readonly " $refType": "UserFrag1";
@@ -2302,6 +2346,7 @@ export type UserFrag1$key = {
 
 
 // UserFrag2.graphql
+import { FragmentRefs } from "relay-runtime";
 export type UserFrag2 = {
     readonly __typename: "Page";
     readonly " $refType": "UserFrag2";
@@ -2388,6 +2433,7 @@ fragment SomeFragment on User {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // InlineFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type InlineFragment = {
     readonly id: string;
     readonly name?: string | null;
@@ -2404,6 +2450,7 @@ export type InlineFragment$key = {
 
 
 // InlineFragmentWithOverlappingFields.graphql
+import { FragmentRefs } from "relay-runtime";
 export type InlineFragmentWithOverlappingFields = {
     readonly hometown?: {
         readonly id: string;
@@ -2423,6 +2470,7 @@ export type InlineFragmentWithOverlappingFields$key = {
 
 
 // InlineFragmentConditionalID.graphql
+import { FragmentRefs } from "relay-runtime";
 export type InlineFragmentConditionalID = {
     readonly id?: string;
     readonly name?: string | null;
@@ -2458,6 +2506,7 @@ export type InlineFragmentKitchenSink$key = {
 
 
 // SomeFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type SomeFragment = {
     readonly __typename: "User";
     readonly " $refType": "SomeFragment";
@@ -2507,6 +2556,7 @@ query UnionTypeTest {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // LinkedField.graphql
+import { FragmentRefs } from "relay-runtime";
 export type LinkedField = {
     readonly profilePicture: {
         readonly uri: string | null;
@@ -2595,6 +2645,7 @@ export type NameRendererFragment$key = {
 
 
 // PlainUserNameRenderer_name.graphql
+import { FragmentRefs } from "relay-runtime";
 export type PlainUserNameRenderer_name = {
     readonly plaintext: string | null;
     readonly data: {
@@ -2610,6 +2661,7 @@ export type PlainUserNameRenderer_name$key = {
 
 
 // MarkdownUserNameRenderer_name.graphql
+import { FragmentRefs } from "relay-runtime";
 export type MarkdownUserNameRenderer_name = {
     readonly markdown: string | null;
     readonly data: {
@@ -2671,6 +2723,7 @@ export type NameRendererQuery = {
 
 
 // PlainUserNameRenderer_name.graphql
+import { FragmentRefs } from "relay-runtime";
 export type PlainUserNameRenderer_name = {
     readonly plaintext: string | null;
     readonly data: {
@@ -2686,6 +2739,7 @@ export type PlainUserNameRenderer_name$key = {
 
 
 // MarkdownUserNameRenderer_name.graphql
+import { FragmentRefs } from "relay-runtime";
 export type MarkdownUserNameRenderer_name = {
     readonly markdown: string | null;
     readonly data: {
@@ -2848,6 +2902,7 @@ export type TestMutation = {
 
 
 // InlineFragmentWithOverlappingFields.graphql
+import { FragmentRefs } from "relay-runtime";
 export type InlineFragmentWithOverlappingFields = {
     readonly hometown?: {
         readonly id: string;
@@ -3057,6 +3112,7 @@ export type CommentCreateMutation = {
 
 // FriendFragment.graphql
 export type TestEnums = "mark" | "zuck" | "%future added value";
+import { FragmentRefs } from "relay-runtime";
 export type FriendFragment = {
     readonly name: string | null;
     readonly lastName: string | null;
@@ -3185,6 +3241,7 @@ export type FriendFragment$key = {
 
 
 // FeedbackFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type FeedbackFragment = {
     readonly id: string;
     readonly name: string | null;
@@ -3206,6 +3263,7 @@ fragment PluralFragment on Node @relay(plural: true) {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // PluralFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type PluralFragment = ReadonlyArray<{
     readonly id: string;
     readonly " $refType": "PluralFragment";
@@ -3412,6 +3470,7 @@ export type ExampleQuery = {
 
 
 // FriendFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type FriendFragment = {
     readonly name?: string | null;
     readonly lastName?: string | null;
@@ -3533,6 +3592,7 @@ fragment RefetchableFragment on Node
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // RefetchableFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type RefetchableFragment = {
     readonly id: string;
     readonly fragAndField: {
@@ -3609,6 +3669,7 @@ export type ExampleQuery = {
 
 
 // ExampleFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type ExampleFragment = {
     readonly id: string;
     readonly " $refType": "ExampleFragment";
@@ -3689,6 +3750,7 @@ fragment ScalarField on User {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // ScalarField.graphql
 export type PersonalityTraits = "CHEERFUL" | "DERISIVE" | "HELPFUL" | "SNARKY" | "%future added value";
+import { FragmentRefs } from "relay-runtime";
 export type ScalarField = {
     readonly id: string;
     readonly name: string | null;
@@ -3732,6 +3794,7 @@ fragment TypenameInsideWithOverlappingFields on Viewer {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // TypenameInsideWithOverlappingFields.graphql
+import { FragmentRefs } from "relay-runtime";
 export type TypenameInsideWithOverlappingFields = {
     readonly actor: ({
         readonly __typename: "Page";
@@ -3844,6 +3907,7 @@ fragment TypenameAliases on Actor {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // TypenameInside.graphql
+import { FragmentRefs } from "relay-runtime";
 export type TypenameInside = {
     readonly __typename: "User";
     readonly firstName: string | null;
@@ -3866,6 +3930,7 @@ export type TypenameInside$key = {
 
 
 // TypenameOutside.graphql
+import { FragmentRefs } from "relay-runtime";
 export type TypenameOutside = {
     readonly __typename: "User";
     readonly firstName: string | null;
@@ -3888,6 +3953,7 @@ export type TypenameOutside$key = {
 
 
 // TypenameOutsideWithAbstractType.graphql
+import { FragmentRefs } from "relay-runtime";
 export type TypenameOutsideWithAbstractType = {
     readonly __typename: string;
     readonly username?: string | null;
@@ -3907,6 +3973,7 @@ export type TypenameOutsideWithAbstractType$key = {
 
 
 // TypenameWithoutSpreads.graphql
+import { FragmentRefs } from "relay-runtime";
 export type TypenameWithoutSpreads = {
     readonly firstName: string | null;
     readonly __typename: "User";
@@ -3920,6 +3987,7 @@ export type TypenameWithoutSpreads$key = {
 
 
 // TypenameWithoutSpreadsAbstractType.graphql
+import { FragmentRefs } from "relay-runtime";
 export type TypenameWithoutSpreadsAbstractType = {
     readonly __typename: string;
     readonly id: string;
@@ -3933,6 +4001,7 @@ export type TypenameWithoutSpreadsAbstractType$key = {
 
 
 // TypenameWithCommonSelections.graphql
+import { FragmentRefs } from "relay-runtime";
 export type TypenameWithCommonSelections = {
     readonly __typename: string;
     readonly name: string | null;
@@ -3948,6 +4017,7 @@ export type TypenameWithCommonSelections$key = {
 
 
 // TypenameAlias.graphql
+import { FragmentRefs } from "relay-runtime";
 export type TypenameAlias = {
     readonly _typeAlias: "User";
     readonly firstName: string | null;
@@ -3970,6 +4040,7 @@ export type TypenameAlias$key = {
 
 
 // TypenameAliases.graphql
+import { FragmentRefs } from "relay-runtime";
 export type TypenameAliases = {
     readonly _typeAlias1: "User";
     readonly _typeAlias2: "User";
@@ -4046,6 +4117,7 @@ export type UserProfile$key = {
 
 
 // PhotoFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type PhotoFragment = {
     readonly uri: string | null;
     readonly width: number | null;
@@ -4059,6 +4131,7 @@ export type PhotoFragment$key = {
 
 
 // RecursiveFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type RecursiveFragment = {
     readonly uri: string | null;
     readonly width: number | null;
@@ -4071,6 +4144,7 @@ export type RecursiveFragment$key = {
 
 
 // AnotherRecursiveFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type AnotherRecursiveFragment = {
     readonly uri: string | null;
     readonly height: number | null;

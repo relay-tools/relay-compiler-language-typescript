@@ -1,6 +1,7 @@
 /* tslint:disable */
 
 import { ReaderFragment } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type TodoListFooter_viewer = {
     readonly id: string;
     readonly completedCount: number | null;

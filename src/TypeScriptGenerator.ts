@@ -334,7 +334,8 @@ function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
     useHaste: options.useHaste,
     useSingleArtifactDirectory: options.useSingleArtifactDirectory,
     noFutureProofEnums: options.noFutureProofEnums,
-    matchFields: new Map()
+    matchFields: new Map(),
+    runtimeImports: new Set()
   };
 
   return {
@@ -466,10 +467,11 @@ function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
               baseType
             ])
           : baseType;
+        state.runtimeImports.add("FragmentRefs");
 
         return [
-          ...getFragmentRefsTypeImport(state),
           ...getEnumDefinitions(state),
+          importTypes(Array.from(state.runtimeImports).sort(), "relay-runtime"),
           exportType(node.name, type),
           exportType(dataTypeName, dataType),
           exportType(
