@@ -20,8 +20,8 @@ export type ConditionField = {
 };
 export type ConditionField$data = ConditionField;
 export type ConditionField$key = {
-    readonly $data?: ConditionField$data;
-    readonly $fragmentRefs: ConditionField$ref;
+    readonly " $data"?: ConditionField$data;
+    readonly " $fragmentRefs": ConditionField$ref;
 };
 
 
@@ -32,8 +32,8 @@ export type NestedCondition = {
 };
 export type NestedCondition$data = NestedCondition;
 export type NestedCondition$key = {
-    readonly $data?: NestedCondition$data;
-    readonly $fragmentRefs: NestedCondition$ref;
+    readonly " $data"?: NestedCondition$data;
+    readonly " $fragmentRefs": NestedCondition$ref;
 };
 
 `;
@@ -93,8 +93,8 @@ export type FeedbackComments_feedback = {
 };
 export type FeedbackComments_feedback$data = FeedbackComments_feedback;
 export type FeedbackComments_feedback$key = {
-    readonly $data?: FeedbackComments_feedback$data;
-    readonly $fragmentRefs: FeedbackComments_feedback$ref;
+    readonly " $data"?: FeedbackComments_feedback$data;
+    readonly " $fragmentRefs": FeedbackComments_feedback$ref;
 };
 
 `;
@@ -167,8 +167,8 @@ export type FragmentSpread = {
 };
 export type FragmentSpread$data = FragmentSpread;
 export type FragmentSpread$key = {
-    readonly $data?: FragmentSpread$data;
-    readonly $fragmentRefs: FragmentSpread$ref;
+    readonly " $data"?: FragmentSpread$data;
+    readonly " $fragmentRefs": FragmentSpread$ref;
 };
 
 
@@ -191,8 +191,8 @@ export type ConcreateTypes = {
 };
 export type ConcreateTypes$data = ConcreateTypes;
 export type ConcreateTypes$key = {
-    readonly $data?: ConcreateTypes$data;
-    readonly $fragmentRefs: ConcreateTypes$ref;
+    readonly " $data"?: ConcreateTypes$data;
+    readonly " $fragmentRefs": ConcreateTypes$ref;
 };
 
 
@@ -208,8 +208,8 @@ export type PictureFragment = {
 };
 export type PictureFragment$data = PictureFragment;
 export type PictureFragment$key = {
-    readonly $data?: PictureFragment$data;
-    readonly $fragmentRefs: PictureFragment$ref;
+    readonly " $data"?: PictureFragment$data;
+    readonly " $fragmentRefs": PictureFragment$ref;
 };
 
 
@@ -220,8 +220,8 @@ export type OtherFragment = {
 };
 export type OtherFragment$data = OtherFragment;
 export type OtherFragment$key = {
-    readonly $data?: OtherFragment$data;
-    readonly $fragmentRefs: OtherFragment$ref;
+    readonly " $data"?: OtherFragment$data;
+    readonly " $fragmentRefs": OtherFragment$ref;
 };
 
 
@@ -237,8 +237,8 @@ export type PageFragment = {
 };
 export type PageFragment$data = PageFragment;
 export type PageFragment$key = {
-    readonly $data?: PageFragment$data;
-    readonly $fragmentRefs: PageFragment$ref;
+    readonly " $data"?: PageFragment$data;
+    readonly " $fragmentRefs": PageFragment$ref;
 };
 
 
@@ -254,8 +254,8 @@ export type UserFrag1 = {
 };
 export type UserFrag1$data = UserFrag1;
 export type UserFrag1$key = {
-    readonly $data?: UserFrag1$data;
-    readonly $fragmentRefs: UserFrag1$ref;
+    readonly " $data"?: UserFrag1$data;
+    readonly " $fragmentRefs": UserFrag1$ref;
 };
 
 
@@ -271,8 +271,8 @@ export type UserFrag2 = {
 };
 export type UserFrag2$data = UserFrag2;
 export type UserFrag2$key = {
-    readonly $data?: UserFrag2$data;
-    readonly $fragmentRefs: UserFrag2$ref;
+    readonly " $data"?: UserFrag2$data;
+    readonly " $fragmentRefs": UserFrag2$ref;
 };
 
 `;
@@ -356,8 +356,8 @@ export type InlineFragment = {
 };
 export type InlineFragment$data = InlineFragment;
 export type InlineFragment$key = {
-    readonly $data?: InlineFragment$data;
-    readonly $fragmentRefs: InlineFragment$ref;
+    readonly " $data"?: InlineFragment$data;
+    readonly " $fragmentRefs": InlineFragment$ref;
 };
 
 
@@ -375,8 +375,8 @@ export type InlineFragmentWithOverlappingFields = {
 };
 export type InlineFragmentWithOverlappingFields$data = InlineFragmentWithOverlappingFields;
 export type InlineFragmentWithOverlappingFields$key = {
-    readonly $data?: InlineFragmentWithOverlappingFields$data;
-    readonly $fragmentRefs: InlineFragmentWithOverlappingFields$ref;
+    readonly " $data"?: InlineFragmentWithOverlappingFields$data;
+    readonly " $fragmentRefs": InlineFragmentWithOverlappingFields$ref;
 };
 
 
@@ -388,8 +388,8 @@ export type InlineFragmentConditionalID = {
 };
 export type InlineFragmentConditionalID$data = InlineFragmentConditionalID;
 export type InlineFragmentConditionalID$key = {
-    readonly $data?: InlineFragmentConditionalID$data;
-    readonly $fragmentRefs: InlineFragmentConditionalID$ref;
+    readonly " $data"?: InlineFragmentConditionalID$data;
+    readonly " $fragmentRefs": InlineFragmentConditionalID$ref;
 };
 
 
@@ -410,8 +410,8 @@ export type InlineFragmentKitchenSink = {
 };
 export type InlineFragmentKitchenSink$data = InlineFragmentKitchenSink;
 export type InlineFragmentKitchenSink$key = {
-    readonly $data?: InlineFragmentKitchenSink$data;
-    readonly $fragmentRefs: InlineFragmentKitchenSink$ref;
+    readonly " $data"?: InlineFragmentKitchenSink$data;
+    readonly " $fragmentRefs": InlineFragmentKitchenSink$ref;
 };
 
 
@@ -427,8 +427,8 @@ export type SomeFragment = {
 };
 export type SomeFragment$data = SomeFragment;
 export type SomeFragment$key = {
-    readonly $data?: SomeFragment$data;
-    readonly $fragmentRefs: SomeFragment$ref;
+    readonly " $data"?: SomeFragment$data;
+    readonly " $fragmentRefs": SomeFragment$ref;
 };
 
 `;
@@ -484,8 +484,8 @@ export type LinkedField = {
 };
 export type LinkedField$data = LinkedField;
 export type LinkedField$key = {
-    readonly $data?: LinkedField$data;
-    readonly $fragmentRefs: LinkedField$ref;
+    readonly " $data"?: LinkedField$data;
+    readonly " $fragmentRefs": LinkedField$ref;
 };
 
 
@@ -547,8 +547,8 @@ export type NameRendererFragment = {
 };
 export type NameRendererFragment$data = NameRendererFragment;
 export type NameRendererFragment$key = {
-    readonly $data?: NameRendererFragment$data;
-    readonly $fragmentRefs: NameRendererFragment$ref;
+    readonly " $data"?: NameRendererFragment$data;
+    readonly " $fragmentRefs": NameRendererFragment$ref;
 };
 
 
@@ -562,8 +562,8 @@ export type PlainUserNameRenderer_name = {
 };
 export type PlainUserNameRenderer_name$data = PlainUserNameRenderer_name;
 export type PlainUserNameRenderer_name$key = {
-    readonly $data?: PlainUserNameRenderer_name$data;
-    readonly $fragmentRefs: PlainUserNameRenderer_name$ref;
+    readonly " $data"?: PlainUserNameRenderer_name$data;
+    readonly " $fragmentRefs": PlainUserNameRenderer_name$ref;
 };
 
 
@@ -577,8 +577,8 @@ export type MarkdownUserNameRenderer_name = {
 };
 export type MarkdownUserNameRenderer_name$data = MarkdownUserNameRenderer_name;
 export type MarkdownUserNameRenderer_name$key = {
-    readonly $data?: MarkdownUserNameRenderer_name$data;
-    readonly $fragmentRefs: MarkdownUserNameRenderer_name$ref;
+    readonly " $data"?: MarkdownUserNameRenderer_name$data;
+    readonly " $fragmentRefs": MarkdownUserNameRenderer_name$ref;
 };
 
 `;
@@ -638,8 +638,8 @@ export type PlainUserNameRenderer_name = {
 };
 export type PlainUserNameRenderer_name$data = PlainUserNameRenderer_name;
 export type PlainUserNameRenderer_name$key = {
-    readonly $data?: PlainUserNameRenderer_name$data;
-    readonly $fragmentRefs: PlainUserNameRenderer_name$ref;
+    readonly " $data"?: PlainUserNameRenderer_name$data;
+    readonly " $fragmentRefs": PlainUserNameRenderer_name$ref;
 };
 
 
@@ -653,8 +653,8 @@ export type MarkdownUserNameRenderer_name = {
 };
 export type MarkdownUserNameRenderer_name$data = MarkdownUserNameRenderer_name;
 export type MarkdownUserNameRenderer_name$key = {
-    readonly $data?: MarkdownUserNameRenderer_name$data;
-    readonly $fragmentRefs: MarkdownUserNameRenderer_name$ref;
+    readonly " $data"?: MarkdownUserNameRenderer_name$data;
+    readonly " $fragmentRefs": MarkdownUserNameRenderer_name$ref;
 };
 
 `;
@@ -819,8 +819,8 @@ export type InlineFragmentWithOverlappingFields = {
 };
 export type InlineFragmentWithOverlappingFields$data = InlineFragmentWithOverlappingFields;
 export type InlineFragmentWithOverlappingFields$key = {
-    readonly $data?: InlineFragmentWithOverlappingFields$data;
-    readonly $fragmentRefs: InlineFragmentWithOverlappingFields$ref;
+    readonly " $data"?: InlineFragmentWithOverlappingFields$data;
+    readonly " $fragmentRefs": InlineFragmentWithOverlappingFields$ref;
 };
 
 `;
@@ -1025,8 +1025,8 @@ export type FriendFragment = {
 };
 export type FriendFragment$data = FriendFragment;
 export type FriendFragment$key = {
-    readonly $data?: FriendFragment$data;
-    readonly $fragmentRefs: FriendFragment$ref;
+    readonly " $data"?: FriendFragment$data;
+    readonly " $fragmentRefs": FriendFragment$ref;
 };
 
 `;
@@ -1137,8 +1137,8 @@ export type FriendFragment = {
 };
 export type FriendFragment$data = FriendFragment;
 export type FriendFragment$key = {
-    readonly $data?: FriendFragment$data;
-    readonly $fragmentRefs: FriendFragment$ref;
+    readonly " $data"?: FriendFragment$data;
+    readonly " $fragmentRefs": FriendFragment$ref;
 };
 
 
@@ -1150,8 +1150,8 @@ export type FeedbackFragment = {
 };
 export type FeedbackFragment$data = FeedbackFragment;
 export type FeedbackFragment$key = {
-    readonly $data?: FeedbackFragment$data;
-    readonly $fragmentRefs: FeedbackFragment$ref;
+    readonly " $data"?: FeedbackFragment$data;
+    readonly " $fragmentRefs": FeedbackFragment$ref;
 };
 
 `;
@@ -1170,8 +1170,8 @@ export type PluralFragment = ReadonlyArray<{
 }>;
 export type PluralFragment$data = PluralFragment;
 export type PluralFragment$key = ReadonlyArray<{
-    readonly $data?: PluralFragment$data;
-    readonly $fragmentRefs: PluralFragment$ref;
+    readonly " $data"?: PluralFragment$data;
+    readonly " $fragmentRefs": PluralFragment$ref;
 }>;
 
 `;
@@ -1381,8 +1381,8 @@ export type FriendFragment = {
 };
 export type FriendFragment$data = FriendFragment;
 export type FriendFragment$key = {
-    readonly $data?: FriendFragment$data;
-    readonly $fragmentRefs: FriendFragment$ref;
+    readonly " $data"?: FriendFragment$data;
+    readonly " $fragmentRefs": FriendFragment$ref;
 };
 
 `;
@@ -1473,8 +1473,8 @@ export type FragmentSpread = {
 };
 export type FragmentSpread$data = FragmentSpread;
 export type FragmentSpread$key = {
-    readonly $data?: FragmentSpread$data;
-    readonly $fragmentRefs: FragmentSpread$ref;
+    readonly " $data"?: FragmentSpread$data;
+    readonly " $fragmentRefs": FragmentSpread$ref;
 };
 
 `;
@@ -1500,8 +1500,8 @@ export type RefetchableFragment = {
 };
 export type RefetchableFragment$data = RefetchableFragment;
 export type RefetchableFragment$key = {
-    readonly $data?: RefetchableFragment$data;
-    readonly $fragmentRefs: RefetchableFragment$ref;
+    readonly " $data"?: RefetchableFragment$data;
+    readonly " $fragmentRefs": RefetchableFragment$ref;
 };
 
 
@@ -1573,8 +1573,8 @@ export type ExampleFragment = {
 };
 export type ExampleFragment$data = ExampleFragment;
 export type ExampleFragment$key = {
-    readonly $data?: ExampleFragment$data;
-    readonly $fragmentRefs: ExampleFragment$ref;
+    readonly " $data"?: ExampleFragment$data;
+    readonly " $fragmentRefs": ExampleFragment$ref;
 };
 
 
@@ -1663,8 +1663,8 @@ export type ScalarField = {
 };
 export type ScalarField$data = ScalarField;
 export type ScalarField$key = {
-    readonly $data?: ScalarField$data;
-    readonly $fragmentRefs: ScalarField$ref;
+    readonly " $data"?: ScalarField$data;
+    readonly " $fragmentRefs": ScalarField$ref;
 };
 
 `;
@@ -1711,8 +1711,8 @@ export type TypenameInsideWithOverlappingFields = {
 };
 export type TypenameInsideWithOverlappingFields$data = TypenameInsideWithOverlappingFields;
 export type TypenameInsideWithOverlappingFields$key = {
-    readonly $data?: TypenameInsideWithOverlappingFields$data;
-    readonly $fragmentRefs: TypenameInsideWithOverlappingFields$ref;
+    readonly " $data"?: TypenameInsideWithOverlappingFields$data;
+    readonly " $fragmentRefs": TypenameInsideWithOverlappingFields$ref;
 };
 
 `;
@@ -1818,8 +1818,8 @@ export type TypenameInside = {
 };
 export type TypenameInside$data = TypenameInside;
 export type TypenameInside$key = {
-    readonly $data?: TypenameInside$data;
-    readonly $fragmentRefs: TypenameInside$ref;
+    readonly " $data"?: TypenameInside$data;
+    readonly " $fragmentRefs": TypenameInside$ref;
 };
 
 
@@ -1840,8 +1840,8 @@ export type TypenameOutside = {
 };
 export type TypenameOutside$data = TypenameOutside;
 export type TypenameOutside$key = {
-    readonly $data?: TypenameOutside$data;
-    readonly $fragmentRefs: TypenameOutside$ref;
+    readonly " $data"?: TypenameOutside$data;
+    readonly " $fragmentRefs": TypenameOutside$ref;
 };
 
 
@@ -1859,8 +1859,8 @@ export type TypenameOutsideWithAbstractType = {
 };
 export type TypenameOutsideWithAbstractType$data = TypenameOutsideWithAbstractType;
 export type TypenameOutsideWithAbstractType$key = {
-    readonly $data?: TypenameOutsideWithAbstractType$data;
-    readonly $fragmentRefs: TypenameOutsideWithAbstractType$ref;
+    readonly " $data"?: TypenameOutsideWithAbstractType$data;
+    readonly " $fragmentRefs": TypenameOutsideWithAbstractType$ref;
 };
 
 
@@ -1872,8 +1872,8 @@ export type TypenameWithoutSpreads = {
 };
 export type TypenameWithoutSpreads$data = TypenameWithoutSpreads;
 export type TypenameWithoutSpreads$key = {
-    readonly $data?: TypenameWithoutSpreads$data;
-    readonly $fragmentRefs: TypenameWithoutSpreads$ref;
+    readonly " $data"?: TypenameWithoutSpreads$data;
+    readonly " $fragmentRefs": TypenameWithoutSpreads$ref;
 };
 
 
@@ -1885,8 +1885,8 @@ export type TypenameWithoutSpreadsAbstractType = {
 };
 export type TypenameWithoutSpreadsAbstractType$data = TypenameWithoutSpreadsAbstractType;
 export type TypenameWithoutSpreadsAbstractType$key = {
-    readonly $data?: TypenameWithoutSpreadsAbstractType$data;
-    readonly $fragmentRefs: TypenameWithoutSpreadsAbstractType$ref;
+    readonly " $data"?: TypenameWithoutSpreadsAbstractType$data;
+    readonly " $fragmentRefs": TypenameWithoutSpreadsAbstractType$ref;
 };
 
 
@@ -1900,8 +1900,8 @@ export type TypenameWithCommonSelections = {
 };
 export type TypenameWithCommonSelections$data = TypenameWithCommonSelections;
 export type TypenameWithCommonSelections$key = {
-    readonly $data?: TypenameWithCommonSelections$data;
-    readonly $fragmentRefs: TypenameWithCommonSelections$ref;
+    readonly " $data"?: TypenameWithCommonSelections$data;
+    readonly " $fragmentRefs": TypenameWithCommonSelections$ref;
 };
 
 
@@ -1922,8 +1922,8 @@ export type TypenameAlias = {
 };
 export type TypenameAlias$data = TypenameAlias;
 export type TypenameAlias$key = {
-    readonly $data?: TypenameAlias$data;
-    readonly $fragmentRefs: TypenameAlias$ref;
+    readonly " $data"?: TypenameAlias$data;
+    readonly " $fragmentRefs": TypenameAlias$ref;
 };
 
 
@@ -1949,8 +1949,8 @@ export type TypenameAliases = {
 };
 export type TypenameAliases$data = TypenameAliases;
 export type TypenameAliases$key = {
-    readonly $data?: TypenameAliases$data;
-    readonly $fragmentRefs: TypenameAliases$ref;
+    readonly " $data"?: TypenameAliases$data;
+    readonly " $fragmentRefs": TypenameAliases$ref;
 };
 
 `;
@@ -1998,8 +1998,8 @@ export type UserProfile = {
 };
 export type UserProfile$data = UserProfile;
 export type UserProfile$key = {
-    readonly $data?: UserProfile$data;
-    readonly $fragmentRefs: UserProfile$ref;
+    readonly " $data"?: UserProfile$data;
+    readonly " $fragmentRefs": UserProfile$ref;
 };
 
 
@@ -2011,8 +2011,8 @@ export type PhotoFragment = {
 };
 export type PhotoFragment$data = PhotoFragment;
 export type PhotoFragment$key = {
-    readonly $data?: PhotoFragment$data;
-    readonly $fragmentRefs: PhotoFragment$ref;
+    readonly " $data"?: PhotoFragment$data;
+    readonly " $fragmentRefs": PhotoFragment$ref;
 };
 
 
@@ -2023,8 +2023,8 @@ export type RecursiveFragment = {
 };
 export type RecursiveFragment$data = RecursiveFragment;
 export type RecursiveFragment$key = {
-    readonly $data?: RecursiveFragment$data;
-    readonly $fragmentRefs: RecursiveFragment$ref;
+    readonly " $data"?: RecursiveFragment$data;
+    readonly " $fragmentRefs": RecursiveFragment$ref;
 };
 
 
@@ -2036,8 +2036,8 @@ export type AnotherRecursiveFragment = {
 };
 export type AnotherRecursiveFragment$data = AnotherRecursiveFragment;
 export type AnotherRecursiveFragment$key = {
-    readonly $data?: AnotherRecursiveFragment$data;
-    readonly $fragmentRefs: AnotherRecursiveFragment$ref;
+    readonly " $data"?: AnotherRecursiveFragment$data;
+    readonly " $fragmentRefs": AnotherRecursiveFragment$ref;
 };
 
 `;
@@ -2062,8 +2062,8 @@ export type ConditionField = {
 };
 export type ConditionField$data = ConditionField;
 export type ConditionField$key = {
-    readonly $data?: ConditionField$data;
-    readonly $fragmentRefs: ConditionField$ref;
+    readonly " $data"?: ConditionField$data;
+    readonly " $fragmentRefs": ConditionField$ref;
 };
 
 
@@ -2074,8 +2074,8 @@ export type NestedCondition = {
 };
 export type NestedCondition$data = NestedCondition;
 export type NestedCondition$key = {
-    readonly $data?: NestedCondition$data;
-    readonly $fragmentRefs: NestedCondition$ref;
+    readonly " $data"?: NestedCondition$data;
+    readonly " $fragmentRefs": NestedCondition$ref;
 };
 
 `;
@@ -2135,8 +2135,8 @@ export type FeedbackComments_feedback = {
 };
 export type FeedbackComments_feedback$data = FeedbackComments_feedback;
 export type FeedbackComments_feedback$key = {
-    readonly $data?: FeedbackComments_feedback$data;
-    readonly $fragmentRefs: FeedbackComments_feedback$ref;
+    readonly " $data"?: FeedbackComments_feedback$data;
+    readonly " $fragmentRefs": FeedbackComments_feedback$ref;
 };
 
 `;
@@ -2209,8 +2209,8 @@ export type FragmentSpread = {
 };
 export type FragmentSpread$data = FragmentSpread;
 export type FragmentSpread$key = {
-    readonly $data?: FragmentSpread$data;
-    readonly $fragmentRefs: FragmentSpread$ref;
+    readonly " $data"?: FragmentSpread$data;
+    readonly " $fragmentRefs": FragmentSpread$ref;
 };
 
 
@@ -2233,8 +2233,8 @@ export type ConcreateTypes = {
 };
 export type ConcreateTypes$data = ConcreateTypes;
 export type ConcreateTypes$key = {
-    readonly $data?: ConcreateTypes$data;
-    readonly $fragmentRefs: ConcreateTypes$ref;
+    readonly " $data"?: ConcreateTypes$data;
+    readonly " $fragmentRefs": ConcreateTypes$ref;
 };
 
 
@@ -2250,8 +2250,8 @@ export type PictureFragment = {
 };
 export type PictureFragment$data = PictureFragment;
 export type PictureFragment$key = {
-    readonly $data?: PictureFragment$data;
-    readonly $fragmentRefs: PictureFragment$ref;
+    readonly " $data"?: PictureFragment$data;
+    readonly " $fragmentRefs": PictureFragment$ref;
 };
 
 
@@ -2262,8 +2262,8 @@ export type OtherFragment = {
 };
 export type OtherFragment$data = OtherFragment;
 export type OtherFragment$key = {
-    readonly $data?: OtherFragment$data;
-    readonly $fragmentRefs: OtherFragment$ref;
+    readonly " $data"?: OtherFragment$data;
+    readonly " $fragmentRefs": OtherFragment$ref;
 };
 
 
@@ -2279,8 +2279,8 @@ export type PageFragment = {
 };
 export type PageFragment$data = PageFragment;
 export type PageFragment$key = {
-    readonly $data?: PageFragment$data;
-    readonly $fragmentRefs: PageFragment$ref;
+    readonly " $data"?: PageFragment$data;
+    readonly " $fragmentRefs": PageFragment$ref;
 };
 
 
@@ -2296,8 +2296,8 @@ export type UserFrag1 = {
 };
 export type UserFrag1$data = UserFrag1;
 export type UserFrag1$key = {
-    readonly $data?: UserFrag1$data;
-    readonly $fragmentRefs: UserFrag1$ref;
+    readonly " $data"?: UserFrag1$data;
+    readonly " $fragmentRefs": UserFrag1$ref;
 };
 
 
@@ -2313,8 +2313,8 @@ export type UserFrag2 = {
 };
 export type UserFrag2$data = UserFrag2;
 export type UserFrag2$key = {
-    readonly $data?: UserFrag2$data;
-    readonly $fragmentRefs: UserFrag2$ref;
+    readonly " $data"?: UserFrag2$data;
+    readonly " $fragmentRefs": UserFrag2$ref;
 };
 
 `;
@@ -2398,8 +2398,8 @@ export type InlineFragment = {
 };
 export type InlineFragment$data = InlineFragment;
 export type InlineFragment$key = {
-    readonly $data?: InlineFragment$data;
-    readonly $fragmentRefs: InlineFragment$ref;
+    readonly " $data"?: InlineFragment$data;
+    readonly " $fragmentRefs": InlineFragment$ref;
 };
 
 
@@ -2417,8 +2417,8 @@ export type InlineFragmentWithOverlappingFields = {
 };
 export type InlineFragmentWithOverlappingFields$data = InlineFragmentWithOverlappingFields;
 export type InlineFragmentWithOverlappingFields$key = {
-    readonly $data?: InlineFragmentWithOverlappingFields$data;
-    readonly $fragmentRefs: InlineFragmentWithOverlappingFields$ref;
+    readonly " $data"?: InlineFragmentWithOverlappingFields$data;
+    readonly " $fragmentRefs": InlineFragmentWithOverlappingFields$ref;
 };
 
 
@@ -2430,8 +2430,8 @@ export type InlineFragmentConditionalID = {
 };
 export type InlineFragmentConditionalID$data = InlineFragmentConditionalID;
 export type InlineFragmentConditionalID$key = {
-    readonly $data?: InlineFragmentConditionalID$data;
-    readonly $fragmentRefs: InlineFragmentConditionalID$ref;
+    readonly " $data"?: InlineFragmentConditionalID$data;
+    readonly " $fragmentRefs": InlineFragmentConditionalID$ref;
 };
 
 
@@ -2452,8 +2452,8 @@ export type InlineFragmentKitchenSink = {
 };
 export type InlineFragmentKitchenSink$data = InlineFragmentKitchenSink;
 export type InlineFragmentKitchenSink$key = {
-    readonly $data?: InlineFragmentKitchenSink$data;
-    readonly $fragmentRefs: InlineFragmentKitchenSink$ref;
+    readonly " $data"?: InlineFragmentKitchenSink$data;
+    readonly " $fragmentRefs": InlineFragmentKitchenSink$ref;
 };
 
 
@@ -2469,8 +2469,8 @@ export type SomeFragment = {
 };
 export type SomeFragment$data = SomeFragment;
 export type SomeFragment$key = {
-    readonly $data?: SomeFragment$data;
-    readonly $fragmentRefs: SomeFragment$ref;
+    readonly " $data"?: SomeFragment$data;
+    readonly " $fragmentRefs": SomeFragment$ref;
 };
 
 `;
@@ -2526,8 +2526,8 @@ export type LinkedField = {
 };
 export type LinkedField$data = LinkedField;
 export type LinkedField$key = {
-    readonly $data?: LinkedField$data;
-    readonly $fragmentRefs: LinkedField$ref;
+    readonly " $data"?: LinkedField$data;
+    readonly " $fragmentRefs": LinkedField$ref;
 };
 
 
@@ -2589,8 +2589,8 @@ export type NameRendererFragment = {
 };
 export type NameRendererFragment$data = NameRendererFragment;
 export type NameRendererFragment$key = {
-    readonly $data?: NameRendererFragment$data;
-    readonly $fragmentRefs: NameRendererFragment$ref;
+    readonly " $data"?: NameRendererFragment$data;
+    readonly " $fragmentRefs": NameRendererFragment$ref;
 };
 
 
@@ -2604,8 +2604,8 @@ export type PlainUserNameRenderer_name = {
 };
 export type PlainUserNameRenderer_name$data = PlainUserNameRenderer_name;
 export type PlainUserNameRenderer_name$key = {
-    readonly $data?: PlainUserNameRenderer_name$data;
-    readonly $fragmentRefs: PlainUserNameRenderer_name$ref;
+    readonly " $data"?: PlainUserNameRenderer_name$data;
+    readonly " $fragmentRefs": PlainUserNameRenderer_name$ref;
 };
 
 
@@ -2619,8 +2619,8 @@ export type MarkdownUserNameRenderer_name = {
 };
 export type MarkdownUserNameRenderer_name$data = MarkdownUserNameRenderer_name;
 export type MarkdownUserNameRenderer_name$key = {
-    readonly $data?: MarkdownUserNameRenderer_name$data;
-    readonly $fragmentRefs: MarkdownUserNameRenderer_name$ref;
+    readonly " $data"?: MarkdownUserNameRenderer_name$data;
+    readonly " $fragmentRefs": MarkdownUserNameRenderer_name$ref;
 };
 
 `;
@@ -2680,8 +2680,8 @@ export type PlainUserNameRenderer_name = {
 };
 export type PlainUserNameRenderer_name$data = PlainUserNameRenderer_name;
 export type PlainUserNameRenderer_name$key = {
-    readonly $data?: PlainUserNameRenderer_name$data;
-    readonly $fragmentRefs: PlainUserNameRenderer_name$ref;
+    readonly " $data"?: PlainUserNameRenderer_name$data;
+    readonly " $fragmentRefs": PlainUserNameRenderer_name$ref;
 };
 
 
@@ -2695,8 +2695,8 @@ export type MarkdownUserNameRenderer_name = {
 };
 export type MarkdownUserNameRenderer_name$data = MarkdownUserNameRenderer_name;
 export type MarkdownUserNameRenderer_name$key = {
-    readonly $data?: MarkdownUserNameRenderer_name$data;
-    readonly $fragmentRefs: MarkdownUserNameRenderer_name$ref;
+    readonly " $data"?: MarkdownUserNameRenderer_name$data;
+    readonly " $fragmentRefs": MarkdownUserNameRenderer_name$ref;
 };
 
 `;
@@ -2861,8 +2861,8 @@ export type InlineFragmentWithOverlappingFields = {
 };
 export type InlineFragmentWithOverlappingFields$data = InlineFragmentWithOverlappingFields;
 export type InlineFragmentWithOverlappingFields$key = {
-    readonly $data?: InlineFragmentWithOverlappingFields$data;
-    readonly $fragmentRefs: InlineFragmentWithOverlappingFields$ref;
+    readonly " $data"?: InlineFragmentWithOverlappingFields$data;
+    readonly " $fragmentRefs": InlineFragmentWithOverlappingFields$ref;
 };
 
 `;
@@ -3067,8 +3067,8 @@ export type FriendFragment = {
 };
 export type FriendFragment$data = FriendFragment;
 export type FriendFragment$key = {
-    readonly $data?: FriendFragment$data;
-    readonly $fragmentRefs: FriendFragment$ref;
+    readonly " $data"?: FriendFragment$data;
+    readonly " $fragmentRefs": FriendFragment$ref;
 };
 
 `;
@@ -3179,8 +3179,8 @@ export type FriendFragment = {
 };
 export type FriendFragment$data = FriendFragment;
 export type FriendFragment$key = {
-    readonly $data?: FriendFragment$data;
-    readonly $fragmentRefs: FriendFragment$ref;
+    readonly " $data"?: FriendFragment$data;
+    readonly " $fragmentRefs": FriendFragment$ref;
 };
 
 
@@ -3192,8 +3192,8 @@ export type FeedbackFragment = {
 };
 export type FeedbackFragment$data = FeedbackFragment;
 export type FeedbackFragment$key = {
-    readonly $data?: FeedbackFragment$data;
-    readonly $fragmentRefs: FeedbackFragment$ref;
+    readonly " $data"?: FeedbackFragment$data;
+    readonly " $fragmentRefs": FeedbackFragment$ref;
 };
 
 `;
@@ -3212,8 +3212,8 @@ export type PluralFragment = ReadonlyArray<{
 }>;
 export type PluralFragment$data = PluralFragment;
 export type PluralFragment$key = ReadonlyArray<{
-    readonly $data?: PluralFragment$data;
-    readonly $fragmentRefs: PluralFragment$ref;
+    readonly " $data"?: PluralFragment$data;
+    readonly " $fragmentRefs": PluralFragment$ref;
 }>;
 
 `;
@@ -3423,8 +3423,8 @@ export type FriendFragment = {
 };
 export type FriendFragment$data = FriendFragment;
 export type FriendFragment$key = {
-    readonly $data?: FriendFragment$data;
-    readonly $fragmentRefs: FriendFragment$ref;
+    readonly " $data"?: FriendFragment$data;
+    readonly " $fragmentRefs": FriendFragment$ref;
 };
 
 `;
@@ -3515,8 +3515,8 @@ export type FragmentSpread = {
 };
 export type FragmentSpread$data = FragmentSpread;
 export type FragmentSpread$key = {
-    readonly $data?: FragmentSpread$data;
-    readonly $fragmentRefs: FragmentSpread$ref;
+    readonly " $data"?: FragmentSpread$data;
+    readonly " $fragmentRefs": FragmentSpread$ref;
 };
 
 `;
@@ -3542,8 +3542,8 @@ export type RefetchableFragment = {
 };
 export type RefetchableFragment$data = RefetchableFragment;
 export type RefetchableFragment$key = {
-    readonly $data?: RefetchableFragment$data;
-    readonly $fragmentRefs: RefetchableFragment$ref;
+    readonly " $data"?: RefetchableFragment$data;
+    readonly " $fragmentRefs": RefetchableFragment$ref;
 };
 
 
@@ -3615,8 +3615,8 @@ export type ExampleFragment = {
 };
 export type ExampleFragment$data = ExampleFragment;
 export type ExampleFragment$key = {
-    readonly $data?: ExampleFragment$data;
-    readonly $fragmentRefs: ExampleFragment$ref;
+    readonly " $data"?: ExampleFragment$data;
+    readonly " $fragmentRefs": ExampleFragment$ref;
 };
 
 
@@ -3705,8 +3705,8 @@ export type ScalarField = {
 };
 export type ScalarField$data = ScalarField;
 export type ScalarField$key = {
-    readonly $data?: ScalarField$data;
-    readonly $fragmentRefs: ScalarField$ref;
+    readonly " $data"?: ScalarField$data;
+    readonly " $fragmentRefs": ScalarField$ref;
 };
 
 `;
@@ -3753,8 +3753,8 @@ export type TypenameInsideWithOverlappingFields = {
 };
 export type TypenameInsideWithOverlappingFields$data = TypenameInsideWithOverlappingFields;
 export type TypenameInsideWithOverlappingFields$key = {
-    readonly $data?: TypenameInsideWithOverlappingFields$data;
-    readonly $fragmentRefs: TypenameInsideWithOverlappingFields$ref;
+    readonly " $data"?: TypenameInsideWithOverlappingFields$data;
+    readonly " $fragmentRefs": TypenameInsideWithOverlappingFields$ref;
 };
 
 `;
@@ -3860,8 +3860,8 @@ export type TypenameInside = {
 };
 export type TypenameInside$data = TypenameInside;
 export type TypenameInside$key = {
-    readonly $data?: TypenameInside$data;
-    readonly $fragmentRefs: TypenameInside$ref;
+    readonly " $data"?: TypenameInside$data;
+    readonly " $fragmentRefs": TypenameInside$ref;
 };
 
 
@@ -3882,8 +3882,8 @@ export type TypenameOutside = {
 };
 export type TypenameOutside$data = TypenameOutside;
 export type TypenameOutside$key = {
-    readonly $data?: TypenameOutside$data;
-    readonly $fragmentRefs: TypenameOutside$ref;
+    readonly " $data"?: TypenameOutside$data;
+    readonly " $fragmentRefs": TypenameOutside$ref;
 };
 
 
@@ -3901,8 +3901,8 @@ export type TypenameOutsideWithAbstractType = {
 };
 export type TypenameOutsideWithAbstractType$data = TypenameOutsideWithAbstractType;
 export type TypenameOutsideWithAbstractType$key = {
-    readonly $data?: TypenameOutsideWithAbstractType$data;
-    readonly $fragmentRefs: TypenameOutsideWithAbstractType$ref;
+    readonly " $data"?: TypenameOutsideWithAbstractType$data;
+    readonly " $fragmentRefs": TypenameOutsideWithAbstractType$ref;
 };
 
 
@@ -3914,8 +3914,8 @@ export type TypenameWithoutSpreads = {
 };
 export type TypenameWithoutSpreads$data = TypenameWithoutSpreads;
 export type TypenameWithoutSpreads$key = {
-    readonly $data?: TypenameWithoutSpreads$data;
-    readonly $fragmentRefs: TypenameWithoutSpreads$ref;
+    readonly " $data"?: TypenameWithoutSpreads$data;
+    readonly " $fragmentRefs": TypenameWithoutSpreads$ref;
 };
 
 
@@ -3927,8 +3927,8 @@ export type TypenameWithoutSpreadsAbstractType = {
 };
 export type TypenameWithoutSpreadsAbstractType$data = TypenameWithoutSpreadsAbstractType;
 export type TypenameWithoutSpreadsAbstractType$key = {
-    readonly $data?: TypenameWithoutSpreadsAbstractType$data;
-    readonly $fragmentRefs: TypenameWithoutSpreadsAbstractType$ref;
+    readonly " $data"?: TypenameWithoutSpreadsAbstractType$data;
+    readonly " $fragmentRefs": TypenameWithoutSpreadsAbstractType$ref;
 };
 
 
@@ -3942,8 +3942,8 @@ export type TypenameWithCommonSelections = {
 };
 export type TypenameWithCommonSelections$data = TypenameWithCommonSelections;
 export type TypenameWithCommonSelections$key = {
-    readonly $data?: TypenameWithCommonSelections$data;
-    readonly $fragmentRefs: TypenameWithCommonSelections$ref;
+    readonly " $data"?: TypenameWithCommonSelections$data;
+    readonly " $fragmentRefs": TypenameWithCommonSelections$ref;
 };
 
 
@@ -3964,8 +3964,8 @@ export type TypenameAlias = {
 };
 export type TypenameAlias$data = TypenameAlias;
 export type TypenameAlias$key = {
-    readonly $data?: TypenameAlias$data;
-    readonly $fragmentRefs: TypenameAlias$ref;
+    readonly " $data"?: TypenameAlias$data;
+    readonly " $fragmentRefs": TypenameAlias$ref;
 };
 
 
@@ -3991,8 +3991,8 @@ export type TypenameAliases = {
 };
 export type TypenameAliases$data = TypenameAliases;
 export type TypenameAliases$key = {
-    readonly $data?: TypenameAliases$data;
-    readonly $fragmentRefs: TypenameAliases$ref;
+    readonly " $data"?: TypenameAliases$data;
+    readonly " $fragmentRefs": TypenameAliases$ref;
 };
 
 `;
@@ -4040,8 +4040,8 @@ export type UserProfile = {
 };
 export type UserProfile$data = UserProfile;
 export type UserProfile$key = {
-    readonly $data?: UserProfile$data;
-    readonly $fragmentRefs: UserProfile$ref;
+    readonly " $data"?: UserProfile$data;
+    readonly " $fragmentRefs": UserProfile$ref;
 };
 
 
@@ -4053,8 +4053,8 @@ export type PhotoFragment = {
 };
 export type PhotoFragment$data = PhotoFragment;
 export type PhotoFragment$key = {
-    readonly $data?: PhotoFragment$data;
-    readonly $fragmentRefs: PhotoFragment$ref;
+    readonly " $data"?: PhotoFragment$data;
+    readonly " $fragmentRefs": PhotoFragment$ref;
 };
 
 
@@ -4065,8 +4065,8 @@ export type RecursiveFragment = {
 };
 export type RecursiveFragment$data = RecursiveFragment;
 export type RecursiveFragment$key = {
-    readonly $data?: RecursiveFragment$data;
-    readonly $fragmentRefs: RecursiveFragment$ref;
+    readonly " $data"?: RecursiveFragment$data;
+    readonly " $fragmentRefs": RecursiveFragment$ref;
 };
 
 
@@ -4078,8 +4078,8 @@ export type AnotherRecursiveFragment = {
 };
 export type AnotherRecursiveFragment$data = AnotherRecursiveFragment;
 export type AnotherRecursiveFragment$key = {
-    readonly $data?: AnotherRecursiveFragment$data;
-    readonly $fragmentRefs: AnotherRecursiveFragment$ref;
+    readonly " $data"?: AnotherRecursiveFragment$data;
+    readonly " $fragmentRefs": AnotherRecursiveFragment$ref;
 };
 
 `;

@@ -30,6 +30,7 @@ const { isAbstractType } = SchemaUtils;
 
 const REF_TYPE = " $refType";
 const FRAGMENT_REFS = " $fragmentRefs";
+const DATA_REF = " $data";
 const FRAGMENT_REFS_TYPE_NAME = "FragmentRefs";
 const MODULE_IMPORT_FIELD = "MODULE_IMPORT_FIELD";
 const DIRECTIVE_NAME = "raw_response_type";
@@ -432,14 +433,14 @@ function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
 
         const refTypeName = getRefTypeName(node.name);
         const refTypeDataProperty = objectTypeProperty(
-          "$data",
+          DATA_REF,
           ts.createTypeReferenceNode(`${node.name}$data`, undefined)
         );
         refTypeDataProperty.questionToken = ts.createToken(
           ts.SyntaxKind.QuestionToken
         );
         const refTypeFragmentRefProperty = objectTypeProperty(
-          "$fragmentRefs",
+          FRAGMENT_REFS,
           ts.createTypeReferenceNode(
             getOldFragmentTypeName(node.name),
             undefined
