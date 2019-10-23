@@ -15,6 +15,11 @@ export type TodoListFooter_viewer = {
     readonly totalCount: number | null;
     readonly " $refType": "TodoListFooter_viewer";
 };
+export type TodoListFooter_viewer$data = TodoListFooter_viewer;
+export type TodoListFooter_viewer$key = {
+    readonly " $data"?: TodoListFooter_viewer$data;
+    readonly " $fragmentRefs": FragmentRefs<"TodoListFooter_viewer">;
+};
 
 
 

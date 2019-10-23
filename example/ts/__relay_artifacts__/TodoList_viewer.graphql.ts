@@ -18,6 +18,11 @@ export type TodoList_viewer = {
     readonly " $fragmentRefs": FragmentRefs<"Todo_viewer">;
     readonly " $refType": "TodoList_viewer";
 };
+export type TodoList_viewer$data = TodoList_viewer;
+export type TodoList_viewer$key = {
+    readonly " $data"?: TodoList_viewer$data;
+    readonly " $fragmentRefs": FragmentRefs<"TodoList_viewer">;
+};
 
 
 

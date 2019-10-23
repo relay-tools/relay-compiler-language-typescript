@@ -8,6 +8,11 @@ export type TodoApp_viewer = {
     readonly " $fragmentRefs": FragmentRefs<"TodoListFooter_viewer" | "TodoList_viewer">;
     readonly " $refType": "TodoApp_viewer";
 };
+export type TodoApp_viewer$data = TodoApp_viewer;
+export type TodoApp_viewer$key = {
+    readonly " $data"?: TodoApp_viewer$data;
+    readonly " $fragmentRefs": FragmentRefs<"TodoApp_viewer">;
+};
 
 
 

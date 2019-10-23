@@ -7,6 +7,11 @@ export type Todo_todo = {
     readonly text: string | null;
     readonly " $refType": "Todo_todo";
 };
+export type Todo_todo$data = Todo_todo;
+export type Todo_todo$key = {
+    readonly " $data"?: Todo_todo$data;
+    readonly " $fragmentRefs": FragmentRefs<"Todo_todo">;
+};
 
 
 

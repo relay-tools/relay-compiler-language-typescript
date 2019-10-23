@@ -6,7 +6,7 @@ export type AddTodoInput = {
     readonly clientMutationId?: string | null;
 };
 export type AddTodoMutationVariables = {
-    readonly input: AddTodoInput;
+    input: AddTodoInput;
 };
 export type AddTodoMutationResponse = {
     readonly addTodo: {
