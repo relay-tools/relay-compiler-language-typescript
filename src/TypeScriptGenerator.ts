@@ -429,6 +429,28 @@ function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
           return [selection];
         });
         state.generatedFragments.add(node.name);
+
+        const refTypeName = getRefTypeName(node.name);
+        const refTypeDataProperty = objectTypeProperty(
+          "$data",
+          ts.createTypeReferenceNode(`${node.name}$data`, undefined)
+        );
+        refTypeDataProperty.questionToken = ts.createToken(
+          ts.SyntaxKind.QuestionToken
+        );
+        const refTypeFragmentRefProperty = objectTypeProperty(
+          "$fragmentRefs",
+          ts.createTypeReferenceNode(
+            getOldFragmentTypeName(node.name),
+            undefined
+          )
+        );
+        const isPluralFragment = isPlural(node);
+        const refType = exactObjectTypeAnnotation([
+          refTypeDataProperty,
+          refTypeFragmentRefProperty
+        ]);
+
         const unmasked = node.metadata != null && node.metadata.mask === false;
         const baseType = selectionsToAST(
           selections,
@@ -445,7 +467,16 @@ function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
         return [
           ...getFragmentRefsTypeImport(state),
           ...getEnumDefinitions(state),
-          exportType(node.name, type)
+          exportType(node.name, type),
+          exportType(
+            refTypeName,
+            isPluralFragment
+              ? ts.createTypeReferenceNode(
+                  ts.createIdentifier("ReadonlyArray"),
+                  [refType]
+                )
+              : refType
+          )
         ];
       },
       InlineFragment(node) {
@@ -889,6 +920,14 @@ function getEnumDefinitions({
 
 function stringLiteralTypeAnnotation(name: string): ts.TypeNode {
   return ts.createLiteralTypeNode(ts.createLiteral(name));
+}
+
+function getOldFragmentTypeName(name: string) {
+  return `${name}$ref`;
+}
+
+function getRefTypeName(name: string): string {
+  return `${name}$key`;
 }
 
 // Should match FLOW_TRANSFORMS array
