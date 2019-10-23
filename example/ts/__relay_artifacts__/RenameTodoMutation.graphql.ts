@@ -7,7 +7,7 @@ export type RenameTodoInput = {
     readonly clientMutationId?: string | null;
 };
 export type RenameTodoMutationVariables = {
-    readonly input: RenameTodoInput;
+    input: RenameTodoInput;
 };
 export type RenameTodoMutationResponse = {
     readonly renameTodo: {

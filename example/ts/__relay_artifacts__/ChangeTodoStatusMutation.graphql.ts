@@ -7,7 +7,7 @@ export type ChangeTodoStatusInput = {
     readonly clientMutationId?: string | null;
 };
 export type ChangeTodoStatusMutationVariables = {
-    readonly input: ChangeTodoStatusInput;
+    input: ChangeTodoStatusInput;
 };
 export type ChangeTodoStatusMutationResponse = {
     readonly changeTodoStatus: {
