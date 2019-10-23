@@ -9,16 +9,16 @@ export type MarkAllTodosMutationVariables = {
     readonly input: MarkAllTodosInput;
 };
 export type MarkAllTodosMutationResponse = {
-    readonly markAllTodos: ({
-        readonly changedTodos: ReadonlyArray<({
+    readonly markAllTodos: {
+        readonly changedTodos: ReadonlyArray<{
             readonly id: string;
             readonly complete: boolean | null;
-        }) | null> | null;
-        readonly viewer: ({
+        } | null> | null;
+        readonly viewer: {
             readonly id: string;
             readonly completedCount: number | null;
-        }) | null;
-    }) | null;
+        } | null;
+    } | null;
 };
 export type MarkAllTodosMutation = {
     readonly response: MarkAllTodosMutationResponse;
@@ -70,8 +70,7 @@ v2 = [
       {
         "kind": "Variable",
         "name": "input",
-        "variableName": "input",
-        "type": "MarkAllTodosInput!"
+        "variableName": "input"
       }
     ],
     "concreteType": "MarkAllTodosPayload",
@@ -86,7 +85,7 @@ v2 = [
         "concreteType": "Todo",
         "plural": true,
         "selections": [
-          v1,
+          (v1/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -105,7 +104,7 @@ v2 = [
         "concreteType": "User",
         "plural": false,
         "selections": [
-          v1,
+          (v1/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -120,24 +119,26 @@ v2 = [
 ];
 return {
   "kind": "Request",
-  "operationKind": "mutation",
-  "name": "MarkAllTodosMutation",
-  "id": null,
-  "text": "mutation MarkAllTodosMutation(\n  $input: MarkAllTodosInput!\n) {\n  markAllTodos(input: $input) {\n    changedTodos {\n      id\n      complete\n    }\n    viewer {\n      id\n      completedCount\n    }\n  }\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "MarkAllTodosMutation",
     "type": "Mutation",
     "metadata": null,
-    "argumentDefinitions": v0,
-    "selections": v2
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v2/*: any*/)
   },
   "operation": {
     "kind": "Operation",
     "name": "MarkAllTodosMutation",
-    "argumentDefinitions": v0,
-    "selections": v2
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v2/*: any*/)
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "MarkAllTodosMutation",
+    "id": null,
+    "text": "mutation MarkAllTodosMutation(\n  $input: MarkAllTodosInput!\n) {\n  markAllTodos(input: $input) {\n    changedTodos {\n      id\n      complete\n    }\n    viewer {\n      id\n      completedCount\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

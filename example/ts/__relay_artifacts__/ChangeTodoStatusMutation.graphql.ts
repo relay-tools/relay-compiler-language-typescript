@@ -10,16 +10,16 @@ export type ChangeTodoStatusMutationVariables = {
     readonly input: ChangeTodoStatusInput;
 };
 export type ChangeTodoStatusMutationResponse = {
-    readonly changeTodoStatus: ({
-        readonly todo: ({
+    readonly changeTodoStatus: {
+        readonly todo: {
             readonly id: string;
             readonly complete: boolean | null;
-        }) | null;
-        readonly viewer: ({
+        } | null;
+        readonly viewer: {
             readonly id: string;
             readonly completedCount: number | null;
-        }) | null;
-    }) | null;
+        } | null;
+    } | null;
 };
 export type ChangeTodoStatusMutation = {
     readonly response: ChangeTodoStatusMutationResponse;
@@ -71,8 +71,7 @@ v2 = [
       {
         "kind": "Variable",
         "name": "input",
-        "variableName": "input",
-        "type": "ChangeTodoStatusInput!"
+        "variableName": "input"
       }
     ],
     "concreteType": "ChangeTodoStatusPayload",
@@ -87,7 +86,7 @@ v2 = [
         "concreteType": "Todo",
         "plural": false,
         "selections": [
-          v1,
+          (v1/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -106,7 +105,7 @@ v2 = [
         "concreteType": "User",
         "plural": false,
         "selections": [
-          v1,
+          (v1/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -121,24 +120,26 @@ v2 = [
 ];
 return {
   "kind": "Request",
-  "operationKind": "mutation",
-  "name": "ChangeTodoStatusMutation",
-  "id": null,
-  "text": "mutation ChangeTodoStatusMutation(\n  $input: ChangeTodoStatusInput!\n) {\n  changeTodoStatus(input: $input) {\n    todo {\n      id\n      complete\n    }\n    viewer {\n      id\n      completedCount\n    }\n  }\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "ChangeTodoStatusMutation",
     "type": "Mutation",
     "metadata": null,
-    "argumentDefinitions": v0,
-    "selections": v2
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v2/*: any*/)
   },
   "operation": {
     "kind": "Operation",
     "name": "ChangeTodoStatusMutation",
-    "argumentDefinitions": v0,
-    "selections": v2
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v2/*: any*/)
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "ChangeTodoStatusMutation",
+    "id": null,
+    "text": "mutation ChangeTodoStatusMutation(\n  $input: ChangeTodoStatusInput!\n) {\n  changeTodoStatus(input: $input) {\n    todo {\n      id\n      complete\n    }\n    viewer {\n      id\n      completedCount\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();

@@ -63,3 +63,7 @@ typings/
 /bin
 
 .npmrc
+
+# Build artifacts
+.yalc
+yalc.lock

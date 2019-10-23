@@ -14,20 +14,16 @@ fragment NestedCondition on Node {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // ConditionField.graphql
-declare const _ConditionField$ref: unique symbol;
-export type ConditionField$ref = typeof _ConditionField$ref;
 export type ConditionField = {
     readonly id?: string;
-    readonly " $refType": ConditionField$ref;
+    readonly " $refType": "ConditionField";
 };
 
 
 // NestedCondition.graphql
-declare const _NestedCondition$ref: unique symbol;
-export type NestedCondition$ref = typeof _NestedCondition$ref;
 export type NestedCondition = {
     readonly id?: string;
-    readonly " $refType": NestedCondition$ref;
+    readonly " $refType": "NestedCondition";
 };
 
 `;
@@ -56,13 +52,13 @@ fragment FeedbackComments_feedback on Feedback {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // QueryWithConnectionField.graphql
-type FeedbackComments_feedback$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type QueryWithConnectionFieldVariables = {
-    readonly id: string;
+    id: string;
 };
 export type QueryWithConnectionFieldResponse = {
     readonly feedback: {
-        readonly " $fragmentRefs": FeedbackComments_feedback$ref;
+        readonly " $fragmentRefs": FragmentRefs<"FeedbackComments_feedback">;
     } | null;
 };
 export type QueryWithConnectionField = {
@@ -72,8 +68,6 @@ export type QueryWithConnectionField = {
 
 
 // FeedbackComments_feedback.graphql
-declare const _FeedbackComments_feedback$ref: unique symbol;
-export type FeedbackComments_feedback$ref = typeof _FeedbackComments_feedback$ref;
 export type FeedbackComments_feedback = {
     readonly comments: {
         readonly edges: ReadonlyArray<{
@@ -85,7 +79,7 @@ export type FeedbackComments_feedback = {
             readonly hasNextPage: boolean | null;
         } | null;
     } | null;
-    readonly " $refType": FeedbackComments_feedback$ref;
+    readonly " $refType": "FeedbackComments_feedback";
 };
 
 `;
@@ -143,35 +137,28 @@ fragment UserFrag2 on Page {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // FragmentSpread.graphql
-type OtherFragment$ref = any;
-type PictureFragment$ref = any;
-type UserFrag1$ref = any;
-type UserFrag2$ref = any;
-declare const _FragmentSpread$ref: unique symbol;
-export type FragmentSpread$ref = typeof _FragmentSpread$ref;
+import { FragmentRefs } from "relay-runtime";
 export type FragmentSpread = {
     readonly id: string;
     readonly justFrag: {
-        readonly " $fragmentRefs": PictureFragment$ref;
+        readonly " $fragmentRefs": FragmentRefs<"PictureFragment">;
     } | null;
     readonly fragAndField: {
         readonly uri: string | null;
-        readonly " $fragmentRefs": PictureFragment$ref;
+        readonly " $fragmentRefs": FragmentRefs<"PictureFragment">;
     } | null;
-    readonly " $fragmentRefs": OtherFragment$ref & UserFrag1$ref & UserFrag2$ref;
-    readonly " $refType": FragmentSpread$ref;
+    readonly " $fragmentRefs": FragmentRefs<"OtherFragment" | "UserFrag1" | "UserFrag2">;
+    readonly " $refType": "FragmentSpread";
 };
 
 
 // ConcreateTypes.graphql
-type PageFragment$ref = any;
-declare const _ConcreateTypes$ref: unique symbol;
-export type ConcreateTypes$ref = typeof _ConcreateTypes$ref;
+import { FragmentRefs } from "relay-runtime";
 export type ConcreateTypes = {
     readonly actor: ({
         readonly __typename: "Page";
         readonly id: string;
-        readonly " $fragmentRefs": PageFragment$ref;
+        readonly " $fragmentRefs": FragmentRefs<"PageFragment">;
     } | {
         readonly __typename: "User";
         readonly name: string | null;
@@ -180,72 +167,62 @@ export type ConcreateTypes = {
         value in case none of the concrete values match.*/
         readonly __typename: "%other";
     }) | null;
-    readonly " $refType": ConcreateTypes$ref;
+    readonly " $refType": "ConcreateTypes";
 };
 
 
 // PictureFragment.graphql
-declare const _PictureFragment$ref: unique symbol;
-export type PictureFragment$ref = typeof _PictureFragment$ref;
 export type PictureFragment = {
     readonly __typename: "Image";
-    readonly " $refType": PictureFragment$ref;
+    readonly " $refType": "PictureFragment";
 } | {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": PictureFragment$ref;
+    readonly " $refType": "PictureFragment";
 };
 
 
 // OtherFragment.graphql
-declare const _OtherFragment$ref: unique symbol;
-export type OtherFragment$ref = typeof _OtherFragment$ref;
 export type OtherFragment = {
     readonly __typename: string;
-    readonly " $refType": OtherFragment$ref;
+    readonly " $refType": "OtherFragment";
 };
 
 
 // PageFragment.graphql
-declare const _PageFragment$ref: unique symbol;
-export type PageFragment$ref = typeof _PageFragment$ref;
 export type PageFragment = {
     readonly __typename: "Page";
-    readonly " $refType": PageFragment$ref;
+    readonly " $refType": "PageFragment";
 } | {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": PageFragment$ref;
+    readonly " $refType": "PageFragment";
 };
 
 
 // UserFrag1.graphql
-declare const _UserFrag1$ref: unique symbol;
-export type UserFrag1$ref = typeof _UserFrag1$ref;
 export type UserFrag1 = {
     readonly __typename: "Page";
-    readonly " $refType": UserFrag1$ref;
+    readonly " $refType": "UserFrag1";
 } | {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": UserFrag1$ref;
+    readonly " $refType": "UserFrag1";
 };
 
 
 // UserFrag2.graphql
-declare const _UserFrag2$ref: unique symbol;
-export type UserFrag2$ref = typeof _UserFrag2$ref;
 export type UserFrag2 = {
     readonly __typename: "Page";
-    readonly " $refType": UserFrag2$ref;
+    readonly " $refType": "UserFrag2";
 } | {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": UserFrag2$ref;
+    readonly " $refType": "UserFrag2";
 };
 
 `;
@@ -319,21 +296,17 @@ fragment SomeFragment on User {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // InlineFragment.graphql
-declare const _InlineFragment$ref: unique symbol;
-export type InlineFragment$ref = typeof _InlineFragment$ref;
 export type InlineFragment = {
     readonly id: string;
     readonly name?: string | null;
     readonly message?: {
         readonly text: string | null;
     } | null;
-    readonly " $refType": InlineFragment$ref;
+    readonly " $refType": "InlineFragment";
 };
 
 
 // InlineFragmentWithOverlappingFields.graphql
-declare const _InlineFragmentWithOverlappingFields$ref: unique symbol;
-export type InlineFragmentWithOverlappingFields$ref = typeof _InlineFragmentWithOverlappingFields$ref;
 export type InlineFragmentWithOverlappingFields = {
     readonly hometown?: {
         readonly id: string;
@@ -343,24 +316,20 @@ export type InlineFragmentWithOverlappingFields = {
         } | null;
     } | null;
     readonly name?: string | null;
-    readonly " $refType": InlineFragmentWithOverlappingFields$ref;
+    readonly " $refType": "InlineFragmentWithOverlappingFields";
 };
 
 
 // InlineFragmentConditionalID.graphql
-declare const _InlineFragmentConditionalID$ref: unique symbol;
-export type InlineFragmentConditionalID$ref = typeof _InlineFragmentConditionalID$ref;
 export type InlineFragmentConditionalID = {
     readonly id?: string;
     readonly name?: string | null;
-    readonly " $refType": InlineFragmentConditionalID$ref;
+    readonly " $refType": "InlineFragmentConditionalID";
 };
 
 
 // InlineFragmentKitchenSink.graphql
-type SomeFragment$ref = any;
-declare const _InlineFragmentKitchenSink$ref: unique symbol;
-export type InlineFragmentKitchenSink$ref = typeof _InlineFragmentKitchenSink$ref;
+import { FragmentRefs } from "relay-runtime";
 export type InlineFragmentKitchenSink = {
     readonly actor: {
         readonly id: string;
@@ -370,23 +339,21 @@ export type InlineFragmentKitchenSink = {
             readonly height?: number | null;
         } | null;
         readonly name?: string | null;
-        readonly " $fragmentRefs": SomeFragment$ref;
+        readonly " $fragmentRefs": FragmentRefs<"SomeFragment">;
     } | null;
-    readonly " $refType": InlineFragmentKitchenSink$ref;
+    readonly " $refType": "InlineFragmentKitchenSink";
 };
 
 
 // SomeFragment.graphql
-declare const _SomeFragment$ref: unique symbol;
-export type SomeFragment$ref = typeof _SomeFragment$ref;
 export type SomeFragment = {
     readonly __typename: "User";
-    readonly " $refType": SomeFragment$ref;
+    readonly " $refType": "SomeFragment";
 } | {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": SomeFragment$ref;
+    readonly " $refType": "SomeFragment";
 };
 
 `;
@@ -423,8 +390,6 @@ query UnionTypeTest {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // LinkedField.graphql
-declare const _LinkedField$ref: unique symbol;
-export type LinkedField$ref = typeof _LinkedField$ref;
 export type LinkedField = {
     readonly profilePicture: {
         readonly uri: string | null;
@@ -440,7 +405,7 @@ export type LinkedField = {
     readonly actor: {
         readonly id: string;
     } | null;
-    readonly " $refType": LinkedField$ref;
+    readonly " $refType": "LinkedField";
 };
 
 
@@ -490,42 +455,35 @@ fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // NameRendererFragment.graphql
-type MarkdownUserNameRenderer_name$ref = any;
-type PlainUserNameRenderer_name$ref = any;
-declare const _NameRendererFragment$ref: unique symbol;
-export type NameRendererFragment$ref = typeof _NameRendererFragment$ref;
+import { FragmentRefs } from "relay-runtime";
 export type NameRendererFragment = {
     readonly id: string;
     readonly nameRenderer: {
         readonly __fragmentPropName?: string | null;
         readonly __module_component?: string | null;
-        readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
+        readonly " $fragmentRefs": FragmentRefs<"PlainUserNameRenderer_name" | "MarkdownUserNameRenderer_name">;
     } | null;
-    readonly " $refType": NameRendererFragment$ref;
+    readonly " $refType": "NameRendererFragment";
 };
 
 
 // PlainUserNameRenderer_name.graphql
-declare const _PlainUserNameRenderer_name$ref: unique symbol;
-export type PlainUserNameRenderer_name$ref = typeof _PlainUserNameRenderer_name$ref;
 export type PlainUserNameRenderer_name = {
     readonly plaintext: string | null;
     readonly data: {
         readonly text: string | null;
     } | null;
-    readonly " $refType": PlainUserNameRenderer_name$ref;
+    readonly " $refType": "PlainUserNameRenderer_name";
 };
 
 
 // MarkdownUserNameRenderer_name.graphql
-declare const _MarkdownUserNameRenderer_name$ref: unique symbol;
-export type MarkdownUserNameRenderer_name$ref = typeof _MarkdownUserNameRenderer_name$ref;
 export type MarkdownUserNameRenderer_name = {
     readonly markdown: string | null;
     readonly data: {
         readonly markup: string | null;
     } | null;
-    readonly " $refType": MarkdownUserNameRenderer_name$ref;
+    readonly " $refType": "MarkdownUserNameRenderer_name";
 };
 
 `;
@@ -558,15 +516,14 @@ fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // NameRendererQuery.graphql
-type MarkdownUserNameRenderer_name$ref = any;
-type PlainUserNameRenderer_name$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type NameRendererQueryVariables = {};
 export type NameRendererQueryResponse = {
     readonly me: {
         readonly nameRenderer: {
             readonly __fragmentPropName?: string | null;
             readonly __module_component?: string | null;
-            readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
+            readonly " $fragmentRefs": FragmentRefs<"PlainUserNameRenderer_name" | "MarkdownUserNameRenderer_name">;
         } | null;
     } | null;
 };
@@ -577,26 +534,22 @@ export type NameRendererQuery = {
 
 
 // PlainUserNameRenderer_name.graphql
-declare const _PlainUserNameRenderer_name$ref: unique symbol;
-export type PlainUserNameRenderer_name$ref = typeof _PlainUserNameRenderer_name$ref;
 export type PlainUserNameRenderer_name = {
     readonly plaintext: string | null;
     readonly data: {
         readonly text: string | null;
     } | null;
-    readonly " $refType": PlainUserNameRenderer_name$ref;
+    readonly " $refType": "PlainUserNameRenderer_name";
 };
 
 
 // MarkdownUserNameRenderer_name.graphql
-declare const _MarkdownUserNameRenderer_name$ref: unique symbol;
-export type MarkdownUserNameRenderer_name$ref = typeof _MarkdownUserNameRenderer_name$ref;
 export type MarkdownUserNameRenderer_name = {
     readonly markdown: string | null;
     readonly data: {
         readonly markup: string | null;
     } | null;
-    readonly " $refType": MarkdownUserNameRenderer_name$ref;
+    readonly " $refType": "MarkdownUserNameRenderer_name";
 };
 
 `;
@@ -628,7 +581,7 @@ export type UpdateAllSeenStateInput = {
     readonly storyIds?: ReadonlyArray<string | null> | null;
 };
 export type TestVariables = {
-    readonly input?: UpdateAllSeenStateInput | null;
+    input?: UpdateAllSeenStateInput | null;
 };
 export type TestResponse = {
     readonly viewerNotificationsUpdateAllSeenState: {
@@ -689,7 +642,7 @@ fragment InlineFragmentWithOverlappingFields on Actor {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // TestMutation.graphql
-type InlineFragmentWithOverlappingFields$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type CommentCreateInput = {
     readonly clientMutationId?: string | null;
     readonly feedbackId?: string | null;
@@ -702,13 +655,13 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type TestMutationVariables = {
-    readonly input: CommentCreateInput;
+    input: CommentCreateInput;
 };
 export type TestMutationResponse = {
     readonly commentCreate: {
         readonly viewer: {
             readonly actor: {
-                readonly " $fragmentRefs": InlineFragmentWithOverlappingFields$ref;
+                readonly " $fragmentRefs": FragmentRefs<"InlineFragmentWithOverlappingFields">;
             } | null;
         } | null;
     } | null;
@@ -748,8 +701,6 @@ export type TestMutation = {
 
 
 // InlineFragmentWithOverlappingFields.graphql
-declare const _InlineFragmentWithOverlappingFields$ref: unique symbol;
-export type InlineFragmentWithOverlappingFields$ref = typeof _InlineFragmentWithOverlappingFields$ref;
 export type InlineFragmentWithOverlappingFields = {
     readonly hometown?: {
         readonly id: string;
@@ -759,7 +710,7 @@ export type InlineFragmentWithOverlappingFields = {
         } | null;
     } | null;
     readonly name?: string | null;
-    readonly " $refType": InlineFragmentWithOverlappingFields$ref;
+    readonly " $refType": "InlineFragmentWithOverlappingFields";
 };
 
 `;
@@ -796,9 +747,9 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentCreateMutationVariables = {
-    readonly input: CommentCreateInput;
-    readonly first?: number | null;
-    readonly orderBy?: ReadonlyArray<string> | null;
+    input: CommentCreateInput;
+    first?: number | null;
+    orderBy?: ReadonlyArray<string> | null;
 };
 export type CommentCreateMutationResponse = {
     readonly commentCreate: {
@@ -835,7 +786,7 @@ export type UpdateAllSeenStateInput = {
     readonly storyIds?: ReadonlyArray<string | null> | null;
 };
 export type InputHasArrayVariables = {
-    readonly input?: UpdateAllSeenStateInput | null;
+    input?: UpdateAllSeenStateInput | null;
 };
 export type InputHasArrayResponse = {
     readonly viewerNotificationsUpdateAllSeenState: {
@@ -892,7 +843,7 @@ fragment FriendFragment on User {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // CommentCreateMutation.graphql
-type FriendFragment$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type TestEnums = "mark" | "zuck" | "%future added value";
 export type CommentCreateInput = {
     readonly clientMutationId?: string | null;
@@ -906,9 +857,9 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentCreateMutationVariables = {
-    readonly input: CommentCreateInput;
-    readonly first?: number | null;
-    readonly orderBy?: ReadonlyArray<string> | null;
+    input: CommentCreateInput;
+    first?: number | null;
+    orderBy?: ReadonlyArray<string> | null;
 };
 export type CommentCreateMutationResponse = {
     readonly commentCreate: {
@@ -918,7 +869,7 @@ export type CommentCreateMutationResponse = {
                     readonly node: {
                         readonly id: string;
                         readonly __typename: string;
-                        readonly " $fragmentRefs": FriendFragment$ref;
+                        readonly " $fragmentRefs": FragmentRefs<"FriendFragment">;
                     } | null;
                 } | null> | null;
             } | null;
@@ -954,15 +905,13 @@ export type CommentCreateMutation = {
 
 // FriendFragment.graphql
 export type TestEnums = "mark" | "zuck" | "%future added value";
-declare const _FriendFragment$ref: unique symbol;
-export type FriendFragment$ref = typeof _FriendFragment$ref;
 export type FriendFragment = {
     readonly name: string | null;
     readonly lastName: string | null;
     readonly profilePicture2: {
         readonly test_enums: TestEnums | null;
     } | null;
-    readonly " $refType": FriendFragment$ref;
+    readonly " $refType": "FriendFragment";
 };
 
 `;
@@ -1003,7 +952,7 @@ fragment FeedbackFragment on Feedback {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // CommentCreateMutation.graphql
-type FriendFragment$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type CommentCreateInput = {
     readonly clientMutationId?: string | null;
     readonly feedbackId?: string | null;
@@ -1016,9 +965,9 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentCreateMutationVariables = {
-    readonly input: CommentCreateInput;
-    readonly first?: number | null;
-    readonly orderBy?: ReadonlyArray<string> | null;
+    input: CommentCreateInput;
+    first?: number | null;
+    orderBy?: ReadonlyArray<string> | null;
 };
 export type CommentCreateMutationResponse = {
     readonly commentCreate: {
@@ -1027,7 +976,7 @@ export type CommentCreateMutationResponse = {
                 readonly edges: ReadonlyArray<{
                     readonly node: {
                         readonly lastName: string | null;
-                        readonly " $fragmentRefs": FriendFragment$ref;
+                        readonly " $fragmentRefs": FragmentRefs<"FriendFragment">;
                     } | null;
                 } | null> | null;
             } | null;
@@ -1062,26 +1011,22 @@ export type CommentCreateMutation = {
 
 
 // FriendFragment.graphql
-type FeedbackFragment$ref = any;
-declare const _FriendFragment$ref: unique symbol;
-export type FriendFragment$ref = typeof _FriendFragment$ref;
+import { FragmentRefs } from "relay-runtime";
 export type FriendFragment = {
     readonly name: string | null;
     readonly lastName: string | null;
     readonly feedback: {
-        readonly " $fragmentRefs": FeedbackFragment$ref;
+        readonly " $fragmentRefs": FragmentRefs<"FeedbackFragment">;
     } | null;
-    readonly " $refType": FriendFragment$ref;
+    readonly " $refType": "FriendFragment";
 };
 
 
 // FeedbackFragment.graphql
-declare const _FeedbackFragment$ref: unique symbol;
-export type FeedbackFragment$ref = typeof _FeedbackFragment$ref;
 export type FeedbackFragment = {
     readonly id: string;
     readonly name: string | null;
-    readonly " $refType": FeedbackFragment$ref;
+    readonly " $refType": "FeedbackFragment";
 };
 
 `;
@@ -1094,11 +1039,9 @@ fragment PluralFragment on Node @relay(plural: true) {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // PluralFragment.graphql
-declare const _PluralFragment$ref: unique symbol;
-export type PluralFragment$ref = typeof _PluralFragment$ref;
 export type PluralFragment = ReadonlyArray<{
     readonly id: string;
-    readonly " $refType": PluralFragment$ref;
+    readonly " $refType": "PluralFragment";
 }>;
 
 `;
@@ -1188,7 +1131,7 @@ query ScalarHandleField($id: ID!) @raw_response_type {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // LinkedHandleField.graphql
 export type LinkedHandleFieldVariables = {
-    readonly id: string;
+    id: string;
 };
 export type LinkedHandleFieldResponse = {
     readonly node: {
@@ -1218,7 +1161,7 @@ export type LinkedHandleField = {
 
 // ScalarHandleField.graphql
 export type ScalarHandleFieldVariables = {
-    readonly id: string;
+    id: string;
 };
 export type ScalarHandleFieldResponse = {
     readonly node: {
@@ -1264,14 +1207,14 @@ fragment FriendFragment on User {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // ExampleQuery.graphql
-type FriendFragment$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type ExampleQueryVariables = {
-    readonly id: string;
-    readonly condition: boolean;
+    id: string;
+    condition: boolean;
 };
 export type ExampleQueryResponse = {
     readonly node: {
-        readonly " $fragmentRefs": FriendFragment$ref;
+        readonly " $fragmentRefs": FragmentRefs<"FriendFragment">;
     } | null;
 };
 export type ExampleQueryRawResponse = {
@@ -1297,8 +1240,6 @@ export type ExampleQuery = {
 
 
 // FriendFragment.graphql
-declare const _FriendFragment$ref: unique symbol;
-export type FriendFragment$ref = typeof _FriendFragment$ref;
 export type FriendFragment = {
     readonly name?: string | null;
     readonly lastName?: string | null;
@@ -1306,7 +1247,7 @@ export type FriendFragment = {
         readonly id: string;
         readonly name: string | null;
     } | null;
-    readonly " $refType": FriendFragment$ref;
+    readonly " $refType": "FriendFragment";
 };
 
 `;
@@ -1389,13 +1330,11 @@ fragment FragmentSpread on Node {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // FragmentSpread.graphql
-type FragmentSpread$ref = any;
-declare const _FragmentSpread$ref: unique symbol;
-export type FragmentSpread$ref = typeof _FragmentSpread$ref;
+import { FragmentRefs } from "relay-runtime";
 export type FragmentSpread = {
     readonly id: string;
-    readonly " $fragmentRefs": FragmentSpread$ref;
-    readonly " $refType": FragmentSpread$ref;
+    readonly " $fragmentRefs": FragmentRefs<"FragmentSpread">;
+    readonly " $refType": "FragmentSpread";
 };
 
 `;
@@ -1412,26 +1351,23 @@ fragment RefetchableFragment on Node
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // RefetchableFragment.graphql
-import { RefetchableFragment$ref } from "./RefetchableFragmentQuery.graphql";
-export { RefetchableFragment$ref };
 export type RefetchableFragment = {
     readonly id: string;
     readonly fragAndField: {
         readonly uri: string | null;
     } | null;
-    readonly " $refType": RefetchableFragment$ref;
+    readonly " $refType": "RefetchableFragment";
 };
 
 
 // RefetchableFragmentQuery.graphql
-declare const _RefetchableFragment$ref: unique symbol;
-export type RefetchableFragment$ref = typeof _RefetchableFragment$ref;
+import { FragmentRefs } from "relay-runtime";
 export type RefetchableFragmentQueryVariables = {
-    readonly id: string;
+    id: string;
 };
 export type RefetchableFragmentQueryResponse = {
     readonly node: {
-        readonly " $fragmentRefs": RefetchableFragment$ref;
+        readonly " $fragmentRefs": FragmentRefs<"RefetchableFragment">;
     } | null;
 };
 export type RefetchableFragmentQuery = {
@@ -1472,7 +1408,7 @@ subscription TestSubscription($input: FeedbackLikeInput) {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // ExampleQuery.graphql
 export type ExampleQueryVariables = {
-    readonly id: string;
+    id: string;
 };
 export type ExampleQueryResponse = {
     readonly node: {
@@ -1486,11 +1422,9 @@ export type ExampleQuery = {
 
 
 // ExampleFragment.graphql
-declare const _ExampleFragment$ref: unique symbol;
-export type ExampleFragment$ref = typeof _ExampleFragment$ref;
 export type ExampleFragment = {
     readonly id: string;
-    readonly " $refType": ExampleFragment$ref;
+    readonly " $refType": "ExampleFragment";
 };
 
 
@@ -1507,7 +1441,7 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type TestMutationVariables = {
-    readonly input: CommentCreateInput;
+    input: CommentCreateInput;
 };
 export type TestMutationResponse = {
     readonly commentCreate: {
@@ -1528,7 +1462,7 @@ export type FeedbackLikeInput = {
     readonly feedbackId?: string | null;
 };
 export type TestSubscriptionVariables = {
-    readonly input?: FeedbackLikeInput | null;
+    input?: FeedbackLikeInput | null;
 };
 export type TestSubscriptionResponse = {
     readonly feedbackLikeSubscribe: {
@@ -1563,8 +1497,6 @@ fragment ScalarField on User {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // ScalarField.graphql
 export type PersonalityTraits = "CHEERFUL" | "DERISIVE" | "HELPFUL" | "SNARKY" | "%future added value";
-declare const _ScalarField$ref: unique symbol;
-export type ScalarField$ref = typeof _ScalarField$ref;
 export type ScalarField = {
     readonly id: string;
     readonly name: string | null;
@@ -1577,7 +1509,7 @@ export type ScalarField = {
         readonly name: string | null;
         readonly service: string | null;
     } | null> | null;
-    readonly " $refType": ScalarField$ref;
+    readonly " $refType": "ScalarField";
 };
 
 `;
@@ -1603,8 +1535,6 @@ fragment TypenameInsideWithOverlappingFields on Viewer {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // TypenameInsideWithOverlappingFields.graphql
-declare const _TypenameInsideWithOverlappingFields$ref: unique symbol;
-export type TypenameInsideWithOverlappingFields$ref = typeof _TypenameInsideWithOverlappingFields$ref;
 export type TypenameInsideWithOverlappingFields = {
     readonly actor: ({
         readonly __typename: "Page";
@@ -1622,7 +1552,7 @@ export type TypenameInsideWithOverlappingFields = {
         value in case none of the concrete values match.*/
         readonly __typename: "%other";
     }) | null;
-    readonly " $refType": TypenameInsideWithOverlappingFields$ref;
+    readonly " $refType": "TypenameInsideWithOverlappingFields";
 };
 
 `;
@@ -1712,46 +1642,40 @@ fragment TypenameAliases on Actor {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // TypenameInside.graphql
-declare const _TypenameInside$ref: unique symbol;
-export type TypenameInside$ref = typeof _TypenameInside$ref;
 export type TypenameInside = {
     readonly __typename: "User";
     readonly firstName: string | null;
-    readonly " $refType": TypenameInside$ref;
+    readonly " $refType": "TypenameInside";
 } | {
     readonly __typename: "Page";
     readonly username: string | null;
-    readonly " $refType": TypenameInside$ref;
+    readonly " $refType": "TypenameInside";
 } | {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": TypenameInside$ref;
+    readonly " $refType": "TypenameInside";
 };
 
 
 // TypenameOutside.graphql
-declare const _TypenameOutside$ref: unique symbol;
-export type TypenameOutside$ref = typeof _TypenameOutside$ref;
 export type TypenameOutside = {
     readonly __typename: "User";
     readonly firstName: string | null;
-    readonly " $refType": TypenameOutside$ref;
+    readonly " $refType": "TypenameOutside";
 } | {
     readonly __typename: "Page";
     readonly username: string | null;
-    readonly " $refType": TypenameOutside$ref;
+    readonly " $refType": "TypenameOutside";
 } | {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": TypenameOutside$ref;
+    readonly " $refType": "TypenameOutside";
 };
 
 
 // TypenameOutsideWithAbstractType.graphql
-declare const _TypenameOutsideWithAbstractType$ref: unique symbol;
-export type TypenameOutsideWithAbstractType$ref = typeof _TypenameOutsideWithAbstractType$ref;
 export type TypenameOutsideWithAbstractType = {
     readonly __typename: string;
     readonly username?: string | null;
@@ -1761,74 +1685,64 @@ export type TypenameOutsideWithAbstractType = {
         readonly street?: string | null;
     } | null;
     readonly firstName?: string | null;
-    readonly " $refType": TypenameOutsideWithAbstractType$ref;
+    readonly " $refType": "TypenameOutsideWithAbstractType";
 };
 
 
 // TypenameWithoutSpreads.graphql
-declare const _TypenameWithoutSpreads$ref: unique symbol;
-export type TypenameWithoutSpreads$ref = typeof _TypenameWithoutSpreads$ref;
 export type TypenameWithoutSpreads = {
     readonly firstName: string | null;
     readonly __typename: "User";
-    readonly " $refType": TypenameWithoutSpreads$ref;
+    readonly " $refType": "TypenameWithoutSpreads";
 };
 
 
 // TypenameWithoutSpreadsAbstractType.graphql
-declare const _TypenameWithoutSpreadsAbstractType$ref: unique symbol;
-export type TypenameWithoutSpreadsAbstractType$ref = typeof _TypenameWithoutSpreadsAbstractType$ref;
 export type TypenameWithoutSpreadsAbstractType = {
     readonly __typename: string;
     readonly id: string;
-    readonly " $refType": TypenameWithoutSpreadsAbstractType$ref;
+    readonly " $refType": "TypenameWithoutSpreadsAbstractType";
 };
 
 
 // TypenameWithCommonSelections.graphql
-declare const _TypenameWithCommonSelections$ref: unique symbol;
-export type TypenameWithCommonSelections$ref = typeof _TypenameWithCommonSelections$ref;
 export type TypenameWithCommonSelections = {
     readonly __typename: string;
     readonly name: string | null;
     readonly firstName?: string | null;
     readonly username?: string | null;
-    readonly " $refType": TypenameWithCommonSelections$ref;
+    readonly " $refType": "TypenameWithCommonSelections";
 };
 
 
 // TypenameAlias.graphql
-declare const _TypenameAlias$ref: unique symbol;
-export type TypenameAlias$ref = typeof _TypenameAlias$ref;
 export type TypenameAlias = {
     readonly _typeAlias: "User";
     readonly firstName: string | null;
-    readonly " $refType": TypenameAlias$ref;
+    readonly " $refType": "TypenameAlias";
 } | {
     readonly _typeAlias: "Page";
     readonly username: string | null;
-    readonly " $refType": TypenameAlias$ref;
+    readonly " $refType": "TypenameAlias";
 } | {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly _typeAlias: "%other";
-    readonly " $refType": TypenameAlias$ref;
+    readonly " $refType": "TypenameAlias";
 };
 
 
 // TypenameAliases.graphql
-declare const _TypenameAliases$ref: unique symbol;
-export type TypenameAliases$ref = typeof _TypenameAliases$ref;
 export type TypenameAliases = {
     readonly _typeAlias1: "User";
     readonly _typeAlias2: "User";
     readonly firstName: string | null;
-    readonly " $refType": TypenameAliases$ref;
+    readonly " $refType": "TypenameAliases";
 } | {
     readonly _typeAlias1: "Page";
     readonly _typeAlias2: "Page";
     readonly username: string | null;
-    readonly " $refType": TypenameAliases$ref;
+    readonly " $refType": "TypenameAliases";
 } | {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
@@ -1836,7 +1750,7 @@ export type TypenameAliases = {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly _typeAlias2: "%other";
-    readonly " $refType": TypenameAliases$ref;
+    readonly " $refType": "TypenameAliases";
 };
 
 `;
@@ -1872,33 +1786,27 @@ fragment AnotherRecursiveFragment on Image {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // UserProfile.graphql
-import { PhotoFragment$ref } from "./PhotoFragment.graphql";
-declare const _UserProfile$ref: unique symbol;
-export type UserProfile$ref = typeof _UserProfile$ref;
+import { FragmentRefs } from "relay-runtime";
 export type UserProfile = {
     readonly profilePicture: {
         readonly uri: string | null;
         readonly width: number | null;
         readonly height: number | null;
-        readonly " $fragmentRefs": PhotoFragment$ref;
+        readonly " $fragmentRefs": FragmentRefs<"PhotoFragment">;
     } | null;
-    readonly " $refType": UserProfile$ref;
+    readonly " $refType": "UserProfile";
 };
 
 
 // PhotoFragment.graphql
-declare const _PhotoFragment$ref: unique symbol;
-export type PhotoFragment$ref = typeof _PhotoFragment$ref;
 export type PhotoFragment = {
     readonly uri: string | null;
     readonly width: number | null;
-    readonly " $refType": PhotoFragment$ref;
+    readonly " $refType": "PhotoFragment";
 };
 
 
 // RecursiveFragment.graphql
-declare const _RecursiveFragment$ref: unique symbol;
-export type RecursiveFragment$ref = typeof _RecursiveFragment$ref;
 export type RecursiveFragment = {
     readonly uri: string | null;
     readonly width: number | null;
@@ -1906,12 +1814,10 @@ export type RecursiveFragment = {
 
 
 // AnotherRecursiveFragment.graphql
-declare const _AnotherRecursiveFragment$ref: unique symbol;
-export type AnotherRecursiveFragment$ref = typeof _AnotherRecursiveFragment$ref;
 export type AnotherRecursiveFragment = {
     readonly uri: string | null;
     readonly height: number | null;
-    readonly " $refType": AnotherRecursiveFragment$ref;
+    readonly " $refType": "AnotherRecursiveFragment";
 };
 
 `;
@@ -1930,18 +1836,16 @@ fragment NestedCondition on Node {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // ConditionField.graphql
-export type ConditionField$ref = any;
 export type ConditionField = {
     readonly id?: string;
-    readonly " $refType": ConditionField$ref;
+    readonly " $refType": "ConditionField";
 };
 
 
 // NestedCondition.graphql
-export type NestedCondition$ref = any;
 export type NestedCondition = {
     readonly id?: string;
-    readonly " $refType": NestedCondition$ref;
+    readonly " $refType": "NestedCondition";
 };
 
 `;
@@ -1970,13 +1874,13 @@ fragment FeedbackComments_feedback on Feedback {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // QueryWithConnectionField.graphql
-type FeedbackComments_feedback$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type QueryWithConnectionFieldVariables = {
-    readonly id: string;
+    id: string;
 };
 export type QueryWithConnectionFieldResponse = {
     readonly feedback: {
-        readonly " $fragmentRefs": FeedbackComments_feedback$ref;
+        readonly " $fragmentRefs": FragmentRefs<"FeedbackComments_feedback">;
     } | null;
 };
 export type QueryWithConnectionField = {
@@ -1986,7 +1890,6 @@ export type QueryWithConnectionField = {
 
 
 // FeedbackComments_feedback.graphql
-export type FeedbackComments_feedback$ref = any;
 export type FeedbackComments_feedback = {
     readonly comments: {
         readonly edges: ReadonlyArray<{
@@ -1998,7 +1901,7 @@ export type FeedbackComments_feedback = {
             readonly hasNextPage: boolean | null;
         } | null;
     } | null;
-    readonly " $refType": FeedbackComments_feedback$ref;
+    readonly " $refType": "FeedbackComments_feedback";
 };
 
 `;
@@ -2056,33 +1959,28 @@ fragment UserFrag2 on Page {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // FragmentSpread.graphql
-type OtherFragment$ref = any;
-type PictureFragment$ref = any;
-type UserFrag1$ref = any;
-type UserFrag2$ref = any;
-export type FragmentSpread$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type FragmentSpread = {
     readonly id: string;
     readonly justFrag: {
-        readonly " $fragmentRefs": PictureFragment$ref;
+        readonly " $fragmentRefs": FragmentRefs<"PictureFragment">;
     } | null;
     readonly fragAndField: {
         readonly uri: string | null;
-        readonly " $fragmentRefs": PictureFragment$ref;
+        readonly " $fragmentRefs": FragmentRefs<"PictureFragment">;
     } | null;
-    readonly " $fragmentRefs": OtherFragment$ref & UserFrag1$ref & UserFrag2$ref;
-    readonly " $refType": FragmentSpread$ref;
+    readonly " $fragmentRefs": FragmentRefs<"OtherFragment" | "UserFrag1" | "UserFrag2">;
+    readonly " $refType": "FragmentSpread";
 };
 
 
 // ConcreateTypes.graphql
-type PageFragment$ref = any;
-export type ConcreateTypes$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type ConcreateTypes = {
     readonly actor: ({
         readonly __typename: "Page";
         readonly id: string;
-        readonly " $fragmentRefs": PageFragment$ref;
+        readonly " $fragmentRefs": FragmentRefs<"PageFragment">;
     } | {
         readonly __typename: "User";
         readonly name: string | null;
@@ -2091,67 +1989,62 @@ export type ConcreateTypes = {
         value in case none of the concrete values match.*/
         readonly __typename: "%other";
     }) | null;
-    readonly " $refType": ConcreateTypes$ref;
+    readonly " $refType": "ConcreateTypes";
 };
 
 
 // PictureFragment.graphql
-export type PictureFragment$ref = any;
 export type PictureFragment = {
     readonly __typename: "Image";
-    readonly " $refType": PictureFragment$ref;
+    readonly " $refType": "PictureFragment";
 } | {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": PictureFragment$ref;
+    readonly " $refType": "PictureFragment";
 };
 
 
 // OtherFragment.graphql
-export type OtherFragment$ref = any;
 export type OtherFragment = {
     readonly __typename: string;
-    readonly " $refType": OtherFragment$ref;
+    readonly " $refType": "OtherFragment";
 };
 
 
 // PageFragment.graphql
-export type PageFragment$ref = any;
 export type PageFragment = {
     readonly __typename: "Page";
-    readonly " $refType": PageFragment$ref;
+    readonly " $refType": "PageFragment";
 } | {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": PageFragment$ref;
+    readonly " $refType": "PageFragment";
 };
 
 
 // UserFrag1.graphql
-export type UserFrag1$ref = any;
 export type UserFrag1 = {
     readonly __typename: "Page";
-    readonly " $refType": UserFrag1$ref;
+    readonly " $refType": "UserFrag1";
 } | {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": UserFrag1$ref;
+    readonly " $refType": "UserFrag1";
 };
 
 
 // UserFrag2.graphql
-export type UserFrag2$ref = any;
 export type UserFrag2 = {
     readonly __typename: "Page";
-    readonly " $refType": UserFrag2$ref;
+    readonly " $refType": "UserFrag2";
 } | {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": UserFrag2$ref;
+    readonly " $refType": "UserFrag2";
 };
 
 `;
@@ -2225,19 +2118,17 @@ fragment SomeFragment on User {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // InlineFragment.graphql
-export type InlineFragment$ref = any;
 export type InlineFragment = {
     readonly id: string;
     readonly name?: string | null;
     readonly message?: {
         readonly text: string | null;
     } | null;
-    readonly " $refType": InlineFragment$ref;
+    readonly " $refType": "InlineFragment";
 };
 
 
 // InlineFragmentWithOverlappingFields.graphql
-export type InlineFragmentWithOverlappingFields$ref = any;
 export type InlineFragmentWithOverlappingFields = {
     readonly hometown?: {
         readonly id: string;
@@ -2247,22 +2138,20 @@ export type InlineFragmentWithOverlappingFields = {
         } | null;
     } | null;
     readonly name?: string | null;
-    readonly " $refType": InlineFragmentWithOverlappingFields$ref;
+    readonly " $refType": "InlineFragmentWithOverlappingFields";
 };
 
 
 // InlineFragmentConditionalID.graphql
-export type InlineFragmentConditionalID$ref = any;
 export type InlineFragmentConditionalID = {
     readonly id?: string;
     readonly name?: string | null;
-    readonly " $refType": InlineFragmentConditionalID$ref;
+    readonly " $refType": "InlineFragmentConditionalID";
 };
 
 
 // InlineFragmentKitchenSink.graphql
-type SomeFragment$ref = any;
-export type InlineFragmentKitchenSink$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type InlineFragmentKitchenSink = {
     readonly actor: {
         readonly id: string;
@@ -2272,22 +2161,21 @@ export type InlineFragmentKitchenSink = {
             readonly height?: number | null;
         } | null;
         readonly name?: string | null;
-        readonly " $fragmentRefs": SomeFragment$ref;
+        readonly " $fragmentRefs": FragmentRefs<"SomeFragment">;
     } | null;
-    readonly " $refType": InlineFragmentKitchenSink$ref;
+    readonly " $refType": "InlineFragmentKitchenSink";
 };
 
 
 // SomeFragment.graphql
-export type SomeFragment$ref = any;
 export type SomeFragment = {
     readonly __typename: "User";
-    readonly " $refType": SomeFragment$ref;
+    readonly " $refType": "SomeFragment";
 } | {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": SomeFragment$ref;
+    readonly " $refType": "SomeFragment";
 };
 
 `;
@@ -2324,7 +2212,6 @@ query UnionTypeTest {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // LinkedField.graphql
-export type LinkedField$ref = any;
 export type LinkedField = {
     readonly profilePicture: {
         readonly uri: string | null;
@@ -2340,7 +2227,7 @@ export type LinkedField = {
     readonly actor: {
         readonly id: string;
     } | null;
-    readonly " $refType": LinkedField$ref;
+    readonly " $refType": "LinkedField";
 };
 
 
@@ -2390,39 +2277,35 @@ fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // NameRendererFragment.graphql
-type MarkdownUserNameRenderer_name$ref = any;
-type PlainUserNameRenderer_name$ref = any;
-export type NameRendererFragment$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type NameRendererFragment = {
     readonly id: string;
     readonly nameRenderer: {
         readonly __fragmentPropName?: string | null;
         readonly __module_component?: string | null;
-        readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
+        readonly " $fragmentRefs": FragmentRefs<"PlainUserNameRenderer_name" | "MarkdownUserNameRenderer_name">;
     } | null;
-    readonly " $refType": NameRendererFragment$ref;
+    readonly " $refType": "NameRendererFragment";
 };
 
 
 // PlainUserNameRenderer_name.graphql
-export type PlainUserNameRenderer_name$ref = any;
 export type PlainUserNameRenderer_name = {
     readonly plaintext: string | null;
     readonly data: {
         readonly text: string | null;
     } | null;
-    readonly " $refType": PlainUserNameRenderer_name$ref;
+    readonly " $refType": "PlainUserNameRenderer_name";
 };
 
 
 // MarkdownUserNameRenderer_name.graphql
-export type MarkdownUserNameRenderer_name$ref = any;
 export type MarkdownUserNameRenderer_name = {
     readonly markdown: string | null;
     readonly data: {
         readonly markup: string | null;
     } | null;
-    readonly " $refType": MarkdownUserNameRenderer_name$ref;
+    readonly " $refType": "MarkdownUserNameRenderer_name";
 };
 
 `;
@@ -2455,15 +2338,14 @@ fragment MarkdownUserNameRenderer_name on MarkdownUserNameRenderer {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // NameRendererQuery.graphql
-type MarkdownUserNameRenderer_name$ref = any;
-type PlainUserNameRenderer_name$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type NameRendererQueryVariables = {};
 export type NameRendererQueryResponse = {
     readonly me: {
         readonly nameRenderer: {
             readonly __fragmentPropName?: string | null;
             readonly __module_component?: string | null;
-            readonly " $fragmentRefs": PlainUserNameRenderer_name$ref & MarkdownUserNameRenderer_name$ref;
+            readonly " $fragmentRefs": FragmentRefs<"PlainUserNameRenderer_name" | "MarkdownUserNameRenderer_name">;
         } | null;
     } | null;
 };
@@ -2474,24 +2356,22 @@ export type NameRendererQuery = {
 
 
 // PlainUserNameRenderer_name.graphql
-export type PlainUserNameRenderer_name$ref = any;
 export type PlainUserNameRenderer_name = {
     readonly plaintext: string | null;
     readonly data: {
         readonly text: string | null;
     } | null;
-    readonly " $refType": PlainUserNameRenderer_name$ref;
+    readonly " $refType": "PlainUserNameRenderer_name";
 };
 
 
 // MarkdownUserNameRenderer_name.graphql
-export type MarkdownUserNameRenderer_name$ref = any;
 export type MarkdownUserNameRenderer_name = {
     readonly markdown: string | null;
     readonly data: {
         readonly markup: string | null;
     } | null;
-    readonly " $refType": MarkdownUserNameRenderer_name$ref;
+    readonly " $refType": "MarkdownUserNameRenderer_name";
 };
 
 `;
@@ -2523,7 +2403,7 @@ export type UpdateAllSeenStateInput = {
     readonly storyIds?: ReadonlyArray<string | null> | null;
 };
 export type TestVariables = {
-    readonly input?: UpdateAllSeenStateInput | null;
+    input?: UpdateAllSeenStateInput | null;
 };
 export type TestResponse = {
     readonly viewerNotificationsUpdateAllSeenState: {
@@ -2584,7 +2464,7 @@ fragment InlineFragmentWithOverlappingFields on Actor {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // TestMutation.graphql
-type InlineFragmentWithOverlappingFields$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type CommentCreateInput = {
     readonly clientMutationId?: string | null;
     readonly feedbackId?: string | null;
@@ -2597,13 +2477,13 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type TestMutationVariables = {
-    readonly input: CommentCreateInput;
+    input: CommentCreateInput;
 };
 export type TestMutationResponse = {
     readonly commentCreate: {
         readonly viewer: {
             readonly actor: {
-                readonly " $fragmentRefs": InlineFragmentWithOverlappingFields$ref;
+                readonly " $fragmentRefs": FragmentRefs<"InlineFragmentWithOverlappingFields">;
             } | null;
         } | null;
     } | null;
@@ -2643,7 +2523,6 @@ export type TestMutation = {
 
 
 // InlineFragmentWithOverlappingFields.graphql
-export type InlineFragmentWithOverlappingFields$ref = any;
 export type InlineFragmentWithOverlappingFields = {
     readonly hometown?: {
         readonly id: string;
@@ -2653,7 +2532,7 @@ export type InlineFragmentWithOverlappingFields = {
         } | null;
     } | null;
     readonly name?: string | null;
-    readonly " $refType": InlineFragmentWithOverlappingFields$ref;
+    readonly " $refType": "InlineFragmentWithOverlappingFields";
 };
 
 `;
@@ -2690,9 +2569,9 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentCreateMutationVariables = {
-    readonly input: CommentCreateInput;
-    readonly first?: number | null;
-    readonly orderBy?: ReadonlyArray<string> | null;
+    input: CommentCreateInput;
+    first?: number | null;
+    orderBy?: ReadonlyArray<string> | null;
 };
 export type CommentCreateMutationResponse = {
     readonly commentCreate: {
@@ -2729,7 +2608,7 @@ export type UpdateAllSeenStateInput = {
     readonly storyIds?: ReadonlyArray<string | null> | null;
 };
 export type InputHasArrayVariables = {
-    readonly input?: UpdateAllSeenStateInput | null;
+    input?: UpdateAllSeenStateInput | null;
 };
 export type InputHasArrayResponse = {
     readonly viewerNotificationsUpdateAllSeenState: {
@@ -2786,7 +2665,7 @@ fragment FriendFragment on User {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // CommentCreateMutation.graphql
-type FriendFragment$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type TestEnums = "mark" | "zuck" | "%future added value";
 export type CommentCreateInput = {
     readonly clientMutationId?: string | null;
@@ -2800,9 +2679,9 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentCreateMutationVariables = {
-    readonly input: CommentCreateInput;
-    readonly first?: number | null;
-    readonly orderBy?: ReadonlyArray<string> | null;
+    input: CommentCreateInput;
+    first?: number | null;
+    orderBy?: ReadonlyArray<string> | null;
 };
 export type CommentCreateMutationResponse = {
     readonly commentCreate: {
@@ -2812,7 +2691,7 @@ export type CommentCreateMutationResponse = {
                     readonly node: {
                         readonly id: string;
                         readonly __typename: string;
-                        readonly " $fragmentRefs": FriendFragment$ref;
+                        readonly " $fragmentRefs": FragmentRefs<"FriendFragment">;
                     } | null;
                 } | null> | null;
             } | null;
@@ -2848,14 +2727,13 @@ export type CommentCreateMutation = {
 
 // FriendFragment.graphql
 export type TestEnums = "mark" | "zuck" | "%future added value";
-export type FriendFragment$ref = any;
 export type FriendFragment = {
     readonly name: string | null;
     readonly lastName: string | null;
     readonly profilePicture2: {
         readonly test_enums: TestEnums | null;
     } | null;
-    readonly " $refType": FriendFragment$ref;
+    readonly " $refType": "FriendFragment";
 };
 
 `;
@@ -2896,7 +2774,7 @@ fragment FeedbackFragment on Feedback {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // CommentCreateMutation.graphql
-type FriendFragment$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type CommentCreateInput = {
     readonly clientMutationId?: string | null;
     readonly feedbackId?: string | null;
@@ -2909,9 +2787,9 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentCreateMutationVariables = {
-    readonly input: CommentCreateInput;
-    readonly first?: number | null;
-    readonly orderBy?: ReadonlyArray<string> | null;
+    input: CommentCreateInput;
+    first?: number | null;
+    orderBy?: ReadonlyArray<string> | null;
 };
 export type CommentCreateMutationResponse = {
     readonly commentCreate: {
@@ -2920,7 +2798,7 @@ export type CommentCreateMutationResponse = {
                 readonly edges: ReadonlyArray<{
                     readonly node: {
                         readonly lastName: string | null;
-                        readonly " $fragmentRefs": FriendFragment$ref;
+                        readonly " $fragmentRefs": FragmentRefs<"FriendFragment">;
                     } | null;
                 } | null> | null;
             } | null;
@@ -2955,24 +2833,22 @@ export type CommentCreateMutation = {
 
 
 // FriendFragment.graphql
-type FeedbackFragment$ref = any;
-export type FriendFragment$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type FriendFragment = {
     readonly name: string | null;
     readonly lastName: string | null;
     readonly feedback: {
-        readonly " $fragmentRefs": FeedbackFragment$ref;
+        readonly " $fragmentRefs": FragmentRefs<"FeedbackFragment">;
     } | null;
-    readonly " $refType": FriendFragment$ref;
+    readonly " $refType": "FriendFragment";
 };
 
 
 // FeedbackFragment.graphql
-export type FeedbackFragment$ref = any;
 export type FeedbackFragment = {
     readonly id: string;
     readonly name: string | null;
-    readonly " $refType": FeedbackFragment$ref;
+    readonly " $refType": "FeedbackFragment";
 };
 
 `;
@@ -2985,10 +2861,9 @@ fragment PluralFragment on Node @relay(plural: true) {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // PluralFragment.graphql
-export type PluralFragment$ref = any;
 export type PluralFragment = ReadonlyArray<{
     readonly id: string;
-    readonly " $refType": PluralFragment$ref;
+    readonly " $refType": "PluralFragment";
 }>;
 
 `;
@@ -3078,7 +2953,7 @@ query ScalarHandleField($id: ID!) @raw_response_type {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // LinkedHandleField.graphql
 export type LinkedHandleFieldVariables = {
-    readonly id: string;
+    id: string;
 };
 export type LinkedHandleFieldResponse = {
     readonly node: {
@@ -3108,7 +2983,7 @@ export type LinkedHandleField = {
 
 // ScalarHandleField.graphql
 export type ScalarHandleFieldVariables = {
-    readonly id: string;
+    id: string;
 };
 export type ScalarHandleFieldResponse = {
     readonly node: {
@@ -3154,14 +3029,14 @@ fragment FriendFragment on User {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // ExampleQuery.graphql
-type FriendFragment$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type ExampleQueryVariables = {
-    readonly id: string;
-    readonly condition: boolean;
+    id: string;
+    condition: boolean;
 };
 export type ExampleQueryResponse = {
     readonly node: {
-        readonly " $fragmentRefs": FriendFragment$ref;
+        readonly " $fragmentRefs": FragmentRefs<"FriendFragment">;
     } | null;
 };
 export type ExampleQueryRawResponse = {
@@ -3187,7 +3062,6 @@ export type ExampleQuery = {
 
 
 // FriendFragment.graphql
-export type FriendFragment$ref = any;
 export type FriendFragment = {
     readonly name?: string | null;
     readonly lastName?: string | null;
@@ -3195,7 +3069,7 @@ export type FriendFragment = {
         readonly id: string;
         readonly name: string | null;
     } | null;
-    readonly " $refType": FriendFragment$ref;
+    readonly " $refType": "FriendFragment";
 };
 
 `;
@@ -3278,12 +3152,11 @@ fragment FragmentSpread on Node {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // FragmentSpread.graphql
-type FragmentSpread$ref = any;
-export type FragmentSpread$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type FragmentSpread = {
     readonly id: string;
-    readonly " $fragmentRefs": FragmentSpread$ref;
-    readonly " $refType": FragmentSpread$ref;
+    readonly " $fragmentRefs": FragmentRefs<"FragmentSpread">;
+    readonly " $refType": "FragmentSpread";
 };
 
 `;
@@ -3300,24 +3173,23 @@ fragment RefetchableFragment on Node
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // RefetchableFragment.graphql
-export type RefetchableFragment$ref = any;
 export type RefetchableFragment = {
     readonly id: string;
     readonly fragAndField: {
         readonly uri: string | null;
     } | null;
-    readonly " $refType": RefetchableFragment$ref;
+    readonly " $refType": "RefetchableFragment";
 };
 
 
 // RefetchableFragmentQuery.graphql
-type RefetchableFragment$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type RefetchableFragmentQueryVariables = {
-    readonly id: string;
+    id: string;
 };
 export type RefetchableFragmentQueryResponse = {
     readonly node: {
-        readonly " $fragmentRefs": RefetchableFragment$ref;
+        readonly " $fragmentRefs": FragmentRefs<"RefetchableFragment">;
     } | null;
 };
 export type RefetchableFragmentQuery = {
@@ -3358,7 +3230,7 @@ subscription TestSubscription($input: FeedbackLikeInput) {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // ExampleQuery.graphql
 export type ExampleQueryVariables = {
-    readonly id: string;
+    id: string;
 };
 export type ExampleQueryResponse = {
     readonly node: {
@@ -3372,10 +3244,9 @@ export type ExampleQuery = {
 
 
 // ExampleFragment.graphql
-export type ExampleFragment$ref = any;
 export type ExampleFragment = {
     readonly id: string;
-    readonly " $refType": ExampleFragment$ref;
+    readonly " $refType": "ExampleFragment";
 };
 
 
@@ -3392,7 +3263,7 @@ export type FeedbackcommentComment = {
     readonly feedback?: CommentfeedbackFeedback | null;
 };
 export type TestMutationVariables = {
-    readonly input: CommentCreateInput;
+    input: CommentCreateInput;
 };
 export type TestMutationResponse = {
     readonly commentCreate: {
@@ -3413,7 +3284,7 @@ export type FeedbackLikeInput = {
     readonly feedbackId?: string | null;
 };
 export type TestSubscriptionVariables = {
-    readonly input?: FeedbackLikeInput | null;
+    input?: FeedbackLikeInput | null;
 };
 export type TestSubscriptionResponse = {
     readonly feedbackLikeSubscribe: {
@@ -3448,7 +3319,6 @@ fragment ScalarField on User {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // ScalarField.graphql
 export type PersonalityTraits = "CHEERFUL" | "DERISIVE" | "HELPFUL" | "SNARKY" | "%future added value";
-export type ScalarField$ref = any;
 export type ScalarField = {
     readonly id: string;
     readonly name: string | null;
@@ -3461,7 +3331,7 @@ export type ScalarField = {
         readonly name: string | null;
         readonly service: string | null;
     } | null> | null;
-    readonly " $refType": ScalarField$ref;
+    readonly " $refType": "ScalarField";
 };
 
 `;
@@ -3487,7 +3357,6 @@ fragment TypenameInsideWithOverlappingFields on Viewer {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // TypenameInsideWithOverlappingFields.graphql
-export type TypenameInsideWithOverlappingFields$ref = any;
 export type TypenameInsideWithOverlappingFields = {
     readonly actor: ({
         readonly __typename: "Page";
@@ -3505,7 +3374,7 @@ export type TypenameInsideWithOverlappingFields = {
         value in case none of the concrete values match.*/
         readonly __typename: "%other";
     }) | null;
-    readonly " $refType": TypenameInsideWithOverlappingFields$ref;
+    readonly " $refType": "TypenameInsideWithOverlappingFields";
 };
 
 `;
@@ -3595,43 +3464,40 @@ fragment TypenameAliases on Actor {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // TypenameInside.graphql
-export type TypenameInside$ref = any;
 export type TypenameInside = {
     readonly __typename: "User";
     readonly firstName: string | null;
-    readonly " $refType": TypenameInside$ref;
+    readonly " $refType": "TypenameInside";
 } | {
     readonly __typename: "Page";
     readonly username: string | null;
-    readonly " $refType": TypenameInside$ref;
+    readonly " $refType": "TypenameInside";
 } | {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": TypenameInside$ref;
+    readonly " $refType": "TypenameInside";
 };
 
 
 // TypenameOutside.graphql
-export type TypenameOutside$ref = any;
 export type TypenameOutside = {
     readonly __typename: "User";
     readonly firstName: string | null;
-    readonly " $refType": TypenameOutside$ref;
+    readonly " $refType": "TypenameOutside";
 } | {
     readonly __typename: "Page";
     readonly username: string | null;
-    readonly " $refType": TypenameOutside$ref;
+    readonly " $refType": "TypenameOutside";
 } | {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
-    readonly " $refType": TypenameOutside$ref;
+    readonly " $refType": "TypenameOutside";
 };
 
 
 // TypenameOutsideWithAbstractType.graphql
-export type TypenameOutsideWithAbstractType$ref = any;
 export type TypenameOutsideWithAbstractType = {
     readonly __typename: string;
     readonly username?: string | null;
@@ -3641,69 +3507,64 @@ export type TypenameOutsideWithAbstractType = {
         readonly street?: string | null;
     } | null;
     readonly firstName?: string | null;
-    readonly " $refType": TypenameOutsideWithAbstractType$ref;
+    readonly " $refType": "TypenameOutsideWithAbstractType";
 };
 
 
 // TypenameWithoutSpreads.graphql
-export type TypenameWithoutSpreads$ref = any;
 export type TypenameWithoutSpreads = {
     readonly firstName: string | null;
     readonly __typename: "User";
-    readonly " $refType": TypenameWithoutSpreads$ref;
+    readonly " $refType": "TypenameWithoutSpreads";
 };
 
 
 // TypenameWithoutSpreadsAbstractType.graphql
-export type TypenameWithoutSpreadsAbstractType$ref = any;
 export type TypenameWithoutSpreadsAbstractType = {
     readonly __typename: string;
     readonly id: string;
-    readonly " $refType": TypenameWithoutSpreadsAbstractType$ref;
+    readonly " $refType": "TypenameWithoutSpreadsAbstractType";
 };
 
 
 // TypenameWithCommonSelections.graphql
-export type TypenameWithCommonSelections$ref = any;
 export type TypenameWithCommonSelections = {
     readonly __typename: string;
     readonly name: string | null;
     readonly firstName?: string | null;
     readonly username?: string | null;
-    readonly " $refType": TypenameWithCommonSelections$ref;
+    readonly " $refType": "TypenameWithCommonSelections";
 };
 
 
 // TypenameAlias.graphql
-export type TypenameAlias$ref = any;
 export type TypenameAlias = {
     readonly _typeAlias: "User";
     readonly firstName: string | null;
-    readonly " $refType": TypenameAlias$ref;
+    readonly " $refType": "TypenameAlias";
 } | {
     readonly _typeAlias: "Page";
     readonly username: string | null;
-    readonly " $refType": TypenameAlias$ref;
+    readonly " $refType": "TypenameAlias";
 } | {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly _typeAlias: "%other";
-    readonly " $refType": TypenameAlias$ref;
+    readonly " $refType": "TypenameAlias";
 };
 
 
 // TypenameAliases.graphql
-export type TypenameAliases$ref = any;
 export type TypenameAliases = {
     readonly _typeAlias1: "User";
     readonly _typeAlias2: "User";
     readonly firstName: string | null;
-    readonly " $refType": TypenameAliases$ref;
+    readonly " $refType": "TypenameAliases";
 } | {
     readonly _typeAlias1: "Page";
     readonly _typeAlias2: "Page";
     readonly username: string | null;
-    readonly " $refType": TypenameAliases$ref;
+    readonly " $refType": "TypenameAliases";
 } | {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
@@ -3711,7 +3572,7 @@ export type TypenameAliases = {
     /*This will never be '%other', but we need some
     value in case none of the concrete values match.*/
     readonly _typeAlias2: "%other";
-    readonly " $refType": TypenameAliases$ref;
+    readonly " $refType": "TypenameAliases";
 };
 
 `;
@@ -3747,30 +3608,27 @@ fragment AnotherRecursiveFragment on Image {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // UserProfile.graphql
-type PhotoFragment$ref = any;
-export type UserProfile$ref = any;
+import { FragmentRefs } from "relay-runtime";
 export type UserProfile = {
     readonly profilePicture: {
         readonly uri: string | null;
         readonly width: number | null;
         readonly height: number | null;
-        readonly " $fragmentRefs": PhotoFragment$ref;
+        readonly " $fragmentRefs": FragmentRefs<"PhotoFragment">;
     } | null;
-    readonly " $refType": UserProfile$ref;
+    readonly " $refType": "UserProfile";
 };
 
 
 // PhotoFragment.graphql
-export type PhotoFragment$ref = any;
 export type PhotoFragment = {
     readonly uri: string | null;
     readonly width: number | null;
-    readonly " $refType": PhotoFragment$ref;
+    readonly " $refType": "PhotoFragment";
 };
 
 
 // RecursiveFragment.graphql
-export type RecursiveFragment$ref = any;
 export type RecursiveFragment = {
     readonly uri: string | null;
     readonly width: number | null;
@@ -3778,11 +3636,10 @@ export type RecursiveFragment = {
 
 
 // AnotherRecursiveFragment.graphql
-export type AnotherRecursiveFragment$ref = any;
 export type AnotherRecursiveFragment = {
     readonly uri: string | null;
     readonly height: number | null;
-    readonly " $refType": AnotherRecursiveFragment$ref;
+    readonly " $refType": "AnotherRecursiveFragment";
 };
 
 `;

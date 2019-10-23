@@ -1,10 +1,8 @@
 import {
   Condition,
-  Directive,
   Fragment,
   IRVisitor,
   LinkedField,
-  Metadata,
   Root,
   ScalarField,
   SchemaUtils,
@@ -32,6 +30,7 @@ const { isAbstractType } = SchemaUtils;
 
 const REF_TYPE = " $refType";
 const FRAGMENT_REFS = " $fragmentRefs";
+const FRAGMENT_REFS_TYPE_NAME = "FragmentRefs";
 const MODULE_IMPORT_FIELD = "MODULE_IMPORT_FIELD";
 const DIRECTIVE_NAME = "raw_response_type";
 
@@ -92,7 +91,7 @@ function makeProp(
   if (schemaName === "__typename" && concreteType) {
     value = ts.createLiteralTypeNode(ts.createLiteral(concreteType));
   }
-  return readOnlyObjectTypeProperty(key, value, conditional);
+  return objectTypeProperty(key, value, { optional: conditional });
 }
 
 const isTypenameSelection = (selection: Selection) =>
@@ -156,7 +155,7 @@ function selectionsToAST(
     // this doesn't exist in Flow at the time.
     types.push(
       Array.from(typenameAliases).map(typenameAlias => {
-        const otherProp = readOnlyObjectTypeProperty(
+        const otherProp = objectTypeProperty(
           typenameAlias,
           ts.createLiteralTypeNode(ts.createLiteral("%other"))
         );
@@ -203,12 +202,9 @@ function selectionsToAST(
   const typeElements = types.map(props => {
     if (fragmentTypeName) {
       props.push(
-        readOnlyObjectTypeProperty(
+        objectTypeProperty(
           REF_TYPE,
-          ts.createTypeReferenceNode(
-            ts.createIdentifier(fragmentTypeName),
-            undefined
-          )
+          ts.createLiteralTypeNode(ts.createStringLiteral(fragmentTypeName))
         )
       );
     }
@@ -231,13 +227,18 @@ function exactObjectTypeAnnotation(
 
 const idRegex = /^[$a-zA-Z_][$a-z0-9A-Z_]*$/;
 
-function readOnlyObjectTypeProperty(
+function objectTypeProperty(
   propertyName: string,
   type: ts.TypeNode,
-  optional?: boolean
+  options: { readonly?: boolean; optional?: boolean } = {}
 ): ts.PropertySignature {
+  const { optional, readonly = true } = options;
+  const modifiers = readonly
+    ? [ts.createToken(ts.SyntaxKind.ReadonlyKeyword)]
+    : undefined;
+
   return ts.createPropertySignature(
-    [ts.createToken(ts.SyntaxKind.ReadonlyKeyword)],
+    modifiers,
     idRegex.test(propertyName)
       ? ts.createIdentifier(propertyName)
       : ts.createLiteral(propertyName),
@@ -303,16 +304,6 @@ function exportType(name: string, type: ts.TypeNode) {
   );
 }
 
-function exportTypes(types: string[]) {
-  return ts.createExportDeclaration(
-    undefined,
-    undefined,
-    ts.createNamedExports(
-      types.map(type => ts.createExportSpecifier(undefined, type))
-    )
-  );
-}
-
 function importTypes(names: string[], fromModule: string): ts.Statement {
   return ts.createImportDeclaration(
     undefined,
@@ -360,11 +351,11 @@ function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
           )
         );
         const operationTypes = [
-          readOnlyObjectTypeProperty(
+          objectTypeProperty(
             "response",
             ts.createTypeReferenceNode(responseType.name, undefined)
           ),
-          readOnlyObjectTypeProperty(
+          objectTypeProperty(
             "variables",
             ts.createTypeReferenceNode(inputVariablesType.name, undefined)
           )
@@ -381,14 +372,8 @@ function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
             createRawResponseTypeVisitor(state)
           );
         }
-        const refetchableFragmentName = getRefetchableQueryParentFragmentName(
-          state,
-          node.metadata
-        );
         const nodes = [
-          ...(refetchableFragmentName
-            ? generateFragmentRefsForRefetchable(refetchableFragmentName)
-            : getFragmentImports(state)),
+          ...getFragmentRefsTypeImport(state),
           ...getEnumDefinitions(state),
           ...inputObjectTypes,
           inputVariablesType,
@@ -407,7 +392,7 @@ function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
             );
           }
           operationTypes.push(
-            readOnlyObjectTypeProperty(
+            objectTypeProperty(
               "rawResponse",
               ts.createTypeReferenceNode(`${node.name}RawResponse`, undefined)
             )
@@ -444,17 +429,12 @@ function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
           return [selection];
         });
         state.generatedFragments.add(node.name);
-        const fragmentTypes = getFragmentTypes(
-          node.name,
-          getRefetchableQueryPath(state, node.directives),
-          state
-        );
         const unmasked = node.metadata != null && node.metadata.mask === false;
         const baseType = selectionsToAST(
           selections,
           state,
           unmasked,
-          unmasked ? undefined : getOldFragmentTypeName(node.name)
+          unmasked ? undefined : node.name
         );
         const type = isPlural(node)
           ? ts.createTypeReferenceNode(ts.createIdentifier("ReadonlyArray"), [
@@ -463,9 +443,8 @@ function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
           : baseType;
 
         return [
-          ...getFragmentImports(state),
+          ...getFragmentRefsTypeImport(state),
           ...getEnumDefinitions(state),
-          ...fragmentTypes,
           exportType(node.name, type)
         ];
       },
@@ -612,7 +591,7 @@ function makeRawResponseProp(
   if (schemaName === "__typename" && concreteType) {
     value = ts.createLiteralTypeNode(ts.createLiteral(concreteType));
   }
-  const typeProperty = readOnlyObjectTypeProperty(key, value);
+  const typeProperty = objectTypeProperty(key, value);
   if (conditional) {
     typeProperty.questionToken = ts.createToken(ts.SyntaxKind.QuestionToken);
   }
@@ -821,69 +800,14 @@ function generateInputVariablesType(node: Root, state: State) {
     `${node.name}Variables`,
     exactObjectTypeAnnotation(
       node.argumentDefinitions.map(arg => {
-        return readOnlyObjectTypeProperty(
+        return objectTypeProperty(
           arg.name,
           transformInputType(arg.type, state),
-          !(arg.type instanceof GraphQLNonNull)
+          { readonly: false, optional: !(arg.type instanceof GraphQLNonNull) }
         );
       })
     )
   );
-}
-
-// If it's a @refetchable fragment, we generate the $fragmentRef in generated
-// query, and import it in the fragment to avoid circular dependencies
-function getRefetchableQueryParentFragmentName(
-  state: State,
-  metadata: Metadata
-): string | null {
-  if (
-    !(metadata && metadata.isRefetchableQuery) ||
-    (!state.useHaste && !state.useSingleArtifactDirectory)
-  ) {
-    return null;
-  }
-  const derivedFrom = metadata && metadata.derivedFrom;
-  if (derivedFrom != null && typeof derivedFrom === "string") {
-    return derivedFrom;
-  }
-  return null;
-}
-
-function getRefetchableQueryPath(
-  state: State,
-  directives: ReadonlyArray<Directive>
-): string | undefined {
-  let refetchableQuery: string | undefined;
-  if (!state.useHaste && !state.useSingleArtifactDirectory) {
-    return;
-  }
-  const directive = directives.find(d => d.name === "refetchable");
-  const refetchableArgs = directive && directive.args;
-  if (!refetchableArgs) {
-    return;
-  }
-  const argument = refetchableArgs.find(
-    arg => arg.kind === "Argument" && arg.name === "queryName"
-  );
-  if (
-    argument &&
-    argument.value &&
-    argument.value.kind === "Literal" &&
-    typeof argument.value.value === "string"
-  ) {
-    refetchableQuery = argument.value.value;
-    if (!state.useHaste) {
-      refetchableQuery = "./" + refetchableQuery;
-    }
-    refetchableQuery += ".graphql";
-  }
-  return refetchableQuery;
-}
-
-function generateFragmentRefsForRefetchable(name: string) {
-  const oldFragmentTypeName = getOldFragmentTypeName(name);
-  return declareExportOpaqueType(oldFragmentTypeName);
 }
 
 function groupRefs(props: Selection[]): Selection[] {
@@ -897,53 +821,38 @@ function groupRefs(props: Selection[]): Selection[] {
     }
   });
   if (refs.length > 0) {
-    const value = ts.createIntersectionTypeNode(
-      refs.map(ref =>
-        ts.createTypeReferenceNode(
-          ts.createIdentifier(getOldFragmentTypeName(ref)),
-          undefined
-        )
-      )
+    const refTypes = ts.createUnionTypeNode(
+      refs.map(ref => ts.createLiteralTypeNode(ts.createStringLiteral(ref)))
     );
     result.push({
       key: FRAGMENT_REFS,
       conditional: false,
-      value
+      value: ts.createTypeReferenceNode(FRAGMENT_REFS_TYPE_NAME, [refTypes])
     });
   }
   return result;
 }
 
-function createAnyTypeAlias(name: string): ts.TypeAliasDeclaration {
-  return ts.createTypeAliasDeclaration(
-    undefined,
-    undefined,
-    ts.createIdentifier(name),
-    undefined,
-    ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
-  );
-}
-
-function getFragmentImports(state: State) {
-  const imports: ts.Statement[] = [];
+function getFragmentRefsTypeImport(state: State): ts.Statement[] {
   if (state.usedFragments.size > 0) {
-    const usedFragments = Array.from(state.usedFragments).sort();
-    for (const usedFragment of usedFragments) {
-      const fragmentTypeName = getOldFragmentTypeName(usedFragment);
-      if (
-        !state.generatedFragments.has(usedFragment) &&
-        state.useSingleArtifactDirectory &&
-        state.existingFragmentNames.has(usedFragment)
-      ) {
-        imports.push(
-          importTypes([fragmentTypeName], `./${usedFragment}.graphql`)
-        );
-      } else {
-        imports.push(createAnyTypeAlias(fragmentTypeName));
-      }
-    }
+    return [
+      ts.createImportDeclaration(
+        undefined,
+        undefined,
+        ts.createImportClause(
+          undefined,
+          ts.createNamedImports([
+            ts.createImportSpecifier(
+              undefined,
+              ts.createIdentifier("FragmentRefs")
+            )
+          ])
+        ),
+        ts.createStringLiteral("relay-runtime")
+      )
+    ];
   }
-  return imports;
+  return [];
 }
 
 function getEnumDefinitions({
@@ -980,75 +889,6 @@ function getEnumDefinitions({
 
 function stringLiteralTypeAnnotation(name: string): ts.TypeNode {
   return ts.createLiteralTypeNode(ts.createLiteral(name));
-}
-
-function getFragmentTypes(
-  name: string,
-  refetchableQueryPath: undefined | string,
-  state: State
-) {
-  const oldFragmentTypeName = getOldFragmentTypeName(name);
-
-  if (!state.useSingleArtifactDirectory && !state.useHaste) {
-    return [
-      exportType(
-        oldFragmentTypeName,
-        ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
-      )
-    ];
-  }
-
-  if (refetchableQueryPath) {
-    return [
-      importTypes([oldFragmentTypeName], refetchableQueryPath),
-      exportTypes([oldFragmentTypeName])
-    ];
-  }
-
-  return declareExportOpaqueType(oldFragmentTypeName);
-}
-
-function declareExportOpaqueType(oldFragmentTypeName: string) {
-  const _refTypeName = `_${oldFragmentTypeName}`;
-  const _refType = ts.createVariableStatement(
-    [ts.createToken(ts.SyntaxKind.DeclareKeyword)],
-    ts.createVariableDeclarationList(
-      [
-        ts.createVariableDeclaration(
-          _refTypeName,
-          ts.createTypeOperatorNode(
-            ts.SyntaxKind.UniqueKeyword,
-            ts.createKeywordTypeNode(ts.SyntaxKind.SymbolKeyword)
-          )
-        )
-      ],
-      ts.NodeFlags.Const
-    )
-  );
-
-  return [
-    _refType,
-    exportType(
-      oldFragmentTypeName,
-      ts.createTypeQueryNode(ts.createIdentifier(_refTypeName))
-    )
-  ];
-}
-
-function getOldFragmentTypeName(name: string) {
-  return `${name}$ref`;
-}
-
-function getNewFragmentTypeName(name: string) {
-  return `${name}$fragmentType`;
-}
-
-function getRefTypeName(name: string): string {
-  return `${name}$key`;
-}
-
-function getDataTypeName(name: string): string {
-  return `${name}$data`;
 }
 
 // Should match FLOW_TRANSFORMS array

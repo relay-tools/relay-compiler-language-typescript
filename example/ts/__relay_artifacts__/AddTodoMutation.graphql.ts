@@ -9,21 +9,21 @@ export type AddTodoMutationVariables = {
     readonly input: AddTodoInput;
 };
 export type AddTodoMutationResponse = {
-    readonly addTodo: ({
-        readonly todoEdge: ({
+    readonly addTodo: {
+        readonly todoEdge: {
             readonly __typename: string;
             readonly cursor: string;
-            readonly node: ({
+            readonly node: {
                 readonly complete: boolean | null;
                 readonly id: string;
                 readonly text: string | null;
-            }) | null;
-        }) | null;
-        readonly viewer: ({
+            } | null;
+        } | null;
+        readonly viewer: {
             readonly id: string;
             readonly totalCount: number | null;
-        }) | null;
-    }) | null;
+        } | null;
+    } | null;
 };
 export type AddTodoMutation = {
     readonly response: AddTodoMutationResponse;
@@ -80,8 +80,7 @@ v2 = [
       {
         "kind": "Variable",
         "name": "input",
-        "variableName": "input",
-        "type": "AddTodoInput!"
+        "variableName": "input"
       }
     ],
     "concreteType": "AddTodoPayload",
@@ -126,7 +125,7 @@ v2 = [
                 "args": null,
                 "storageKey": null
               },
-              v1,
+              (v1/*: any*/),
               {
                 "kind": "ScalarField",
                 "alias": null,
@@ -147,7 +146,7 @@ v2 = [
         "concreteType": "User",
         "plural": false,
         "selections": [
-          v1,
+          (v1/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -162,24 +161,26 @@ v2 = [
 ];
 return {
   "kind": "Request",
-  "operationKind": "mutation",
-  "name": "AddTodoMutation",
-  "id": null,
-  "text": "mutation AddTodoMutation(\n  $input: AddTodoInput!\n) {\n  addTodo(input: $input) {\n    todoEdge {\n      __typename\n      cursor\n      node {\n        complete\n        id\n        text\n      }\n    }\n    viewer {\n      id\n      totalCount\n    }\n  }\n}\n",
-  "metadata": {},
   "fragment": {
     "kind": "Fragment",
     "name": "AddTodoMutation",
     "type": "Mutation",
     "metadata": null,
-    "argumentDefinitions": v0,
-    "selections": v2
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v2/*: any*/)
   },
   "operation": {
     "kind": "Operation",
     "name": "AddTodoMutation",
-    "argumentDefinitions": v0,
-    "selections": v2
+    "argumentDefinitions": (v0/*: any*/),
+    "selections": (v2/*: any*/)
+  },
+  "params": {
+    "operationKind": "mutation",
+    "name": "AddTodoMutation",
+    "id": null,
+    "text": "mutation AddTodoMutation(\n  $input: AddTodoInput!\n) {\n  addTodo(input: $input) {\n    todoEdge {\n      __typename\n      cursor\n      node {\n        complete\n        id\n        text\n      }\n    }\n    viewer {\n      id\n      totalCount\n    }\n  }\n}\n",
+    "metadata": {}
   }
 };
 })();
