@@ -451,6 +451,9 @@ function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
           refTypeFragmentRefProperty
         ]);
 
+        const dataTypeName = getDataTypeName(node.name);
+        const dataType = ts.createTypeReferenceNode(node.name, undefined);
+
         const unmasked = node.metadata != null && node.metadata.mask === false;
         const baseType = selectionsToAST(
           selections,
@@ -468,6 +471,7 @@ function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
           ...getFragmentRefsTypeImport(state),
           ...getEnumDefinitions(state),
           exportType(node.name, type),
+          exportType(dataTypeName, dataType),
           exportType(
             refTypeName,
             isPluralFragment
@@ -928,6 +932,10 @@ function getOldFragmentTypeName(name: string) {
 
 function getRefTypeName(name: string): string {
   return `${name}$key`;
+}
+
+function getDataTypeName(name: string): string {
+  return `${name}$data`;
 }
 
 // Should match FLOW_TRANSFORMS array
