@@ -441,10 +441,9 @@ function createVisitor(options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
         );
         const refTypeFragmentRefProperty = objectTypeProperty(
           FRAGMENT_REFS,
-          ts.createTypeReferenceNode(
-            getOldFragmentTypeName(node.name),
-            undefined
-          )
+          ts.createTypeReferenceNode(FRAGMENT_REFS_TYPE_NAME, [
+            ts.createLiteralTypeNode(ts.createStringLiteral(node.name))
+          ])
         );
         const isPluralFragment = isPlural(node);
         const refType = exactObjectTypeAnnotation([
@@ -925,10 +924,6 @@ function getEnumDefinitions({
 
 function stringLiteralTypeAnnotation(name: string): ts.TypeNode {
   return ts.createLiteralTypeNode(ts.createLiteral(name));
-}
-
-function getOldFragmentTypeName(name: string) {
-  return `${name}$ref`;
 }
 
 function getRefTypeName(name: string): string {
