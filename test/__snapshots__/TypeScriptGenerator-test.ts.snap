@@ -18,12 +18,22 @@ export type ConditionField = {
     readonly id?: string;
     readonly " $refType": "ConditionField";
 };
+export type ConditionField$data = ConditionField;
+export type ConditionField$key = {
+    readonly $data?: ConditionField$data;
+    readonly $fragmentRefs: ConditionField$ref;
+};
 
 
 // NestedCondition.graphql
 export type NestedCondition = {
     readonly id?: string;
     readonly " $refType": "NestedCondition";
+};
+export type NestedCondition$data = NestedCondition;
+export type NestedCondition$key = {
+    readonly $data?: NestedCondition$data;
+    readonly $fragmentRefs: NestedCondition$ref;
 };
 
 `;
@@ -80,6 +90,11 @@ export type FeedbackComments_feedback = {
         } | null;
     } | null;
     readonly " $refType": "FeedbackComments_feedback";
+};
+export type FeedbackComments_feedback$data = FeedbackComments_feedback;
+export type FeedbackComments_feedback$key = {
+    readonly $data?: FeedbackComments_feedback$data;
+    readonly $fragmentRefs: FeedbackComments_feedback$ref;
 };
 
 `;
@@ -150,6 +165,11 @@ export type FragmentSpread = {
     readonly " $fragmentRefs": FragmentRefs<"OtherFragment" | "UserFrag1" | "UserFrag2">;
     readonly " $refType": "FragmentSpread";
 };
+export type FragmentSpread$data = FragmentSpread;
+export type FragmentSpread$key = {
+    readonly $data?: FragmentSpread$data;
+    readonly $fragmentRefs: FragmentSpread$ref;
+};
 
 
 // ConcreateTypes.graphql
@@ -169,6 +189,11 @@ export type ConcreateTypes = {
     }) | null;
     readonly " $refType": "ConcreateTypes";
 };
+export type ConcreateTypes$data = ConcreateTypes;
+export type ConcreateTypes$key = {
+    readonly $data?: ConcreateTypes$data;
+    readonly $fragmentRefs: ConcreateTypes$ref;
+};
 
 
 // PictureFragment.graphql
@@ -181,12 +206,22 @@ export type PictureFragment = {
     readonly __typename: "%other";
     readonly " $refType": "PictureFragment";
 };
+export type PictureFragment$data = PictureFragment;
+export type PictureFragment$key = {
+    readonly $data?: PictureFragment$data;
+    readonly $fragmentRefs: PictureFragment$ref;
+};
 
 
 // OtherFragment.graphql
 export type OtherFragment = {
     readonly __typename: string;
     readonly " $refType": "OtherFragment";
+};
+export type OtherFragment$data = OtherFragment;
+export type OtherFragment$key = {
+    readonly $data?: OtherFragment$data;
+    readonly $fragmentRefs: OtherFragment$ref;
 };
 
 
@@ -200,6 +235,11 @@ export type PageFragment = {
     readonly __typename: "%other";
     readonly " $refType": "PageFragment";
 };
+export type PageFragment$data = PageFragment;
+export type PageFragment$key = {
+    readonly $data?: PageFragment$data;
+    readonly $fragmentRefs: PageFragment$ref;
+};
 
 
 // UserFrag1.graphql
@@ -212,6 +252,11 @@ export type UserFrag1 = {
     readonly __typename: "%other";
     readonly " $refType": "UserFrag1";
 };
+export type UserFrag1$data = UserFrag1;
+export type UserFrag1$key = {
+    readonly $data?: UserFrag1$data;
+    readonly $fragmentRefs: UserFrag1$ref;
+};
 
 
 // UserFrag2.graphql
@@ -223,6 +268,11 @@ export type UserFrag2 = {
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
     readonly " $refType": "UserFrag2";
+};
+export type UserFrag2$data = UserFrag2;
+export type UserFrag2$key = {
+    readonly $data?: UserFrag2$data;
+    readonly $fragmentRefs: UserFrag2$ref;
 };
 
 `;
@@ -304,6 +354,11 @@ export type InlineFragment = {
     } | null;
     readonly " $refType": "InlineFragment";
 };
+export type InlineFragment$data = InlineFragment;
+export type InlineFragment$key = {
+    readonly $data?: InlineFragment$data;
+    readonly $fragmentRefs: InlineFragment$ref;
+};
 
 
 // InlineFragmentWithOverlappingFields.graphql
@@ -318,6 +373,11 @@ export type InlineFragmentWithOverlappingFields = {
     readonly name?: string | null;
     readonly " $refType": "InlineFragmentWithOverlappingFields";
 };
+export type InlineFragmentWithOverlappingFields$data = InlineFragmentWithOverlappingFields;
+export type InlineFragmentWithOverlappingFields$key = {
+    readonly $data?: InlineFragmentWithOverlappingFields$data;
+    readonly $fragmentRefs: InlineFragmentWithOverlappingFields$ref;
+};
 
 
 // InlineFragmentConditionalID.graphql
@@ -325,6 +385,11 @@ export type InlineFragmentConditionalID = {
     readonly id?: string;
     readonly name?: string | null;
     readonly " $refType": "InlineFragmentConditionalID";
+};
+export type InlineFragmentConditionalID$data = InlineFragmentConditionalID;
+export type InlineFragmentConditionalID$key = {
+    readonly $data?: InlineFragmentConditionalID$data;
+    readonly $fragmentRefs: InlineFragmentConditionalID$ref;
 };
 
 
@@ -343,6 +408,11 @@ export type InlineFragmentKitchenSink = {
     } | null;
     readonly " $refType": "InlineFragmentKitchenSink";
 };
+export type InlineFragmentKitchenSink$data = InlineFragmentKitchenSink;
+export type InlineFragmentKitchenSink$key = {
+    readonly $data?: InlineFragmentKitchenSink$data;
+    readonly $fragmentRefs: InlineFragmentKitchenSink$ref;
+};
 
 
 // SomeFragment.graphql
@@ -354,6 +424,11 @@ export type SomeFragment = {
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
     readonly " $refType": "SomeFragment";
+};
+export type SomeFragment$data = SomeFragment;
+export type SomeFragment$key = {
+    readonly $data?: SomeFragment$data;
+    readonly $fragmentRefs: SomeFragment$ref;
 };
 
 `;
@@ -406,6 +481,11 @@ export type LinkedField = {
         readonly id: string;
     } | null;
     readonly " $refType": "LinkedField";
+};
+export type LinkedField$data = LinkedField;
+export type LinkedField$key = {
+    readonly $data?: LinkedField$data;
+    readonly $fragmentRefs: LinkedField$ref;
 };
 
 
@@ -465,6 +545,11 @@ export type NameRendererFragment = {
     } | null;
     readonly " $refType": "NameRendererFragment";
 };
+export type NameRendererFragment$data = NameRendererFragment;
+export type NameRendererFragment$key = {
+    readonly $data?: NameRendererFragment$data;
+    readonly $fragmentRefs: NameRendererFragment$ref;
+};
 
 
 // PlainUserNameRenderer_name.graphql
@@ -475,6 +560,11 @@ export type PlainUserNameRenderer_name = {
     } | null;
     readonly " $refType": "PlainUserNameRenderer_name";
 };
+export type PlainUserNameRenderer_name$data = PlainUserNameRenderer_name;
+export type PlainUserNameRenderer_name$key = {
+    readonly $data?: PlainUserNameRenderer_name$data;
+    readonly $fragmentRefs: PlainUserNameRenderer_name$ref;
+};
 
 
 // MarkdownUserNameRenderer_name.graphql
@@ -484,6 +574,11 @@ export type MarkdownUserNameRenderer_name = {
         readonly markup: string | null;
     } | null;
     readonly " $refType": "MarkdownUserNameRenderer_name";
+};
+export type MarkdownUserNameRenderer_name$data = MarkdownUserNameRenderer_name;
+export type MarkdownUserNameRenderer_name$key = {
+    readonly $data?: MarkdownUserNameRenderer_name$data;
+    readonly $fragmentRefs: MarkdownUserNameRenderer_name$ref;
 };
 
 `;
@@ -541,6 +636,11 @@ export type PlainUserNameRenderer_name = {
     } | null;
     readonly " $refType": "PlainUserNameRenderer_name";
 };
+export type PlainUserNameRenderer_name$data = PlainUserNameRenderer_name;
+export type PlainUserNameRenderer_name$key = {
+    readonly $data?: PlainUserNameRenderer_name$data;
+    readonly $fragmentRefs: PlainUserNameRenderer_name$ref;
+};
 
 
 // MarkdownUserNameRenderer_name.graphql
@@ -550,6 +650,11 @@ export type MarkdownUserNameRenderer_name = {
         readonly markup: string | null;
     } | null;
     readonly " $refType": "MarkdownUserNameRenderer_name";
+};
+export type MarkdownUserNameRenderer_name$data = MarkdownUserNameRenderer_name;
+export type MarkdownUserNameRenderer_name$key = {
+    readonly $data?: MarkdownUserNameRenderer_name$data;
+    readonly $fragmentRefs: MarkdownUserNameRenderer_name$ref;
 };
 
 `;
@@ -711,6 +816,11 @@ export type InlineFragmentWithOverlappingFields = {
     } | null;
     readonly name?: string | null;
     readonly " $refType": "InlineFragmentWithOverlappingFields";
+};
+export type InlineFragmentWithOverlappingFields$data = InlineFragmentWithOverlappingFields;
+export type InlineFragmentWithOverlappingFields$key = {
+    readonly $data?: InlineFragmentWithOverlappingFields$data;
+    readonly $fragmentRefs: InlineFragmentWithOverlappingFields$ref;
 };
 
 `;
@@ -913,6 +1023,11 @@ export type FriendFragment = {
     } | null;
     readonly " $refType": "FriendFragment";
 };
+export type FriendFragment$data = FriendFragment;
+export type FriendFragment$key = {
+    readonly $data?: FriendFragment$data;
+    readonly $fragmentRefs: FriendFragment$ref;
+};
 
 `;
 
@@ -1020,6 +1135,11 @@ export type FriendFragment = {
     } | null;
     readonly " $refType": "FriendFragment";
 };
+export type FriendFragment$data = FriendFragment;
+export type FriendFragment$key = {
+    readonly $data?: FriendFragment$data;
+    readonly $fragmentRefs: FriendFragment$ref;
+};
 
 
 // FeedbackFragment.graphql
@@ -1027,6 +1147,11 @@ export type FeedbackFragment = {
     readonly id: string;
     readonly name: string | null;
     readonly " $refType": "FeedbackFragment";
+};
+export type FeedbackFragment$data = FeedbackFragment;
+export type FeedbackFragment$key = {
+    readonly $data?: FeedbackFragment$data;
+    readonly $fragmentRefs: FeedbackFragment$ref;
 };
 
 `;
@@ -1042,6 +1167,11 @@ fragment PluralFragment on Node @relay(plural: true) {
 export type PluralFragment = ReadonlyArray<{
     readonly id: string;
     readonly " $refType": "PluralFragment";
+}>;
+export type PluralFragment$data = PluralFragment;
+export type PluralFragment$key = ReadonlyArray<{
+    readonly $data?: PluralFragment$data;
+    readonly $fragmentRefs: PluralFragment$ref;
 }>;
 
 `;
@@ -1249,6 +1379,11 @@ export type FriendFragment = {
     } | null;
     readonly " $refType": "FriendFragment";
 };
+export type FriendFragment$data = FriendFragment;
+export type FriendFragment$key = {
+    readonly $data?: FriendFragment$data;
+    readonly $fragmentRefs: FriendFragment$ref;
+};
 
 `;
 
@@ -1336,6 +1471,11 @@ export type FragmentSpread = {
     readonly " $fragmentRefs": FragmentRefs<"FragmentSpread">;
     readonly " $refType": "FragmentSpread";
 };
+export type FragmentSpread$data = FragmentSpread;
+export type FragmentSpread$key = {
+    readonly $data?: FragmentSpread$data;
+    readonly $fragmentRefs: FragmentSpread$ref;
+};
 
 `;
 
@@ -1357,6 +1497,11 @@ export type RefetchableFragment = {
         readonly uri: string | null;
     } | null;
     readonly " $refType": "RefetchableFragment";
+};
+export type RefetchableFragment$data = RefetchableFragment;
+export type RefetchableFragment$key = {
+    readonly $data?: RefetchableFragment$data;
+    readonly $fragmentRefs: RefetchableFragment$ref;
 };
 
 
@@ -1425,6 +1570,11 @@ export type ExampleQuery = {
 export type ExampleFragment = {
     readonly id: string;
     readonly " $refType": "ExampleFragment";
+};
+export type ExampleFragment$data = ExampleFragment;
+export type ExampleFragment$key = {
+    readonly $data?: ExampleFragment$data;
+    readonly $fragmentRefs: ExampleFragment$ref;
 };
 
 
@@ -1511,6 +1661,11 @@ export type ScalarField = {
     } | null> | null;
     readonly " $refType": "ScalarField";
 };
+export type ScalarField$data = ScalarField;
+export type ScalarField$key = {
+    readonly $data?: ScalarField$data;
+    readonly $fragmentRefs: ScalarField$ref;
+};
 
 `;
 
@@ -1553,6 +1708,11 @@ export type TypenameInsideWithOverlappingFields = {
         readonly __typename: "%other";
     }) | null;
     readonly " $refType": "TypenameInsideWithOverlappingFields";
+};
+export type TypenameInsideWithOverlappingFields$data = TypenameInsideWithOverlappingFields;
+export type TypenameInsideWithOverlappingFields$key = {
+    readonly $data?: TypenameInsideWithOverlappingFields$data;
+    readonly $fragmentRefs: TypenameInsideWithOverlappingFields$ref;
 };
 
 `;
@@ -1656,6 +1816,11 @@ export type TypenameInside = {
     readonly __typename: "%other";
     readonly " $refType": "TypenameInside";
 };
+export type TypenameInside$data = TypenameInside;
+export type TypenameInside$key = {
+    readonly $data?: TypenameInside$data;
+    readonly $fragmentRefs: TypenameInside$ref;
+};
 
 
 // TypenameOutside.graphql
@@ -1673,6 +1838,11 @@ export type TypenameOutside = {
     readonly __typename: "%other";
     readonly " $refType": "TypenameOutside";
 };
+export type TypenameOutside$data = TypenameOutside;
+export type TypenameOutside$key = {
+    readonly $data?: TypenameOutside$data;
+    readonly $fragmentRefs: TypenameOutside$ref;
+};
 
 
 // TypenameOutsideWithAbstractType.graphql
@@ -1687,6 +1857,11 @@ export type TypenameOutsideWithAbstractType = {
     readonly firstName?: string | null;
     readonly " $refType": "TypenameOutsideWithAbstractType";
 };
+export type TypenameOutsideWithAbstractType$data = TypenameOutsideWithAbstractType;
+export type TypenameOutsideWithAbstractType$key = {
+    readonly $data?: TypenameOutsideWithAbstractType$data;
+    readonly $fragmentRefs: TypenameOutsideWithAbstractType$ref;
+};
 
 
 // TypenameWithoutSpreads.graphql
@@ -1695,6 +1870,11 @@ export type TypenameWithoutSpreads = {
     readonly __typename: "User";
     readonly " $refType": "TypenameWithoutSpreads";
 };
+export type TypenameWithoutSpreads$data = TypenameWithoutSpreads;
+export type TypenameWithoutSpreads$key = {
+    readonly $data?: TypenameWithoutSpreads$data;
+    readonly $fragmentRefs: TypenameWithoutSpreads$ref;
+};
 
 
 // TypenameWithoutSpreadsAbstractType.graphql
@@ -1702,6 +1882,11 @@ export type TypenameWithoutSpreadsAbstractType = {
     readonly __typename: string;
     readonly id: string;
     readonly " $refType": "TypenameWithoutSpreadsAbstractType";
+};
+export type TypenameWithoutSpreadsAbstractType$data = TypenameWithoutSpreadsAbstractType;
+export type TypenameWithoutSpreadsAbstractType$key = {
+    readonly $data?: TypenameWithoutSpreadsAbstractType$data;
+    readonly $fragmentRefs: TypenameWithoutSpreadsAbstractType$ref;
 };
 
 
@@ -1712,6 +1897,11 @@ export type TypenameWithCommonSelections = {
     readonly firstName?: string | null;
     readonly username?: string | null;
     readonly " $refType": "TypenameWithCommonSelections";
+};
+export type TypenameWithCommonSelections$data = TypenameWithCommonSelections;
+export type TypenameWithCommonSelections$key = {
+    readonly $data?: TypenameWithCommonSelections$data;
+    readonly $fragmentRefs: TypenameWithCommonSelections$ref;
 };
 
 
@@ -1729,6 +1919,11 @@ export type TypenameAlias = {
     value in case none of the concrete values match.*/
     readonly _typeAlias: "%other";
     readonly " $refType": "TypenameAlias";
+};
+export type TypenameAlias$data = TypenameAlias;
+export type TypenameAlias$key = {
+    readonly $data?: TypenameAlias$data;
+    readonly $fragmentRefs: TypenameAlias$ref;
 };
 
 
@@ -1751,6 +1946,11 @@ export type TypenameAliases = {
     value in case none of the concrete values match.*/
     readonly _typeAlias2: "%other";
     readonly " $refType": "TypenameAliases";
+};
+export type TypenameAliases$data = TypenameAliases;
+export type TypenameAliases$key = {
+    readonly $data?: TypenameAliases$data;
+    readonly $fragmentRefs: TypenameAliases$ref;
 };
 
 `;
@@ -1796,6 +1996,11 @@ export type UserProfile = {
     } | null;
     readonly " $refType": "UserProfile";
 };
+export type UserProfile$data = UserProfile;
+export type UserProfile$key = {
+    readonly $data?: UserProfile$data;
+    readonly $fragmentRefs: UserProfile$ref;
+};
 
 
 // PhotoFragment.graphql
@@ -1804,12 +2009,22 @@ export type PhotoFragment = {
     readonly width: number | null;
     readonly " $refType": "PhotoFragment";
 };
+export type PhotoFragment$data = PhotoFragment;
+export type PhotoFragment$key = {
+    readonly $data?: PhotoFragment$data;
+    readonly $fragmentRefs: PhotoFragment$ref;
+};
 
 
 // RecursiveFragment.graphql
 export type RecursiveFragment = {
     readonly uri: string | null;
     readonly width: number | null;
+};
+export type RecursiveFragment$data = RecursiveFragment;
+export type RecursiveFragment$key = {
+    readonly $data?: RecursiveFragment$data;
+    readonly $fragmentRefs: RecursiveFragment$ref;
 };
 
 
@@ -1818,6 +2033,11 @@ export type AnotherRecursiveFragment = {
     readonly uri: string | null;
     readonly height: number | null;
     readonly " $refType": "AnotherRecursiveFragment";
+};
+export type AnotherRecursiveFragment$data = AnotherRecursiveFragment;
+export type AnotherRecursiveFragment$key = {
+    readonly $data?: AnotherRecursiveFragment$data;
+    readonly $fragmentRefs: AnotherRecursiveFragment$ref;
 };
 
 `;
@@ -1840,12 +2060,22 @@ export type ConditionField = {
     readonly id?: string;
     readonly " $refType": "ConditionField";
 };
+export type ConditionField$data = ConditionField;
+export type ConditionField$key = {
+    readonly $data?: ConditionField$data;
+    readonly $fragmentRefs: ConditionField$ref;
+};
 
 
 // NestedCondition.graphql
 export type NestedCondition = {
     readonly id?: string;
     readonly " $refType": "NestedCondition";
+};
+export type NestedCondition$data = NestedCondition;
+export type NestedCondition$key = {
+    readonly $data?: NestedCondition$data;
+    readonly $fragmentRefs: NestedCondition$ref;
 };
 
 `;
@@ -1902,6 +2132,11 @@ export type FeedbackComments_feedback = {
         } | null;
     } | null;
     readonly " $refType": "FeedbackComments_feedback";
+};
+export type FeedbackComments_feedback$data = FeedbackComments_feedback;
+export type FeedbackComments_feedback$key = {
+    readonly $data?: FeedbackComments_feedback$data;
+    readonly $fragmentRefs: FeedbackComments_feedback$ref;
 };
 
 `;
@@ -1972,6 +2207,11 @@ export type FragmentSpread = {
     readonly " $fragmentRefs": FragmentRefs<"OtherFragment" | "UserFrag1" | "UserFrag2">;
     readonly " $refType": "FragmentSpread";
 };
+export type FragmentSpread$data = FragmentSpread;
+export type FragmentSpread$key = {
+    readonly $data?: FragmentSpread$data;
+    readonly $fragmentRefs: FragmentSpread$ref;
+};
 
 
 // ConcreateTypes.graphql
@@ -1991,6 +2231,11 @@ export type ConcreateTypes = {
     }) | null;
     readonly " $refType": "ConcreateTypes";
 };
+export type ConcreateTypes$data = ConcreateTypes;
+export type ConcreateTypes$key = {
+    readonly $data?: ConcreateTypes$data;
+    readonly $fragmentRefs: ConcreateTypes$ref;
+};
 
 
 // PictureFragment.graphql
@@ -2003,12 +2248,22 @@ export type PictureFragment = {
     readonly __typename: "%other";
     readonly " $refType": "PictureFragment";
 };
+export type PictureFragment$data = PictureFragment;
+export type PictureFragment$key = {
+    readonly $data?: PictureFragment$data;
+    readonly $fragmentRefs: PictureFragment$ref;
+};
 
 
 // OtherFragment.graphql
 export type OtherFragment = {
     readonly __typename: string;
     readonly " $refType": "OtherFragment";
+};
+export type OtherFragment$data = OtherFragment;
+export type OtherFragment$key = {
+    readonly $data?: OtherFragment$data;
+    readonly $fragmentRefs: OtherFragment$ref;
 };
 
 
@@ -2022,6 +2277,11 @@ export type PageFragment = {
     readonly __typename: "%other";
     readonly " $refType": "PageFragment";
 };
+export type PageFragment$data = PageFragment;
+export type PageFragment$key = {
+    readonly $data?: PageFragment$data;
+    readonly $fragmentRefs: PageFragment$ref;
+};
 
 
 // UserFrag1.graphql
@@ -2034,6 +2294,11 @@ export type UserFrag1 = {
     readonly __typename: "%other";
     readonly " $refType": "UserFrag1";
 };
+export type UserFrag1$data = UserFrag1;
+export type UserFrag1$key = {
+    readonly $data?: UserFrag1$data;
+    readonly $fragmentRefs: UserFrag1$ref;
+};
 
 
 // UserFrag2.graphql
@@ -2045,6 +2310,11 @@ export type UserFrag2 = {
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
     readonly " $refType": "UserFrag2";
+};
+export type UserFrag2$data = UserFrag2;
+export type UserFrag2$key = {
+    readonly $data?: UserFrag2$data;
+    readonly $fragmentRefs: UserFrag2$ref;
 };
 
 `;
@@ -2126,6 +2396,11 @@ export type InlineFragment = {
     } | null;
     readonly " $refType": "InlineFragment";
 };
+export type InlineFragment$data = InlineFragment;
+export type InlineFragment$key = {
+    readonly $data?: InlineFragment$data;
+    readonly $fragmentRefs: InlineFragment$ref;
+};
 
 
 // InlineFragmentWithOverlappingFields.graphql
@@ -2140,6 +2415,11 @@ export type InlineFragmentWithOverlappingFields = {
     readonly name?: string | null;
     readonly " $refType": "InlineFragmentWithOverlappingFields";
 };
+export type InlineFragmentWithOverlappingFields$data = InlineFragmentWithOverlappingFields;
+export type InlineFragmentWithOverlappingFields$key = {
+    readonly $data?: InlineFragmentWithOverlappingFields$data;
+    readonly $fragmentRefs: InlineFragmentWithOverlappingFields$ref;
+};
 
 
 // InlineFragmentConditionalID.graphql
@@ -2147,6 +2427,11 @@ export type InlineFragmentConditionalID = {
     readonly id?: string;
     readonly name?: string | null;
     readonly " $refType": "InlineFragmentConditionalID";
+};
+export type InlineFragmentConditionalID$data = InlineFragmentConditionalID;
+export type InlineFragmentConditionalID$key = {
+    readonly $data?: InlineFragmentConditionalID$data;
+    readonly $fragmentRefs: InlineFragmentConditionalID$ref;
 };
 
 
@@ -2165,6 +2450,11 @@ export type InlineFragmentKitchenSink = {
     } | null;
     readonly " $refType": "InlineFragmentKitchenSink";
 };
+export type InlineFragmentKitchenSink$data = InlineFragmentKitchenSink;
+export type InlineFragmentKitchenSink$key = {
+    readonly $data?: InlineFragmentKitchenSink$data;
+    readonly $fragmentRefs: InlineFragmentKitchenSink$ref;
+};
 
 
 // SomeFragment.graphql
@@ -2176,6 +2466,11 @@ export type SomeFragment = {
     value in case none of the concrete values match.*/
     readonly __typename: "%other";
     readonly " $refType": "SomeFragment";
+};
+export type SomeFragment$data = SomeFragment;
+export type SomeFragment$key = {
+    readonly $data?: SomeFragment$data;
+    readonly $fragmentRefs: SomeFragment$ref;
 };
 
 `;
@@ -2228,6 +2523,11 @@ export type LinkedField = {
         readonly id: string;
     } | null;
     readonly " $refType": "LinkedField";
+};
+export type LinkedField$data = LinkedField;
+export type LinkedField$key = {
+    readonly $data?: LinkedField$data;
+    readonly $fragmentRefs: LinkedField$ref;
 };
 
 
@@ -2287,6 +2587,11 @@ export type NameRendererFragment = {
     } | null;
     readonly " $refType": "NameRendererFragment";
 };
+export type NameRendererFragment$data = NameRendererFragment;
+export type NameRendererFragment$key = {
+    readonly $data?: NameRendererFragment$data;
+    readonly $fragmentRefs: NameRendererFragment$ref;
+};
 
 
 // PlainUserNameRenderer_name.graphql
@@ -2297,6 +2602,11 @@ export type PlainUserNameRenderer_name = {
     } | null;
     readonly " $refType": "PlainUserNameRenderer_name";
 };
+export type PlainUserNameRenderer_name$data = PlainUserNameRenderer_name;
+export type PlainUserNameRenderer_name$key = {
+    readonly $data?: PlainUserNameRenderer_name$data;
+    readonly $fragmentRefs: PlainUserNameRenderer_name$ref;
+};
 
 
 // MarkdownUserNameRenderer_name.graphql
@@ -2306,6 +2616,11 @@ export type MarkdownUserNameRenderer_name = {
         readonly markup: string | null;
     } | null;
     readonly " $refType": "MarkdownUserNameRenderer_name";
+};
+export type MarkdownUserNameRenderer_name$data = MarkdownUserNameRenderer_name;
+export type MarkdownUserNameRenderer_name$key = {
+    readonly $data?: MarkdownUserNameRenderer_name$data;
+    readonly $fragmentRefs: MarkdownUserNameRenderer_name$ref;
 };
 
 `;
@@ -2363,6 +2678,11 @@ export type PlainUserNameRenderer_name = {
     } | null;
     readonly " $refType": "PlainUserNameRenderer_name";
 };
+export type PlainUserNameRenderer_name$data = PlainUserNameRenderer_name;
+export type PlainUserNameRenderer_name$key = {
+    readonly $data?: PlainUserNameRenderer_name$data;
+    readonly $fragmentRefs: PlainUserNameRenderer_name$ref;
+};
 
 
 // MarkdownUserNameRenderer_name.graphql
@@ -2372,6 +2692,11 @@ export type MarkdownUserNameRenderer_name = {
         readonly markup: string | null;
     } | null;
     readonly " $refType": "MarkdownUserNameRenderer_name";
+};
+export type MarkdownUserNameRenderer_name$data = MarkdownUserNameRenderer_name;
+export type MarkdownUserNameRenderer_name$key = {
+    readonly $data?: MarkdownUserNameRenderer_name$data;
+    readonly $fragmentRefs: MarkdownUserNameRenderer_name$ref;
 };
 
 `;
@@ -2533,6 +2858,11 @@ export type InlineFragmentWithOverlappingFields = {
     } | null;
     readonly name?: string | null;
     readonly " $refType": "InlineFragmentWithOverlappingFields";
+};
+export type InlineFragmentWithOverlappingFields$data = InlineFragmentWithOverlappingFields;
+export type InlineFragmentWithOverlappingFields$key = {
+    readonly $data?: InlineFragmentWithOverlappingFields$data;
+    readonly $fragmentRefs: InlineFragmentWithOverlappingFields$ref;
 };
 
 `;
@@ -2735,6 +3065,11 @@ export type FriendFragment = {
     } | null;
     readonly " $refType": "FriendFragment";
 };
+export type FriendFragment$data = FriendFragment;
+export type FriendFragment$key = {
+    readonly $data?: FriendFragment$data;
+    readonly $fragmentRefs: FriendFragment$ref;
+};
 
 `;
 
@@ -2842,6 +3177,11 @@ export type FriendFragment = {
     } | null;
     readonly " $refType": "FriendFragment";
 };
+export type FriendFragment$data = FriendFragment;
+export type FriendFragment$key = {
+    readonly $data?: FriendFragment$data;
+    readonly $fragmentRefs: FriendFragment$ref;
+};
 
 
 // FeedbackFragment.graphql
@@ -2849,6 +3189,11 @@ export type FeedbackFragment = {
     readonly id: string;
     readonly name: string | null;
     readonly " $refType": "FeedbackFragment";
+};
+export type FeedbackFragment$data = FeedbackFragment;
+export type FeedbackFragment$key = {
+    readonly $data?: FeedbackFragment$data;
+    readonly $fragmentRefs: FeedbackFragment$ref;
 };
 
 `;
@@ -2864,6 +3209,11 @@ fragment PluralFragment on Node @relay(plural: true) {
 export type PluralFragment = ReadonlyArray<{
     readonly id: string;
     readonly " $refType": "PluralFragment";
+}>;
+export type PluralFragment$data = PluralFragment;
+export type PluralFragment$key = ReadonlyArray<{
+    readonly $data?: PluralFragment$data;
+    readonly $fragmentRefs: PluralFragment$ref;
 }>;
 
 `;
@@ -3071,6 +3421,11 @@ export type FriendFragment = {
     } | null;
     readonly " $refType": "FriendFragment";
 };
+export type FriendFragment$data = FriendFragment;
+export type FriendFragment$key = {
+    readonly $data?: FriendFragment$data;
+    readonly $fragmentRefs: FriendFragment$ref;
+};
 
 `;
 
@@ -3158,6 +3513,11 @@ export type FragmentSpread = {
     readonly " $fragmentRefs": FragmentRefs<"FragmentSpread">;
     readonly " $refType": "FragmentSpread";
 };
+export type FragmentSpread$data = FragmentSpread;
+export type FragmentSpread$key = {
+    readonly $data?: FragmentSpread$data;
+    readonly $fragmentRefs: FragmentSpread$ref;
+};
 
 `;
 
@@ -3179,6 +3539,11 @@ export type RefetchableFragment = {
         readonly uri: string | null;
     } | null;
     readonly " $refType": "RefetchableFragment";
+};
+export type RefetchableFragment$data = RefetchableFragment;
+export type RefetchableFragment$key = {
+    readonly $data?: RefetchableFragment$data;
+    readonly $fragmentRefs: RefetchableFragment$ref;
 };
 
 
@@ -3247,6 +3612,11 @@ export type ExampleQuery = {
 export type ExampleFragment = {
     readonly id: string;
     readonly " $refType": "ExampleFragment";
+};
+export type ExampleFragment$data = ExampleFragment;
+export type ExampleFragment$key = {
+    readonly $data?: ExampleFragment$data;
+    readonly $fragmentRefs: ExampleFragment$ref;
 };
 
 
@@ -3333,6 +3703,11 @@ export type ScalarField = {
     } | null> | null;
     readonly " $refType": "ScalarField";
 };
+export type ScalarField$data = ScalarField;
+export type ScalarField$key = {
+    readonly $data?: ScalarField$data;
+    readonly $fragmentRefs: ScalarField$ref;
+};
 
 `;
 
@@ -3375,6 +3750,11 @@ export type TypenameInsideWithOverlappingFields = {
         readonly __typename: "%other";
     }) | null;
     readonly " $refType": "TypenameInsideWithOverlappingFields";
+};
+export type TypenameInsideWithOverlappingFields$data = TypenameInsideWithOverlappingFields;
+export type TypenameInsideWithOverlappingFields$key = {
+    readonly $data?: TypenameInsideWithOverlappingFields$data;
+    readonly $fragmentRefs: TypenameInsideWithOverlappingFields$ref;
 };
 
 `;
@@ -3478,6 +3858,11 @@ export type TypenameInside = {
     readonly __typename: "%other";
     readonly " $refType": "TypenameInside";
 };
+export type TypenameInside$data = TypenameInside;
+export type TypenameInside$key = {
+    readonly $data?: TypenameInside$data;
+    readonly $fragmentRefs: TypenameInside$ref;
+};
 
 
 // TypenameOutside.graphql
@@ -3495,6 +3880,11 @@ export type TypenameOutside = {
     readonly __typename: "%other";
     readonly " $refType": "TypenameOutside";
 };
+export type TypenameOutside$data = TypenameOutside;
+export type TypenameOutside$key = {
+    readonly $data?: TypenameOutside$data;
+    readonly $fragmentRefs: TypenameOutside$ref;
+};
 
 
 // TypenameOutsideWithAbstractType.graphql
@@ -3509,6 +3899,11 @@ export type TypenameOutsideWithAbstractType = {
     readonly firstName?: string | null;
     readonly " $refType": "TypenameOutsideWithAbstractType";
 };
+export type TypenameOutsideWithAbstractType$data = TypenameOutsideWithAbstractType;
+export type TypenameOutsideWithAbstractType$key = {
+    readonly $data?: TypenameOutsideWithAbstractType$data;
+    readonly $fragmentRefs: TypenameOutsideWithAbstractType$ref;
+};
 
 
 // TypenameWithoutSpreads.graphql
@@ -3517,6 +3912,11 @@ export type TypenameWithoutSpreads = {
     readonly __typename: "User";
     readonly " $refType": "TypenameWithoutSpreads";
 };
+export type TypenameWithoutSpreads$data = TypenameWithoutSpreads;
+export type TypenameWithoutSpreads$key = {
+    readonly $data?: TypenameWithoutSpreads$data;
+    readonly $fragmentRefs: TypenameWithoutSpreads$ref;
+};
 
 
 // TypenameWithoutSpreadsAbstractType.graphql
@@ -3524,6 +3924,11 @@ export type TypenameWithoutSpreadsAbstractType = {
     readonly __typename: string;
     readonly id: string;
     readonly " $refType": "TypenameWithoutSpreadsAbstractType";
+};
+export type TypenameWithoutSpreadsAbstractType$data = TypenameWithoutSpreadsAbstractType;
+export type TypenameWithoutSpreadsAbstractType$key = {
+    readonly $data?: TypenameWithoutSpreadsAbstractType$data;
+    readonly $fragmentRefs: TypenameWithoutSpreadsAbstractType$ref;
 };
 
 
@@ -3534,6 +3939,11 @@ export type TypenameWithCommonSelections = {
     readonly firstName?: string | null;
     readonly username?: string | null;
     readonly " $refType": "TypenameWithCommonSelections";
+};
+export type TypenameWithCommonSelections$data = TypenameWithCommonSelections;
+export type TypenameWithCommonSelections$key = {
+    readonly $data?: TypenameWithCommonSelections$data;
+    readonly $fragmentRefs: TypenameWithCommonSelections$ref;
 };
 
 
@@ -3551,6 +3961,11 @@ export type TypenameAlias = {
     value in case none of the concrete values match.*/
     readonly _typeAlias: "%other";
     readonly " $refType": "TypenameAlias";
+};
+export type TypenameAlias$data = TypenameAlias;
+export type TypenameAlias$key = {
+    readonly $data?: TypenameAlias$data;
+    readonly $fragmentRefs: TypenameAlias$ref;
 };
 
 
@@ -3573,6 +3988,11 @@ export type TypenameAliases = {
     value in case none of the concrete values match.*/
     readonly _typeAlias2: "%other";
     readonly " $refType": "TypenameAliases";
+};
+export type TypenameAliases$data = TypenameAliases;
+export type TypenameAliases$key = {
+    readonly $data?: TypenameAliases$data;
+    readonly $fragmentRefs: TypenameAliases$ref;
 };
 
 `;
@@ -3618,6 +4038,11 @@ export type UserProfile = {
     } | null;
     readonly " $refType": "UserProfile";
 };
+export type UserProfile$data = UserProfile;
+export type UserProfile$key = {
+    readonly $data?: UserProfile$data;
+    readonly $fragmentRefs: UserProfile$ref;
+};
 
 
 // PhotoFragment.graphql
@@ -3626,12 +4051,22 @@ export type PhotoFragment = {
     readonly width: number | null;
     readonly " $refType": "PhotoFragment";
 };
+export type PhotoFragment$data = PhotoFragment;
+export type PhotoFragment$key = {
+    readonly $data?: PhotoFragment$data;
+    readonly $fragmentRefs: PhotoFragment$ref;
+};
 
 
 // RecursiveFragment.graphql
 export type RecursiveFragment = {
     readonly uri: string | null;
     readonly width: number | null;
+};
+export type RecursiveFragment$data = RecursiveFragment;
+export type RecursiveFragment$key = {
+    readonly $data?: RecursiveFragment$data;
+    readonly $fragmentRefs: RecursiveFragment$ref;
 };
 
 
@@ -3640,6 +4075,11 @@ export type AnotherRecursiveFragment = {
     readonly uri: string | null;
     readonly height: number | null;
     readonly " $refType": "AnotherRecursiveFragment";
+};
+export type AnotherRecursiveFragment$data = AnotherRecursiveFragment;
+export type AnotherRecursiveFragment$key = {
+    readonly $data?: AnotherRecursiveFragment$data;
+    readonly $fragmentRefs: AnotherRecursiveFragment$ref;
 };
 
 `;
