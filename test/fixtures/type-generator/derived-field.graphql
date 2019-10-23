@@ -5,8 +5,8 @@ query QueryWithConnectionField($id: ID!) {
 }
 
 fragment FeedbackComments_feedback on Feedback {
-  comments(first: 10) @connection_resolver(label: "FeedbackComments_feedback") {
-    count
+  comments(first: 10)
+    @connection_resolver(resolver: "FeedbackCommentsResolver") {
     edges {
       node {
         id
