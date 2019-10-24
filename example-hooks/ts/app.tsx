@@ -12,8 +12,8 @@
 
 import "todomvc-common"
 
-import * as React from "react"
-import * as ReactDOM from "react-dom"
+import React from "react"
+import ReactDOM from "react-dom"
 
 import { RelayEnvironmentProvider } from "react-relay"
 import { Environment, Network, RecordSource, Store } from "relay-runtime"

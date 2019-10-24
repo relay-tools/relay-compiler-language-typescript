@@ -12,7 +12,7 @@
 
 import RemoveCompletedTodosMutation from "../mutations/RemoveCompletedTodosMutation"
 
-import * as React from "react"
+import React from "react"
 import { graphql, useRelayEnvironment, useFragment } from "react-relay"
 
 import { TodoListFooter_viewer$key } from "../__relay_artifacts__/TodoListFooter_viewer.graphql"
@@ -46,14 +46,14 @@ const TodoListFooter = (props: Props) => {
     props.viewer,
   )
 
-  const numCompletedTodos = viewer!.completedCount || 0
-  const numRemainingTodos = (viewer!.totalCount || 0) - numCompletedTodos
+  const numCompletedTodos = viewer.completedCount || 0
+  const numRemainingTodos = (viewer.totalCount || 0) - numCompletedTodos
 
   const handleRemoveCompletedTodosClick = () => {
     RemoveCompletedTodosMutation.commit(
       environment,
-      viewer!.completedTodos,
-      viewer!,
+      viewer.completedTodos,
+      viewer,
     )
   }
 

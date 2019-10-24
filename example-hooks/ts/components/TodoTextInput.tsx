@@ -10,9 +10,9 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import * as React from "react"
-import * as ReactDOM from "react-dom"
-import * as PropTypes from "prop-types"
+import React from "react"
+import ReactDOM from "react-dom"
+import PropTypes from "prop-types"
 import { ChangeEvent } from "react"
 
 const ENTER_KEY_CODE = 13

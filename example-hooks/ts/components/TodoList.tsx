@@ -13,7 +13,7 @@
 import MarkAllTodosMutation from "../mutations/MarkAllTodosMutation"
 import Todo from "./Todo"
 
-import * as React from "react"
+import React from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 
 import { TodoList_viewer$key } from "../__relay_artifacts__/TodoList_viewer.graphql"
@@ -49,22 +49,22 @@ const TodoList = (props: Props) => {
     props.viewer,
   )
 
-  const numTodos = viewer!.totalCount
-  const numCompletedTodos = viewer!.completedCount
+  const numTodos = viewer.totalCount
+  const numCompletedTodos = viewer.completedCount
 
   const handleMarkAllChange = (e: ChangeEvent<HTMLInputElement>) => {
     const complete = e.target.checked
-    MarkAllTodosMutation.commit(environment, complete, viewer!.todos, viewer!)
+    MarkAllTodosMutation.commit(environment, complete, viewer.todos, viewer)
   }
 
   const renderTodos = () => {
-    if (!viewer!.todos || !viewer!.todos.edges) {
+    if (!viewer.todos || !viewer.todos.edges) {
       throw new Error("assertion failed")
     }
-    return viewer!.todos.edges.map(edge => {
+    return viewer.todos.edges.map(edge => {
       const node = edge && edge.node
       if (!node) throw new Error("assertion failed")
-      return <Todo key={node.id} todo={node} viewer={viewer!} />
+      return <Todo key={node.id} todo={node} viewer={viewer} />
     })
   }
 

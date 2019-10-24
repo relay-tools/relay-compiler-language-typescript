@@ -1,12 +1,16 @@
 import * as React from "react"
 
 interface Props {
-  fallback: (error: Error) => JSX.Element
+  fallback: (error: Error, retryFn: () => void) => JSX.Element
+}
+interface State {
+  error: Error | null
 }
 
-class ErrorBoundaryWithRetry extends React.Component<Props> {
+class ErrorBoundaryWithRetry extends React.Component<Props, State> {
   state = { error: null }
 
+  // @ts-ignore
   static getDerivedStateFromError(error) {
     return { error: error }
   }
@@ -21,7 +25,7 @@ class ErrorBoundaryWithRetry extends React.Component<Props> {
 
     if (error) {
       if (typeof fallback === "function") {
-        return fallback(error, this._retry)
+        return fallback(error!, this._retry)
       }
       return fallback
     }

@@ -9,13 +9,13 @@
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+import React from "react"
 
 import ChangeTodoStatusMutation from "../mutations/ChangeTodoStatusMutation"
 import RemoveTodoMutation from "../mutations/RemoveTodoMutation"
 import RenameTodoMutation from "../mutations/RenameTodoMutation"
 import TodoTextInput from "./TodoTextInput"
 
-import * as React from "react"
 import { graphql, useRelayEnvironment, useFragment } from "react-relay"
 
 import classnames from "classnames"
@@ -58,7 +58,7 @@ const Todo = (props: Props) => {
 
   const handleCompleteChange = (e: ChangeEvent<HTMLInputElement>) => {
     const complete = e.target.checked
-    ChangeTodoStatusMutation.commit(environment, complete, todo!, viewer!)
+    ChangeTodoStatusMutation.commit(environment, complete, todo, viewer)
   }
   const handleDestroyClick = () => {
     removeTodo()
@@ -75,10 +75,10 @@ const Todo = (props: Props) => {
   }
   const handleTextInputSave = (text: string) => {
     setIsEditing(false)
-    RenameTodoMutation.commit(environment, text, todo!)
+    RenameTodoMutation.commit(environment, text, todo)
   }
   function removeTodo() {
-    RemoveTodoMutation.commit(environment, todo!, viewer!)
+    RemoveTodoMutation.commit(environment, todo, viewer)
   }
 
   function renderTextInput() {
@@ -86,7 +86,7 @@ const Todo = (props: Props) => {
       <TodoTextInput
         className="edit"
         commitOnBlur={true}
-        initialValue={todo!.text}
+        initialValue={todo.text}
         onCancel={handleTextInputCancel}
         onDelete={handleTextInputDelete}
         onSave={handleTextInputSave}
@@ -103,12 +103,12 @@ const Todo = (props: Props) => {
     >
       <div className="view">
         <input
-          checked={!!todo!.complete}
+          checked={!!todo.complete}
           className="toggle"
           onChange={handleCompleteChange}
           type="checkbox"
         />
-        <label onDoubleClick={handleLabelDoubleClick}>{todo!.text}</label>
+        <label onDoubleClick={handleLabelDoubleClick}>{todo.text}</label>
         <button className="destroy" onClick={handleDestroyClick} />
       </div>
       {isEditing && renderTextInput()}
