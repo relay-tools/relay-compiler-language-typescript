@@ -2,21 +2,21 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type appQueryVariables = {};
-export type appQueryResponse = {
+export type TodoRootQueryVariables = {};
+export type TodoRootQueryResponse = {
     readonly viewer: {
         readonly " $fragmentRefs": FragmentRefs<"TodoApp_viewer">;
     } | null;
 };
-export type appQuery = {
-    readonly response: appQueryResponse;
-    readonly variables: appQueryVariables;
+export type TodoRootQuery = {
+    readonly response: TodoRootQueryResponse;
+    readonly variables: TodoRootQueryVariables;
 };
 
 
 
 /*
-query appQuery {
+query TodoRootQuery {
   viewer {
     ...TodoApp_viewer
     id
@@ -106,7 +106,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "appQuery",
+    "name": "TodoRootQuery",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": [],
@@ -131,7 +131,7 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "appQuery",
+    "name": "TodoRootQuery",
     "argumentDefinitions": [],
     "selections": [
       {
@@ -296,12 +296,12 @@ return {
   },
   "params": {
     "operationKind": "query",
-    "name": "appQuery",
+    "name": "TodoRootQuery",
     "id": null,
-    "text": "query appQuery {\n  viewer {\n    ...TodoApp_viewer\n    id\n  }\n}\n\nfragment TodoApp_viewer on User {\n  id\n  totalCount\n  ...TodoListFooter_viewer\n  ...TodoList_viewer\n}\n\nfragment TodoListFooter_viewer on User {\n  id\n  completedCount\n  completedTodos: todos(status: \"completed\", first: 2147483647) {\n    edges {\n      node {\n        id\n        complete\n      }\n    }\n  }\n  totalCount\n}\n\nfragment TodoList_viewer on User {\n  todos(first: 2147483647) {\n    edges {\n      node {\n        id\n        complete\n        ...Todo_todo\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n  totalCount\n  completedCount\n  ...Todo_viewer\n}\n\nfragment Todo_todo on Todo {\n  complete\n  id\n  text\n}\n\nfragment Todo_viewer on User {\n  id\n  totalCount\n  completedCount\n}\n",
+    "text": "query TodoRootQuery {\n  viewer {\n    ...TodoApp_viewer\n    id\n  }\n}\n\nfragment TodoApp_viewer on User {\n  id\n  totalCount\n  ...TodoListFooter_viewer\n  ...TodoList_viewer\n}\n\nfragment TodoListFooter_viewer on User {\n  id\n  completedCount\n  completedTodos: todos(status: \"completed\", first: 2147483647) {\n    edges {\n      node {\n        id\n        complete\n      }\n    }\n  }\n  totalCount\n}\n\nfragment TodoList_viewer on User {\n  todos(first: 2147483647) {\n    edges {\n      node {\n        id\n        complete\n        ...Todo_todo\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n  totalCount\n  completedCount\n  ...Todo_viewer\n}\n\nfragment Todo_todo on Todo {\n  complete\n  id\n  text\n}\n\nfragment Todo_viewer on User {\n  id\n  totalCount\n  completedCount\n}\n",
     "metadata": {}
   }
 };
 })();
-(node as any).hash = '14aafc6977e28bcb7c5b2392f3fdae03';
+(node as any).hash = '393316ee6f1f0e29c32409006ee007f0';
 export default node;

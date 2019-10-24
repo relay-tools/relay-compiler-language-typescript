@@ -10,67 +10,69 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import RemoveCompletedTodosMutation from "../mutations/RemoveCompletedTodosMutation";
+import RemoveCompletedTodosMutation from "../mutations/RemoveCompletedTodosMutation"
 
-import * as React from "react";
-import { graphql, createFragmentContainer, RelayProp } from "react-relay";
+import * as React from "react"
+import { graphql, useRelayEnvironment, useFragment } from "react-relay"
 
-import { TodoListFooter_viewer } from "../__relay_artifacts__/TodoListFooter_viewer.graphql";
-import { Environment } from "relay-runtime";
+import { TodoListFooter_viewer$key } from "../__relay_artifacts__/TodoListFooter_viewer.graphql"
 
 interface Props {
-  relay: RelayProp;
-  viewer: TodoListFooter_viewer;
+  viewer: TodoListFooter_viewer$key
 }
 
-class TodoListFooter extends React.Component<Props> {
-  _handleRemoveCompletedTodosClick = () => {
-    RemoveCompletedTodosMutation.commit(
-      this.props.relay.environment,
-      this.props.viewer.completedTodos,
-      this.props.viewer
-    );
-  };
-  render() {
-    const numCompletedTodos = this.props.viewer.completedCount || 0;
-    const numRemainingTodos =
-      (this.props.viewer.totalCount || 0) - numCompletedTodos;
-    return (
-      <footer className="footer">
-        <span className="todo-count">
-          <strong>{numRemainingTodos}</strong> item
-          {numRemainingTodos === 1 ? "" : "s"} left
-        </span>
-        {numCompletedTodos > 0 && (
-          <button
-            className="clear-completed"
-            onClick={this._handleRemoveCompletedTodosClick}
-          >
-            Clear completed
-          </button>
-        )}
-      </footer>
-    );
-  }
-}
+const TodoListFooter = (props: Props) => {
+  const environment = useRelayEnvironment()
 
-export default createFragmentContainer(TodoListFooter, {
-  viewer: graphql`
-    fragment TodoListFooter_viewer on User {
-      id
-      completedCount
-      completedTodos: todos(
-        status: "completed"
-        first: 2147483647 # max GraphQLInt
-      ) {
-        edges {
-          node {
-            id
-            complete
+  const viewer = useFragment(
+    graphql`
+      fragment TodoListFooter_viewer on User {
+        id
+        completedCount
+        completedTodos: todos(
+          status: "completed"
+          first: 2147483647 # max GraphQLInt
+        ) {
+          edges {
+            node {
+              id
+              complete
+            }
           }
         }
+        totalCount
       }
-      totalCount
-    }
-  `
-});
+    `,
+    props.viewer,
+  )
+
+  const numCompletedTodos = viewer!.completedCount || 0
+  const numRemainingTodos = (viewer!.totalCount || 0) - numCompletedTodos
+
+  const handleRemoveCompletedTodosClick = () => {
+    RemoveCompletedTodosMutation.commit(
+      environment,
+      viewer!.completedTodos,
+      viewer!,
+    )
+  }
+
+  return (
+    <footer className="footer">
+      <span className="todo-count">
+        <strong>{numRemainingTodos}</strong> item
+        {numRemainingTodos === 1 ? "" : "s"} left
+      </span>
+      {numCompletedTodos > 0 && (
+        <button
+          className="clear-completed"
+          onClick={handleRemoveCompletedTodosClick}
+        >
+          Clear completed
+        </button>
+      )}
+    </footer>
+  )
+}
+
+export default TodoListFooter
