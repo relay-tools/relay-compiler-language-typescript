@@ -454,6 +454,11 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.18.tgz#1d3ca764718915584fcd9f6344621b7672665c67"
   integrity sha512-fh+pAqt4xRzPfqA6eh3Z2y6fyZavRIumvjhaCL753+TVkGKGhpPeyrJG2JftD0T9q4GF00KjefsQ+PQNDdWQaQ==
 
+"@types/node@^12.11.6":
+  version "12.11.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.11.6.tgz#2f8d551aef252de78f42acdccd53f5a8ce0cac4d"
+  integrity sha512-4uPUyY1Aofo1YzoypalYHNd2SnKYxH2b6LzXwpryZCJKA2XlagZSynXx5C8sfPH0r1cSltUpaVHV2q5sYXschQ==
+
 "@types/prop-types@*", "@types/prop-types@^15.5.5":
   version "15.7.3"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
@@ -5419,7 +5424,7 @@ regjsparser@^0.1.4:
     jsesc "~0.5.0"
 
 "relay-compiler-language-typescript@file:.yalc/relay-compiler-language-typescript":
-  version "6.0.0-b18b9139"
+  version "9.0.0-7ef0dd23"
   dependencies:
     immutable "^4.0.0-rc.12"
     invariant "^2.2.4"
