@@ -13,10 +13,10 @@ import { TypeGeneratorOptions } from "relay-compiler/lib/language/RelayLanguageP
 
 import * as ConnectionFieldTransform from "relay-compiler/lib/transforms/ConnectionFieldTransform";
 import * as FlattenTransform from "relay-compiler/lib/transforms/FlattenTransform";
-import * as RelayMaskTransform from "relay-compiler/lib/transforms/RelayMaskTransform";
-import * as RelayMatchTransform from "relay-compiler/lib/transforms/RelayMatchTransform";
-import * as RelayRefetchableFragmentTransform from "relay-compiler/lib/transforms/RelayRefetchableFragmentTransform";
-import * as RelayRelayDirectiveTransform from "relay-compiler/lib/transforms/RelayRelayDirectiveTransform";
+import * as RelayMaskTransform from "relay-compiler/lib/transforms/MaskTransform";
+import * as RelayMatchTransform from "relay-compiler/lib/transforms/MatchTransform";
+import * as RelayRefetchableFragmentTransform from "relay-compiler/lib/transforms/RefetchableFragmentTransform";
+import * as RelayRelayDirectiveTransform from "relay-compiler/lib/transforms/RelayDirectiveTransform";
 
 import { GraphQLNonNull, GraphQLString } from "graphql";
 import * as ts from "typescript";
@@ -34,8 +34,8 @@ const FRAGMENT_REFS_TYPE_NAME = "FragmentRefs";
 const MODULE_IMPORT_FIELD = "MODULE_IMPORT_FIELD";
 const DIRECTIVE_NAME = "raw_response_type";
 
-export const generate: TypeGenerator["generate"] = (node, options) => {
-  const ast: ts.Statement[] = IRVisitor.visit(node, createVisitor(options));
+export const generate: TypeGenerator["generate"] = (schema, node, options) => {
+  const ast: ts.Statement[] = IRVisitor.visit(node, createVisitor(schema, options));
   const printer = ts.createPrinter({
     newLine: ts.NewLineKind.LineFeed
   });
