@@ -17,8 +17,7 @@ const TodoRoot = () => {
     {},
   )
 
-  // @ts-ignore
-  return <TodoApp viewer={viewer} />
+  return <TodoApp viewer={viewer!} />
 }
 
 const TodoRootWrapper = () => {

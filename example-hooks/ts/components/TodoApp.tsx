@@ -16,16 +16,17 @@ import TodoListFooter from "./TodoListFooter"
 import TodoTextInput from "./TodoTextInput"
 
 import React from "react"
-import { graphql, RelayProp, useFragment } from "react-relay"
+import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 
 import { TodoApp_viewer$key } from "../__relay_artifacts__/TodoApp_viewer.graphql"
 
 interface Props {
-  relay: RelayProp
   viewer: TodoApp_viewer$key
 }
 
 const TodoApp = (props: Props) => {
+  const environment = useRelayEnvironment()
+
   const viewer = useFragment(
     graphql`
       fragment TodoApp_viewer on User {
@@ -39,7 +40,7 @@ const TodoApp = (props: Props) => {
   )
 
   const handleTextInputSave = (text: string) => {
-    AddTodoMutation.commit(props.relay.environment, text, viewer)
+    AddTodoMutation.commit(environment, text, viewer)
   }
 
   const hasTodos = (viewer.totalCount || 0) > 0

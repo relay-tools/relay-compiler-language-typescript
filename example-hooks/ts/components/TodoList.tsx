@@ -13,11 +13,10 @@
 import MarkAllTodosMutation from "../mutations/MarkAllTodosMutation"
 import Todo from "./Todo"
 
-import React from "react"
+import React, { ChangeEvent } from "react"
 import { graphql, useFragment, useRelayEnvironment } from "react-relay"
 
 import { TodoList_viewer$key } from "../__relay_artifacts__/TodoList_viewer.graphql"
-import { ChangeEvent } from "react"
 
 interface Props {
   viewer: TodoList_viewer$key
