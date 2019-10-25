@@ -100,7 +100,7 @@
   },
   "peerDependencies": {
     "@types/react-relay": ">=6.0.0",
-    "@types/relay-runtime": ">=7.0.0",
+    "@types/relay-runtime": ">=6.0.7",
     "relay-compiler": ">=7.0.0",
     "relay-runtime": ">=7.0.0",
     "typescript": ">=3.6.4"
