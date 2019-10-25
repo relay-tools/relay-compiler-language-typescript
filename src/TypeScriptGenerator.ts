@@ -8,19 +8,19 @@ import {
   Schema,
   SchemaUtils,
   TypeGenerator,
-  TypeID,
+  TypeID
 } from "relay-compiler";
-import { ConnectionField, Directive, Metadata, ModuleImport } from "relay-compiler/lib/core/GraphQLIR";
+import { ConnectionField } from "relay-compiler/lib/core/GraphQLIR";
 import { TypeGeneratorOptions } from "relay-compiler/lib/language/RelayLanguagePluginInterface";
 
 import * as ConnectionFieldTransform from "relay-compiler/lib/transforms/ConnectionFieldTransform";
 import * as FlattenTransform from "relay-compiler/lib/transforms/FlattenTransform";
-import * as RelayMaskTransform from "relay-compiler/lib/transforms/MaskTransform";
-import * as RelayMatchTransform from "relay-compiler/lib/transforms/MatchTransform";
-import * as RelayRefetchableFragmentTransform from "relay-compiler/lib/transforms/RefetchableFragmentTransform";
-import * as RelayRelayDirectiveTransform from "relay-compiler/lib/transforms/RelayDirectiveTransform";
+import * as MaskTransform from "relay-compiler/lib/transforms/MaskTransform";
+import * as MatchTransform from "relay-compiler/lib/transforms/MatchTransform";
+import * as RefetchableFragmentTransform from "relay-compiler/lib/transforms/RefetchableFragmentTransform";
+import * as RelayDirectiveTransform from "relay-compiler/lib/transforms/RelayDirectiveTransform";
 
-import { GraphQLNonNull, GraphQLString } from "graphql";
+import { GraphQLString } from "graphql";
 import * as ts from "typescript";
 import {
   State,
@@ -37,7 +37,10 @@ const MODULE_IMPORT_FIELD = "MODULE_IMPORT_FIELD";
 const DIRECTIVE_NAME = "raw_response_type";
 
 export const generate: TypeGenerator["generate"] = (schema, node, options) => {
-  const ast: ts.Statement[] = IRVisitor.visit(node, createVisitor(schema, options));
+  const ast: ts.Statement[] = IRVisitor.visit(
+    node,
+    createVisitor(schema, options)
+  );
   const printer = ts.createPrinter({
     newLine: ts.NewLineKind.LineFeed
   });
@@ -56,7 +59,7 @@ type Selection = {
   key: string;
   schemaName?: string;
   value?: any;
-  nodeType?: TypeID | 'MODULE_IMPORT_FIELD';
+  nodeType?: TypeID | "MODULE_IMPORT_FIELD";
   conditional?: boolean;
   concreteType?: string;
   ref?: string;
@@ -72,15 +75,15 @@ function nullthrows<T>(obj: T | null | undefined): T {
 }
 
 function makeProp(
-  schema: Schema, 
+  schema: Schema,
   selection: Selection,
-  state: State,
+  state: State | any,
   unmasked: boolean,
   concreteType?: string
 ): ts.PropertySignature {
   let { value } = selection;
   const { key, schemaName, conditional, nodeType, nodeSelections } = selection;
-  if (nodeType && nodeType !== 'MODULE_IMPORT_FIELD') {
+  if (nodeType && nodeType !== "MODULE_IMPORT_FIELD") {
     value = transformScalarType(
       schema,
       nodeType,
@@ -327,7 +330,10 @@ function importTypes(names: string[], fromModule: string): ts.Statement {
   );
 }
 
-function createVisitor(schema: Schema, options: TypeGeneratorOptions): IRVisitor.NodeVisitor {
+function createVisitor(
+  schema: Schema,
+  options: TypeGeneratorOptions
+): IRVisitor.NodeVisitor {
   const state: State = {
     customScalars: options.customScalars,
     enumsHasteModule: options.enumsHasteModule,
@@ -346,7 +352,11 @@ function createVisitor(schema: Schema, options: TypeGeneratorOptions): IRVisitor
   return {
     leave: {
       Root(node) {
-        const inputVariablesType = generateInputVariablesType(schema, node, state);
+        const inputVariablesType = generateInputVariablesType(
+          schema,
+          node,
+          state
+        );
         const inputObjectTypes = generateInputObjectTypes(state);
         const responseType = exportType(
           `${node.name}Response`,
@@ -458,7 +468,6 @@ function createVisitor(schema: Schema, options: TypeGeneratorOptions): IRVisitor
         ];
       },
       InlineFragment(node) {
-        const typeCondition = node.typeCondition;
         return flattenArray(
           /* $FlowFixMe: selections have already been transformed */
           (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
@@ -486,12 +495,22 @@ function createVisitor(schema: Schema, options: TypeGeneratorOptions): IRVisitor
           {
             key: "__fragmentPropName",
             conditional: true,
-            value: transformScalarType(schema, schema.expectStringType(), GraphQLString, state)
+            value: transformScalarType(
+              schema,
+              schema.expectStringType(),
+              GraphQLString,
+              state
+            )
           },
           {
             key: "__module_component",
             conditional: true,
-            value: transformScalarType(schema, schema.expectStringType(), GraphQLString, state)
+            value: transformScalarType(
+              schema,
+              schema.expectStringType(),
+              GraphQLString,
+              state
+            )
           },
           {
             key: "__fragments_" + node.name,
@@ -695,7 +714,10 @@ function selectionsToRawResponseBabel(
 }
 
 // Visitor for generating raw response type
-function createRawResponseTypeVisitor(schema: Schema, state: State): IRVisitor.NodeVisitor {
+function createRawResponseTypeVisitor(
+  schema: Schema,
+  state: State
+): IRVisitor.NodeVisitor {
   return {
     leave: {
       Root(node) {
@@ -720,7 +742,7 @@ function createRawResponseTypeVisitor(schema: Schema, state: State): IRVisitor.N
             ? typeSelection
             : {
                 ...typeSelection,
-                concreteType:  schema.getTypeString(typeCondition)
+                concreteType: schema.getTypeString(typeCondition)
               };
         });
       },
@@ -765,7 +787,11 @@ function createRawResponseTypeVisitor(schema: Schema, state: State): IRVisitor.N
 }
 
 // Dedupe the generated type of module selections to reduce file size
-function visitRawResponseModuleImport(schema: Schema, node: any, state: State): Selection[] {
+function visitRawResponseModuleImport(
+  schema: Schema,
+  node: any,
+  state: State
+): Selection[] {
   const { selections, name: key } = node;
   const moduleSelections = selections
     .filter((sel: any) => sel.length && sel[0].schemaName === "js")
@@ -873,13 +899,10 @@ function getFragmentRefsTypeImport(state: State): ts.Statement[] {
 }
 
 function getEnumDefinitions(
-  schema: Schema, 
-  {
-    enumsHasteModule,
-    usedEnums,
-    noFutureProofEnums
-}: State) {
-  const enumNames = [].concat(schema.getEnumValues(usedEnums[name])).sort();
+  schema: Schema,
+  { enumsHasteModule, usedEnums, noFutureProofEnums }: State
+) {
+  const enumNames = Object.keys(usedEnums).sort();
   if (enumNames.length === 0) {
     return [];
   }
@@ -892,7 +915,7 @@ function getEnumDefinitions(
     );
   }
   return enumNames.map(name => {
-    const values = usedEnums[name].getValues().map(({ value }) => value);
+    const values = schema.getEnumValues(usedEnums[name]);
     values.sort();
     if (!noFutureProofEnums) {
       values.push("%future added value");
@@ -900,7 +923,7 @@ function getEnumDefinitions(
     return exportType(
       name,
       ts.createUnionTypeNode(
-        values.map(value => stringLiteralTypeAnnotation(value))
+        values.map((value: any) => stringLiteralTypeAnnotation(value))
       )
     );
   });
@@ -913,10 +936,10 @@ function stringLiteralTypeAnnotation(name: string): ts.TypeNode {
 // Should match FLOW_TRANSFORMS array
 // https://github.com/facebook/relay/blob/v6.0.0/packages/relay-compiler/language/javascript/RelayFlowGenerator.js#L621-L627
 export const transforms: TypeGenerator["transforms"] = [
-  RelayRelayDirectiveTransform.transform,
-  RelayMaskTransform.transform,
+  RelayDirectiveTransform.transform,
+  MaskTransform.transform,
   ConnectionFieldTransform.transform,
-  RelayMatchTransform.transform,
+  MatchTransform.transform,
   FlattenTransform.transformWithOptions({}),
-  RelayRefetchableFragmentTransform.transform
+  RefetchableFragmentTransform.transform
 ];

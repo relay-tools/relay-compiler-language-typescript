@@ -1,4 +1,4 @@
-import {Schema, TypeID} from 'relay-compiler';
+import { Schema, TypeID } from "relay-compiler";
 import { TypeGeneratorOptions } from "relay-compiler/lib/language/RelayLanguagePluginInterface";
 import * as ts from "typescript";
 
@@ -23,19 +23,20 @@ function getInputObjectTypeIdentifier(schema: Schema, typeID: TypeID): string {
 export function transformScalarType(
   schema: Schema,
   type: TypeID,
-  state: State,
-  objectProps?: ts.TypeNode
+  state: State | any,
+  objectProps?: ts.TypeNode | any
 ): ts.TypeNode {
   if (schema.isNonNull(type)) {
     return transformNonNullableScalarType(
       schema,
-      schema.getNullableType(type),
+      type.ofType,
       state,
-      objectProps,
+      objectProps
     );
   } else {
     return ts.createUnionTypeNode([
       transformNonNullableScalarType(schema, type, state, objectProps),
+      ts.createKeywordTypeNode(ts.SyntaxKind.NullKeyword)
     ]);
   }
 }
@@ -48,12 +49,7 @@ function transformNonNullableScalarType(
 ): ts.TypeNode {
   if (schema.isList(type)) {
     return ts.createTypeReferenceNode(ts.createIdentifier("ReadonlyArray"), [
-      transformScalarType(
-        schema,
-        schema.getNonListType(type),
-        state,
-        objectProps,
-      ),
+      transformScalarType(schema, type.ofType, state, objectProps)
     ]);
   } else if (
     schema.isObject(type) ||
@@ -66,7 +62,7 @@ function transformNonNullableScalarType(
   } else if (schema.isEnum(type)) {
     return transformGraphQLEnumType(schema, type, state);
   } else {
-    throw new Error(`Could not convert from GraphQL type ${type as string}`);
+    throw new Error(`Could not convert from GraphQL type ${type.toString()}`);
   }
 }
 
@@ -99,7 +95,10 @@ function transformGraphQLEnumType(
   state: State
 ): ts.TypeNode {
   state.usedEnums[schema.getTypeString(type)] = type;
-  return ts.createTypeReferenceNode(ts.createIdentifier(schema.getTypeString(type)), []);
+  return ts.createTypeReferenceNode(
+    ts.createIdentifier(schema.getTypeString(type)),
+    []
+  );
 }
 
 export function transformInputType(
@@ -111,7 +110,7 @@ export function transformInputType(
     return transformNonNullableInputType(
       schema,
       schema.getNullableType(type),
-      state,
+      state
     );
   } else {
     return ts.createUnionTypeNode([
@@ -121,10 +120,14 @@ export function transformInputType(
   }
 }
 
-function transformNonNullableInputType(schema: Schema, typeID: TypeID, state: State) {
+function transformNonNullableInputType(
+  schema: Schema,
+  typeID: TypeID,
+  state: State
+) {
   if (schema.isList(typeID)) {
     return ts.createTypeReferenceNode(ts.createIdentifier("ReadonlyArray"), [
-      transformInputType(schema, schema.getNonListType(typeID), state),
+      transformInputType(schema, schema.getNonListType(typeID), state)
     ]);
   } else if (schema.isScalar(typeID)) {
     return transformGraphQLScalarType(schema.getTypeString(typeID), state);
@@ -147,20 +150,21 @@ function transformNonNullableInputType(schema: Schema, typeID: TypeID, state: St
       const property = ts.createPropertySignature(
         [ts.createToken(ts.SyntaxKind.ReadonlyKeyword)],
         ts.createIdentifier(fieldName),
-        state.optionalInputFields.indexOf(fieldName) >= 0 || !schema.isNonNull(fieldType)
+        state.optionalInputFields.indexOf(fieldName) >= 0 ||
+          !schema.isNonNull(fieldType)
           ? ts.createToken(ts.SyntaxKind.QuestionToken)
           : undefined,
         transformInputType(schema, fieldType, state),
         undefined
       );
+
+      return property;
     });
     state.generatedInputObjectTypes[typeIdentifier] = ts.createTypeLiteralNode(
       props
     );
     return ts.createTypeReferenceNode(ts.createIdentifier(typeIdentifier), []);
   } else {
-    throw new Error(
-      `Could not convert from GraphQL type ${typeID as string}`
-    );
+    throw new Error(`Could not convert from GraphQL type ${typeID.toString()}`);
   }
 }
