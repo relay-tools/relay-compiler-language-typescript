@@ -23,8 +23,8 @@ function getInputObjectTypeIdentifier(schema: Schema, typeID: TypeID): string {
 export function transformScalarType(
   schema: Schema,
   type: TypeID,
-  state: State | any,
-  objectProps?: ts.TypeNode | any
+  state: State,
+  objectProps?: ts.TypeNode
 ): ts.TypeNode {
   if (schema.isNonNull(type)) {
     return transformNonNullableScalarType(

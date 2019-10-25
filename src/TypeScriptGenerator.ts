@@ -20,7 +20,6 @@ import * as MatchTransform from "relay-compiler/lib/transforms/MatchTransform";
 import * as RefetchableFragmentTransform from "relay-compiler/lib/transforms/RefetchableFragmentTransform";
 import * as RelayDirectiveTransform from "relay-compiler/lib/transforms/RelayDirectiveTransform";
 
-import { GraphQLString } from "graphql";
 import * as ts from "typescript";
 import {
   State,
@@ -77,7 +76,7 @@ function nullthrows<T>(obj: T | null | undefined): T {
 function makeProp(
   schema: Schema,
   selection: Selection,
-  state: State | any,
+  state: State,
   unmasked: boolean,
   concreteType?: string
 ): ts.PropertySignature {
@@ -495,22 +494,12 @@ function createVisitor(
           {
             key: "__fragmentPropName",
             conditional: true,
-            value: transformScalarType(
-              schema,
-              schema.expectStringType(),
-              GraphQLString,
-              state
-            )
+            value: transformScalarType(schema, schema.expectStringType(), state)
           },
           {
             key: "__module_component",
             conditional: true,
-            value: transformScalarType(
-              schema,
-              schema.expectStringType(),
-              GraphQLString,
-              state
-            )
+            value: transformScalarType(schema, schema.expectStringType(), state)
           },
           {
             key: "__fragments_" + node.name,
