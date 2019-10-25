@@ -127,7 +127,7 @@ function transformNonNullableInputType(
 ) {
   if (schema.isList(typeID)) {
     return ts.createTypeReferenceNode(ts.createIdentifier("ReadonlyArray"), [
-      transformInputType(schema, schema.getNonListType(typeID), state)
+      transformInputType(schema, schema.getListItemType(typeID), state)
     ]);
   } else if (schema.isScalar(typeID)) {
     return transformGraphQLScalarType(schema.getTypeString(typeID), state);

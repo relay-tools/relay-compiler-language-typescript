@@ -762,7 +762,7 @@ function createRawResponseTypeVisitor(
           (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
         );
       },
-      ModuleImport(schema, node) {
+      ModuleImport(node, state) {
         return visitRawResponseModuleImport(schema, node, state);
       },
       FragmentSpread(_node) {
