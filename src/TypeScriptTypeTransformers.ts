@@ -1,4 +1,4 @@
-import { Schema, TypeID } from "relay-compiler";
+import { EnumTypeID, Schema, TypeID } from "relay-compiler";
 import { TypeGeneratorOptions } from "relay-compiler/lib/language/RelayLanguagePluginInterface";
 import * as ts from "typescript";
 
@@ -29,7 +29,7 @@ export function transformScalarType(
   if (schema.isNonNull(type)) {
     return transformNonNullableScalarType(
       schema,
-      type.ofType,
+      schema.getNullableType(type),
       state,
       objectProps
     );
@@ -49,7 +49,12 @@ function transformNonNullableScalarType(
 ): ts.TypeNode {
   if (schema.isList(type)) {
     return ts.createTypeReferenceNode(ts.createIdentifier("ReadonlyArray"), [
-      transformScalarType(schema, type.ofType, state, objectProps)
+      transformScalarType(
+        schema,
+        schema.getListItemType(type),
+        state,
+        objectProps
+      )
     ]);
   } else if (
     schema.isObject(type) ||
@@ -91,7 +96,7 @@ function transformGraphQLScalarType(
 
 function transformGraphQLEnumType(
   schema: Schema,
-  type: TypeID,
+  type: EnumTypeID,
   state: State
 ): ts.TypeNode {
   state.usedEnums[schema.getTypeString(type)] = type;
@@ -122,19 +127,19 @@ export function transformInputType(
 
 function transformNonNullableInputType(
   schema: Schema,
-  typeID: TypeID,
+  type: TypeID,
   state: State
 ) {
-  if (schema.isList(typeID)) {
+  if (schema.isList(type)) {
     return ts.createTypeReferenceNode(ts.createIdentifier("ReadonlyArray"), [
-      transformInputType(schema, schema.getListItemType(typeID), state)
+      transformInputType(schema, schema.getListItemType(type), state)
     ]);
-  } else if (schema.isScalar(typeID)) {
-    return transformGraphQLScalarType(schema.getTypeString(typeID), state);
-  } else if (schema.isEnum(typeID)) {
-    return transformGraphQLEnumType(schema, typeID, state);
-  } else if (schema.isInput(typeID)) {
-    const typeIdentifier = getInputObjectTypeIdentifier(schema, typeID);
+  } else if (schema.isScalar(type)) {
+    return transformGraphQLScalarType(schema.getTypeString(type), state);
+  } else if (schema.isEnum(type)) {
+    return transformGraphQLEnumType(schema, type, state);
+  } else if (schema.isInput(type)) {
+    const typeIdentifier = getInputObjectTypeIdentifier(schema, type);
     if (state.generatedInputObjectTypes[typeIdentifier]) {
       return ts.createTypeReferenceNode(
         ts.createIdentifier(typeIdentifier),
@@ -142,7 +147,7 @@ function transformNonNullableInputType(
       );
     }
     state.generatedInputObjectTypes[typeIdentifier] = "pending";
-    const fields = schema.getFields(typeID);
+    const fields = schema.getFields(type);
 
     const props = fields.map((fieldID: string) => {
       const fieldType = schema.getFieldType(fieldID);
@@ -165,6 +170,6 @@ function transformNonNullableInputType(
     );
     return ts.createTypeReferenceNode(ts.createIdentifier(typeIdentifier), []);
   } else {
-    throw new Error(`Could not convert from GraphQL type ${typeID.toString()}`);
+    throw new Error(`Could not convert from GraphQL type ${type.toString()}`);
   }
 }
