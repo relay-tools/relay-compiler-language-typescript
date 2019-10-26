@@ -5,7 +5,7 @@ export type RemoveCompletedTodosInput = {
     readonly clientMutationId?: string | null;
 };
 export type RemoveCompletedTodosMutationVariables = {
-    readonly input: RemoveCompletedTodosInput;
+    input: RemoveCompletedTodosInput;
 };
 export type RemoveCompletedTodosMutationResponse = {
     readonly removeCompletedTodos: {

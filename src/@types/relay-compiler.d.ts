@@ -12,7 +12,7 @@ declare module "relay-compiler" {
     getTypeString: (type: TypeID) => string;
     isAbstractType: (type: TypeID) => boolean;
     isEnum: (type: TypeID) => boolean;
-    isInput: (type: TypeID) => boolean;
+    isInputObject: (type: TypeID) => boolean;
     isInterface: (type: TypeID) => boolean;
     isList: (type: TypeID) => boolean;
     isNonNull: (type: TypeID) => boolean;

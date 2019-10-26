@@ -6,7 +6,7 @@ export type RemoveTodoInput = {
     readonly clientMutationId?: string | null;
 };
 export type RemoveTodoMutationVariables = {
-    readonly input: RemoveTodoInput;
+    input: RemoveTodoInput;
 };
 export type RemoveTodoMutationResponse = {
     readonly removeTodo: {
