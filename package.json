@@ -80,7 +80,7 @@
     "@types/invariant": "2.2.30",
     "@types/jest": "^24.0.17",
     "@types/node": "8.10.51",
-    "@types/relay-compiler": "^6.0.1",
+    "@types/relay-compiler": "^7.0.0",
     "@types/relay-runtime": "^6.0.6",
     "chokidar-cli": "^2.0.0",
     "concurrently": "^5.0.0",
