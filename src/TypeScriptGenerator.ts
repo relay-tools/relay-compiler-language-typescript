@@ -6,7 +6,6 @@ import {
   Root,
   ScalarField,
   Schema,
-  SchemaUtils,
   TypeGenerator,
   TypeID
 } from "relay-compiler";
@@ -27,7 +26,7 @@ import {
   transformScalarType
 } from "./TypeScriptTypeTransformers";
 
-const { isAbstractType } = SchemaUtils;
+// const { isAbstractType } = SchemaUtils;
 
 const REF_TYPE = " $refType";
 const FRAGMENT_REFS = " $fragmentRefs";
@@ -82,7 +81,7 @@ function makeProp(
 ): ts.PropertySignature {
   let { value } = selection;
   const { key, schemaName, conditional, nodeType, nodeSelections } = selection;
-  if (nodeType && nodeType !== "MODULE_IMPORT_FIELD") {
+  if (nodeType && nodeType !== MODULE_IMPORT_FIELD) {
     value = transformScalarType(
       schema,
       nodeType,
@@ -604,7 +603,7 @@ function makeRawResponseProp(
         schema,
         [Array.from(nullthrows(nodeSelections).values())],
         state,
-        isAbstractType(nodeType) ? null : nodeType.name
+        schema.isAbstractType(nodeType) ? null : nodeType.name
       )
     );
   }
