@@ -1,4 +1,4 @@
-import { EnumTypeID, Schema, TypeID } from "relay-compiler";
+import { EnumTypeID, FieldID, Schema, TypeID } from "relay-compiler";
 import { TypeGeneratorOptions } from "relay-compiler/lib/language/RelayLanguagePluginInterface";
 import * as ts from "typescript";
 
@@ -149,7 +149,7 @@ function transformNonNullableInputType(
     state.generatedInputObjectTypes[typeIdentifier] = "pending";
     const fields = schema.getFields(type);
 
-    const props = fields.map((fieldID: string) => {
+    const props = fields.map((fieldID: FieldID) => {
       const fieldType = schema.getFieldType(fieldID);
       const fieldName = schema.getFieldName(fieldID);
       const property = ts.createPropertySignature(
