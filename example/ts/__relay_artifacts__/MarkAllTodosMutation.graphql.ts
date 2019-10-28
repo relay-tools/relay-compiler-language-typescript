@@ -6,7 +6,7 @@ export type MarkAllTodosInput = {
     readonly clientMutationId?: string | null;
 };
 export type MarkAllTodosMutationVariables = {
-    readonly input: MarkAllTodosInput;
+    input: MarkAllTodosInput;
 };
 export type MarkAllTodosMutationResponse = {
     readonly markAllTodos: {
