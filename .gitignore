@@ -67,3 +67,5 @@ typings/
 # Build artifacts
 .yalc
 yalc.lock
+
+.DS_Store
