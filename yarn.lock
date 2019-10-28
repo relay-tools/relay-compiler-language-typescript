@@ -750,9 +750,9 @@
   integrity sha512-f5j5b/Gf71L+dbqxIpQ4Z2WlmI/mPJ0fOkGGmFgtb6sAu97EPczzbS3/tJKxmcYDj55OX6ssqwDAWOHIYDRDGA==
 
 "@types/relay-compiler@^7.0.0":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@types/relay-compiler/-/relay-compiler-6.0.1.tgz#c33dace63e70d33ecf932bfe6abe911b71c9839c"
-  integrity sha512-to0ntZAGmgQanFpBQHOuvpULJFATD5z7We+H2gM7QPNzK/0P4jScweBmTGKSd8idnFfemPdXbVNEfKL9Mjd26g==
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@types/relay-compiler/-/relay-compiler-7.0.0.tgz#677479e008f1ad386f97ef6380b8fbf769765079"
+  integrity sha512-V4U6NS4xOi5qg2EN+tOVtRDx835StEEvsOBLeWaG0IJuoi0mIj0wMX79CzFyZYvk3TjJkgWTCVBvor38SAH7UQ==
   dependencies:
     "@types/relay-runtime" "*"
     graphql "^14.5.3"
