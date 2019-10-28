@@ -1,3 +1,15 @@
+# v9.0.1 (Mon Oct 28 2019)
+
+#### 🏠  Internal
+
+- Ensure tags are fetched for release [#148](https://github.com/relay-tools/relay-compiler-language-typescript/pull/148) ([@zephraph](https://github.com/zephraph))
+
+#### Authors: 1
+
+- Justin Bennett ([@zephraph](https://github.com/zephraph))
+
+---
+
 # v9.0.0 (Mon Oct 21 2019)
 
 #### 💥  Breaking Change
