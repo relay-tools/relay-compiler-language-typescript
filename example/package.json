@@ -5,7 +5,6 @@
     "build": "relay-compiler --src ./ts/ --schema ./data/schema.graphql --language typescript --artifactDirectory ./ts/__relay_artifacts__",
     "update-schema": "babel-node ./scripts/updateSchema.js",
     "lint": "tslint --project tsconfig.json",
-    "postinstall": "patch-package",
     "type-check": "tsc --noEmit --pretty"
   },
   "prettier": {
@@ -44,14 +43,12 @@
     "@types/prop-types": "^15.5.5",
     "@types/react": "^16.4.12",
     "@types/react-dom": "^16.0.7",
-    "@types/react-relay": "^6.0.2",
+    "@types/react-relay": "^7.0.0",
     "@types/relay-runtime": "^6.0.7",
     "babel-cli": "^6.26.0",
     "babel-eslint": "6.1.2",
     "csstype": "^2.5.6",
     "fork-ts-checker-webpack-plugin": "^0.3.0",
-    "patch-package": "^6.2.0",
-    "postinstall-postinstall": "^2.0.0",
     "relay-compiler": "^7.0.0",
     "relay-compiler-language-typescript": "file:.yalc/relay-compiler-language-typescript",
     "ts-loader": "^6.2.0",
