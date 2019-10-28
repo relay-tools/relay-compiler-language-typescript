@@ -9,20 +9,19 @@
  * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-import React from "react"
+import React, { ChangeEvent } from "react"
 
 import ChangeTodoStatusMutation from "../mutations/ChangeTodoStatusMutation"
 import RemoveTodoMutation from "../mutations/RemoveTodoMutation"
 import RenameTodoMutation from "../mutations/RenameTodoMutation"
 import TodoTextInput from "./TodoTextInput"
 
-import { graphql, useRelayEnvironment, useFragment } from "react-relay"
+import { graphql, useRelayEnvironment, useFragment } from "react-relay/hooks"
 
 import classnames from "classnames"
 
 import { Todo_todo$key } from "../__relay_artifacts__/Todo_todo.graphql"
 import { Todo_viewer$key } from "../__relay_artifacts__/Todo_viewer.graphql"
-import { ChangeEvent } from "react"
 
 interface Props {
   todo: Todo_todo$key

@@ -15,7 +15,7 @@ import "todomvc-common"
 import React from "react"
 import ReactDOM from "react-dom"
 
-import { RelayEnvironmentProvider } from "react-relay"
+import { RelayEnvironmentProvider } from "react-relay/hooks"
 import { Environment, Network, RecordSource, Store } from "relay-runtime"
 
 import TodoRoot from "./components/TodoRoot"

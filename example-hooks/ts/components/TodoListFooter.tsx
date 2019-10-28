@@ -13,7 +13,7 @@
 import RemoveCompletedTodosMutation from "../mutations/RemoveCompletedTodosMutation"
 
 import React from "react"
-import { graphql, useRelayEnvironment, useFragment } from "react-relay"
+import { graphql, useRelayEnvironment, useFragment } from "react-relay/hooks"
 
 import { TodoListFooter_viewer$key } from "../__relay_artifacts__/TodoListFooter_viewer.graphql"
 

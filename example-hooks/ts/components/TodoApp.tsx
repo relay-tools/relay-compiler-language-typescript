@@ -16,7 +16,7 @@ import TodoListFooter from "./TodoListFooter"
 import TodoTextInput from "./TodoTextInput"
 
 import React from "react"
-import { graphql, useFragment, useRelayEnvironment } from "react-relay"
+import { graphql, useFragment, useRelayEnvironment } from "react-relay/hooks"
 
 import { TodoApp_viewer$key } from "../__relay_artifacts__/TodoApp_viewer.graphql"
 

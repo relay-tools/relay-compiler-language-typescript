@@ -14,7 +14,7 @@ import MarkAllTodosMutation from "../mutations/MarkAllTodosMutation"
 import Todo from "./Todo"
 
 import React, { ChangeEvent } from "react"
-import { graphql, useFragment, useRelayEnvironment } from "react-relay"
+import { graphql, useFragment, useRelayEnvironment } from "react-relay/hooks"
 
 import { TodoList_viewer$key } from "../__relay_artifacts__/TodoList_viewer.graphql"
 

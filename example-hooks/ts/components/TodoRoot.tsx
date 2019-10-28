@@ -1,5 +1,5 @@
 import React from "react"
-import { useLazyLoadQuery, graphql } from "react-relay"
+import { useLazyLoadQuery, graphql } from "react-relay/hooks"
 
 import { TodoRootQuery } from "../__relay_artifacts__/TodoRootQuery.graphql"
 
