@@ -1,0 +1,12 @@
+{
+  "passPerPreset": true,
+  "plugins": [
+    ["relay", { "artifactDirectory": "./ts/__relay_artifacts__" }],
+    "transform-runtime"
+  ],
+  "presets": [
+    "react",
+    "es2015",
+    "stage-0"
+  ]
+}
