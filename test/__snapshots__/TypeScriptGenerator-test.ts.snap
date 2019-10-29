@@ -28,62 +28,6 @@ export type NestedCondition = {
 
 `;
 
-exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: derived-field.graphql 1`] = `
-~~~~~~~~~~ INPUT ~~~~~~~~~~
-query QueryWithConnectionField($id: ID!) {
-  feedback: node(id: $id) {
-    ...FeedbackComments_feedback
-  }
-}
-
-fragment FeedbackComments_feedback on Feedback {
-  comments(first: 10)
-    @connection_resolver(label: "FeedbackComments_feedback") {
-    edges {
-      node {
-        id
-      }
-    }
-    pageInfo {
-      hasNextPage
-    }
-  }
-}
-
-~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-// QueryWithConnectionField.graphql
-import { FragmentRefs } from "relay-runtime";
-export type QueryWithConnectionFieldVariables = {
-    id: string;
-};
-export type QueryWithConnectionFieldResponse = {
-    readonly feedback: {
-        readonly " $fragmentRefs": FragmentRefs<"FeedbackComments_feedback">;
-    } | null;
-};
-export type QueryWithConnectionField = {
-    readonly response: QueryWithConnectionFieldResponse;
-    readonly variables: QueryWithConnectionFieldVariables;
-};
-
-
-// FeedbackComments_feedback.graphql
-export type FeedbackComments_feedback = {
-    readonly comments: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly id: string;
-            } | null;
-        } | null> | null;
-        readonly pageInfo: {
-            readonly hasNextPage: boolean | null;
-        } | null;
-    } | null;
-    readonly " $refType": "FeedbackComments_feedback";
-};
-
-`;
-
 exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: fragment-spread.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment FragmentSpread on Node {
@@ -668,7 +612,6 @@ extend type Story {
 type Foo {
   bar: String
 }
-
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // Test.graphql
 export type UpdateAllSeenStateInput = {
@@ -1858,62 +1801,6 @@ export type NestedCondition = {
 
 `;
 
-exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: derived-field.graphql 1`] = `
-~~~~~~~~~~ INPUT ~~~~~~~~~~
-query QueryWithConnectionField($id: ID!) {
-  feedback: node(id: $id) {
-    ...FeedbackComments_feedback
-  }
-}
-
-fragment FeedbackComments_feedback on Feedback {
-  comments(first: 10)
-    @connection_resolver(label: "FeedbackComments_feedback") {
-    edges {
-      node {
-        id
-      }
-    }
-    pageInfo {
-      hasNextPage
-    }
-  }
-}
-
-~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-// QueryWithConnectionField.graphql
-import { FragmentRefs } from "relay-runtime";
-export type QueryWithConnectionFieldVariables = {
-    id: string;
-};
-export type QueryWithConnectionFieldResponse = {
-    readonly feedback: {
-        readonly " $fragmentRefs": FragmentRefs<"FeedbackComments_feedback">;
-    } | null;
-};
-export type QueryWithConnectionField = {
-    readonly response: QueryWithConnectionFieldResponse;
-    readonly variables: QueryWithConnectionFieldVariables;
-};
-
-
-// FeedbackComments_feedback.graphql
-export type FeedbackComments_feedback = {
-    readonly comments: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly id: string;
-            } | null;
-        } | null> | null;
-        readonly pageInfo: {
-            readonly hasNextPage: boolean | null;
-        } | null;
-    } | null;
-    readonly " $refType": "FeedbackComments_feedback";
-};
-
-`;
-
 exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: fragment-spread.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment FragmentSpread on Node {
@@ -2498,7 +2385,6 @@ extend type Story {
 type Foo {
   bar: String
 }
-
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // Test.graphql
 export type UpdateAllSeenStateInput = {

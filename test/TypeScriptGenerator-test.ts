@@ -73,10 +73,10 @@ describe("Snapshot tests", () => {
       RelayTestSchema,
       IRTransforms.schemaExtensions
     );
-    const { definitions } = parseGraphQLText(schema, text);
+    const { definitions, schema: extendedSchema } = parseGraphQLText(schema, text);
     const compilerSchema = DEPRECATED__create(
       RelayTestSchema,
-      schema,
+      extendedSchema,
     );
     return new GraphQLCompilerContext(compilerSchema)
       .addAll(definitions)
@@ -94,7 +94,7 @@ describe("Snapshot tests", () => {
         text,
         {
           customScalars: {},
-          enumsHasteModule: null,
+          // enumsHasteModule: null,
           existingFragmentNames: new Set(["PhotoFragment"]),
           optionalInputFields: [],
           useHaste: false,
@@ -113,7 +113,7 @@ describe("Snapshot tests", () => {
         text,
         {
           customScalars: {},
-          enumsHasteModule: null,
+          // enumsHasteModule: null,
           existingFragmentNames: new Set(["PhotoFragment"]),
           optionalInputFields: [],
           useHaste: false,
@@ -134,11 +134,12 @@ describe("Does not add `%future added values` when the noFutureProofEnums option
   `;
   const types = generate(text, {
     customScalars: {},
-    enumsHasteModule: null,
+    // enumsHasteModule: null,
     existingFragmentNames: new Set(["PhotoFragment"]),
     optionalInputFields: [],
-    useHaste: false,
+    useHaste: true,
     useSingleArtifactDirectory: false,
+    // This is what's different from the tests above.
     noFutureProofEnums: true
   });
 
@@ -167,7 +168,7 @@ describe.each`
     customScalars: {
       Color: mapping
     },
-    enumsHasteModule: null,
+    // enumsHasteModule: null,
     existingFragmentNames: new Set(["PhotoFragment"]),
     optionalInputFields: [],
     useHaste: false,
