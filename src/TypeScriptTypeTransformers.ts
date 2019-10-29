@@ -65,7 +65,12 @@ function transformNonNullableScalarType(
   } else if (schema.isScalar(type)) {
     return transformGraphQLScalarType(schema.getTypeString(type), state);
   } else if (schema.isEnum(type)) {
-    return transformGraphQLEnumType(schema, type, state);
+    // TODO: Add assertEnumType to Schema
+    return transformGraphQLEnumType(
+      schema,
+      (schema as any).assertEnumType(type),
+      state
+    );
   } else {
     throw new Error(`Could not convert from GraphQL type ${type.toString()}`);
   }
@@ -137,7 +142,12 @@ function transformNonNullableInputType(
   } else if (schema.isScalar(type)) {
     return transformGraphQLScalarType(schema.getTypeString(type), state);
   } else if (schema.isEnum(type)) {
-    return transformGraphQLEnumType(schema, type, state);
+    // TODO: Add assertEnumType to Schema
+    return transformGraphQLEnumType(
+      schema,
+      (schema as any).assertEnumType(type),
+      state
+    );
   } else if (schema.isInputObject(type)) {
     const typeIdentifier = getInputObjectTypeIdentifier(schema, type);
     if (state.generatedInputObjectTypes[typeIdentifier]) {
@@ -147,7 +157,10 @@ function transformNonNullableInputType(
       );
     }
     state.generatedInputObjectTypes[typeIdentifier] = "pending";
-    const fields = schema.getFields(type);
+    // TODO: Add assertInputObjectType to Schema
+    const fields = schema.getFields(
+      (schema as any).assertInputObjectType(type)
+    );
 
     const props = fields.map((fieldID: FieldID) => {
       const fieldType = schema.getFieldType(fieldID);
