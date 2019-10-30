@@ -18,15 +18,13 @@ import * as MaskTransform from "relay-compiler/lib/transforms/MaskTransform";
 import * as MatchTransform from "relay-compiler/lib/transforms/MatchTransform";
 import * as RefetchableFragmentTransform from "relay-compiler/lib/transforms/RefetchableFragmentTransform";
 import * as RelayDirectiveTransform from "relay-compiler/lib/transforms/RelayDirectiveTransform";
+import { ConnectionInterface } from "relay-runtime";
 import * as ts from "typescript";
 import {
   State,
   transformInputType,
   transformScalarType
 } from "./TypeScriptTypeTransformers";
-
-// TODO: update typings and import properly
-const { ConnectionInterface } = require("relay-runtime");
 
 type Selection = {
   key: string;
