@@ -171,7 +171,7 @@ function selectionsToAST(
     // would set the type to diff(string, set of listed concrete types), but
     // this doesn't exist in Flow at the time.
     types.push(
-      Array.from(typenameAliases).map((typenameAlias: any) => {
+      Array.from(typenameAliases).map(typenameAlias => {
         const otherProp = objectTypeProperty(
           typenameAlias,
           ts.createLiteralTypeNode(ts.createLiteral("%other"))
@@ -1023,7 +1023,7 @@ function getEnumDefinitions(
     return exportType(
       name,
       ts.createUnionTypeNode(
-        values.map((value: any) => stringLiteralTypeAnnotation(value))
+        values.map(value => stringLiteralTypeAnnotation(value))
       )
     );
   });
