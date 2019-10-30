@@ -1,7 +1,7 @@
 import {
   Condition,
+  createUserError,
   Fragment,
-  FragmentSpread,
   IRVisitor,
   LinkedField,
   Root,
@@ -10,11 +10,7 @@ import {
   TypeGenerator,
   TypeID
 } from "relay-compiler";
-import {
-  ConnectionField,
-  InlineFragment,
-  ModuleImport
-} from "relay-compiler/lib/core/GraphQLIR";
+import { ConnectionField } from "relay-compiler/lib/core/GraphQLIR";
 import { TypeGeneratorOptions } from "relay-compiler/lib/language/RelayLanguagePluginInterface";
 import * as ConnectionFieldTransform from "relay-compiler/lib/transforms/ConnectionFieldTransform";
 import * as FlattenTransform from "relay-compiler/lib/transforms/FlattenTransform";
@@ -28,13 +24,9 @@ import {
   transformInputType,
   transformScalarType
 } from "./TypeScriptTypeTransformers";
-// import { NodeVisitor } from "relay-compiler/lib/core/GraphQLIRVisitor";
 
 // TODO: update typings and import properly
 const { ConnectionInterface } = require("relay-runtime");
-const {
-  createUserError
-} = require("relay-compiler/lib/core/RelayCompilerError");
 
 type Selection = {
   key: string;
@@ -364,17 +356,17 @@ function importTypes(names: string[], fromModule: string): ts.Statement {
   );
 }
 
-// TODO: Add Connection to IRVisitor.NodeVisitor leave
 function createVisitor(
   schema: Schema,
   options: TypeGeneratorOptions
-): any /* IRVisitor.NodeVisitor */ {
+): IRVisitor.NodeVisitor {
   const state: State = {
     customScalars: options.customScalars,
     enumsHasteModule: options.enumsHasteModule,
     existingFragmentNames: options.existingFragmentNames,
     generatedInputObjectTypes: {},
     generatedFragments: new Set(),
+    hasConnectionResolver: false,
     optionalInputFields: options.optionalInputFields,
     usedEnums: {},
     usedFragments: new Set(),
@@ -386,7 +378,7 @@ function createVisitor(
 
   return {
     leave: {
-      Root(node: Root) {
+      Root(node) {
         const inputVariablesType = generateInputVariablesType(
           schema,
           node,
@@ -468,7 +460,7 @@ function createVisitor(
         return nodes;
       },
 
-      Fragment(node: Fragment) {
+      Fragment(node) {
         const flattenedSelections: Selection[] = flattenArray(
           /* $FlowFixMe: selections have already been transformed */
           (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
@@ -519,7 +511,7 @@ function createVisitor(
           exportType(node.name, type)
         ];
       },
-      InlineFragment(node: InlineFragment) {
+      InlineFragment(node) {
         return flattenArray(
           /* $FlowFixMe: selections have already been transformed */
           (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
@@ -537,15 +529,15 @@ function createVisitor(
       },
       Condition: visitCondition,
       // TODO: Why not inline it like others?
-      ScalarField(node: any) {
+      ScalarField(node) {
         return visitScalarField(schema, node, state);
       },
       ConnectionField: visitLinkedField,
       LinkedField: visitLinkedField,
-      Connection(node: any) {
+      Connection(node) {
         return visitConnection(schema, node, state);
       },
-      ModuleImport(node: ModuleImport) {
+      ModuleImport(node) {
         return [
           {
             key: "__fragmentPropName",
@@ -563,7 +555,7 @@ function createVisitor(
           }
         ];
       },
-      FragmentSpread(node: FragmentSpread) {
+      FragmentSpread(node) {
         state.usedFragments.add(node.name);
         return [
           {
@@ -576,8 +568,7 @@ function createVisitor(
   };
 }
 
-// TODO: Add hasConnectionResolver to State
-function visitConnection(schema: Schema, node: any, state: any) {
+function visitConnection(schema: Schema, node: any, state: State) {
   const { EDGES } = ConnectionInterface.get();
 
   state.hasConnectionResolver = true;
@@ -841,6 +832,9 @@ function createRawResponseTypeVisitor(
       },
       ConnectionField: visitLinkedField,
       LinkedField: visitLinkedField,
+      Connection(node) {
+        return visitConnection(schema, node, state);
+      },
       ClientExtension(node) {
         return flattenArray(
           /* $FlowFixMe: selections have already been transformed */

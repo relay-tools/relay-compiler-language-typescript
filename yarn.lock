@@ -749,13 +749,14 @@
   resolved "https://registry.yarnpkg.com/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
   integrity sha512-f5j5b/Gf71L+dbqxIpQ4Z2WlmI/mPJ0fOkGGmFgtb6sAu97EPczzbS3/tJKxmcYDj55OX6ssqwDAWOHIYDRDGA==
 
-"@types/relay-compiler@^7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@types/relay-compiler/-/relay-compiler-7.0.0.tgz#677479e008f1ad386f97ef6380b8fbf769765079"
-  integrity sha512-V4U6NS4xOi5qg2EN+tOVtRDx835StEEvsOBLeWaG0IJuoi0mIj0wMX79CzFyZYvk3TjJkgWTCVBvor38SAH7UQ==
+"@types/relay-compiler@^7.0.2":
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/@types/relay-compiler/-/relay-compiler-7.0.2.tgz#3d5ddd33aeea7a248a86f197a9f847be14874c6d"
+  integrity sha512-qmK4itE/82YG9Xt6WFCj8oDvAgdpPWU5GV5TbDRfn2dgMbq9vVFeLiNw+uymzLurQTlKPJejZnL0ByYq+pkFSg==
   dependencies:
     "@types/relay-runtime" "*"
     graphql "^14.5.3"
+    typescript "^3.0.0"
 
 "@types/relay-runtime@*", "@types/relay-runtime@^6.0.7":
   version "6.0.7"
@@ -5937,7 +5938,7 @@ type-fest@^0.6.0:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.6.0.tgz#8d2a2370d3df886eb5c90ada1c5bf6188acf838b"
   integrity sha512-q+MB8nYR1KDLrgr4G5yemftpMC7/QLqVndBmEEdqzmNj5dcFOO4Oo8qlwZE3ULT3+Zim1F8Kq4cBnikNhlCMlg==
 
-typescript@3.6.4:
+typescript@3.6.4, typescript@^3.0.0:
   version "3.6.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.6.4.tgz#b18752bb3792bc1a0281335f7f6ebf1bbfc5b91d"
   integrity sha512-unoCll1+l+YK4i4F8f22TaNVPRHcD9PA3yCuZ8g5e0qGqlVlJ/8FSateOLLSagn+Yg5+ZwuPkL8LFUc0Jcvksg==

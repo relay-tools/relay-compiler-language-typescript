@@ -7,13 +7,14 @@ export type ScalarTypeMapping = {
 };
 
 export type State = {
-  usedEnums: { [name: string]: TypeID };
-  usedFragments: Set<string>;
+  generatedFragments: Set<string>;
   generatedInputObjectTypes: {
     [name: string]: ts.TypeNode | "pending";
   };
-  generatedFragments: Set<string>;
+  hasConnectionResolver: boolean;
   matchFields: Map<string, ts.TypeNode>;
+  usedEnums: { [name: string]: TypeID };
+  usedFragments: Set<string>;
 } & TypeGeneratorOptions;
 
 function getInputObjectTypeIdentifier(schema: Schema, typeID: TypeID): string {
@@ -65,12 +66,7 @@ function transformNonNullableScalarType(
   } else if (schema.isScalar(type)) {
     return transformGraphQLScalarType(schema.getTypeString(type), state);
   } else if (schema.isEnum(type)) {
-    // TODO: Add assertEnumType to Schema
-    return transformGraphQLEnumType(
-      schema,
-      (schema as any).assertEnumType(type),
-      state
-    );
+    return transformGraphQLEnumType(schema, schema.assertEnumType(type), state);
   } else {
     throw new Error(`Could not convert from GraphQL type ${type.toString()}`);
   }
@@ -142,12 +138,7 @@ function transformNonNullableInputType(
   } else if (schema.isScalar(type)) {
     return transformGraphQLScalarType(schema.getTypeString(type), state);
   } else if (schema.isEnum(type)) {
-    // TODO: Add assertEnumType to Schema
-    return transformGraphQLEnumType(
-      schema,
-      (schema as any).assertEnumType(type),
-      state
-    );
+    return transformGraphQLEnumType(schema, schema.assertEnumType(type), state);
   } else if (schema.isInputObject(type)) {
     const typeIdentifier = getInputObjectTypeIdentifier(schema, type);
     if (state.generatedInputObjectTypes[typeIdentifier]) {
@@ -157,10 +148,8 @@ function transformNonNullableInputType(
       );
     }
     state.generatedInputObjectTypes[typeIdentifier] = "pending";
-    // TODO: Add assertInputObjectType to Schema
-    const fields = schema.getFields(
-      (schema as any).assertInputObjectType(type)
-    );
+
+    const fields = schema.getFields(schema.assertInputObjectType(type));
 
     const props = fields.map((fieldID: FieldID) => {
       const fieldType = schema.getFieldType(fieldID);
