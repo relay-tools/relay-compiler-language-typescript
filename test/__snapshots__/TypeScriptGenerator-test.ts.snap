@@ -161,6 +161,8 @@ export type ConcreateTypes = {
         readonly __typename: "User";
         readonly name: string | null;
     } | {
+        /*This will never be '%other', but we need some
+        value in case none of the concrete values match.*/
         readonly __typename: "%other";
     }) | null;
     readonly " $refType": "ConcreateTypes";
@@ -172,6 +174,8 @@ export type PictureFragment = {
     readonly __typename: "Image";
     readonly " $refType": "PictureFragment";
 } | {
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly __typename: "%other";
     readonly " $refType": "PictureFragment";
 };
@@ -189,6 +193,8 @@ export type PageFragment = {
     readonly __typename: "Page";
     readonly " $refType": "PageFragment";
 } | {
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly __typename: "%other";
     readonly " $refType": "PageFragment";
 };
@@ -199,6 +205,8 @@ export type UserFrag1 = {
     readonly __typename: "User";
     readonly " $refType": "UserFrag1";
 } | {
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly __typename: "%other";
     readonly " $refType": "UserFrag1";
 };
@@ -209,6 +217,8 @@ export type UserFrag2 = {
     readonly __typename: "User";
     readonly " $refType": "UserFrag2";
 } | {
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly __typename: "%other";
     readonly " $refType": "UserFrag2";
 };
@@ -338,6 +348,8 @@ export type SomeFragment = {
     readonly __typename: "User";
     readonly " $refType": "SomeFragment";
 } | {
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly __typename: "%other";
     readonly " $refType": "SomeFragment";
 };
@@ -402,6 +414,8 @@ export type UnionTypeTestResponse = {
         readonly __typename: "FakeNode";
         readonly id: string;
     } | {
+        /*This will never be '%other', but we need some
+        value in case none of the concrete values match.*/
         readonly __typename: "%other";
     }) | null;
 };
@@ -1540,6 +1554,8 @@ export type TypenameInsideWithOverlappingFields = {
             readonly uri: string | null;
         } | null;
     } | {
+        /*This will never be '%other', but we need some
+        value in case none of the concrete values match.*/
         readonly __typename: "%other";
     }) | null;
     readonly " $refType": "TypenameInsideWithOverlappingFields";
@@ -1641,6 +1657,8 @@ export type TypenameInside = {
     readonly username: string | null;
     readonly " $refType": "TypenameInside";
 } | {
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly __typename: "%other";
     readonly " $refType": "TypenameInside";
 };
@@ -1656,6 +1674,8 @@ export type TypenameOutside = {
     readonly username: string | null;
     readonly " $refType": "TypenameOutside";
 } | {
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly __typename: "%other";
     readonly " $refType": "TypenameOutside";
 };
@@ -1711,6 +1731,8 @@ export type TypenameAlias = {
     readonly username: string | null;
     readonly " $refType": "TypenameAlias";
 } | {
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly _typeAlias: "%other";
     readonly " $refType": "TypenameAlias";
 };
@@ -1728,7 +1750,11 @@ export type TypenameAliases = {
     readonly username: string | null;
     readonly " $refType": "TypenameAliases";
 } | {
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly _typeAlias1: "%other";
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly _typeAlias2: "%other";
     readonly " $refType": "TypenameAliases";
 };
@@ -1963,6 +1989,8 @@ export type ConcreateTypes = {
         readonly __typename: "User";
         readonly name: string | null;
     } | {
+        /*This will never be '%other', but we need some
+        value in case none of the concrete values match.*/
         readonly __typename: "%other";
     }) | null;
     readonly " $refType": "ConcreateTypes";
@@ -1974,6 +2002,8 @@ export type PictureFragment = {
     readonly __typename: "Image";
     readonly " $refType": "PictureFragment";
 } | {
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly __typename: "%other";
     readonly " $refType": "PictureFragment";
 };
@@ -1991,6 +2021,8 @@ export type PageFragment = {
     readonly __typename: "Page";
     readonly " $refType": "PageFragment";
 } | {
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly __typename: "%other";
     readonly " $refType": "PageFragment";
 };
@@ -2001,6 +2033,8 @@ export type UserFrag1 = {
     readonly __typename: "User";
     readonly " $refType": "UserFrag1";
 } | {
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly __typename: "%other";
     readonly " $refType": "UserFrag1";
 };
@@ -2011,6 +2045,8 @@ export type UserFrag2 = {
     readonly __typename: "User";
     readonly " $refType": "UserFrag2";
 } | {
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly __typename: "%other";
     readonly " $refType": "UserFrag2";
 };
@@ -2140,6 +2176,8 @@ export type SomeFragment = {
     readonly __typename: "User";
     readonly " $refType": "SomeFragment";
 } | {
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly __typename: "%other";
     readonly " $refType": "SomeFragment";
 };
@@ -2204,6 +2242,8 @@ export type UnionTypeTestResponse = {
         readonly __typename: "FakeNode";
         readonly id: string;
     } | {
+        /*This will never be '%other', but we need some
+        value in case none of the concrete values match.*/
         readonly __typename: "%other";
     }) | null;
 };
@@ -3342,6 +3382,8 @@ export type TypenameInsideWithOverlappingFields = {
             readonly uri: string | null;
         } | null;
     } | {
+        /*This will never be '%other', but we need some
+        value in case none of the concrete values match.*/
         readonly __typename: "%other";
     }) | null;
     readonly " $refType": "TypenameInsideWithOverlappingFields";
@@ -3443,6 +3485,8 @@ export type TypenameInside = {
     readonly username: string | null;
     readonly " $refType": "TypenameInside";
 } | {
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly __typename: "%other";
     readonly " $refType": "TypenameInside";
 };
@@ -3458,6 +3502,8 @@ export type TypenameOutside = {
     readonly username: string | null;
     readonly " $refType": "TypenameOutside";
 } | {
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly __typename: "%other";
     readonly " $refType": "TypenameOutside";
 };
@@ -3513,6 +3559,8 @@ export type TypenameAlias = {
     readonly username: string | null;
     readonly " $refType": "TypenameAlias";
 } | {
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly _typeAlias: "%other";
     readonly " $refType": "TypenameAlias";
 };
@@ -3530,7 +3578,11 @@ export type TypenameAliases = {
     readonly username: string | null;
     readonly " $refType": "TypenameAliases";
 } | {
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly _typeAlias1: "%other";
+    /*This will never be '%other', but we need some
+    value in case none of the concrete values match.*/
     readonly _typeAlias2: "%other";
     readonly " $refType": "TypenameAliases";
 };

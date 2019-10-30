@@ -1,6 +1,7 @@
 import {
   Condition,
   Fragment,
+  FragmentSpread,
   IRVisitor,
   LinkedField,
   Root,
@@ -9,23 +10,25 @@ import {
   TypeGenerator,
   TypeID
 } from "relay-compiler";
-// import { ConnectionField } from "relay-compiler/lib/core/GraphQLIR";
+import {
+  ConnectionField,
+  InlineFragment,
+  ModuleImport
+} from "relay-compiler/lib/core/GraphQLIR";
 import { TypeGeneratorOptions } from "relay-compiler/lib/language/RelayLanguagePluginInterface";
-
 import * as ConnectionFieldTransform from "relay-compiler/lib/transforms/ConnectionFieldTransform";
 import * as FlattenTransform from "relay-compiler/lib/transforms/FlattenTransform";
 import * as MaskTransform from "relay-compiler/lib/transforms/MaskTransform";
 import * as MatchTransform from "relay-compiler/lib/transforms/MatchTransform";
 import * as RefetchableFragmentTransform from "relay-compiler/lib/transforms/RefetchableFragmentTransform";
 import * as RelayDirectiveTransform from "relay-compiler/lib/transforms/RelayDirectiveTransform";
-
-import { ConnectionField } from "relay-compiler/lib/core/GraphQLIR";
 import * as ts from "typescript";
 import {
   State,
   transformInputType,
   transformScalarType
 } from "./TypeScriptTypeTransformers";
+// import { NodeVisitor } from "relay-compiler/lib/core/GraphQLIRVisitor";
 
 // TODO: update typings and import properly
 const { ConnectionInterface } = require("relay-runtime");
@@ -33,7 +36,18 @@ const {
   createUserError
 } = require("relay-compiler/lib/core/RelayCompilerError");
 
-// const { isAbstractType } = SchemaUtils;
+type Selection = {
+  key: string;
+  schemaName?: string;
+  value?: any;
+  nodeType?: TypeID | "MODULE_IMPORT_FIELD";
+  conditional?: boolean;
+  concreteType?: string;
+  ref?: string;
+  nodeSelections?: SelectionMap | null;
+};
+
+type SelectionMap = Map<string, Selection>;
 
 const REF_TYPE = " $refType";
 const FRAGMENT_REFS = " $fragmentRefs";
@@ -46,31 +60,21 @@ export const generate: TypeGenerator["generate"] = (schema, node, options) => {
     node,
     createVisitor(schema, options)
   );
-  const printer = ts.createPrinter({
-    newLine: ts.NewLineKind.LineFeed
-  });
+
+  const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
+
   const resultFile = ts.createSourceFile(
     "grapghql-def.ts",
     "",
     ts.ScriptTarget.Latest,
-    /*setParentNodes*/ false,
+    false,
     ts.ScriptKind.TS
   );
+
   const fullProgramAst = ts.updateSourceFileNode(resultFile, ast);
+
   return printer.printNode(ts.EmitHint.SourceFile, fullProgramAst, resultFile);
 };
-
-type Selection = {
-  key: string;
-  schemaName?: string;
-  value?: any;
-  nodeType?: TypeID | "MODULE_IMPORT_FIELD";
-  conditional?: boolean;
-  concreteType?: string;
-  ref?: string;
-  nodeSelections?: SelectionMap | null;
-};
-type SelectionMap = Map<string, Selection>;
 
 function nullthrows<T>(obj: T | null | undefined): T {
   if (obj == null) {
@@ -87,13 +91,15 @@ function makeProp(
   concreteType?: string
 ): ts.PropertySignature {
   let { value } = selection;
+
   const { key, schemaName, conditional, nodeType, nodeSelections } = selection;
+
   if (nodeType && nodeType !== MODULE_IMPORT_FIELD) {
     value = transformScalarType(
       schema,
       nodeType,
       state,
-      selectionsToBabel(
+      selectionsToAST(
         schema,
         [Array.from(nullthrows(nodeSelections).values())],
         state,
@@ -101,18 +107,152 @@ function makeProp(
       )
     );
   }
+
   if (schemaName === "__typename" && concreteType) {
     value = ts.createLiteralTypeNode(ts.createLiteral(concreteType));
   }
+
   return objectTypeProperty(key, value, { optional: conditional });
 }
 
 const isTypenameSelection = (selection: Selection) =>
-  selection && selection.schemaName === "__typename";
+  selection.schemaName === "__typename";
+
 const hasTypenameSelection = (selections: Selection[]) =>
-  selections && selections.some(isTypenameSelection);
+  selections.some(isTypenameSelection);
+
 const onlySelectsTypename = (selections: Selection[]) =>
-  selections && selections.every(isTypenameSelection);
+  selections.every(isTypenameSelection);
+
+function selectionsToAST(
+  schema: Schema,
+  selections: ReadonlyArray<ReadonlyArray<Selection>>,
+  state: State,
+  unmasked: boolean,
+  fragmentTypeName?: string
+) {
+  const baseFields = new Map<string, Selection>();
+
+  const byConcreteType: { [type: string]: Selection[] } = {};
+
+  flattenArray(selections).forEach(selection => {
+    const { concreteType } = selection;
+
+    if (concreteType) {
+      byConcreteType[concreteType] = byConcreteType[concreteType] || [];
+      byConcreteType[concreteType].push(selection);
+    } else {
+      const previousSel = baseFields.get(selection.key);
+
+      baseFields.set(
+        selection.key,
+        previousSel ? mergeSelection(selection, previousSel) : selection
+      );
+    }
+  });
+
+  const types: ts.PropertySignature[][] = [];
+
+  if (
+    Object.keys(byConcreteType).length &&
+    onlySelectsTypename(Array.from(baseFields.values())) &&
+    (hasTypenameSelection(Array.from(baseFields.values())) ||
+      Object.keys(byConcreteType).every(type =>
+        hasTypenameSelection(byConcreteType[type])
+      ))
+  ) {
+    const typenameAliases = new Set<string>();
+
+    for (const concreteType in byConcreteType) {
+      types.push(
+        groupRefs([
+          ...Array.from(baseFields.values()),
+          ...byConcreteType[concreteType]
+        ]).map(selection => {
+          if (selection.schemaName === "__typename") {
+            typenameAliases.add(selection.key);
+          }
+          return makeProp(schema, selection, state, unmasked, concreteType);
+        })
+      );
+    }
+
+    // It might be some other type then the listed concrete types. Ideally, we
+    // would set the type to diff(string, set of listed concrete types), but
+    // this doesn't exist in Flow at the time.
+    types.push(
+      Array.from(typenameAliases).map((typenameAlias: any) => {
+        const otherProp = objectTypeProperty(
+          typenameAlias,
+          ts.createLiteralTypeNode(ts.createLiteral("%other"))
+        );
+
+        const otherPropWithComment = ts.addSyntheticLeadingComment(
+          otherProp,
+          ts.SyntaxKind.MultiLineCommentTrivia,
+          "This will never be '%other', but we need some\n" +
+            "value in case none of the concrete values match.",
+          true
+        );
+
+        return otherPropWithComment;
+      })
+    );
+  } else {
+    let selectionMap = selectionsToMap(Array.from(baseFields.values()));
+
+    for (const concreteType in byConcreteType) {
+      selectionMap = mergeSelections(
+        selectionMap,
+        selectionsToMap(
+          byConcreteType[concreteType].map(sel => ({
+            ...sel,
+            conditional: true
+          }))
+        )
+      );
+    }
+
+    const selectionMapValues = groupRefs(Array.from(selectionMap.values())).map(
+      sel =>
+        isTypenameSelection(sel) && sel.concreteType
+          ? makeProp(
+              schema,
+              {
+                ...sel,
+                conditional: false
+              },
+              state,
+              unmasked,
+              sel.concreteType
+            )
+          : makeProp(schema, sel, state, unmasked)
+    );
+
+    types.push(selectionMapValues);
+  }
+
+  const typeElements = types.map(props => {
+    if (fragmentTypeName) {
+      props.push(
+        objectTypeProperty(
+          REF_TYPE,
+          ts.createLiteralTypeNode(ts.createStringLiteral(fragmentTypeName))
+        )
+      );
+    }
+
+    return unmasked
+      ? ts.createTypeLiteralNode(props)
+      : exactObjectTypeAnnotation(props);
+  });
+
+  if (typeElements.length === 1) {
+    return typeElements[0];
+  }
+
+  return ts.createUnionTypeNode(typeElements);
+}
 
 // We don't have exact object types in typescript.
 function exactObjectTypeAnnotation(
@@ -156,8 +296,10 @@ function mergeSelection(
         conditional: true
       };
     }
+
     return b;
   }
+
   return {
     ...a,
     nodeSelections: a.nodeSelections
@@ -177,12 +319,15 @@ function mergeSelections(
   shouldSetConditional: boolean = true
 ): SelectionMap {
   const merged = new Map();
+
   for (const [key, value] of Array.from(a.entries())) {
     merged.set(key, value);
   }
+
   for (const [key, value] of Array.from(b.entries())) {
     merged.set(key, mergeSelection(a.get(key), value, shouldSetConditional));
   }
+
   return merged;
 }
 
@@ -219,6 +364,7 @@ function importTypes(names: string[], fromModule: string): ts.Statement {
   );
 }
 
+// TODO: Add Connection to IRVisitor.NodeVisitor leave
 function createVisitor(
   schema: Schema,
   options: TypeGeneratorOptions
@@ -240,16 +386,18 @@ function createVisitor(
 
   return {
     leave: {
-      Root(node: any) {
+      Root(node: Root) {
         const inputVariablesType = generateInputVariablesType(
           schema,
           node,
           state
         );
+
         const inputObjectTypes = generateInputObjectTypes(state);
+
         const responseType = exportType(
           `${node.name}Response`,
-          selectionsToBabel(
+          selectionsToAST(
             schema,
             /* $FlowFixMe: selections have already been transformed */
             (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>,
@@ -257,6 +405,7 @@ function createVisitor(
             false
           )
         );
+
         const operationTypes = [
           objectTypeProperty(
             "response",
@@ -267,18 +416,22 @@ function createVisitor(
             ts.createTypeReferenceNode(inputVariablesType.name, undefined)
           )
         ];
+
         // Generate raw response type
         let rawResponseType;
+
         const { normalizationIR } = options;
+
         if (
           normalizationIR &&
-          node.directives.some((d: any) => d.name === DIRECTIVE_NAME)
+          node.directives.some(d => d.name === DIRECTIVE_NAME)
         ) {
           rawResponseType = IRVisitor.visit(
             normalizationIR,
             createRawResponseTypeVisitor(schema, state)
           );
         }
+
         const nodes = [
           ...getFragmentRefsTypeImport(state),
           ...getEnumDefinitions(schema, state),
@@ -286,6 +439,7 @@ function createVisitor(
           inputVariablesType,
           responseType
         ];
+
         if (rawResponseType) {
           for (const [key, ast] of state.matchFields) {
             nodes.push(
@@ -298,12 +452,14 @@ function createVisitor(
               )
             );
           }
+
           operationTypes.push(
             objectTypeProperty(
               "rawResponse",
               ts.createTypeReferenceNode(`${node.name}RawResponse`, undefined)
             )
           );
+
           nodes.push(rawResponseType);
         }
         nodes.push(
@@ -312,43 +468,45 @@ function createVisitor(
         return nodes;
       },
 
-      Fragment(node: any) {
+      Fragment(node: Fragment) {
         const flattenedSelections: Selection[] = flattenArray(
           /* $FlowFixMe: selections have already been transformed */
           (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
         );
-        const concreteSelections =
-          flattenedSelections &&
-          flattenedSelections.filter(s => s.concreteType);
 
-        const numConcreteSelections =
-          (concreteSelections && concreteSelections.length) || 0;
-        const selections =
-          flattenedSelections &&
-          flattenedSelections.map(selection => {
-            if (
-              numConcreteSelections <= 1 &&
-              isTypenameSelection(selection) &&
-              !schema.isAbstractType(node.type)
-            ) {
-              return [
-                {
-                  ...selection,
-                  concreteType: schema.getTypeString(node.type)
-                }
-              ];
-            }
-            return [selection];
-          });
+        const numConcreteSelections = flattenedSelections.filter(
+          s => s.concreteType
+        ).length;
+
+        const selections = flattenedSelections.map(selection => {
+          if (
+            numConcreteSelections <= 1 &&
+            isTypenameSelection(selection) &&
+            !schema.isAbstractType(node.type)
+          ) {
+            return [
+              {
+                ...selection,
+                concreteType: schema.getTypeString(node.type)
+              }
+            ];
+          }
+
+          return [selection];
+        });
+
         state.generatedFragments.add(node.name);
+
         const unmasked = node.metadata != null && node.metadata.mask === false;
-        const baseType = selectionsToBabel(
+
+        const baseType = selectionsToAST(
           schema,
           selections,
           state,
           unmasked,
           unmasked ? undefined : node.name
         );
+
         const type = isPlural(node)
           ? ts.createTypeReferenceNode(ts.createIdentifier("ReadonlyArray"), [
               baseType
@@ -361,7 +519,7 @@ function createVisitor(
           exportType(node.name, type)
         ];
       },
-      InlineFragment(node: any) {
+      InlineFragment(node: InlineFragment) {
         return flattenArray(
           /* $FlowFixMe: selections have already been transformed */
           (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
@@ -387,7 +545,7 @@ function createVisitor(
       Connection(node: any) {
         return visitConnection(schema, node, state);
       },
-      ModuleImport(node: any) {
+      ModuleImport(node: ModuleImport) {
         return [
           {
             key: "__fragmentPropName",
@@ -405,7 +563,7 @@ function createVisitor(
           }
         ];
       },
-      FragmentSpread(node: any) {
+      FragmentSpread(node: FragmentSpread) {
         state.usedFragments.add(node.name);
         return [
           {
@@ -421,7 +579,9 @@ function createVisitor(
 // TODO: Add hasConnectionResolver to State
 function visitConnection(schema: Schema, node: any, state: any) {
   const { EDGES } = ConnectionInterface.get();
+
   state.hasConnectionResolver = true;
+
   const edgesSelection = node.selections.find((selections: any) => {
     return (
       Array.isArray(selections) &&
@@ -434,13 +594,16 @@ function visitConnection(schema: Schema, node: any, state: any) {
       )
     );
   });
+
   const edgesItem = Array.isArray(edgesSelection) ? edgesSelection[0] : null;
+
   const nodeSelections =
     edgesItem != null &&
     typeof edgesItem === "object" &&
     edgesItem.nodeSelections instanceof Map
       ? edgesItem.nodeSelections
       : null;
+
   if (nodeSelections == null) {
     throw createUserError(
       "Cannot generate flow types for connection field, expected an edges " +
@@ -448,8 +611,10 @@ function visitConnection(schema: Schema, node: any, state: any) {
       [node.loc]
     );
   }
+
   const edgesFields = Array.from(nodeSelections.values()) as any[];
-  const edgesType = selectionsToBabel(schema, [edgesFields], state, false);
+
+  const edgesType = selectionsToAST(schema, [edgesFields], state, false);
 
   return [
     {
@@ -458,122 +623,6 @@ function visitConnection(schema: Schema, node: any, state: any) {
       value: ts.createTypeReferenceNode("ConnectionReference", [edgesType])
     }
   ];
-}
-
-function selectionsToBabel(
-  schema: Schema,
-  selections: ReadonlyArray<ReadonlyArray<Selection>>,
-  state: State,
-  unmasked: boolean,
-  fragmentTypeName?: string
-) {
-  const baseFields = new Map();
-  const byConcreteType = {} as any;
-  flattenArray(selections).forEach(selection => {
-    const { concreteType } = selection;
-    if (concreteType) {
-      byConcreteType[concreteType] = byConcreteType[concreteType] || [];
-      byConcreteType[concreteType].push(selection);
-    } else {
-      const previousSel = baseFields.get(selection.key);
-
-      baseFields.set(
-        selection.key,
-        previousSel ? mergeSelection(selection, previousSel) : selection
-      );
-    }
-  });
-
-  const types = [];
-
-  if (
-    Object.keys(byConcreteType) &&
-    Object.keys(byConcreteType).length &&
-    baseFields &&
-    baseFields.values() &&
-    onlySelectsTypename(Array.from(baseFields.values())) &&
-    (hasTypenameSelection(Array.from(baseFields.values())) ||
-      Object.keys(byConcreteType).every(type =>
-        hasTypenameSelection(byConcreteType[type])
-      ))
-  ) {
-    const typenameAliases = new Set();
-    for (const concreteType in byConcreteType) {
-      const gRefs = groupRefs([
-        ...Array.from(baseFields.values()),
-        ...byConcreteType[concreteType]
-      ]);
-      gRefs &&
-        types.push(
-          gRefs.map(selection => {
-            if (selection.schemaName === "__typename") {
-              typenameAliases.add(selection.key);
-            }
-            return makeProp(schema, selection, state, unmasked, concreteType);
-          })
-        );
-    }
-    // It might be some other type then the listed concrete types. Ideally, we
-    // would set the type to diff(string, set of listed concrete types), but
-    // this doesn't exist in Flow at the time.
-    types.push(
-      Array.from(typenameAliases).map((typenameAlias: any) => {
-        const otherProp = objectTypeProperty(
-          typenameAlias,
-          ts.createLiteralTypeNode(ts.createLiteral("%other"))
-        );
-        // otherProp.leadingComments = lineComments(
-        //   "This will never be '%other', but we need some",
-        //   'value in case none of the concrete values match.',
-        // );
-        return otherProp;
-      })
-    );
-  } else {
-    let selectionMap = selectionsToMap(Array.from(baseFields.values()));
-    for (const concreteType in byConcreteType) {
-      selectionMap = mergeSelections(
-        selectionMap,
-        selectionsToMap(
-          byConcreteType[concreteType].map((sel: any) => ({
-            ...sel,
-            conditional: true
-          }))
-        )
-      );
-    }
-    const selectionMapValues = groupRefs(Array.from(selectionMap.values())).map(
-      sel =>
-        isTypenameSelection(sel) && sel.concreteType
-          ? makeProp(
-              schema,
-              { ...sel, conditional: false },
-              state,
-              unmasked,
-              sel.concreteType
-            )
-          : makeProp(schema, sel, state, unmasked)
-    );
-    types.push(selectionMapValues);
-  }
-
-  const typeElements = types.map(props => {
-    if (fragmentTypeName) {
-      props.push(
-        objectTypeProperty(
-          REF_TYPE,
-          ts.createLiteralTypeNode(ts.createStringLiteral(fragmentTypeName))
-        )
-      );
-    }
-    return unmasked
-      ? ts.createTypeLiteralNode(props)
-      : exactObjectTypeAnnotation(props);
-  });
-  if (typeElements && typeElements.length === 1) {
-    return typeElements[0];
-  }
-  return ts.createUnionTypeNode(typeElements);
 }
 
 function visitCondition(node: Condition) {
@@ -631,6 +680,7 @@ function makeRawResponseProp(
       // return ts.createSpread(ts.createIdentifier(key));
       throw new Error("TODO!");
     }
+
     value = transformScalarType(
       schema,
       nodeType,
@@ -643,13 +693,17 @@ function makeRawResponseProp(
       )
     );
   }
+
   if (schemaName === "__typename" && concreteType) {
     value = ts.createLiteralTypeNode(ts.createLiteral(concreteType));
   }
+
   const typeProperty = objectTypeProperty(key, value);
+
   if (conditional) {
     typeProperty.questionToken = ts.createToken(ts.SyntaxKind.QuestionToken);
   }
+
   return typeProperty;
 }
 
@@ -658,17 +712,21 @@ function selectionsToMap(
   appendType?: boolean
 ): SelectionMap {
   const map = new Map();
+
   selections.forEach(selection => {
     const key =
       appendType && selection.concreteType
         ? `${selection.key}::${selection.concreteType}`
         : selection.key;
+
     const previousSel = map.get(key);
+
     map.set(
       key,
       previousSel ? mergeSelection(previousSel, selection) : selection
     );
   });
+
   return map;
 }
 
@@ -684,6 +742,7 @@ function selectionsToRawResponseBabel(
 
   flattenArray(selections).forEach(selection => {
     const { concreteType } = selection;
+
     if (concreteType) {
       byConcreteType[concreteType] = byConcreteType[concreteType] || [];
       byConcreteType[concreteType].push(selection);
@@ -693,8 +752,10 @@ function selectionsToRawResponseBabel(
   });
 
   const types: ts.PropertySignature[][] = [];
-  if (Object.keys(byConcreteType) && Object.keys(byConcreteType).length) {
+
+  if (Object.keys(byConcreteType).length) {
     const baseFieldsMap = selectionsToMap(baseFields);
+
     for (const concreteType in byConcreteType) {
       types.push(
         Array.from(
@@ -712,12 +773,13 @@ function selectionsToRawResponseBabel(
               concreteType
             );
           }
+
           return makeRawResponseProp(schema, selection, state, concreteType);
         })
       );
     }
   }
-  if (baseFields && baseFields.length) {
+  if (baseFields.length) {
     types.push(
       baseFields.map(selection => {
         if (isTypenameSelection(selection)) {
@@ -728,10 +790,12 @@ function selectionsToRawResponseBabel(
             nodeTypeName
           );
         }
+
         return makeRawResponseProp(schema, selection, state, null);
       })
     );
   }
+
   return ts.createUnionTypeNode(
     types.map(props => exactObjectTypeAnnotation(props))
   );
@@ -758,6 +822,7 @@ function createRawResponseTypeVisitor(
       },
       InlineFragment(node) {
         const typeCondition = node.typeCondition;
+
         return flattenArray(
           /* $FlowFixMe: selections have already been transformed */
           (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
@@ -817,20 +882,24 @@ function visitRawResponseModuleImport(
   state: State
 ): Selection[] {
   const { selections, name: key } = node;
+
   const moduleSelections = selections
-    .filter((sel: any) => sel && sel.length && sel[0].schemaName === "js")
+    .filter((sel: any) => sel.length && sel[0].schemaName === "js")
     .map((arr: any[]) => arr[0]);
+
   if (!state.matchFields.has(key)) {
     const ast = selectionsToRawResponseBabel(
       schema,
       node.selections.filter(
-        (sel: any) => (sel && sel.length > 1) || sel[0].schemaName !== "js"
+        (sel: any) => sel.length > 1 || sel[0].schemaName !== "js"
       ),
       state,
       null
     );
+
     state.matchFields.set(key, ast);
   }
+
   return [
     ...moduleSelections,
     {
@@ -844,13 +913,16 @@ function flattenArray(
   arrayOfArrays: ReadonlyArray<ReadonlyArray<Selection>>
 ): Selection[] {
   const result: Selection[] = [];
+
   arrayOfArrays.forEach(array => result.push(...array));
+
   return result;
 }
 
 function generateInputObjectTypes(state: State) {
   return Object.keys(state.generatedInputObjectTypes).map(typeIdentifier => {
     const inputObjectType = state.generatedInputObjectTypes[typeIdentifier];
+
     if (inputObjectType === "pending") {
       throw new Error(
         "TypeScriptGenerator: Expected input object type to have been" +
@@ -879,7 +951,9 @@ function generateInputVariablesType(schema: Schema, node: Root, state: State) {
 
 function groupRefs(props: Selection[]): Selection[] {
   const result: Selection[] = [];
+
   const refs: string[] = [];
+
   props.forEach(prop => {
     if (prop.ref) {
       refs.push(prop.ref);
@@ -887,16 +961,19 @@ function groupRefs(props: Selection[]): Selection[] {
       result.push(prop);
     }
   });
-  if (refs && refs.length > 0) {
+
+  if (refs.length > 0) {
     const refTypes = ts.createUnionTypeNode(
       refs.map(ref => ts.createLiteralTypeNode(ts.createStringLiteral(ref)))
     );
+
     result.push({
       key: FRAGMENT_REFS,
       conditional: false,
       value: ts.createTypeReferenceNode(FRAGMENT_REFS_TYPE_NAME, [refTypes])
     });
   }
+
   return result;
 }
 
@@ -919,6 +996,7 @@ function getFragmentRefsTypeImport(state: State): ts.Statement[] {
       )
     ];
   }
+
   return [];
 }
 
@@ -927,23 +1005,29 @@ function getEnumDefinitions(
   { enumsHasteModule, usedEnums, noFutureProofEnums }: State
 ) {
   const enumNames = Object.keys(usedEnums).sort();
-  if (enumNames && enumNames.length === 0) {
+
+  if (enumNames.length === 0) {
     return [];
   }
+
   if (typeof enumsHasteModule === "string") {
     return [importTypes(enumNames, enumsHasteModule)];
   }
+
   if (typeof enumsHasteModule === "function") {
     return enumNames.map(enumName =>
       importTypes([enumName], enumsHasteModule(enumName))
     );
   }
+
   return enumNames.map(name => {
     const values = schema.getEnumValues(usedEnums[name]);
     values.sort();
+
     if (!noFutureProofEnums) {
       values.push("%future added value");
     }
+
     return exportType(
       name,
       ts.createUnionTypeNode(
