@@ -9,6 +9,9 @@ import { generateTestsFromFixtures } from "relay-test-utils-internal/lib/generat
 import * as parseGraphQLText from "relay-test-utils-internal/lib/parseGraphQLText";
 import * as RelayTestSchema from "relay-test-utils-internal/lib/RelayTestSchema";
 import * as TypeScriptGenerator from "../src/TypeScriptGenerator";
+import * as Schema from 'relay-compiler/lib/core/Schema';
+
+const DEPRECATED__create = (Schema as any).DEPRECATED__create;
 
 function generate(
   text,
@@ -46,13 +49,17 @@ function generate(
     `
   ]);
   const { definitions } = parseGraphQLText(schema, text);
-  return new GraphQLCompilerContext(RelayTestSchema, schema)
+  const compilerSchema = DEPRECATED__create(
+    RelayTestSchema,
+    schema,
+  );
+  return new GraphQLCompilerContext(compilerSchema)
     .addAll(definitions)
     .applyTransforms(TypeScriptGenerator.transforms)
     .documents()
     .map(
       doc =>
-        `// ${doc.name}.graphql\n${TypeScriptGenerator.generate(doc as any, {
+        `// ${doc.name}.graphql\n${TypeScriptGenerator.generate(compilerSchema, doc as any, {
           ...options,
           normalizationIR: context ? (context.get(doc.name) as Root) : undefined
         })}`
@@ -66,8 +73,12 @@ describe("Snapshot tests", () => {
       RelayTestSchema,
       IRTransforms.schemaExtensions
     );
-    const { definitions } = parseGraphQLText(schema, text);
-    return new GraphQLCompilerContext(RelayTestSchema, schema)
+    const { definitions, schema: extendedSchema } = parseGraphQLText(schema, text);
+    const compilerSchema = DEPRECATED__create(
+      RelayTestSchema,
+      extendedSchema,
+    );
+    return new GraphQLCompilerContext(compilerSchema)
       .addAll(definitions)
       .applyTransforms([
         ...IRTransforms.commonTransforms,
@@ -83,7 +94,7 @@ describe("Snapshot tests", () => {
         text,
         {
           customScalars: {},
-          enumsHasteModule: null,
+          // enumsHasteModule: null,
           existingFragmentNames: new Set(["PhotoFragment"]),
           optionalInputFields: [],
           useHaste: false,
@@ -102,7 +113,7 @@ describe("Snapshot tests", () => {
         text,
         {
           customScalars: {},
-          enumsHasteModule: null,
+          // enumsHasteModule: null,
           existingFragmentNames: new Set(["PhotoFragment"]),
           optionalInputFields: [],
           useHaste: false,
@@ -123,11 +134,12 @@ describe("Does not add `%future added values` when the noFutureProofEnums option
   `;
   const types = generate(text, {
     customScalars: {},
-    enumsHasteModule: null,
+    // enumsHasteModule: null,
     existingFragmentNames: new Set(["PhotoFragment"]),
     optionalInputFields: [],
-    useHaste: false,
+    useHaste: true,
     useSingleArtifactDirectory: false,
+    // This is what's different from the tests above.
     noFutureProofEnums: true
   });
 
@@ -156,7 +168,7 @@ describe.each`
     customScalars: {
       Color: mapping
     },
-    enumsHasteModule: null,
+    // enumsHasteModule: null,
     existingFragmentNames: new Set(["PhotoFragment"]),
     optionalInputFields: [],
     useHaste: false,
