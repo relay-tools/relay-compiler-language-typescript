@@ -49,8 +49,8 @@ query QueryWithConnectionField($id: ID!) {
 }
 
 fragment FeedbackComments_feedback on Feedback {
-  comments(first: 10)
-    @connection_resolver(resolver: "FeedbackCommentsResolver") {
+  comments(first: 10) @connection_resolver(label: "FeedbackComments_feedback") {
+    count
     edges {
       node {
         id
@@ -61,7 +61,6 @@ fragment FeedbackComments_feedback on Feedback {
     }
   }
 }
-
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // QueryWithConnectionField.graphql
 import { FragmentRefs } from "relay-runtime";
@@ -83,14 +82,14 @@ export type QueryWithConnectionField = {
 import { FragmentRefs } from "relay-runtime";
 export type FeedbackComments_feedback = {
     readonly comments: {
-        readonly edges: ReadonlyArray<{
+        readonly count: number | null;
+        readonly __connection?: ConnectionReference<{
             readonly node: {
                 readonly id: string;
+                readonly __id: string;
             } | null;
-        } | null> | null;
-        readonly pageInfo: {
-            readonly hasNextPage: boolean | null;
-        } | null;
+            readonly __id: string;
+        }>;
     } | null;
     readonly " $refType": "FeedbackComments_feedback";
 };
@@ -145,14 +144,13 @@ fragment PageFragment on Page {
   __typename
 }
 
-fragment UserFrag1 on Page {
+fragment UserFrag1 on User {
   __typename
 }
 
-fragment UserFrag2 on Page {
+fragment UserFrag2 on User {
   __typename
 }
-
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // FragmentSpread.graphql
 import { FragmentRefs } from "relay-runtime";
@@ -251,7 +249,7 @@ export type PageFragment$key = {
 // UserFrag1.graphql
 import { FragmentRefs } from "relay-runtime";
 export type UserFrag1 = {
-    readonly __typename: "Page";
+    readonly __typename: "User";
     readonly " $refType": "UserFrag1";
 } | {
     /*This will never be '%other', but we need some
@@ -269,7 +267,7 @@ export type UserFrag1$key = {
 // UserFrag2.graphql
 import { FragmentRefs } from "relay-runtime";
 export type UserFrag2 = {
-    readonly __typename: "Page";
+    readonly __typename: "User";
     readonly " $refType": "UserFrag2";
 } | {
     /*This will never be '%other', but we need some
@@ -939,6 +937,61 @@ export type InputHasArray = {
 
 `;
 
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: mutation-with-client-extension.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+mutation Test($input: UpdateAllSeenStateInput) @raw_response_type {
+  viewerNotificationsUpdateAllSeenState(input: $input) {
+    stories {
+      foos {
+        bar
+      }
+    }
+  }
+}
+
+extend type Story {
+  foos: [Foo]
+}
+
+type Foo {
+  bar: String
+}
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// Test.graphql
+export type UpdateAllSeenStateInput = {
+    readonly clientMutationId?: string | null;
+    readonly storyIds?: ReadonlyArray<string | null> | null;
+};
+export type TestVariables = {
+    input?: UpdateAllSeenStateInput | null;
+};
+export type TestResponse = {
+    readonly viewerNotificationsUpdateAllSeenState: {
+        readonly stories: ReadonlyArray<{
+            readonly foos: ReadonlyArray<{
+                readonly bar: string | null;
+            } | null> | null;
+        } | null> | null;
+    } | null;
+};
+export type TestRawResponse = {
+    readonly viewerNotificationsUpdateAllSeenState: ({
+        readonly stories: ReadonlyArray<({
+            readonly id: string | null;
+            readonly foos?: ReadonlyArray<({
+                readonly bar: string | null;
+            }) | null> | null;
+        }) | null> | null;
+    }) | null;
+};
+export type Test = {
+    readonly response: TestResponse;
+    readonly variables: TestVariables;
+    readonly rawResponse: TestRawResponse;
+};
+
+`;
+
 exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: mutation-with-enums-on-fragment.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation CommentCreateMutation(
@@ -1197,18 +1250,137 @@ export type PluralFragment$key = ReadonlyArray<{
 
 `;
 
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: mutation-with-response-on-inline-fragments.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+mutation TestMutation($input: CommentCreateInput!) @raw_response_type {
+  commentCreate(input: $input) {
+    viewer {
+      actor {
+        ...InlineFragmentWithOverlappingFields
+      }
+    }
+  }
+}
+
+fragment InlineFragmentWithOverlappingFields on Actor {
+  ... on User {
+    hometown {
+      id
+      name
+    }
+  }
+  ... on Page {
+    name
+    hometown {
+      id
+      message {
+        text
+      }
+    }
+  }
+}
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// TestMutation.graphql
+import { FragmentRefs } from "relay-runtime";
+export type CommentCreateInput = {
+    readonly clientMutationId?: string | null;
+    readonly feedbackId?: string | null;
+    readonly feedback?: CommentfeedbackFeedback | null;
+};
+export type CommentfeedbackFeedback = {
+    readonly comment?: FeedbackcommentComment | null;
+};
+export type FeedbackcommentComment = {
+    readonly feedback?: CommentfeedbackFeedback | null;
+};
+export type TestMutationVariables = {
+    input: CommentCreateInput;
+};
+export type TestMutationResponse = {
+    readonly commentCreate: {
+        readonly viewer: {
+            readonly actor: {
+                readonly " $fragmentRefs": FragmentRefs<"InlineFragmentWithOverlappingFields">;
+            } | null;
+        } | null;
+    } | null;
+};
+export type TestMutationRawResponse = {
+    readonly commentCreate: ({
+        readonly viewer: ({
+            readonly actor: ({
+                readonly __typename: "User";
+                readonly id: string | null;
+                readonly hometown: ({
+                    readonly id: string;
+                    readonly name: string | null;
+                }) | null;
+            } | {
+                readonly __typename: "Page";
+                readonly id: string | null;
+                readonly name: string | null;
+                readonly hometown: ({
+                    readonly id: string;
+                    readonly message: ({
+                        readonly text: string | null;
+                    }) | null;
+                }) | null;
+            } | {
+                readonly __typename: string | null;
+                readonly id: string | null;
+            }) | null;
+        }) | null;
+    }) | null;
+};
+export type TestMutation = {
+    readonly response: TestMutationResponse;
+    readonly variables: TestMutationVariables;
+    readonly rawResponse: TestMutationRawResponse;
+};
+
+
+// InlineFragmentWithOverlappingFields.graphql
+export type InlineFragmentWithOverlappingFields = {
+    readonly hometown?: {
+        readonly id: string;
+        readonly name: string | null;
+        readonly message?: {
+            readonly text: string | null;
+        } | null;
+    } | null;
+    readonly name?: string | null;
+    readonly " $refType": "InlineFragmentWithOverlappingFields";
+};
+
+`;
+
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: plural-fragment.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+fragment PluralFragment on Node @relay(plural: true) {
+  id
+}
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// PluralFragment.graphql
+export type PluralFragment = ReadonlyArray<{
+    readonly id: string;
+    readonly " $refType": "PluralFragment";
+}>;
+
+`;
+
 exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: query-with-defer.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 query TestDefer @raw_response_type {
   node(id: "1") {
     ... on User {
       name
-      friends(first: 10) {
+      friends(first: 10)
+        @stream_connection(key: "TestDefer_friends", initial_count: 0) {
         edges {
-          ... on FriendsConnection @defer {
-            pageInfo {
-              endCursor
-              hasNextPage
+          node {
+            actor {
+              name
             }
           }
         }
@@ -1216,7 +1388,6 @@ query TestDefer @raw_response_type {
     }
   }
 }
-
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // TestDefer.graphql
 export type TestDeferVariables = {};
@@ -1225,9 +1396,10 @@ export type TestDeferResponse = {
         readonly name?: string | null;
         readonly friends?: {
             readonly edges: ReadonlyArray<{
-                readonly pageInfo?: {
-                    readonly endCursor: string | null;
-                    readonly hasNextPage: boolean | null;
+                readonly node: {
+                    readonly actor: {
+                        readonly name: string | null;
+                    } | null;
                 } | null;
             } | null> | null;
         } | null;
@@ -1240,11 +1412,21 @@ export type TestDeferRawResponse = {
         readonly name: string | null;
         readonly friends: ({
             readonly edges: ReadonlyArray<({
-                readonly pageInfo: ({
-                    readonly endCursor: string | null;
-                    readonly hasNextPage: boolean | null;
+                readonly node: ({
+                    readonly actor: ({
+                        readonly __typename: string | null;
+                        readonly name: string | null;
+                        readonly id: string | null;
+                    }) | null;
+                    readonly id: string | null;
+                    readonly __typename: "User";
                 }) | null;
+                readonly cursor: string | null;
             }) | null> | null;
+            readonly pageInfo: ({
+                readonly endCursor: string | null;
+                readonly hasNextPage: boolean | null;
+            }) | null;
         }) | null;
     } | {
         readonly __typename: string | null;
@@ -2128,8 +2310,8 @@ query QueryWithConnectionField($id: ID!) {
 }
 
 fragment FeedbackComments_feedback on Feedback {
-  comments(first: 10)
-    @connection_resolver(resolver: "FeedbackCommentsResolver") {
+  comments(first: 10) @connection_resolver(label: "FeedbackComments_feedback") {
+    count
     edges {
       node {
         id
@@ -2140,7 +2322,6 @@ fragment FeedbackComments_feedback on Feedback {
     }
   }
 }
-
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // QueryWithConnectionField.graphql
 import { FragmentRefs } from "relay-runtime";
@@ -2162,14 +2343,14 @@ export type QueryWithConnectionField = {
 import { FragmentRefs } from "relay-runtime";
 export type FeedbackComments_feedback = {
     readonly comments: {
-        readonly edges: ReadonlyArray<{
+        readonly count: number | null;
+        readonly __connection?: ConnectionReference<{
             readonly node: {
                 readonly id: string;
+                readonly __id: string;
             } | null;
-        } | null> | null;
-        readonly pageInfo: {
-            readonly hasNextPage: boolean | null;
-        } | null;
+            readonly __id: string;
+        }>;
     } | null;
     readonly " $refType": "FeedbackComments_feedback";
 };
@@ -2224,14 +2405,13 @@ fragment PageFragment on Page {
   __typename
 }
 
-fragment UserFrag1 on Page {
+fragment UserFrag1 on User {
   __typename
 }
 
-fragment UserFrag2 on Page {
+fragment UserFrag2 on User {
   __typename
 }
-
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // FragmentSpread.graphql
 import { FragmentRefs } from "relay-runtime";
@@ -2330,7 +2510,7 @@ export type PageFragment$key = {
 // UserFrag1.graphql
 import { FragmentRefs } from "relay-runtime";
 export type UserFrag1 = {
-    readonly __typename: "Page";
+    readonly __typename: "User";
     readonly " $refType": "UserFrag1";
 } | {
     /*This will never be '%other', but we need some
@@ -2348,7 +2528,7 @@ export type UserFrag1$key = {
 // UserFrag2.graphql
 import { FragmentRefs } from "relay-runtime";
 export type UserFrag2 = {
-    readonly __typename: "Page";
+    readonly __typename: "User";
     readonly " $refType": "UserFrag2";
 } | {
     /*This will never be '%other', but we need some
@@ -3018,6 +3198,61 @@ export type InputHasArray = {
 
 `;
 
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: mutation-with-client-extension.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+mutation Test($input: UpdateAllSeenStateInput) @raw_response_type {
+  viewerNotificationsUpdateAllSeenState(input: $input) {
+    stories {
+      foos {
+        bar
+      }
+    }
+  }
+}
+
+extend type Story {
+  foos: [Foo]
+}
+
+type Foo {
+  bar: String
+}
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// Test.graphql
+export type UpdateAllSeenStateInput = {
+    readonly clientMutationId?: string | null;
+    readonly storyIds?: ReadonlyArray<string | null> | null;
+};
+export type TestVariables = {
+    input?: UpdateAllSeenStateInput | null;
+};
+export type TestResponse = {
+    readonly viewerNotificationsUpdateAllSeenState: {
+        readonly stories: ReadonlyArray<{
+            readonly foos: ReadonlyArray<{
+                readonly bar: string | null;
+            } | null> | null;
+        } | null> | null;
+    } | null;
+};
+export type TestRawResponse = {
+    readonly viewerNotificationsUpdateAllSeenState: ({
+        readonly stories: ReadonlyArray<({
+            readonly id: string | null;
+            readonly foos?: ReadonlyArray<({
+                readonly bar: string | null;
+            }) | null> | null;
+        }) | null> | null;
+    }) | null;
+};
+export type Test = {
+    readonly response: TestResponse;
+    readonly variables: TestVariables;
+    readonly rawResponse: TestRawResponse;
+};
+
+`;
+
 exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: mutation-with-enums-on-fragment.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation CommentCreateMutation(
@@ -3255,6 +3490,110 @@ export type FeedbackFragment$key = {
 
 `;
 
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: mutation-with-response-on-inline-fragments.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+mutation TestMutation($input: CommentCreateInput!) @raw_response_type {
+  commentCreate(input: $input) {
+    viewer {
+      actor {
+        ...InlineFragmentWithOverlappingFields
+      }
+    }
+  }
+}
+
+fragment InlineFragmentWithOverlappingFields on Actor {
+  ... on User {
+    hometown {
+      id
+      name
+    }
+  }
+  ... on Page {
+    name
+    hometown {
+      id
+      message {
+        text
+      }
+    }
+  }
+}
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// TestMutation.graphql
+import { FragmentRefs } from "relay-runtime";
+export type CommentCreateInput = {
+    readonly clientMutationId?: string | null;
+    readonly feedbackId?: string | null;
+    readonly feedback?: CommentfeedbackFeedback | null;
+};
+export type CommentfeedbackFeedback = {
+    readonly comment?: FeedbackcommentComment | null;
+};
+export type FeedbackcommentComment = {
+    readonly feedback?: CommentfeedbackFeedback | null;
+};
+export type TestMutationVariables = {
+    input: CommentCreateInput;
+};
+export type TestMutationResponse = {
+    readonly commentCreate: {
+        readonly viewer: {
+            readonly actor: {
+                readonly " $fragmentRefs": FragmentRefs<"InlineFragmentWithOverlappingFields">;
+            } | null;
+        } | null;
+    } | null;
+};
+export type TestMutationRawResponse = {
+    readonly commentCreate: ({
+        readonly viewer: ({
+            readonly actor: ({
+                readonly __typename: "User";
+                readonly id: string | null;
+                readonly hometown: ({
+                    readonly id: string;
+                    readonly name: string | null;
+                }) | null;
+            } | {
+                readonly __typename: "Page";
+                readonly id: string | null;
+                readonly name: string | null;
+                readonly hometown: ({
+                    readonly id: string;
+                    readonly message: ({
+                        readonly text: string | null;
+                    }) | null;
+                }) | null;
+            } | {
+                readonly __typename: string | null;
+                readonly id: string | null;
+            }) | null;
+        }) | null;
+    }) | null;
+};
+export type TestMutation = {
+    readonly response: TestMutationResponse;
+    readonly variables: TestMutationVariables;
+    readonly rawResponse: TestMutationRawResponse;
+};
+
+
+// InlineFragmentWithOverlappingFields.graphql
+export type InlineFragmentWithOverlappingFields = {
+    readonly hometown?: {
+        readonly id: string;
+        readonly name: string | null;
+        readonly message?: {
+            readonly text: string | null;
+        } | null;
+    } | null;
+    readonly name?: string | null;
+    readonly " $refType": "InlineFragmentWithOverlappingFields";
+};
+
+`;
+
 exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: plural-fragment.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment PluralFragment on Node @relay(plural: true) {
@@ -3282,12 +3621,12 @@ query TestDefer @raw_response_type {
   node(id: "1") {
     ... on User {
       name
-      friends(first: 10) {
+      friends(first: 10)
+        @stream_connection(key: "TestDefer_friends", initial_count: 0) {
         edges {
-          ... on FriendsConnection @defer {
-            pageInfo {
-              endCursor
-              hasNextPage
+          node {
+            actor {
+              name
             }
           }
         }
@@ -3295,7 +3634,6 @@ query TestDefer @raw_response_type {
     }
   }
 }
-
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // TestDefer.graphql
 export type TestDeferVariables = {};
@@ -3304,9 +3642,10 @@ export type TestDeferResponse = {
         readonly name?: string | null;
         readonly friends?: {
             readonly edges: ReadonlyArray<{
-                readonly pageInfo?: {
-                    readonly endCursor: string | null;
-                    readonly hasNextPage: boolean | null;
+                readonly node: {
+                    readonly actor: {
+                        readonly name: string | null;
+                    } | null;
                 } | null;
             } | null> | null;
         } | null;
@@ -3319,11 +3658,21 @@ export type TestDeferRawResponse = {
         readonly name: string | null;
         readonly friends: ({
             readonly edges: ReadonlyArray<({
-                readonly pageInfo: ({
-                    readonly endCursor: string | null;
-                    readonly hasNextPage: boolean | null;
+                readonly node: ({
+                    readonly actor: ({
+                        readonly __typename: string | null;
+                        readonly name: string | null;
+                        readonly id: string | null;
+                    }) | null;
+                    readonly id: string | null;
+                    readonly __typename: "User";
                 }) | null;
+                readonly cursor: string | null;
             }) | null> | null;
+            readonly pageInfo: ({
+                readonly endCursor: string | null;
+                readonly hasNextPage: boolean | null;
+            }) | null;
         }) | null;
     } | {
         readonly __typename: string | null;
