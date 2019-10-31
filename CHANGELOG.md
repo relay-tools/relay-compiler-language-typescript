@@ -1,3 +1,15 @@
+# v10.0.0 (Thu Oct 31 2019)
+
+#### 💥  Breaking Change
+
+- Upgrade to relay v7 [#155](https://github.com/relay-tools/relay-compiler-language-typescript/pull/155) ([@sorenhoyer](https://github.com/sorenhoyer))
+
+#### Authors: 1
+
+- Søren Høyer ([@sorenhoyer](https://github.com/sorenhoyer))
+
+---
+
 # v9.0.1 (Mon Oct 28 2019)
 
 #### 🏠  Internal
