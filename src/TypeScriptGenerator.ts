@@ -4,6 +4,7 @@ import {
   Fragment,
   IRVisitor,
   LinkedField,
+  Metadata,
   Root,
   ScalarField,
   Schema,
@@ -363,8 +364,8 @@ function createVisitor(
     customScalars: options.customScalars,
     enumsHasteModule: options.enumsHasteModule,
     existingFragmentNames: options.existingFragmentNames,
-    generatedInputObjectTypes: {},
     generatedFragments: new Set(),
+    generatedInputObjectTypes: {},
     hasConnectionResolver: false,
     optionalInputFields: options.optionalInputFields,
     usedEnums: {},
@@ -384,9 +385,7 @@ function createVisitor(
           node,
           state
         );
-
         const inputObjectTypes = generateInputObjectTypes(state);
-
         const responseType = exportType(
           `${node.name}Response`,
           selectionsToAST(
@@ -411,9 +410,7 @@ function createVisitor(
 
         // Generate raw response type
         let rawResponseType;
-
         const { normalizationIR } = options;
-
         if (
           normalizationIR &&
           node.directives.some(d => d.name === DIRECTIVE_NAME)
@@ -423,14 +420,32 @@ function createVisitor(
             createRawResponseTypeVisitor(schema, state)
           );
         }
-
-        const nodes = [
+        const refetchableFragmentName = getRefetchableQueryParentFragmentName(
+          state,
+          node.metadata
+        );
+        if (state.hasConnectionResolver) {
+          state.runtimeImports.add("ConnectionReference");
+        }
+        if (refetchableFragmentName !== null) {
+          state.runtimeImports.add("FragmentReference");
+        }
+        const nodes = [];
+        if (state.runtimeImports.size) {
+          nodes.push(
+            importTypes(
+              Array.from(state.runtimeImports).sort(),
+              "relay-runtime"
+            )
+          );
+        }
+        nodes.push(
           ...getFragmentRefsTypeImport(state),
           ...getEnumDefinitions(schema, state),
           ...inputObjectTypes,
           inputVariablesType,
           responseType
-        ];
+        );
 
         if (rawResponseType) {
           for (const [key, ast] of state.matchFields) {
@@ -1063,6 +1078,25 @@ function getEnumDefinitions(
       )
     );
   });
+}
+
+// If it's a @refetchable fragment, we generate the $fragmentRef in generated
+// query, and import it in the fragment to avoid circular dependencies
+function getRefetchableQueryParentFragmentName(
+  state: State,
+  metadata: Metadata
+): string | null | undefined {
+  if (
+    (metadata && !metadata.isRefetchableQuery) ||
+    (!state.useHaste && !state.useSingleArtifactDirectory)
+  ) {
+    return null;
+  }
+  const derivedFrom = metadata && metadata.derivedFrom;
+  if (derivedFrom !== null && typeof derivedFrom === "string") {
+    return derivedFrom;
+  }
+  return null;
 }
 
 function stringLiteralTypeAnnotation(name: string): ts.TypeNode {

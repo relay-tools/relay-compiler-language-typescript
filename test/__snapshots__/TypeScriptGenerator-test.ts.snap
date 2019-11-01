@@ -674,173 +674,6 @@ export type MarkdownUserNameRenderer_name$key = {
 
 `;
 
-exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: mutaion-with-client-extension.graphql 1`] = `
-~~~~~~~~~~ INPUT ~~~~~~~~~~
-mutation Test($input: UpdateAllSeenStateInput) @raw_response_type {
-  viewerNotificationsUpdateAllSeenState(input: $input) {
-    stories {
-      foos {
-        bar
-      }
-    }
-  }
-}
-
-extend type Story {
-  foos: [Foo]
-}
-
-type Foo {
-  bar: String
-}
-
-~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-// Test.graphql
-export type UpdateAllSeenStateInput = {
-    readonly clientMutationId?: string | null;
-    readonly storyIds?: ReadonlyArray<string | null> | null;
-};
-export type TestVariables = {
-    input?: UpdateAllSeenStateInput | null;
-};
-export type TestResponse = {
-    readonly viewerNotificationsUpdateAllSeenState: {
-        readonly stories: ReadonlyArray<{
-            readonly foos: ReadonlyArray<{
-                readonly bar: string | null;
-            } | null> | null;
-        } | null> | null;
-    } | null;
-};
-export type TestRawResponse = {
-    readonly viewerNotificationsUpdateAllSeenState: ({
-        readonly stories: ReadonlyArray<({
-            readonly id: string | null;
-            readonly foos?: ReadonlyArray<({
-                readonly bar: string | null;
-            }) | null> | null;
-        }) | null> | null;
-    }) | null;
-};
-export type Test = {
-    readonly response: TestResponse;
-    readonly variables: TestVariables;
-    readonly rawResponse: TestRawResponse;
-};
-
-`;
-
-exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: mutaion-with-response-on-inline-fragments.graphql 1`] = `
-~~~~~~~~~~ INPUT ~~~~~~~~~~
-mutation TestMutation($input: CommentCreateInput!) @raw_response_type {
-  commentCreate(input: $input) {
-    viewer {
-      actor {
-        ...InlineFragmentWithOverlappingFields
-      }
-    }
-  }
-}
-
-fragment InlineFragmentWithOverlappingFields on Actor {
-  ... on User {
-    hometown {
-      id
-      name
-    }
-  }
-  ... on Page {
-    name
-    hometown {
-      id
-      message {
-        text
-      }
-    }
-  }
-}
-
-~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-// TestMutation.graphql
-import { FragmentRefs } from "relay-runtime";
-export type CommentCreateInput = {
-    readonly clientMutationId?: string | null;
-    readonly feedbackId?: string | null;
-    readonly feedback?: CommentfeedbackFeedback | null;
-};
-export type CommentfeedbackFeedback = {
-    readonly comment?: FeedbackcommentComment | null;
-};
-export type FeedbackcommentComment = {
-    readonly feedback?: CommentfeedbackFeedback | null;
-};
-export type TestMutationVariables = {
-    input: CommentCreateInput;
-};
-export type TestMutationResponse = {
-    readonly commentCreate: {
-        readonly viewer: {
-            readonly actor: {
-                readonly " $fragmentRefs": FragmentRefs<"InlineFragmentWithOverlappingFields">;
-            } | null;
-        } | null;
-    } | null;
-};
-export type TestMutationRawResponse = {
-    readonly commentCreate: ({
-        readonly viewer: ({
-            readonly actor: ({
-                readonly __typename: "User";
-                readonly id: string | null;
-                readonly hometown: ({
-                    readonly id: string;
-                    readonly name: string | null;
-                }) | null;
-            } | {
-                readonly __typename: "Page";
-                readonly id: string | null;
-                readonly name: string | null;
-                readonly hometown: ({
-                    readonly id: string;
-                    readonly message: ({
-                        readonly text: string | null;
-                    }) | null;
-                }) | null;
-            } | {
-                readonly __typename: string | null;
-                readonly id: string | null;
-            }) | null;
-        }) | null;
-    }) | null;
-};
-export type TestMutation = {
-    readonly response: TestMutationResponse;
-    readonly variables: TestMutationVariables;
-    readonly rawResponse: TestMutationRawResponse;
-};
-
-
-// InlineFragmentWithOverlappingFields.graphql
-import { FragmentRefs } from "relay-runtime";
-export type InlineFragmentWithOverlappingFields = {
-    readonly hometown?: {
-        readonly id: string;
-        readonly name: string | null;
-        readonly message?: {
-            readonly text: string | null;
-        } | null;
-    } | null;
-    readonly name?: string | null;
-    readonly " $refType": "InlineFragmentWithOverlappingFields";
-};
-export type InlineFragmentWithOverlappingFields$data = InlineFragmentWithOverlappingFields;
-export type InlineFragmentWithOverlappingFields$key = {
-    readonly " $data"?: InlineFragmentWithOverlappingFields$data;
-    readonly " $fragmentRefs": FragmentRefs<"InlineFragmentWithOverlappingFields">;
-};
-
-`;
-
 exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: mutation.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation CommentCreateMutation(
@@ -1229,27 +1062,6 @@ export type FeedbackFragment$key = {
 
 `;
 
-exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: plural-fragment.graphql 1`] = `
-~~~~~~~~~~ INPUT ~~~~~~~~~~
-fragment PluralFragment on Node @relay(plural: true) {
-  id
-}
-
-~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-// PluralFragment.graphql
-import { FragmentRefs } from "relay-runtime";
-export type PluralFragment = ReadonlyArray<{
-    readonly id: string;
-    readonly " $refType": "PluralFragment";
-}>;
-export type PluralFragment$data = PluralFragment;
-export type PluralFragment$key = ReadonlyArray<{
-    readonly " $data"?: PluralFragment$data;
-    readonly " $fragmentRefs": FragmentRefs<"PluralFragment">;
-}>;
-
-`;
-
 exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: mutation-with-response-on-inline-fragments.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation TestMutation($input: CommentCreateInput!) @raw_response_type {
@@ -1340,6 +1152,7 @@ export type TestMutation = {
 
 
 // InlineFragmentWithOverlappingFields.graphql
+import { FragmentRefs } from "relay-runtime";
 export type InlineFragmentWithOverlappingFields = {
     readonly hometown?: {
         readonly id: string;
@@ -1350,6 +1163,11 @@ export type InlineFragmentWithOverlappingFields = {
     } | null;
     readonly name?: string | null;
     readonly " $refType": "InlineFragmentWithOverlappingFields";
+};
+export type InlineFragmentWithOverlappingFields$data = InlineFragmentWithOverlappingFields;
+export type InlineFragmentWithOverlappingFields$key = {
+    readonly " $data"?: InlineFragmentWithOverlappingFields$data;
+    readonly " $fragmentRefs": FragmentRefs<"InlineFragmentWithOverlappingFields">;
 };
 
 `;
@@ -1362,9 +1180,15 @@ fragment PluralFragment on Node @relay(plural: true) {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // PluralFragment.graphql
+import { FragmentRefs } from "relay-runtime";
 export type PluralFragment = ReadonlyArray<{
     readonly id: string;
     readonly " $refType": "PluralFragment";
+}>;
+export type PluralFragment$data = PluralFragment;
+export type PluralFragment$key = ReadonlyArray<{
+    readonly " $data"?: PluralFragment$data;
+    readonly " $fragmentRefs": FragmentRefs<"PluralFragment">;
 }>;
 
 `;
@@ -1711,6 +1535,7 @@ export type RefetchableFragment$key = {
 
 
 // RefetchableFragmentQuery.graphql
+import { FragmentReference } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type RefetchableFragmentQueryVariables = {
     id: string;
@@ -2935,173 +2760,6 @@ export type MarkdownUserNameRenderer_name$key = {
 
 `;
 
-exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: mutaion-with-client-extension.graphql 1`] = `
-~~~~~~~~~~ INPUT ~~~~~~~~~~
-mutation Test($input: UpdateAllSeenStateInput) @raw_response_type {
-  viewerNotificationsUpdateAllSeenState(input: $input) {
-    stories {
-      foos {
-        bar
-      }
-    }
-  }
-}
-
-extend type Story {
-  foos: [Foo]
-}
-
-type Foo {
-  bar: String
-}
-
-~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-// Test.graphql
-export type UpdateAllSeenStateInput = {
-    readonly clientMutationId?: string | null;
-    readonly storyIds?: ReadonlyArray<string | null> | null;
-};
-export type TestVariables = {
-    input?: UpdateAllSeenStateInput | null;
-};
-export type TestResponse = {
-    readonly viewerNotificationsUpdateAllSeenState: {
-        readonly stories: ReadonlyArray<{
-            readonly foos: ReadonlyArray<{
-                readonly bar: string | null;
-            } | null> | null;
-        } | null> | null;
-    } | null;
-};
-export type TestRawResponse = {
-    readonly viewerNotificationsUpdateAllSeenState: ({
-        readonly stories: ReadonlyArray<({
-            readonly id: string | null;
-            readonly foos?: ReadonlyArray<({
-                readonly bar: string | null;
-            }) | null> | null;
-        }) | null> | null;
-    }) | null;
-};
-export type Test = {
-    readonly response: TestResponse;
-    readonly variables: TestVariables;
-    readonly rawResponse: TestRawResponse;
-};
-
-`;
-
-exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: mutaion-with-response-on-inline-fragments.graphql 1`] = `
-~~~~~~~~~~ INPUT ~~~~~~~~~~
-mutation TestMutation($input: CommentCreateInput!) @raw_response_type {
-  commentCreate(input: $input) {
-    viewer {
-      actor {
-        ...InlineFragmentWithOverlappingFields
-      }
-    }
-  }
-}
-
-fragment InlineFragmentWithOverlappingFields on Actor {
-  ... on User {
-    hometown {
-      id
-      name
-    }
-  }
-  ... on Page {
-    name
-    hometown {
-      id
-      message {
-        text
-      }
-    }
-  }
-}
-
-~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-// TestMutation.graphql
-import { FragmentRefs } from "relay-runtime";
-export type CommentCreateInput = {
-    readonly clientMutationId?: string | null;
-    readonly feedbackId?: string | null;
-    readonly feedback?: CommentfeedbackFeedback | null;
-};
-export type CommentfeedbackFeedback = {
-    readonly comment?: FeedbackcommentComment | null;
-};
-export type FeedbackcommentComment = {
-    readonly feedback?: CommentfeedbackFeedback | null;
-};
-export type TestMutationVariables = {
-    input: CommentCreateInput;
-};
-export type TestMutationResponse = {
-    readonly commentCreate: {
-        readonly viewer: {
-            readonly actor: {
-                readonly " $fragmentRefs": FragmentRefs<"InlineFragmentWithOverlappingFields">;
-            } | null;
-        } | null;
-    } | null;
-};
-export type TestMutationRawResponse = {
-    readonly commentCreate: ({
-        readonly viewer: ({
-            readonly actor: ({
-                readonly __typename: "User";
-                readonly id: string | null;
-                readonly hometown: ({
-                    readonly id: string;
-                    readonly name: string | null;
-                }) | null;
-            } | {
-                readonly __typename: "Page";
-                readonly id: string | null;
-                readonly name: string | null;
-                readonly hometown: ({
-                    readonly id: string;
-                    readonly message: ({
-                        readonly text: string | null;
-                    }) | null;
-                }) | null;
-            } | {
-                readonly __typename: string | null;
-                readonly id: string | null;
-            }) | null;
-        }) | null;
-    }) | null;
-};
-export type TestMutation = {
-    readonly response: TestMutationResponse;
-    readonly variables: TestMutationVariables;
-    readonly rawResponse: TestMutationRawResponse;
-};
-
-
-// InlineFragmentWithOverlappingFields.graphql
-import { FragmentRefs } from "relay-runtime";
-export type InlineFragmentWithOverlappingFields = {
-    readonly hometown?: {
-        readonly id: string;
-        readonly name: string | null;
-        readonly message?: {
-            readonly text: string | null;
-        } | null;
-    } | null;
-    readonly name?: string | null;
-    readonly " $refType": "InlineFragmentWithOverlappingFields";
-};
-export type InlineFragmentWithOverlappingFields$data = InlineFragmentWithOverlappingFields;
-export type InlineFragmentWithOverlappingFields$key = {
-    readonly " $data"?: InlineFragmentWithOverlappingFields$data;
-    readonly " $fragmentRefs": FragmentRefs<"InlineFragmentWithOverlappingFields">;
-};
-
-`;
-
 exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: mutation.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation CommentCreateMutation(
@@ -3580,6 +3238,7 @@ export type TestMutation = {
 
 
 // InlineFragmentWithOverlappingFields.graphql
+import { FragmentRefs } from "relay-runtime";
 export type InlineFragmentWithOverlappingFields = {
     readonly hometown?: {
         readonly id: string;
@@ -3590,6 +3249,11 @@ export type InlineFragmentWithOverlappingFields = {
     } | null;
     readonly name?: string | null;
     readonly " $refType": "InlineFragmentWithOverlappingFields";
+};
+export type InlineFragmentWithOverlappingFields$data = InlineFragmentWithOverlappingFields;
+export type InlineFragmentWithOverlappingFields$key = {
+    readonly " $data"?: InlineFragmentWithOverlappingFields$data;
+    readonly " $fragmentRefs": FragmentRefs<"InlineFragmentWithOverlappingFields">;
 };
 
 `;
