@@ -573,20 +573,20 @@ mutation CommentCreateMutation(
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // CommentCreateMutation.graphql
 export type CommentCreateInput = {
-    readonly clientMutationId?: string | null;
-    readonly feedbackId?: string | null;
-    readonly feedback?: CommentfeedbackFeedback | null;
+    clientMutationId?: string | null;
+    feedbackId?: string | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentfeedbackFeedback = {
-    readonly comment?: FeedbackcommentComment | null;
+    comment?: FeedbackcommentComment | null;
 };
 export type FeedbackcommentComment = {
-    readonly feedback?: CommentfeedbackFeedback | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentCreateMutationVariables = {
     input: CommentCreateInput;
     first?: number | null;
-    orderBy?: ReadonlyArray<string> | null;
+    orderBy?: Array<string> | null;
 };
 export type CommentCreateMutationResponse = {
     readonly commentCreate: {
@@ -619,8 +619,8 @@ mutation InputHasArray($input: UpdateAllSeenStateInput) @raw_response_type {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // InputHasArray.graphql
 export type UpdateAllSeenStateInput = {
-    readonly clientMutationId?: string | null;
-    readonly storyIds?: ReadonlyArray<string | null> | null;
+    clientMutationId?: string | null;
+    storyIds?: Array<string | null> | null;
 };
 export type InputHasArrayVariables = {
     input?: UpdateAllSeenStateInput | null;
@@ -670,8 +670,8 @@ type Foo {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // Test.graphql
 export type UpdateAllSeenStateInput = {
-    readonly clientMutationId?: string | null;
-    readonly storyIds?: ReadonlyArray<string | null> | null;
+    clientMutationId?: string | null;
+    storyIds?: Array<string | null> | null;
 };
 export type TestVariables = {
     input?: UpdateAllSeenStateInput | null;
@@ -738,20 +738,20 @@ fragment FriendFragment on User {
 import { FragmentRefs } from "relay-runtime";
 export type TestEnums = "mark" | "zuck" | "%future added value";
 export type CommentCreateInput = {
-    readonly clientMutationId?: string | null;
-    readonly feedbackId?: string | null;
-    readonly feedback?: CommentfeedbackFeedback | null;
+    clientMutationId?: string | null;
+    feedbackId?: string | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentfeedbackFeedback = {
-    readonly comment?: FeedbackcommentComment | null;
+    comment?: FeedbackcommentComment | null;
 };
 export type FeedbackcommentComment = {
-    readonly feedback?: CommentfeedbackFeedback | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentCreateMutationVariables = {
     input: CommentCreateInput;
     first?: number | null;
-    orderBy?: ReadonlyArray<string> | null;
+    orderBy?: Array<string> | null;
 };
 export type CommentCreateMutationResponse = {
     readonly commentCreate: {
@@ -846,20 +846,20 @@ fragment FeedbackFragment on Feedback {
 // CommentCreateMutation.graphql
 import { FragmentRefs } from "relay-runtime";
 export type CommentCreateInput = {
-    readonly clientMutationId?: string | null;
-    readonly feedbackId?: string | null;
-    readonly feedback?: CommentfeedbackFeedback | null;
+    clientMutationId?: string | null;
+    feedbackId?: string | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentfeedbackFeedback = {
-    readonly comment?: FeedbackcommentComment | null;
+    comment?: FeedbackcommentComment | null;
 };
 export type FeedbackcommentComment = {
-    readonly feedback?: CommentfeedbackFeedback | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentCreateMutationVariables = {
     input: CommentCreateInput;
     first?: number | null;
-    orderBy?: ReadonlyArray<string> | null;
+    orderBy?: Array<string> | null;
 };
 export type CommentCreateMutationResponse = {
     readonly commentCreate: {
@@ -956,15 +956,15 @@ fragment InlineFragmentWithOverlappingFields on Actor {
 // TestMutation.graphql
 import { FragmentRefs } from "relay-runtime";
 export type CommentCreateInput = {
-    readonly clientMutationId?: string | null;
-    readonly feedbackId?: string | null;
-    readonly feedback?: CommentfeedbackFeedback | null;
+    clientMutationId?: string | null;
+    feedbackId?: string | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentfeedbackFeedback = {
-    readonly comment?: FeedbackcommentComment | null;
+    comment?: FeedbackcommentComment | null;
 };
 export type FeedbackcommentComment = {
-    readonly feedback?: CommentfeedbackFeedback | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type TestMutationVariables = {
     input: CommentCreateInput;
@@ -1436,15 +1436,15 @@ export type ExampleFragment = {
 
 // TestMutation.graphql
 export type CommentCreateInput = {
-    readonly clientMutationId?: string | null;
-    readonly feedbackId?: string | null;
-    readonly feedback?: CommentfeedbackFeedback | null;
+    clientMutationId?: string | null;
+    feedbackId?: string | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentfeedbackFeedback = {
-    readonly comment?: FeedbackcommentComment | null;
+    comment?: FeedbackcommentComment | null;
 };
 export type FeedbackcommentComment = {
-    readonly feedback?: CommentfeedbackFeedback | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type TestMutationVariables = {
     input: CommentCreateInput;
@@ -1464,8 +1464,8 @@ export type TestMutation = {
 
 // TestSubscription.graphql
 export type FeedbackLikeInput = {
-    readonly clientMutationId?: string | null;
-    readonly feedbackId?: string | null;
+    clientMutationId?: string | null;
+    feedbackId?: string | null;
 };
 export type TestSubscriptionVariables = {
     input?: FeedbackLikeInput | null;
@@ -2401,20 +2401,20 @@ mutation CommentCreateMutation(
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // CommentCreateMutation.graphql
 export type CommentCreateInput = {
-    readonly clientMutationId?: string | null;
-    readonly feedbackId?: string | null;
-    readonly feedback?: CommentfeedbackFeedback | null;
+    clientMutationId?: string | null;
+    feedbackId?: string | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentfeedbackFeedback = {
-    readonly comment?: FeedbackcommentComment | null;
+    comment?: FeedbackcommentComment | null;
 };
 export type FeedbackcommentComment = {
-    readonly feedback?: CommentfeedbackFeedback | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentCreateMutationVariables = {
     input: CommentCreateInput;
     first?: number | null;
-    orderBy?: ReadonlyArray<string> | null;
+    orderBy?: Array<string> | null;
 };
 export type CommentCreateMutationResponse = {
     readonly commentCreate: {
@@ -2447,8 +2447,8 @@ mutation InputHasArray($input: UpdateAllSeenStateInput) @raw_response_type {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // InputHasArray.graphql
 export type UpdateAllSeenStateInput = {
-    readonly clientMutationId?: string | null;
-    readonly storyIds?: ReadonlyArray<string | null> | null;
+    clientMutationId?: string | null;
+    storyIds?: Array<string | null> | null;
 };
 export type InputHasArrayVariables = {
     input?: UpdateAllSeenStateInput | null;
@@ -2498,8 +2498,8 @@ type Foo {
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // Test.graphql
 export type UpdateAllSeenStateInput = {
-    readonly clientMutationId?: string | null;
-    readonly storyIds?: ReadonlyArray<string | null> | null;
+    clientMutationId?: string | null;
+    storyIds?: Array<string | null> | null;
 };
 export type TestVariables = {
     input?: UpdateAllSeenStateInput | null;
@@ -2566,20 +2566,20 @@ fragment FriendFragment on User {
 import { FragmentRefs } from "relay-runtime";
 export type TestEnums = "mark" | "zuck" | "%future added value";
 export type CommentCreateInput = {
-    readonly clientMutationId?: string | null;
-    readonly feedbackId?: string | null;
-    readonly feedback?: CommentfeedbackFeedback | null;
+    clientMutationId?: string | null;
+    feedbackId?: string | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentfeedbackFeedback = {
-    readonly comment?: FeedbackcommentComment | null;
+    comment?: FeedbackcommentComment | null;
 };
 export type FeedbackcommentComment = {
-    readonly feedback?: CommentfeedbackFeedback | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentCreateMutationVariables = {
     input: CommentCreateInput;
     first?: number | null;
-    orderBy?: ReadonlyArray<string> | null;
+    orderBy?: Array<string> | null;
 };
 export type CommentCreateMutationResponse = {
     readonly commentCreate: {
@@ -2674,20 +2674,20 @@ fragment FeedbackFragment on Feedback {
 // CommentCreateMutation.graphql
 import { FragmentRefs } from "relay-runtime";
 export type CommentCreateInput = {
-    readonly clientMutationId?: string | null;
-    readonly feedbackId?: string | null;
-    readonly feedback?: CommentfeedbackFeedback | null;
+    clientMutationId?: string | null;
+    feedbackId?: string | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentfeedbackFeedback = {
-    readonly comment?: FeedbackcommentComment | null;
+    comment?: FeedbackcommentComment | null;
 };
 export type FeedbackcommentComment = {
-    readonly feedback?: CommentfeedbackFeedback | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentCreateMutationVariables = {
     input: CommentCreateInput;
     first?: number | null;
-    orderBy?: ReadonlyArray<string> | null;
+    orderBy?: Array<string> | null;
 };
 export type CommentCreateMutationResponse = {
     readonly commentCreate: {
@@ -2784,15 +2784,15 @@ fragment InlineFragmentWithOverlappingFields on Actor {
 // TestMutation.graphql
 import { FragmentRefs } from "relay-runtime";
 export type CommentCreateInput = {
-    readonly clientMutationId?: string | null;
-    readonly feedbackId?: string | null;
-    readonly feedback?: CommentfeedbackFeedback | null;
+    clientMutationId?: string | null;
+    feedbackId?: string | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentfeedbackFeedback = {
-    readonly comment?: FeedbackcommentComment | null;
+    comment?: FeedbackcommentComment | null;
 };
 export type FeedbackcommentComment = {
-    readonly feedback?: CommentfeedbackFeedback | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type TestMutationVariables = {
     input: CommentCreateInput;
@@ -3264,15 +3264,15 @@ export type ExampleFragment = {
 
 // TestMutation.graphql
 export type CommentCreateInput = {
-    readonly clientMutationId?: string | null;
-    readonly feedbackId?: string | null;
-    readonly feedback?: CommentfeedbackFeedback | null;
+    clientMutationId?: string | null;
+    feedbackId?: string | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type CommentfeedbackFeedback = {
-    readonly comment?: FeedbackcommentComment | null;
+    comment?: FeedbackcommentComment | null;
 };
 export type FeedbackcommentComment = {
-    readonly feedback?: CommentfeedbackFeedback | null;
+    feedback?: CommentfeedbackFeedback | null;
 };
 export type TestMutationVariables = {
     input: CommentCreateInput;
@@ -3292,8 +3292,8 @@ export type TestMutation = {
 
 // TestSubscription.graphql
 export type FeedbackLikeInput = {
-    readonly clientMutationId?: string | null;
-    readonly feedbackId?: string | null;
+    clientMutationId?: string | null;
+    feedbackId?: string | null;
 };
 export type TestSubscriptionVariables = {
     input?: FeedbackLikeInput | null;

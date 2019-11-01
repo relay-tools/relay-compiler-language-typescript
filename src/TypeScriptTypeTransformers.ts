@@ -132,7 +132,7 @@ function transformNonNullableInputType(
   state: State
 ) {
   if (schema.isList(type)) {
-    return ts.createTypeReferenceNode(ts.createIdentifier("ReadonlyArray"), [
+    return ts.createTypeReferenceNode(ts.createIdentifier("Array"), [
       transformInputType(schema, schema.getListItemType(type), state)
     ]);
   } else if (schema.isScalar(type)) {
@@ -155,7 +155,7 @@ function transformNonNullableInputType(
       const fieldType = schema.getFieldType(fieldID);
       const fieldName = schema.getFieldName(fieldID);
       const property = ts.createPropertySignature(
-        [ts.createToken(ts.SyntaxKind.ReadonlyKeyword)],
+        undefined,
         ts.createIdentifier(fieldName),
         state.optionalInputFields.indexOf(fieldName) >= 0 ||
           !schema.isNonNull(fieldType)
