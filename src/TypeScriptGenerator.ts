@@ -474,17 +474,14 @@ function createVisitor(
         );
         return nodes;
       },
-
       Fragment(node) {
         const flattenedSelections: Selection[] = flattenArray(
           /* $FlowFixMe: selections have already been transformed */
           (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
         );
-
         const numConcreteSelections = flattenedSelections.filter(
           s => s.concreteType
         ).length;
-
         const selections = flattenedSelections.map(selection => {
           if (
             numConcreteSelections <= 1 &&
@@ -498,16 +495,15 @@ function createVisitor(
               }
             ];
           }
-
           return [selection];
         });
-
         state.generatedFragments.add(node.name);
 
         const refTypeName = getRefTypeName(node.name);
         const refTypeDataProperty = objectTypeProperty(
           DATA_REF,
-          ts.createTypeReferenceNode(`${node.name}$data`, undefined)
+          ts.createTypeReferenceNode(`${node.name}$data`, undefined),
+          { optional: true }
         );
         refTypeDataProperty.questionToken = ts.createToken(
           ts.SyntaxKind.QuestionToken
@@ -528,7 +524,6 @@ function createVisitor(
         const dataType = ts.createTypeReferenceNode(node.name, undefined);
 
         const unmasked = node.metadata != null && node.metadata.mask === false;
-
         const baseType = selectionsToAST(
           schema,
           selections,
@@ -536,13 +531,15 @@ function createVisitor(
           unmasked,
           unmasked ? undefined : node.name
         );
-
         const type = isPlural(node)
           ? ts.createTypeReferenceNode(ts.createIdentifier("ReadonlyArray"), [
               baseType
             ])
           : baseType;
         state.runtimeImports.add("FragmentRefs");
+        if (state.hasConnectionResolver) {
+          state.runtimeImports.add("ConnectionReference");
+        }
 
         return [
           ...getEnumDefinitions(schema, state),
@@ -1085,7 +1082,7 @@ function getEnumDefinitions(
 function getRefetchableQueryParentFragmentName(
   state: State,
   metadata: Metadata
-): string | null | undefined {
+): string | null {
   if (
     (metadata && !metadata.isRefetchableQuery) ||
     (!state.useHaste && !state.useSingleArtifactDirectory)
