@@ -79,7 +79,7 @@ export type QueryWithConnectionField = {
 
 
 // FeedbackComments_feedback.graphql
-import { FragmentRefs } from "relay-runtime";
+import { ConnectionReference, FragmentRefs } from "relay-runtime";
 export type FeedbackComments_feedback = {
     readonly comments: {
         readonly count: number | null;
@@ -2165,7 +2165,7 @@ export type QueryWithConnectionField = {
 
 
 // FeedbackComments_feedback.graphql
-import { FragmentRefs } from "relay-runtime";
+import { ConnectionReference, FragmentRefs } from "relay-runtime";
 export type FeedbackComments_feedback = {
     readonly comments: {
         readonly count: number | null;
