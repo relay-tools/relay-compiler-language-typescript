@@ -1,3 +1,15 @@
+# v10.1.0 (Mon Nov 04 2019)
+
+#### 🚀  Enhancement
+
+- Enhance fragment reference [#149](https://github.com/relay-tools/relay-compiler-language-typescript/pull/149) ([@renanmav](https://github.com/renanmav))
+
+#### Authors: 1
+
+- Renan Machado ([@renanmav](https://github.com/renanmav))
+
+---
+
 # v10.0.0 (Thu Oct 31 2019)
 
 #### 💥  Breaking Change
