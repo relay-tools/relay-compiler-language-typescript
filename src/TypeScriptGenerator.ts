@@ -499,10 +499,13 @@ function createVisitor(
         });
         state.generatedFragments.add(node.name);
 
+        const dataTypeName = getDataTypeName(node.name);
+        const dataType = ts.createTypeReferenceNode(node.name, undefined);
+
         const refTypeName = getRefTypeName(node.name);
         const refTypeDataProperty = objectTypeProperty(
           DATA_REF,
-          ts.createTypeReferenceNode(`${node.name}$data`, undefined),
+          ts.createTypeReferenceNode(dataTypeName, undefined),
           { optional: true }
         );
         refTypeDataProperty.questionToken = ts.createToken(
@@ -519,9 +522,6 @@ function createVisitor(
           refTypeDataProperty,
           refTypeFragmentRefProperty
         ]);
-
-        const dataTypeName = getDataTypeName(node.name);
-        const dataType = ts.createTypeReferenceNode(node.name, undefined);
 
         const unmasked = node.metadata != null && node.metadata.mask === false;
         const baseType = selectionsToAST(
