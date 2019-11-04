@@ -4,6 +4,7 @@ import {
   Fragment,
   IRVisitor,
   LinkedField,
+  Metadata,
   Root,
   ScalarField,
   Schema,
@@ -41,6 +42,7 @@ type SelectionMap = Map<string, Selection>;
 
 const REF_TYPE = " $refType";
 const FRAGMENT_REFS = " $fragmentRefs";
+const DATA_REF = " $data";
 const FRAGMENT_REFS_TYPE_NAME = "FragmentRefs";
 const MODULE_IMPORT_FIELD = "MODULE_IMPORT_FIELD";
 const DIRECTIVE_NAME = "raw_response_type";
@@ -362,8 +364,8 @@ function createVisitor(
     customScalars: options.customScalars,
     enumsHasteModule: options.enumsHasteModule,
     existingFragmentNames: options.existingFragmentNames,
-    generatedInputObjectTypes: {},
     generatedFragments: new Set(),
+    generatedInputObjectTypes: {},
     hasConnectionResolver: false,
     optionalInputFields: options.optionalInputFields,
     usedEnums: {},
@@ -371,7 +373,8 @@ function createVisitor(
     useHaste: options.useHaste,
     useSingleArtifactDirectory: options.useSingleArtifactDirectory,
     noFutureProofEnums: options.noFutureProofEnums,
-    matchFields: new Map()
+    matchFields: new Map(),
+    runtimeImports: new Set()
   };
 
   return {
@@ -382,9 +385,7 @@ function createVisitor(
           node,
           state
         );
-
         const inputObjectTypes = generateInputObjectTypes(state);
-
         const responseType = exportType(
           `${node.name}Response`,
           selectionsToAST(
@@ -409,9 +410,7 @@ function createVisitor(
 
         // Generate raw response type
         let rawResponseType;
-
         const { normalizationIR } = options;
-
         if (
           normalizationIR &&
           node.directives.some(d => d.name === DIRECTIVE_NAME)
@@ -421,14 +420,32 @@ function createVisitor(
             createRawResponseTypeVisitor(schema, state)
           );
         }
-
-        const nodes = [
+        const refetchableFragmentName = getRefetchableQueryParentFragmentName(
+          state,
+          node.metadata
+        );
+        if (state.hasConnectionResolver) {
+          state.runtimeImports.add("ConnectionReference");
+        }
+        if (refetchableFragmentName !== null) {
+          state.runtimeImports.add("FragmentReference");
+        }
+        const nodes = [];
+        if (state.runtimeImports.size) {
+          nodes.push(
+            importTypes(
+              Array.from(state.runtimeImports).sort(),
+              "relay-runtime"
+            )
+          );
+        }
+        nodes.push(
           ...getFragmentRefsTypeImport(state),
           ...getEnumDefinitions(schema, state),
           ...inputObjectTypes,
           inputVariablesType,
           responseType
-        ];
+        );
 
         if (rawResponseType) {
           for (const [key, ast] of state.matchFields) {
@@ -457,17 +474,14 @@ function createVisitor(
         );
         return nodes;
       },
-
       Fragment(node) {
         const flattenedSelections: Selection[] = flattenArray(
           /* $FlowFixMe: selections have already been transformed */
           (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
         );
-
         const numConcreteSelections = flattenedSelections.filter(
           s => s.concreteType
         ).length;
-
         const selections = flattenedSelections.map(selection => {
           if (
             numConcreteSelections <= 1 &&
@@ -481,14 +495,35 @@ function createVisitor(
               }
             ];
           }
-
           return [selection];
         });
-
         state.generatedFragments.add(node.name);
 
-        const unmasked = node.metadata != null && node.metadata.mask === false;
+        const dataTypeName = getDataTypeName(node.name);
+        const dataType = ts.createTypeReferenceNode(node.name, undefined);
 
+        const refTypeName = getRefTypeName(node.name);
+        const refTypeDataProperty = objectTypeProperty(
+          DATA_REF,
+          ts.createTypeReferenceNode(dataTypeName, undefined),
+          { optional: true }
+        );
+        refTypeDataProperty.questionToken = ts.createToken(
+          ts.SyntaxKind.QuestionToken
+        );
+        const refTypeFragmentRefProperty = objectTypeProperty(
+          FRAGMENT_REFS,
+          ts.createTypeReferenceNode(FRAGMENT_REFS_TYPE_NAME, [
+            ts.createLiteralTypeNode(ts.createStringLiteral(node.name))
+          ])
+        );
+        const isPluralFragment = isPlural(node);
+        const refType = exactObjectTypeAnnotation([
+          refTypeDataProperty,
+          refTypeFragmentRefProperty
+        ]);
+
+        const unmasked = node.metadata != null && node.metadata.mask === false;
         const baseType = selectionsToAST(
           schema,
           selections,
@@ -496,17 +531,30 @@ function createVisitor(
           unmasked,
           unmasked ? undefined : node.name
         );
-
         const type = isPlural(node)
           ? ts.createTypeReferenceNode(ts.createIdentifier("ReadonlyArray"), [
               baseType
             ])
           : baseType;
+        state.runtimeImports.add("FragmentRefs");
+        if (state.hasConnectionResolver) {
+          state.runtimeImports.add("ConnectionReference");
+        }
 
         return [
-          ...getFragmentRefsTypeImport(state),
           ...getEnumDefinitions(schema, state),
-          exportType(node.name, type)
+          importTypes(Array.from(state.runtimeImports).sort(), "relay-runtime"),
+          exportType(node.name, type),
+          exportType(dataTypeName, dataType),
+          exportType(
+            refTypeName,
+            isPluralFragment
+              ? ts.createTypeReferenceNode(
+                  ts.createIdentifier("ReadonlyArray"),
+                  [refType]
+                )
+              : refType
+          )
         ];
       },
       InlineFragment(node) {
@@ -1029,8 +1077,35 @@ function getEnumDefinitions(
   });
 }
 
+// If it's a @refetchable fragment, we generate the $fragmentRef in generated
+// query, and import it in the fragment to avoid circular dependencies
+function getRefetchableQueryParentFragmentName(
+  state: State,
+  metadata: Metadata
+): string | null {
+  if (
+    (metadata && !metadata.isRefetchableQuery) ||
+    (!state.useHaste && !state.useSingleArtifactDirectory)
+  ) {
+    return null;
+  }
+  const derivedFrom = metadata && metadata.derivedFrom;
+  if (derivedFrom !== null && typeof derivedFrom === "string") {
+    return derivedFrom;
+  }
+  return null;
+}
+
 function stringLiteralTypeAnnotation(name: string): ts.TypeNode {
   return ts.createLiteralTypeNode(ts.createLiteral(name));
+}
+
+function getRefTypeName(name: string): string {
+  return `${name}$key`;
+}
+
+function getDataTypeName(name: string): string {
+  return `${name}$data`;
 }
 
 // Should match FLOW_TRANSFORMS array

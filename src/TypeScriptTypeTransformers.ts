@@ -13,6 +13,7 @@ export type State = {
   };
   hasConnectionResolver: boolean;
   matchFields: Map<string, ts.TypeNode>;
+  runtimeImports: Set<string>;
   usedEnums: { [name: string]: TypeID };
   usedFragments: Set<string>;
 } & TypeGeneratorOptions;
