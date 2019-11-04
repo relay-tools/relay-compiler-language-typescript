@@ -988,10 +988,10 @@ babel-plugin-macros@^2.0.0:
     cosmiconfig "^5.2.0"
     resolve "^1.10.0"
 
-babel-plugin-relay@^2.0.0-rc.1:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-relay/-/babel-plugin-relay-2.0.0.tgz#f5c408f81427f3e97b65ea3f6bccf6821f1615b9"
-  integrity sha512-NFQ+TzQtr4Wh1/FEpjeZqghS1Orpn0gAvksrBOgn606bMf2vd1YYed8z4gMAyAPkwSgWzsNtsLzq84pMJi6agQ==
+babel-plugin-relay@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-relay/-/babel-plugin-relay-7.0.0.tgz#4d8923e0e629effe679764403db61aea9af78aae"
+  integrity sha512-lF9ExqnKeeLZ35GMi33rlbvFiKizHvE0u1A17p6mBsSeg+RfdUqF392vhWIMmMP6Xcsosd9G2wUavA3DOTF7CA==
   dependencies:
     babel-plugin-macros "^2.0.0"
 
@@ -5338,7 +5338,7 @@ regjsparser@^0.1.4:
     jsesc "~0.5.0"
 
 "relay-compiler-language-typescript@file:.yalc/relay-compiler-language-typescript":
-  version "10.0.0-67278bc7"
+  version "10.0.0-f8a27bab"
   dependencies:
     immutable "^4.0.0-rc.12"
     invariant "^2.2.4"
