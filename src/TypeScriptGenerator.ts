@@ -428,7 +428,7 @@ function createVisitor(
           state.runtimeImports.add("ConnectionReference");
         }
         if (refetchableFragmentName !== null) {
-          state.runtimeImports.add("FragmentReference");
+          state.runtimeImports.add("FragmentRefs");
         }
         const nodes = [];
         if (state.runtimeImports.size) {
