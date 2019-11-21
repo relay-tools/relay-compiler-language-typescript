@@ -918,8 +918,8 @@ export type CommentCreateMutation = {
 
 
 // FriendFragment.graphql
-export type TestEnums = "mark" | "zuck" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
+export type TestEnums = "mark" | "zuck" | "%future added value";
 export type FriendFragment = {
     readonly name: string | null;
     readonly lastName: string | null;
@@ -1677,8 +1677,8 @@ fragment ScalarField on User {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // ScalarField.graphql
-export type PersonalityTraits = "CHEERFUL" | "DERISIVE" | "HELPFUL" | "SNARKY" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
+export type PersonalityTraits = "CHEERFUL" | "DERISIVE" | "HELPFUL" | "SNARKY" | "%future added value";
 export type ScalarField = {
     readonly id: string;
     readonly name: string | null;
@@ -3004,8 +3004,8 @@ export type CommentCreateMutation = {
 
 
 // FriendFragment.graphql
-export type TestEnums = "mark" | "zuck" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
+export type TestEnums = "mark" | "zuck" | "%future added value";
 export type FriendFragment = {
     readonly name: string | null;
     readonly lastName: string | null;
@@ -3762,8 +3762,8 @@ fragment ScalarField on User {
 
 ~~~~~~~~~~ OUTPUT ~~~~~~~~~~
 // ScalarField.graphql
-export type PersonalityTraits = "CHEERFUL" | "DERISIVE" | "HELPFUL" | "SNARKY" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
+export type PersonalityTraits = "CHEERFUL" | "DERISIVE" | "HELPFUL" | "SNARKY" | "%future added value";
 export type ScalarField = {
     readonly id: string;
     readonly name: string | null;
