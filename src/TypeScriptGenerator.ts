@@ -542,8 +542,8 @@ function createVisitor(
         }
 
         return [
-          ...getEnumDefinitions(schema, state),
           importTypes(Array.from(state.runtimeImports).sort(), "relay-runtime"),
+          ...getEnumDefinitions(schema, state),
           exportType(node.name, type),
           exportType(dataTypeName, dataType),
           exportType(
