@@ -1,3 +1,15 @@
+# v10.1.1 (Fri Nov 22 2019)
+
+#### 🐛  Bug Fix
+
+- Fix enum import order [#159](https://github.com/relay-tools/relay-compiler-language-typescript/pull/159) ([@renanmav](https://github.com/renanmav))
+
+#### Authors: 1
+
+- Renan Machado ([@renanmav](https://github.com/renanmav))
+
+---
+
 # v10.1.0 (Mon Nov 04 2019)
 
 #### 🚀  Enhancement
