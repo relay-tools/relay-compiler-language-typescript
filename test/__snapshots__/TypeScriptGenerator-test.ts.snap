@@ -1535,8 +1535,7 @@ export type RefetchableFragment$key = {
 
 
 // RefetchableFragmentQuery.graphql
-import { FragmentReference } from "relay-runtime";
-import { FragmentRefs } from "relay-runtime";
+import { FragmentReference, FragmentRefs } from "relay-runtime";
 export type RefetchableFragmentQueryVariables = {
     id: string;
 };
