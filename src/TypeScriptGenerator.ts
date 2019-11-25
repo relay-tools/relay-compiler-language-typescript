@@ -82,10 +82,11 @@ function aggregateRuntimeImports(ast: ts.Statement[]) {
   );
 
   if (runtimeImports.length > 1) {
+    console.log("um runtime duplicado");
     const namedImports: string[] = [];
     runtimeImports.map(node => {
       // @ts-ignore
-      node.importClause?.namedBindings.elements.map(element => {
+      node.importClause.namedBindings.elements.map(element => {
         namedImports.push(element.name.escapedText);
       });
     });

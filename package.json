@@ -96,14 +96,14 @@
     "ts-jest": "^22.0.1",
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.7.2"
+    "typescript": "3.6.4"
   },
   "peerDependencies": {
     "@types/react-relay": ">=7.0.0",
     "@types/relay-runtime": ">=6.0.7",
     "relay-compiler": ">=7.0.0",
     "relay-runtime": ">=7.0.0",
-    "typescript": ">=3.7.2"
+    "typescript": ">=3.6.4"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
