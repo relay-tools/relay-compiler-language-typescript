@@ -45,7 +45,7 @@ describe("formatGeneratedModule", () => {
         docText: null,
         concreteText: JSON.stringify({ the: { fragment: { data: 42 } } }),
         typeText: "export type CompleteExample = { readonly id: string }",
-        hash: "abcde",
+        hash: "@relayHash abcde",
         relayRuntimeModule: "relay-runtime",
         sourceHash: "edcba"
       })
@@ -63,7 +63,7 @@ describe("formatGeneratedModule", () => {
         docText: null,
         concreteText: JSON.stringify({ the: { fragment: { data: 42 } } }),
         typeText: "export type CompleteExample = { readonly id: string }",
-        hash: "abcde",
+        hash: "@relayHash abcde",
         sourceHash: "edcba"
       })
     ).toMatchFile(
@@ -80,7 +80,7 @@ describe("formatGeneratedModule", () => {
         docText: null,
         concreteText: JSON.stringify({ the: { fragment: { data: 42 } } }),
         typeText: "export type CompleteExample = { readonly id: string }",
-        hash: "abcde",
+        hash: null,
         sourceHash: "edcba"
       })
     ).toMatchFile(
