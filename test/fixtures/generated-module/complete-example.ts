@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* @relayHash abcde */
 
 import { ConcreteFragment } from "relay-runtime";
 export type CompleteExample = { readonly id: string }
