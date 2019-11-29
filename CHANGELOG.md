@@ -1,3 +1,15 @@
+# v10.1.2 (Fri Nov 29 2019)
+
+#### 🐛  Bug Fix
+
+- Support relay-compiler --validate [#161](https://github.com/relay-tools/relay-compiler-language-typescript/pull/161) ([@martinandert](https://github.com/martinandert))
+
+#### Authors: 1
+
+- Martin Andert ([@martinandert](https://github.com/martinandert))
+
+---
+
 # v10.1.1 (Fri Nov 22 2019)
 
 #### 🐛  Bug Fix
