@@ -48,12 +48,9 @@ const MODULE_IMPORT_FIELD = "MODULE_IMPORT_FIELD";
 const DIRECTIVE_NAME = "raw_response_type";
 
 export const generate: TypeGenerator["generate"] = (schema, node, options) => {
-  let ast: ts.Statement[] = IRVisitor.visit(
-    node,
-    createVisitor(schema, options)
+  const ast: ts.Statement[] = aggregateRuntimeImports(
+    IRVisitor.visit(node, createVisitor(schema, options))
   );
-
-  ast = aggregateRuntimeImports(ast);
 
   const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
 
