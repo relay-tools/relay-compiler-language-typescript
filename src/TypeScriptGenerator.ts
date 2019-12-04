@@ -48,9 +48,8 @@ const MODULE_IMPORT_FIELD = "MODULE_IMPORT_FIELD";
 const DIRECTIVE_NAME = "raw_response_type";
 
 export const generate: TypeGenerator["generate"] = (schema, node, options) => {
-  const ast: ts.Statement[] = IRVisitor.visit(
-    node,
-    createVisitor(schema, options)
+  const ast: ts.Statement[] = aggregateRuntimeImports(
+    IRVisitor.visit(node, createVisitor(schema, options))
   );
 
   const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
@@ -67,6 +66,57 @@ export const generate: TypeGenerator["generate"] = (schema, node, options) => {
 
   return printer.printNode(ts.EmitHint.SourceFile, fullProgramAst, resultFile);
 };
+
+function aggregateRuntimeImports(ast: ts.Statement[]) {
+  const importNodes = ast.filter(declaration =>
+    ts.isImportDeclaration(declaration)
+  ) as ts.ImportDeclaration[];
+
+  const runtimeImports = importNodes.filter(
+    importDeclaration =>
+      // @ts-ignore
+      importDeclaration.moduleSpecifier.text === "relay-runtime"
+  );
+
+  if (runtimeImports.length > 1) {
+    const namedImports: string[] = [];
+    runtimeImports.map(node => {
+      // @ts-ignore
+      node.importClause.namedBindings.elements.map(element => {
+        namedImports.push(element.name.escapedText);
+      });
+    });
+
+    const importSpecifiers: ts.ImportSpecifier[] = [];
+    namedImports.map(namedImport => {
+      const specifier = ts.createImportSpecifier(
+        undefined,
+        ts.createIdentifier(namedImport)
+      );
+      importSpecifiers.push(specifier);
+    });
+
+    const namedBindings = ts.createNamedImports(importSpecifiers);
+    const aggregatedRuntimeImportDeclaration = ts.createImportDeclaration(
+      undefined,
+      undefined,
+      ts.createImportClause(undefined, namedBindings),
+      ts.createStringLiteral("relay-runtime")
+    );
+
+    const aggregatedRuntimeImportAST = ast.reduce<ts.Statement[]>(
+      (prev, curr) => {
+        if (!ts.isImportDeclaration(curr)) prev.push(curr);
+        return prev;
+      },
+      [aggregatedRuntimeImportDeclaration]
+    );
+
+    return aggregatedRuntimeImportAST;
+  } else {
+    return ast;
+  }
+}
 
 function nullthrows<T>(obj: T | null | undefined): T {
   if (obj == null) {
