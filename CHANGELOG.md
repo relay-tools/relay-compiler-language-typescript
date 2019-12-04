@@ -1,3 +1,15 @@
+# v10.1.3 (Wed Dec 04 2019)
+
+#### 🐛  Bug Fix
+
+- Fix duplicate imports [#160](https://github.com/relay-tools/relay-compiler-language-typescript/pull/160) ([@renanmav](https://github.com/renanmav))
+
+#### Authors: 1
+
+- Renan Machado ([@renanmav](https://github.com/renanmav))
+
+---
+
 # v10.1.2 (Fri Nov 29 2019)
 
 #### 🐛  Bug Fix
