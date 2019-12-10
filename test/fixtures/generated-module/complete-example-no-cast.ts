@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 
 import { ConcreteFragment } from "relay-runtime";
 export type CompleteExample = { readonly id: string }
