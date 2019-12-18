@@ -23,6 +23,7 @@ export const formatterFactory = (
     nodeStatement = addAnyTypeCast(nodeStatement).trim();
   }
   return `/* tslint:disable */
+/* eslint-disable */
 ${hash ? `/* ${hash} */\n` : ""}
 ${documentTypeImport}
 ${typeText || ""}
