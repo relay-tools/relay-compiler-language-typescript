@@ -1,3 +1,19 @@
+# v10.1.4 (Mon Jan 06 2020)
+
+#### 🐛  Bug Fix
+
+- Specify the version of auto or default to v7 [#168](https://github.com/relay-tools/relay-compiler-language-typescript/pull/168) ([@zephraph](https://github.com/zephraph))
+- feat: make mutation inputs mutable [#156](https://github.com/relay-tools/relay-compiler-language-typescript/pull/156) ([@ascagnel](https://github.com/ascagnel))
+- feat: Disable eslint for generated modules [#162](https://github.com/relay-tools/relay-compiler-language-typescript/pull/162) ([@maraisr](https://github.com/maraisr))
+
+#### Authors: 3
+
+- Andrew Scagnelli ([@ascagnel](https://github.com/ascagnel))
+- Justin Bennett ([@zephraph](https://github.com/zephraph))
+- Marais Rossouw ([@maraisr](https://github.com/maraisr))
+
+---
+
 # v10.1.3 (Wed Dec 04 2019)
 
 #### 🐛  Bug Fix
