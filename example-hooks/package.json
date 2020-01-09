@@ -52,7 +52,7 @@
     "patch-package": "^6.2.0",
     "postinstall-postinstall": "^2.0.0",
     "relay-compiler": "^7.0.0",
-    "relay-compiler-language-typescript": "file:../lib",
+    "relay-compiler-language-typescript": "file:.yalc/relay-compiler-language-typescript",
     "ts-loader": "^6.2.0",
     "tslint": "^5.20.0",
     "tslint-plugin-relay": "^0.0.3",
