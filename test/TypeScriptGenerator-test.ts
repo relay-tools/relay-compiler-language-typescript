@@ -1,3 +1,4 @@
+// @ts-ignore
 // TODO - Update CompilerContext type when release @types/relay-compiler 8
 import { CompilerContext, IRTransforms, Root } from "relay-compiler";
 import { TypeGeneratorOptions } from "relay-compiler/lib/language/RelayLanguagePluginInterface";
