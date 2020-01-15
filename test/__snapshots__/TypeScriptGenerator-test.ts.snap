@@ -1343,6 +1343,97 @@ export type ScalarHandleField = {
 
 `;
 
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: query-with-module-field.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+query Test @raw_response_type {
+  node(id: "1") {
+    ...Test_user
+  }
+}
+
+fragment Test_user on User {
+  plainUserRenderer {
+    ...Test_userRenderer @module(name: "Renderer.react")
+  }
+}
+
+fragment Test_userRenderer on PlainUserRenderer {
+  user {
+    username
+  }
+}
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// Test.graphql
+import { Local3DPayload, FragmentRefs } from "relay-runtime";
+export type TestVariables = {};
+export type TestResponse = {
+    readonly node: {
+        readonly " $fragmentRefs": FragmentRefs<"Test_user">;
+    } | null;
+};
+export type Test_userRenderer = {
+    readonly user: ({
+        readonly username: string | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type TestRawResponse = {
+    readonly node: ({
+        readonly __typename: "User";
+        readonly id: string | null;
+        readonly plainUserRenderer: ({
+            readonly __module_operation_Test_user: unknown | null;
+            readonly __module_component_Test_user: unknown | null;
+            ...Test_userRenderer
+        } | Local3DPayload<"Test_user", {
+            ...Test_userRenderer
+        }>) | null;
+    } | {
+        readonly __typename: string | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type Test = {
+    readonly response: TestResponse;
+    readonly variables: TestVariables;
+    readonly rawResponse: TestRawResponse;
+};
+
+
+// Test_user.graphql
+import { FragmentRefs } from "relay-runtime";
+export type Test_user = {
+    readonly plainUserRenderer: {
+        readonly __fragmentPropName?: string | null;
+        readonly __module_component?: string | null;
+        readonly " $fragmentRefs": FragmentRefs<"Test_userRenderer">;
+    } | null;
+    readonly " $refType": "Test_user";
+};
+export type Test_user$data = Test_user;
+export type Test_user$key = {
+    readonly " $data"?: Test_user$data;
+    readonly " $fragmentRefs": FragmentRefs<"Test_user">;
+};
+
+
+// Test_userRenderer.graphql
+import { FragmentRefs } from "relay-runtime";
+export type Test_userRenderer = {
+    readonly user: {
+        readonly username: string | null;
+    } | null;
+    readonly " $refType": "Test_userRenderer";
+};
+export type Test_userRenderer$data = Test_userRenderer;
+export type Test_userRenderer$key = {
+    readonly " $data"?: Test_userRenderer$data;
+    readonly " $fragmentRefs": FragmentRefs<"Test_userRenderer">;
+};
+
+`;
+
 exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: query-with-raw-response-on-conditional.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 query ExampleQuery($id: ID!, $condition: Boolean!) @raw_response_type {
@@ -1378,14 +1469,87 @@ export type ExampleQueryRawResponse = {
     readonly node: ({
         readonly __typename: "User";
         readonly id: string | null;
-        readonly name?: string | null;
-        readonly lastName?: string | null;
-        readonly feedback?: ({
+        readonly name: string | null;
+        readonly lastName: string | null;
+        readonly feedback: ({
             readonly id: string;
             readonly name: string | null;
         }) | null;
     } | {
         readonly __typename: string | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type ExampleQuery = {
+    readonly response: ExampleQueryResponse;
+    readonly variables: ExampleQueryVariables;
+    readonly rawResponse: ExampleQueryRawResponse;
+};
+
+
+// FriendFragment.graphql
+import { FragmentRefs } from "relay-runtime";
+export type FriendFragment = {
+    readonly name?: string | null;
+    readonly lastName?: string | null;
+    readonly feedback?: {
+        readonly id: string;
+        readonly name: string | null;
+    } | null;
+    readonly " $refType": "FriendFragment";
+};
+export type FriendFragment$data = FriendFragment;
+export type FriendFragment$key = {
+    readonly " $data"?: FriendFragment$data;
+    readonly " $fragmentRefs": FragmentRefs<"FriendFragment">;
+};
+
+`;
+
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: query-with-raw-response-on-literal-conditional.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+query ExampleQuery($id: ID!) @raw_response_type {
+  node(id: $id) {
+    username
+    ...FriendFragment
+    ... @include(if: false) {
+      friends(first: 0) {
+        count
+      }
+    }
+  }
+}
+
+fragment FriendFragment on User {
+  ... @include(if: false) {
+    name
+    lastName
+    feedback {
+      id
+      name
+    }
+  }
+}
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// ExampleQuery.graphql
+import { FragmentRefs } from "relay-runtime";
+export type ExampleQueryVariables = {
+    id: string;
+};
+export type ExampleQueryResponse = {
+    readonly node: {
+        readonly username: string | null;
+        readonly friends?: {
+            readonly count: number | null;
+        } | null;
+        readonly " $fragmentRefs": FragmentRefs<"FriendFragment">;
+    } | null;
+};
+export type ExampleQueryRawResponse = {
+    readonly node: ({
+        readonly __typename: string | null;
+        readonly username: string | null;
         readonly id: string | null;
     }) | null;
 };
@@ -1482,6 +1646,79 @@ export type TestStream = {
 
 `;
 
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: query-with-stream-connection.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+query TestDefer @raw_response_type {
+  node(id: "1") {
+    ... on User {
+      name
+      friends(first: 10)
+        @stream_connection(key: "TestDefer_friends", initial_count: 0) {
+        edges {
+          node {
+            actor {
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// TestDefer.graphql
+export type TestDeferVariables = {};
+export type TestDeferResponse = {
+    readonly node: {
+        readonly name?: string | null;
+        readonly friends?: {
+            readonly edges: ReadonlyArray<{
+                readonly node: {
+                    readonly actor: {
+                        readonly name: string | null;
+                    } | null;
+                } | null;
+            } | null> | null;
+        } | null;
+    } | null;
+};
+export type TestDeferRawResponse = {
+    readonly node: ({
+        readonly __typename: "User";
+        readonly id: string | null;
+        readonly name: string | null;
+        readonly friends: ({
+            readonly edges: ReadonlyArray<({
+                readonly node: ({
+                    readonly actor: ({
+                        readonly __typename: string | null;
+                        readonly name: string | null;
+                        readonly id: string | null;
+                    }) | null;
+                    readonly id: string | null;
+                    readonly __typename: "User";
+                }) | null;
+                readonly cursor: string | null;
+            }) | null> | null;
+            readonly pageInfo: ({
+                readonly endCursor: string | null;
+                readonly hasNextPage: boolean | null;
+            }) | null;
+        }) | null;
+    } | {
+        readonly __typename: string | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type TestDefer = {
+    readonly response: TestDeferResponse;
+    readonly variables: TestDeferVariables;
+    readonly rawResponse: TestDeferRawResponse;
+};
+
+`;
+
 exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: recursive-fragments.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment FragmentSpread on Node {
@@ -1547,6 +1784,70 @@ export type RefetchableFragmentQueryResponse = {
 export type RefetchableFragmentQuery = {
     readonly response: RefetchableFragmentQueryResponse;
     readonly variables: RefetchableFragmentQueryVariables;
+};
+
+`;
+
+exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: relay-client-id-field.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+query RelayClientIDFieldQuery($id: ID!) {
+  __id # ok on query type
+  me {
+    __id # ok on object type with 'id'
+    __typename
+    id
+  }
+  node(id: $id) {
+    __id # ok on interface type
+    __typename
+    id
+    ... on Comment {
+      commentBody(supported: ["PlainCommentBody"]) {
+        __id # ok on union type
+        __typename
+        ... on PlainCommentBody {
+          __id # ok on object type w/o 'id'
+          text {
+            __id # ok on object type w/o 'id'
+            __typename
+            text
+          }
+        }
+      }
+    }
+  }
+}
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// RelayClientIDFieldQuery.graphql
+export type RelayClientIDFieldQueryVariables = {
+    id: string;
+};
+export type RelayClientIDFieldQueryResponse = {
+    readonly __id: string;
+    readonly me: {
+        readonly __id: string;
+        readonly __typename: string;
+        readonly id: string;
+    } | null;
+    readonly node: {
+        readonly __id: string;
+        readonly __typename: string;
+        readonly id: string;
+        readonly commentBody?: {
+            readonly __id: string;
+            readonly __typename: string;
+            readonly text?: {
+                readonly __id: string;
+                readonly __typename: string;
+                readonly text: string | null;
+            } | null;
+        } | null;
+    } | null;
+};
+export type RelayClientIDFieldQuery = {
+    readonly response: RelayClientIDFieldQueryResponse;
+    readonly variables: RelayClientIDFieldQueryVariables;
 };
 
 `;
@@ -3428,6 +3729,97 @@ export type ScalarHandleField = {
 
 `;
 
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: query-with-module-field.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+query Test @raw_response_type {
+  node(id: "1") {
+    ...Test_user
+  }
+}
+
+fragment Test_user on User {
+  plainUserRenderer {
+    ...Test_userRenderer @module(name: "Renderer.react")
+  }
+}
+
+fragment Test_userRenderer on PlainUserRenderer {
+  user {
+    username
+  }
+}
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// Test.graphql
+import { Local3DPayload, FragmentRefs } from "relay-runtime";
+export type TestVariables = {};
+export type TestResponse = {
+    readonly node: {
+        readonly " $fragmentRefs": FragmentRefs<"Test_user">;
+    } | null;
+};
+export type Test_userRenderer = {
+    readonly user: ({
+        readonly username: string | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type TestRawResponse = {
+    readonly node: ({
+        readonly __typename: "User";
+        readonly id: string | null;
+        readonly plainUserRenderer: ({
+            readonly __module_operation_Test_user: unknown | null;
+            readonly __module_component_Test_user: unknown | null;
+            ...Test_userRenderer
+        } | Local3DPayload<"Test_user", {
+            ...Test_userRenderer
+        }>) | null;
+    } | {
+        readonly __typename: string | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type Test = {
+    readonly response: TestResponse;
+    readonly variables: TestVariables;
+    readonly rawResponse: TestRawResponse;
+};
+
+
+// Test_user.graphql
+import { FragmentRefs } from "relay-runtime";
+export type Test_user = {
+    readonly plainUserRenderer: {
+        readonly __fragmentPropName?: string | null;
+        readonly __module_component?: string | null;
+        readonly " $fragmentRefs": FragmentRefs<"Test_userRenderer">;
+    } | null;
+    readonly " $refType": "Test_user";
+};
+export type Test_user$data = Test_user;
+export type Test_user$key = {
+    readonly " $data"?: Test_user$data;
+    readonly " $fragmentRefs": FragmentRefs<"Test_user">;
+};
+
+
+// Test_userRenderer.graphql
+import { FragmentRefs } from "relay-runtime";
+export type Test_userRenderer = {
+    readonly user: {
+        readonly username: string | null;
+    } | null;
+    readonly " $refType": "Test_userRenderer";
+};
+export type Test_userRenderer$data = Test_userRenderer;
+export type Test_userRenderer$key = {
+    readonly " $data"?: Test_userRenderer$data;
+    readonly " $fragmentRefs": FragmentRefs<"Test_userRenderer">;
+};
+
+`;
+
 exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: query-with-raw-response-on-conditional.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 query ExampleQuery($id: ID!, $condition: Boolean!) @raw_response_type {
@@ -3463,14 +3855,87 @@ export type ExampleQueryRawResponse = {
     readonly node: ({
         readonly __typename: "User";
         readonly id: string | null;
-        readonly name?: string | null;
-        readonly lastName?: string | null;
-        readonly feedback?: ({
+        readonly name: string | null;
+        readonly lastName: string | null;
+        readonly feedback: ({
             readonly id: string;
             readonly name: string | null;
         }) | null;
     } | {
         readonly __typename: string | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type ExampleQuery = {
+    readonly response: ExampleQueryResponse;
+    readonly variables: ExampleQueryVariables;
+    readonly rawResponse: ExampleQueryRawResponse;
+};
+
+
+// FriendFragment.graphql
+import { FragmentRefs } from "relay-runtime";
+export type FriendFragment = {
+    readonly name?: string | null;
+    readonly lastName?: string | null;
+    readonly feedback?: {
+        readonly id: string;
+        readonly name: string | null;
+    } | null;
+    readonly " $refType": "FriendFragment";
+};
+export type FriendFragment$data = FriendFragment;
+export type FriendFragment$key = {
+    readonly " $data"?: FriendFragment$data;
+    readonly " $fragmentRefs": FragmentRefs<"FriendFragment">;
+};
+
+`;
+
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: query-with-raw-response-on-literal-conditional.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+query ExampleQuery($id: ID!) @raw_response_type {
+  node(id: $id) {
+    username
+    ...FriendFragment
+    ... @include(if: false) {
+      friends(first: 0) {
+        count
+      }
+    }
+  }
+}
+
+fragment FriendFragment on User {
+  ... @include(if: false) {
+    name
+    lastName
+    feedback {
+      id
+      name
+    }
+  }
+}
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// ExampleQuery.graphql
+import { FragmentRefs } from "relay-runtime";
+export type ExampleQueryVariables = {
+    id: string;
+};
+export type ExampleQueryResponse = {
+    readonly node: {
+        readonly username: string | null;
+        readonly friends?: {
+            readonly count: number | null;
+        } | null;
+        readonly " $fragmentRefs": FragmentRefs<"FriendFragment">;
+    } | null;
+};
+export type ExampleQueryRawResponse = {
+    readonly node: ({
+        readonly __typename: string | null;
+        readonly username: string | null;
         readonly id: string | null;
     }) | null;
 };
@@ -3567,6 +4032,79 @@ export type TestStream = {
 
 `;
 
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: query-with-stream-connection.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+query TestDefer @raw_response_type {
+  node(id: "1") {
+    ... on User {
+      name
+      friends(first: 10)
+        @stream_connection(key: "TestDefer_friends", initial_count: 0) {
+        edges {
+          node {
+            actor {
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// TestDefer.graphql
+export type TestDeferVariables = {};
+export type TestDeferResponse = {
+    readonly node: {
+        readonly name?: string | null;
+        readonly friends?: {
+            readonly edges: ReadonlyArray<{
+                readonly node: {
+                    readonly actor: {
+                        readonly name: string | null;
+                    } | null;
+                } | null;
+            } | null> | null;
+        } | null;
+    } | null;
+};
+export type TestDeferRawResponse = {
+    readonly node: ({
+        readonly __typename: "User";
+        readonly id: string | null;
+        readonly name: string | null;
+        readonly friends: ({
+            readonly edges: ReadonlyArray<({
+                readonly node: ({
+                    readonly actor: ({
+                        readonly __typename: string | null;
+                        readonly name: string | null;
+                        readonly id: string | null;
+                    }) | null;
+                    readonly id: string | null;
+                    readonly __typename: "User";
+                }) | null;
+                readonly cursor: string | null;
+            }) | null> | null;
+            readonly pageInfo: ({
+                readonly endCursor: string | null;
+                readonly hasNextPage: boolean | null;
+            }) | null;
+        }) | null;
+    } | {
+        readonly __typename: string | null;
+        readonly id: string | null;
+    }) | null;
+};
+export type TestDefer = {
+    readonly response: TestDeferResponse;
+    readonly variables: TestDeferVariables;
+    readonly rawResponse: TestDeferRawResponse;
+};
+
+`;
+
 exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: recursive-fragments.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment FragmentSpread on Node {
@@ -3632,6 +4170,70 @@ export type RefetchableFragmentQueryResponse = {
 export type RefetchableFragmentQuery = {
     readonly response: RefetchableFragmentQueryResponse;
     readonly variables: RefetchableFragmentQueryVariables;
+};
+
+`;
+
+exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: relay-client-id-field.graphql 1`] = `
+~~~~~~~~~~ INPUT ~~~~~~~~~~
+query RelayClientIDFieldQuery($id: ID!) {
+  __id # ok on query type
+  me {
+    __id # ok on object type with 'id'
+    __typename
+    id
+  }
+  node(id: $id) {
+    __id # ok on interface type
+    __typename
+    id
+    ... on Comment {
+      commentBody(supported: ["PlainCommentBody"]) {
+        __id # ok on union type
+        __typename
+        ... on PlainCommentBody {
+          __id # ok on object type w/o 'id'
+          text {
+            __id # ok on object type w/o 'id'
+            __typename
+            text
+          }
+        }
+      }
+    }
+  }
+}
+
+~~~~~~~~~~ OUTPUT ~~~~~~~~~~
+// RelayClientIDFieldQuery.graphql
+export type RelayClientIDFieldQueryVariables = {
+    id: string;
+};
+export type RelayClientIDFieldQueryResponse = {
+    readonly __id: string;
+    readonly me: {
+        readonly __id: string;
+        readonly __typename: string;
+        readonly id: string;
+    } | null;
+    readonly node: {
+        readonly __id: string;
+        readonly __typename: string;
+        readonly id: string;
+        readonly commentBody?: {
+            readonly __id: string;
+            readonly __typename: string;
+            readonly text?: {
+                readonly __id: string;
+                readonly __typename: string;
+                readonly text: string | null;
+            } | null;
+        } | null;
+    } | null;
+};
+export type RelayClientIDFieldQuery = {
+    readonly response: RelayClientIDFieldQueryResponse;
+    readonly variables: RelayClientIDFieldQueryVariables;
 };
 
 `;
