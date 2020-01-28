@@ -1,5 +1,3 @@
-// @ts-ignore
-// TODO - Update CompilerContext type when release @types/relay-compiler 8
 import { CompilerContext, IRTransforms, Root } from "relay-compiler";
 import { TypeGeneratorOptions } from "relay-compiler/lib/language/RelayLanguagePluginInterface";
 import { generateTestsFromFixtures } from "relay-test-utils-internal/lib/generateTestsFromFixtures";
@@ -10,8 +8,7 @@ import * as TypeScriptGenerator from "../src/TypeScriptGenerator";
 function generate(
   text,
   options: TypeGeneratorOptions,
-  // TODO - Update CompilerContext type when release @types/relay-compiler 8
-  context?
+  context?: CompilerContext
 ) {
   const schema = TestSchema.extend([
     ...IRTransforms.schemaExtensions,

@@ -1,6 +1,5 @@
 import {
   Condition,
-  createUserError,
   Fragment,
   IRVisitor,
   LinkedField,
@@ -11,15 +10,12 @@ import {
   TypeGenerator,
   TypeID
 } from "relay-compiler";
-import { ConnectionField } from "relay-compiler/lib/core/GraphQLIR";
 import { TypeGeneratorOptions } from "relay-compiler/lib/language/RelayLanguagePluginInterface";
-import * as ConnectionFieldTransform from "relay-compiler/lib/transforms/ConnectionFieldTransform";
 import * as FlattenTransform from "relay-compiler/lib/transforms/FlattenTransform";
 import * as MaskTransform from "relay-compiler/lib/transforms/MaskTransform";
 import * as MatchTransform from "relay-compiler/lib/transforms/MatchTransform";
 import * as RefetchableFragmentTransform from "relay-compiler/lib/transforms/RefetchableFragmentTransform";
 import * as RelayDirectiveTransform from "relay-compiler/lib/transforms/RelayDirectiveTransform";
-import { ConnectionInterface } from "relay-runtime";
 import * as ts from "typescript";
 import {
   State,
@@ -419,7 +415,6 @@ function createVisitor(
     existingFragmentNames: options.existingFragmentNames,
     generatedFragments: new Set(),
     generatedInputObjectTypes: {},
-    hasConnectionResolver: false,
     optionalInputFields: options.optionalInputFields,
     usedEnums: {},
     usedFragments: new Set(),
@@ -477,9 +472,6 @@ function createVisitor(
           state,
           node.metadata
         );
-        if (state.hasConnectionResolver) {
-          state.runtimeImports.add("ConnectionReference");
-        }
         if (refetchableFragmentName !== null) {
           state.runtimeImports.add("FragmentReference");
         }
@@ -582,9 +574,6 @@ function createVisitor(
             ])
           : baseType;
         state.runtimeImports.add("FragmentRefs");
-        if (state.hasConnectionResolver) {
-          state.runtimeImports.add("ConnectionReference");
-        }
 
         return [
           importTypes(Array.from(state.runtimeImports).sort(), "relay-runtime"),
@@ -633,10 +622,6 @@ function createVisitor(
       ScalarField(node) {
         return visitScalarField(schema, node, state);
       },
-      Connection(node) {
-        return visitConnection(schema, node, state);
-      },
-      ConnectionField: visitLinkedField,
       LinkedField: visitLinkedField,
       ModuleImport(node) {
         return [
@@ -669,54 +654,6 @@ function createVisitor(
   };
 }
 
-function visitConnection(schema: Schema, node: any, state: State) {
-  const { EDGES } = ConnectionInterface.get();
-
-  state.hasConnectionResolver = true;
-
-  const edgesSelection = node.selections.find((selections: any) => {
-    return (
-      Array.isArray(selections) &&
-      selections.some(
-        selection =>
-          selection != null &&
-          typeof selection === "object" &&
-          selection.key === EDGES &&
-          selection.schemaName === EDGES
-      )
-    );
-  });
-
-  const edgesItem = Array.isArray(edgesSelection) ? edgesSelection[0] : null;
-
-  const nodeSelections =
-    edgesItem != null &&
-    typeof edgesItem === "object" &&
-    edgesItem.nodeSelections instanceof Map
-      ? edgesItem.nodeSelections
-      : null;
-
-  if (nodeSelections == null) {
-    throw createUserError(
-      "Cannot generate flow types for connection field, expected an edges " +
-        "selection.",
-      [node.loc]
-    );
-  }
-
-  const edgesFields = Array.from(nodeSelections.values()) as any[];
-
-  const edgesType = selectionsToAST(schema, [edgesFields], state, false);
-
-  return [
-    {
-      key: "__connection",
-      conditional: true,
-      value: ts.createTypeReferenceNode("ConnectionReference", [edgesType])
-    }
-  ];
-}
-
 function visitScalarField(schema: Schema, node: ScalarField, state: State) {
   return [
     {
@@ -727,7 +664,7 @@ function visitScalarField(schema: Schema, node: ScalarField, state: State) {
   ];
 }
 
-function visitLinkedField(node: LinkedField | ConnectionField) {
+function visitLinkedField(node: LinkedField) {
   return [
     {
       key: node.alias || node.name,
@@ -778,8 +715,6 @@ function makeRawResponseProp(
         schema,
         [Array.from(nullthrows(nodeSelections).values())],
         state,
-        // TODO schema.isWrapper - when update @types/relay-compiler to v8 remove ts-ignore
-        // @ts-ignore
         schema.isAbstractType(nodeType) || schema.isWrapper(nodeType)
           ? null
           : schema.getTypeString(nodeType)
@@ -941,9 +876,6 @@ function createRawResponseTypeVisitor(
       ScalarField(node) {
         return visitScalarField(schema, node, state);
       },
-      Connection(node) {
-        return visitConnection(schema, node, state);
-      },
       ClientExtension(node) {
         return flattenArray(
           /* $FlowFixMe: selections have already been transformed */
@@ -953,7 +885,6 @@ function createRawResponseTypeVisitor(
           conditional: true
         }));
       },
-      ConnectionField: visitLinkedField,
       LinkedField: visitLinkedField,
       Condition(node) {
         return flattenArray(
@@ -1189,7 +1120,6 @@ function getDataTypeName(name: string): string {
 export const transforms: TypeGenerator["transforms"] = [
   RelayDirectiveTransform.transform,
   MaskTransform.transform,
-  ConnectionFieldTransform.transform,
   MatchTransform.transform,
   FlattenTransform.transformWithOptions({}),
   RefetchableFragmentTransform.transform

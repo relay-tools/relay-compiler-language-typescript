@@ -40,67 +40,6 @@ export type NestedCondition$key = {
 
 `;
 
-exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: derived-field.graphql 1`] = `
-~~~~~~~~~~ INPUT ~~~~~~~~~~
-query QueryWithConnectionField($id: ID!) {
-  feedback: node(id: $id) {
-    ...FeedbackComments_feedback
-  }
-}
-
-fragment FeedbackComments_feedback on Feedback {
-  comments(first: 10) @connection_resolver(label: "FeedbackComments_feedback") {
-    count
-    edges {
-      node {
-        id
-      }
-    }
-    pageInfo {
-      hasNextPage
-    }
-  }
-}
-~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-// QueryWithConnectionField.graphql
-import { FragmentRefs } from "relay-runtime";
-export type QueryWithConnectionFieldVariables = {
-    id: string;
-};
-export type QueryWithConnectionFieldResponse = {
-    readonly feedback: {
-        readonly " $fragmentRefs": FragmentRefs<"FeedbackComments_feedback">;
-    } | null;
-};
-export type QueryWithConnectionField = {
-    readonly response: QueryWithConnectionFieldResponse;
-    readonly variables: QueryWithConnectionFieldVariables;
-};
-
-
-// FeedbackComments_feedback.graphql
-import { ConnectionReference, FragmentRefs } from "relay-runtime";
-export type FeedbackComments_feedback = {
-    readonly comments: {
-        readonly count: number | null;
-        readonly __connection?: ConnectionReference<{
-            readonly node: {
-                readonly id: string;
-                readonly __id: string;
-            } | null;
-            readonly __id: string;
-        }>;
-    } | null;
-    readonly " $refType": "FeedbackComments_feedback";
-};
-export type FeedbackComments_feedback$data = FeedbackComments_feedback;
-export type FeedbackComments_feedback$key = {
-    readonly " $data"?: FeedbackComments_feedback$data;
-    readonly " $fragmentRefs": FragmentRefs<"FeedbackComments_feedback">;
-};
-
-`;
-
 exports[`Snapshot tests TypeScriptGenerator with a single artifact directory matches expected output: fragment-spread.graphql 1`] = `
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 fragment FragmentSpread on Node {
@@ -2422,67 +2361,6 @@ export type NestedCondition$data = NestedCondition;
 export type NestedCondition$key = {
     readonly " $data"?: NestedCondition$data;
     readonly " $fragmentRefs": FragmentRefs<"NestedCondition">;
-};
-
-`;
-
-exports[`Snapshot tests TypeScriptGenerator without a single artifact directory matches expected output: derived-field.graphql 1`] = `
-~~~~~~~~~~ INPUT ~~~~~~~~~~
-query QueryWithConnectionField($id: ID!) {
-  feedback: node(id: $id) {
-    ...FeedbackComments_feedback
-  }
-}
-
-fragment FeedbackComments_feedback on Feedback {
-  comments(first: 10) @connection_resolver(label: "FeedbackComments_feedback") {
-    count
-    edges {
-      node {
-        id
-      }
-    }
-    pageInfo {
-      hasNextPage
-    }
-  }
-}
-~~~~~~~~~~ OUTPUT ~~~~~~~~~~
-// QueryWithConnectionField.graphql
-import { FragmentRefs } from "relay-runtime";
-export type QueryWithConnectionFieldVariables = {
-    id: string;
-};
-export type QueryWithConnectionFieldResponse = {
-    readonly feedback: {
-        readonly " $fragmentRefs": FragmentRefs<"FeedbackComments_feedback">;
-    } | null;
-};
-export type QueryWithConnectionField = {
-    readonly response: QueryWithConnectionFieldResponse;
-    readonly variables: QueryWithConnectionFieldVariables;
-};
-
-
-// FeedbackComments_feedback.graphql
-import { ConnectionReference, FragmentRefs } from "relay-runtime";
-export type FeedbackComments_feedback = {
-    readonly comments: {
-        readonly count: number | null;
-        readonly __connection?: ConnectionReference<{
-            readonly node: {
-                readonly id: string;
-                readonly __id: string;
-            } | null;
-            readonly __id: string;
-        }>;
-    } | null;
-    readonly " $refType": "FeedbackComments_feedback";
-};
-export type FeedbackComments_feedback$data = FeedbackComments_feedback;
-export type FeedbackComments_feedback$key = {
-    readonly " $data"?: FeedbackComments_feedback$data;
-    readonly " $fragmentRefs": FragmentRefs<"FeedbackComments_feedback">;
 };
 
 `;
