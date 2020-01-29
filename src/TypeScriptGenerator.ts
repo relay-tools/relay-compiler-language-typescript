@@ -1065,9 +1065,7 @@ function getEnumDefinitions(
   }
 
   return enumNames.map(name => {
-    const values = [].concat(
-      schema.getEnumValues(usedEnums[name]) as any
-    ) as any;
+    const values = [...schema.getEnumValues(usedEnums[name])];
     values.sort();
 
     if (!noFutureProofEnums) {
@@ -1077,7 +1075,6 @@ function getEnumDefinitions(
     return exportType(
       name,
       ts.createUnionTypeNode(
-        // @ts-ignore
         values.map(value => stringLiteralTypeAnnotation(value))
       )
     );
