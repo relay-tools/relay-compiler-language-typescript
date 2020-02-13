@@ -1,3 +1,20 @@
+# v10.1.5 (Thu Feb 13 2020)
+
+#### 🐛  Bug Fix
+
+- Update example url in README [#171](https://github.com/relay-tools/relay-compiler-language-typescript/pull/171) ([@ducthienbui97](https://github.com/ducthienbui97))
+
+#### 🏠  Internal
+
+- chore: Fix GH security warnings [#163](https://github.com/relay-tools/relay-compiler-language-typescript/pull/163) ([@maraisr](https://github.com/maraisr))
+
+#### Authors: 2
+
+- Duc Thien Bui ([@ducthienbui97](https://github.com/ducthienbui97))
+- Marais Rossouw ([@maraisr](https://github.com/maraisr))
+
+---
+
 # v10.1.4 (Mon Jan 06 2020)
 
 #### 🐛  Bug Fix
