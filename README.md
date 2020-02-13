@@ -94,7 +94,7 @@ to do anything about that.
 ## Also see
 
 * You can find a copy of the Relay
-  [example TODO app](https://github.com/kastermester/relay-compiler-language-typescript/tree/master/example)
+  [example TODO app](https://github.com/relay-tools/relay-compiler-language-typescript/tree/master/example)
   inside this repository or you can take a look at the
   [Artsy React Native app](https://github.com/artsy/emission).
 * There are Relay tslint rules available
