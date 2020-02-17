@@ -790,9 +790,9 @@
     typescript "^3.0.0"
 
 "@types/relay-runtime@*":
-  version "6.0.7"
-  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-6.0.7.tgz#2c63bca39c47a4919a7e1530814b64a68c868895"
-  integrity sha512-WNJEWhJI/H1cYy8n3tvyeIVbiDFmnBiQn7c4hptWfYA/zUsERxiwTYv+H+zzRIvWTt1tWLRWeVvGcXtfZy9y7Q==
+  version "8.0.6"
+  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-8.0.6.tgz#931c640f9a37b4c328aaa4e5159e0c85e5ffbbfa"
+  integrity sha512-05MJfbE/1TAz4ttx9a9x9xjaOe0KAYymWo/FcqGh+wRvz5ZvRdRPEssmIwcNsdJZVWTB3R/VBAYx6IvXMHIPNQ==
 
 "@types/relay-runtime@^8.0.0":
   version "8.0.0"
@@ -2571,10 +2571,17 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.3.tgz#4a12ff1b60376ef09862c2093edd908328be8423"
   integrity sha512-a30VEBm4PEdx1dRB7MFK7BejejvCvBronbLjht+sHuGYj8PHs7M/5Z+rt5lw551vZ7yfTCj4Vuyy3mSJytDWRQ==
 
-graphql@*, graphql@^14.5.3, graphql@^14.5.8:
+graphql@*, graphql@^14.5.8:
   version "14.5.8"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.5.8.tgz#504f3d3114cb9a0a3f359bbbcf38d9e5bf6a6b3c"
   integrity sha512-MMwmi0zlVLQKLdGiMfWkgQD7dY/TUKt4L+zgJ/aR0Howebod3aNgP5JkgvAULiR2HPVZaP2VEElqtdidHweLkg==
+  dependencies:
+    iterall "^1.2.2"
+
+graphql@^14.5.3:
+  version "14.6.0"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-14.6.0.tgz#57822297111e874ea12f5cd4419616930cd83e49"
+  integrity sha512-VKzfvHEKybTKjQVpTFrA5yUq2S9ihcZvfJAtsDBBCuV6wauPu1xl/f9ehgVf0FcEJJs4vz6ysb/ZMkGigQZseg==
   dependencies:
     iterall "^1.2.2"
 
@@ -3215,9 +3222,9 @@ istanbul-reports@^2.2.6:
     handlebars "^4.1.2"
 
 iterall@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.2.2.tgz#92d70deb8028e0c39ff3164fdbf4d8b088130cd7"
-  integrity sha512-yynBb1g+RFUPY64fTrFv7nsjRrENBQJaX2UL+2Szc9REFrSNm1rpSXHGzhmAy7a9uv3vlvgBlXnf9RqmPH1/DA==
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.3.0.tgz#afcb08492e2915cbd8a0884eb93a8c94d0d72fea"
+  integrity sha512-QZ9qOMdF+QLHxy1QIpUHUU1D5pS2CG2P69LF6L6CPjPYA/XMOmKV3PZpawHoAjHNyB0swdVTRxdYT4tbBbxqwg==
 
 jest-changed-files@^24.9.0:
   version "24.9.0"
@@ -5917,10 +5924,15 @@ type-fest@^0.6.0:
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.6.0.tgz#8d2a2370d3df886eb5c90ada1c5bf6188acf838b"
   integrity sha512-q+MB8nYR1KDLrgr4G5yemftpMC7/QLqVndBmEEdqzmNj5dcFOO4Oo8qlwZE3ULT3+Zim1F8Kq4cBnikNhlCMlg==
 
-typescript@3.6.4, typescript@^3.0.0:
+typescript@3.6.4:
   version "3.6.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.6.4.tgz#b18752bb3792bc1a0281335f7f6ebf1bbfc5b91d"
   integrity sha512-unoCll1+l+YK4i4F8f22TaNVPRHcD9PA3yCuZ8g5e0qGqlVlJ/8FSateOLLSagn+Yg5+ZwuPkL8LFUc0Jcvksg==
+
+typescript@^3.0.0:
+  version "3.7.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.5.tgz#0692e21f65fd4108b9330238aac11dd2e177a1ae"
+  integrity sha512-/P5lkRXkWHNAbcJIiHPfRoKqyd7bsyCma1hZNUGfn20qm64T6ZBlrzprymeu918H+mB/0rIg2gGK/BXkhhYgBw==
 
 ua-parser-js@^0.7.18:
   version "0.7.20"

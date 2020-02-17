@@ -71,17 +71,18 @@ function aggregateRuntimeImports(ast: ts.Statement[]) {
 
   const runtimeImports = importNodes.filter(
     importDeclaration =>
-      // @ts-ignore
-      importDeclaration.moduleSpecifier.text === "relay-runtime"
+      (importDeclaration.moduleSpecifier as ts.StringLiteral).text ===
+      "relay-runtime"
   );
 
   if (runtimeImports.length > 1) {
     const namedImports: string[] = [];
     runtimeImports.map(node => {
-      // @ts-ignore
-      node.importClause.namedBindings.elements.map(element => {
-        namedImports.push(element.name.escapedText);
-      });
+      (node.importClause!.namedBindings! as ts.NamedImports).elements.map(
+        element => {
+          namedImports.push(element.name.text);
+        }
+      );
     });
 
     const importSpecifiers: ts.ImportSpecifier[] = [];
@@ -701,8 +702,10 @@ function makeRawResponseProp(
 ) {
   if (kind === "ModuleImport") {
     // TODO: In flow one can extend an object type with spread, with TS we need an intersection (&)
-    return ts.createSpread(ts.createIdentifier(key));
-    // throw new Error("TODO!");
+    // return ts.createSpread(ts.createIdentifier(key));
+    throw new Error(
+      "relay-compiler-language-typescript does not support @module yet"
+    );
   }
   if (schemaName === "__typename" && concreteType) {
     value = ts.createLiteralTypeNode(ts.createLiteral(concreteType));
@@ -774,7 +777,7 @@ function selectionsToRawResponseBabel(
     }
   });
 
-  const types: ts.PropertySignature[][] = [];
+  const types: ts.TypeNode[] = [];
 
   if (Object.keys(byConcreteType).length) {
     const baseFieldsMap = selectionsToMap(baseFields);
@@ -788,11 +791,10 @@ function selectionsToRawResponseBabel(
       );
       types.push(
         exactObjectTypeAnnotation(
-          // @ts-ignore
           mergedSeletions.map(selection =>
             makeRawResponseProp(schema, selection, state, concreteType)
           )
-        ) as any
+        )
       );
       appendLocal3DPayload(types, mergedSeletions, schema, state, concreteType);
     }
@@ -800,19 +802,18 @@ function selectionsToRawResponseBabel(
   if (baseFields.length > 0) {
     types.push(
       exactObjectTypeAnnotation(
-        // @ts-ignore
         baseFields.map(selection =>
           makeRawResponseProp(schema, selection, state, nodeTypeName)
         )
-      ) as any
+      )
     );
     appendLocal3DPayload(types, baseFields, schema, state, nodeTypeName);
   }
-  return ts.createUnionTypeNode(types as any);
+  return ts.createUnionTypeNode(types);
 }
 
 function appendLocal3DPayload(
-  types: any[],
+  types: ts.TypeNode[],
   selections: ReadonlyArray<Selection>,
   schema: Schema,
   state: State,
@@ -824,9 +825,8 @@ function appendLocal3DPayload(
     state.runtimeImports.add("Local3DPayload");
     types.push(
       ts.createTypeReferenceNode(ts.createIdentifier("Local3DPayload"), [
-        stringLiteralTypeAnnotation(moduleImport.documentName as any),
+        stringLiteralTypeAnnotation(moduleImport.documentName!),
         exactObjectTypeAnnotation(
-          // @ts-ignore
           selections
             .filter(sel => sel.schemaName !== "js")
             .map(selection =>
@@ -848,7 +848,6 @@ function createRawResponseTypeVisitor(
       Root(node) {
         return exportType(
           `${node.name}RawResponse`,
-          // @ts-ignore
           selectionsToRawResponseBabel(
             schema,
             /* $FlowFixMe: selections have already been transformed */
@@ -918,7 +917,6 @@ function createRawResponseTypeVisitor(
 }
 
 // Dedupe the generated type of module selections to reduce file size
-// @ts-ignore
 function visitRawResponseModuleImport(
   schema: Schema,
   node: any,
@@ -940,7 +938,7 @@ function visitRawResponseModuleImport(
       null
     );
 
-    state.matchFields.set(key, ast as any);
+    state.matchFields.set(key, ast);
   }
 
   return [
