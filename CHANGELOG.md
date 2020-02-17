@@ -1,3 +1,16 @@
+# v11.0.0 (Mon Feb 17 2020)
+
+#### 💥  Breaking Change
+
+- Upgrade to relay v8 [#173](https://github.com/relay-tools/relay-compiler-language-typescript/pull/173) ([@thicodes](https://github.com/thicodes) [@alloy](https://github.com/alloy))
+
+#### Authors: 2
+
+- [@thicodes](https://github.com/thicodes)
+- Eloy Durán ([@alloy](https://github.com/alloy))
+
+---
+
 # v10.1.5 (Thu Feb 13 2020)
 
 #### 🐛  Bug Fix
