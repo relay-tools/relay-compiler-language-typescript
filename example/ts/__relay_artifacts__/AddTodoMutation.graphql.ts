@@ -2,8 +2,8 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type AddTodoInput = {
-    readonly text: string;
-    readonly clientMutationId?: string | null;
+    text: string;
+    clientMutationId?: string | null;
 };
 export type AddTodoMutationVariables = {
     input: AddTodoInput;
