@@ -1,24 +1,16 @@
-import {
-  GraphQLCompilerContext,
-  IRTransforms,
-  Root,
-  transformASTSchema
-} from "relay-compiler";
+import { CompilerContext, IRTransforms, Root } from "relay-compiler";
 import { TypeGeneratorOptions } from "relay-compiler/lib/language/RelayLanguagePluginInterface";
 import { generateTestsFromFixtures } from "relay-test-utils-internal/lib/generateTestsFromFixtures";
 import * as parseGraphQLText from "relay-test-utils-internal/lib/parseGraphQLText";
-import * as RelayTestSchema from "relay-test-utils-internal/lib/RelayTestSchema";
+import { TestSchema } from "relay-test-utils-internal/lib/TestSchema";
 import * as TypeScriptGenerator from "../src/TypeScriptGenerator";
-import * as Schema from "relay-compiler/lib/core/Schema";
-
-const DEPRECATED__create = (Schema as any).DEPRECATED__create;
 
 function generate(
   text,
   options: TypeGeneratorOptions,
-  context?: GraphQLCompilerContext
+  context?: CompilerContext
 ) {
-  const schema = transformASTSchema(RelayTestSchema, [
+  const schema = TestSchema.extend([
     ...IRTransforms.schemaExtensions,
     `
       scalar Color
@@ -48,16 +40,18 @@ function generate(
       }
     `
   ]);
-  const { definitions } = parseGraphQLText(schema, text);
-  const compilerSchema = DEPRECATED__create(RelayTestSchema, schema);
-  return new GraphQLCompilerContext(compilerSchema)
+  const { definitions, schema: extendedSchema } = parseGraphQLText(
+    schema,
+    text
+  );
+  return new CompilerContext(extendedSchema)
     .addAll(definitions)
     .applyTransforms(TypeScriptGenerator.transforms)
     .documents()
     .map(
       doc =>
         `// ${doc.name}.graphql\n${TypeScriptGenerator.generate(
-          compilerSchema,
+          extendedSchema,
           doc as any,
           {
             ...options,
@@ -72,16 +66,12 @@ function generate(
 
 describe("Snapshot tests", () => {
   function generateContext(text) {
-    const schema = transformASTSchema(
-      RelayTestSchema,
-      IRTransforms.schemaExtensions
-    );
+    const relaySchema = TestSchema.extend(IRTransforms.schemaExtensions);
     const { definitions, schema: extendedSchema } = parseGraphQLText(
-      schema,
+      relaySchema,
       text
     );
-    const compilerSchema = DEPRECATED__create(RelayTestSchema, extendedSchema);
-    return new GraphQLCompilerContext(compilerSchema)
+    return new CompilerContext(extendedSchema)
       .addAll(definitions)
       .applyTransforms([
         ...IRTransforms.commonTransforms,
