@@ -82,7 +82,7 @@
     "@types/node": "8.10.51",
     "@types/relay-compiler": "^8.0.0",
     "@types/relay-runtime": "^8.0.0",
-    "babel-plugin-relay": "^8.0.0",
+    "babel-plugin-relay": "^9.0.0",
     "chokidar-cli": "^2.0.0",
     "concurrently": "^5.0.0",
     "graphql": "^14.5.8",
@@ -92,7 +92,7 @@
     "lint-staged": "^9.2.1",
     "prettier": "^1.19.1",
     "relay-compiler": "^8.0.0",
-    "relay-runtime": "^8.0.0",
+    "relay-runtime": "^9.0.0",
     "relay-test-utils-internal": "^8.0.0",
     "ts-jest": "^22.0.1",
     "tslint": "^5.18.0",
@@ -100,10 +100,10 @@
     "typescript": "3.6.4"
   },
   "peerDependencies": {
-    "@types/react-relay": ">=8.0.0",
+    "@types/react-relay": ">=9.0.0",
     "@types/relay-runtime": ">=6.0.7",
-    "relay-compiler": ">=8.0.0",
-    "relay-runtime": ">=8.0.0",
+    "relay-compiler": ">=9.0.0",
+    "relay-runtime": ">=9.0.0",
     "typescript": ">=3.6.4"
   },
   "publishConfig": {
