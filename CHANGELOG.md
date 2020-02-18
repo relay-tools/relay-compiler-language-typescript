@@ -1,3 +1,15 @@
+# v12.0.0 (Tue Feb 18 2020)
+
+#### 💥  Breaking Change
+
+- Upgrade to support relay-compiler v9 [#174](https://github.com/relay-tools/relay-compiler-language-typescript/pull/174) ([@thicodes](https://github.com/thicodes))
+
+#### Authors: 1
+
+- [@thicodes](https://github.com/thicodes)
+
+---
+
 # v11.0.0 (Mon Feb 17 2020)
 
 #### 💥  Breaking Change
