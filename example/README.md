@@ -9,12 +9,15 @@ yarn global add yalc
 And in the project root folder
 
 ```
+yarn install
 yarn watch
 ```
 
 ## Installation
+In the example folder link development version to example and install
 
 ```
+yalc add relay-compiler-language-typescript
 yarn install
 ```
 
