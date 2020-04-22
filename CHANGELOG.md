@@ -1,3 +1,15 @@
+# v12.0.1 (Wed Apr 22 2020)
+
+#### 🐛  Bug Fix
+
+- Correct example installing steps [#183](https://github.com/relay-tools/relay-compiler-language-typescript/pull/183) ([@ro-savage](https://github.com/ro-savage))
+
+#### Authors: 1
+
+- Ro Savage ([@ro-savage](https://github.com/ro-savage))
+
+---
+
 # v12.0.0 (Tue Feb 18 2020)
 
 #### 💥  Breaking Change
