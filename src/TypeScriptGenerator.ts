@@ -3,7 +3,6 @@ import {
   Fragment,
   IRVisitor,
   LinkedField,
-  Metadata,
   Root,
   ScalarField,
   Schema,
@@ -468,13 +467,6 @@ function createVisitor(
             normalizationIR,
             createRawResponseTypeVisitor(schema, state)
           );
-        }
-        const refetchableFragmentName = getRefetchableQueryParentFragmentName(
-          state,
-          node.metadata
-        );
-        if (refetchableFragmentName !== null) {
-          state.runtimeImports.add("FragmentReference");
         }
         const nodes = [];
         if (state.runtimeImports.size) {
@@ -1077,25 +1069,6 @@ function getEnumDefinitions(
       )
     );
   });
-}
-
-// If it's a @refetchable fragment, we generate the $fragmentRef in generated
-// query, and import it in the fragment to avoid circular dependencies
-function getRefetchableQueryParentFragmentName(
-  state: State,
-  metadata: Metadata
-): string | null {
-  if (
-    (metadata && !metadata.isRefetchableQuery) ||
-    (!state.useHaste && !state.useSingleArtifactDirectory)
-  ) {
-    return null;
-  }
-  const derivedFrom = metadata && metadata.derivedFrom;
-  if (derivedFrom !== null && typeof derivedFrom === "string") {
-    return derivedFrom;
-  }
-  return null;
 }
 
 function stringLiteralTypeAnnotation(name: string): ts.TypeNode {
