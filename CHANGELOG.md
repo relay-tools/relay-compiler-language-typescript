@@ -1,3 +1,15 @@
+# v12.0.2 (Wed May 06 2020)
+
+#### 🐛  Bug Fix
+
+- fix(TypeScriptGenerator): omit FragmentReference from refetchable query [#185](https://github.com/relay-tools/relay-compiler-language-typescript/pull/185) ([@enisdenjo](https://github.com/enisdenjo))
+
+#### Authors: 1
+
+- Denis Badurina ([@enisdenjo](https://github.com/enisdenjo))
+
+---
+
 # v12.0.1 (Wed Apr 22 2020)
 
 #### 🐛  Bug Fix
