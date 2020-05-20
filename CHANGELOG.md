@@ -1,3 +1,15 @@
+# v12.0.3 (Wed May 20 2020)
+
+#### 🐛  Bug Fix
+
+- Fix typo in README.md [#188](https://github.com/relay-tools/relay-compiler-language-typescript/pull/188) ([@nickdbush](https://github.com/nickdbush))
+
+#### Authors: 1
+
+- Nicholas Bush ([@nickdbush](https://github.com/nickdbush))
+
+---
+
 # v12.0.2 (Wed May 06 2020)
 
 #### 🐛  Bug Fix
