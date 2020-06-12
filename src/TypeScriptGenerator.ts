@@ -183,6 +183,7 @@ function selectionsToAST(
   fragmentTypeName?: string
 ) {
   const baseFields = new Map<string, Selection>();
+  const baseFragments = new Map<string, Selection>();
 
   const byConcreteType: { [type: string]: Selection[] } = {};
 
@@ -192,6 +193,8 @@ function selectionsToAST(
     if (concreteType) {
       byConcreteType[concreteType] = byConcreteType[concreteType] || [];
       byConcreteType[concreteType].push(selection);
+    } else if (selection.ref) {
+      baseFragments.set(selection.ref, selection);
     } else {
       const previousSel = baseFields.get(selection.key);
 
@@ -219,6 +222,9 @@ function selectionsToAST(
       const concreteTypeSelectionsNames = concreteTypeSelections.map(
         selection => selection.schemaName
       );
+      const concreteFragmentsNames = concreteTypeSelections.map(
+        selection => selection.ref
+      );
 
       types.push(
         groupRefs([
@@ -226,6 +232,9 @@ function selectionsToAST(
           ...Array.from(baseFields.values()).filter(
             selection =>
               !concreteTypeSelectionsNames.includes(selection.schemaName)
+          ),
+          ...Array.from(baseFragments.values()).filter(
+            selection => !concreteFragmentsNames.includes(selection.ref)
           ),
           ...concreteTypeSelections
         ]).map(selection => {
@@ -251,8 +260,8 @@ function selectionsToAST(
     // If we don't know which types are left we set the value to "%other",
     // otherwise return a union of type names.
     if (!possibleTypesLeft || possibleTypesLeft.length > 0) {
-      types.push(
-        Array.from(typenameAliases).map(typenameAlias => {
+      types.push([
+        ...Array.from(typenameAliases).map(typenameAlias => {
           const otherProp = objectTypeProperty(
             typenameAlias,
             possibleTypesLeft
@@ -277,8 +286,22 @@ function selectionsToAST(
           );
 
           return otherPropWithComment;
-        })
-      );
+        }),
+        ...(baseFragments.size > 0
+          ? objectTypeProperty(
+              FRAGMENT_REFS,
+              ts.createTypeReferenceNode(FRAGMENT_REFS_TYPE_NAME, [
+                ts.createUnionTypeNode(
+                  Array.from(baseFragments.values()).map(selection =>
+                    ts.createLiteralTypeNode(
+                      ts.createStringLiteral(selection.ref!)
+                    )
+                  )
+                )
+              ])
+            )
+          : [])
+      ]);
     }
   } else {
     let selectionMap = selectionsToMap(Array.from(baseFields.values()));
@@ -295,25 +318,27 @@ function selectionsToAST(
       );
     }
 
-    const selectionMapValues = groupRefs(Array.from(selectionMap.values())).map(
-      sel =>
-        isTypenameSelection(sel) &&
-        (sel.concreteType ||
-          (nodeType && schema.isUnion(schema.getNullableType(nodeType))))
-          ? makeProp(
-              schema,
-              {
-                ...sel,
-                conditional: false
-              },
-              state,
-              unmasked,
-              sel.concreteType,
-              nodeType && schema.isUnion(schema.getNullableType(nodeType))
-                ? schema.getNullableType(nodeType)
-                : undefined
-            )
-          : makeProp(schema, sel, state, unmasked)
+    const selectionMapValues = groupRefs([
+      ...Array.from(baseFragments.values()),
+      ...Array.from(selectionMap.values())
+    ]).map(sel =>
+      isTypenameSelection(sel) &&
+      (sel.concreteType ||
+        (nodeType && schema.isUnion(schema.getNullableType(nodeType))))
+        ? makeProp(
+            schema,
+            {
+              ...sel,
+              conditional: false
+            },
+            state,
+            unmasked,
+            sel.concreteType,
+            nodeType && schema.isUnion(schema.getNullableType(nodeType))
+              ? schema.getNullableType(nodeType)
+              : undefined
+          )
+        : makeProp(schema, sel, state, unmasked)
     );
 
     types.push(selectionMapValues);
