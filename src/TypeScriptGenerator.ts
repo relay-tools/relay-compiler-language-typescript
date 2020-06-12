@@ -215,10 +215,19 @@ function selectionsToAST(
     const typenameAliases = new Set<string>();
 
     for (const concreteType in byConcreteType) {
+      const concreteTypeSelections = byConcreteType[concreteType];
+      const concreteTypeSelectionsNames = concreteTypeSelections.map(
+        selection => selection.schemaName
+      );
+
       types.push(
         groupRefs([
-          ...Array.from(baseFields.values()),
-          ...byConcreteType[concreteType]
+          // Deduplicate any fields also selected on the concrete type.
+          ...Array.from(baseFields.values()).filter(
+            selection =>
+              !concreteTypeSelectionsNames.includes(selection.schemaName)
+          ),
+          ...concreteTypeSelections
         ]).map(selection => {
           if (selection.schemaName === "__typename") {
             typenameAliases.add(selection.key);
