@@ -446,9 +446,7 @@ export type UnionTypeTestResponse = {
         readonly __typename: "FakeNode";
         readonly id: string;
     } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
+        readonly __typename: "NonNode";
     }) | null;
 };
 export type UnionTypeTest = {
@@ -1684,7 +1682,7 @@ export type RelayClientIDFieldQueryResponse = {
         readonly id: string;
         readonly commentBody?: {
             readonly __id: string;
-            readonly __typename: string;
+            readonly __typename: "PlainCommentBody" | "MarkdownCommentBody";
             readonly text?: {
                 readonly __id: string;
                 readonly __typename: string;
@@ -2680,9 +2678,7 @@ export type UnionTypeTestResponse = {
         readonly __typename: "FakeNode";
         readonly id: string;
     } | {
-        /*This will never be '%other', but we need some
-        value in case none of the concrete values match.*/
-        readonly __typename: "%other";
+        readonly __typename: "NonNode";
     }) | null;
 };
 export type UnionTypeTest = {
@@ -3918,7 +3914,7 @@ export type RelayClientIDFieldQueryResponse = {
         readonly id: string;
         readonly commentBody?: {
             readonly __id: string;
-            readonly __typename: string;
+            readonly __typename: "PlainCommentBody" | "MarkdownCommentBody";
             readonly text?: {
                 readonly __id: string;
                 readonly __typename: string;
