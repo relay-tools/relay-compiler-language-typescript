@@ -168,11 +168,13 @@ function makeProp(
 const isTypenameSelection = (selection: Selection) =>
   selection.schemaName === "__typename";
 
+const isFragmentSelection = (selection: Selection) => !!selection.ref;
+
 const hasTypenameSelection = (selections: Selection[]) =>
   selections.some(isTypenameSelection);
 
-const onlySelectsTypename = (selections: Selection[]) =>
-  selections.every(isTypenameSelection);
+const onlySelectsFragments = (selections: Selection[]) =>
+  selections.every(isFragmentSelection);
 
 function selectionsToAST(
   schema: Schema,
@@ -188,7 +190,13 @@ function selectionsToAST(
   const byConcreteType: { [type: string]: Selection[] } = {};
 
   flattenArray(selections).forEach(selection => {
-    const { concreteType } = selection;
+    let { concreteType } = selection;
+
+    // If the concrete type matches the node type, we can add this to the base fields
+    // and fragments instead.
+    if (nodeType && concreteType && nodeType.name === concreteType) {
+      concreteType = undefined;
+    }
 
     if (concreteType) {
       byConcreteType[concreteType] = byConcreteType[concreteType] || [];
@@ -205,16 +213,28 @@ function selectionsToAST(
     }
   });
 
-  const types: ts.PropertySignature[][] = [];
+  // If there are any concrete types that only select fragments, move those
+  // fragments to the base fragments instead.
+  for (const concreteType in byConcreteType) {
+    const concreteTypeSelections = byConcreteType[concreteType];
+    if (onlySelectsFragments(concreteTypeSelections)) {
+      concreteTypeSelections.forEach(selection =>
+        baseFragments.set(selection.ref!, selection)
+      );
 
-  if (
+      delete byConcreteType[concreteType];
+    }
+  }
+
+  const concreteTypes: ts.PropertySignature[][] = [];
+  const typeFieldsPresentForUnion =
     Object.keys(byConcreteType).length > 0 &&
-    onlySelectsTypename(Array.from(baseFields.values())) &&
     (hasTypenameSelection(Array.from(baseFields.values())) ||
       Object.keys(byConcreteType).every(type =>
         hasTypenameSelection(byConcreteType[type])
-      ))
-  ) {
+      ));
+
+  if (typeFieldsPresentForUnion) {
     const typenameAliases = new Set<string>();
 
     for (const concreteType in byConcreteType) {
@@ -222,19 +242,14 @@ function selectionsToAST(
       const concreteTypeSelectionsNames = concreteTypeSelections.map(
         selection => selection.schemaName
       );
-      const concreteFragmentsNames = concreteTypeSelections.map(
-        selection => selection.ref
-      );
 
-      types.push(
+      concreteTypes.push(
         groupRefs([
           // Deduplicate any fields also selected on the concrete type.
           ...Array.from(baseFields.values()).filter(
             selection =>
+              isTypenameSelection(selection) &&
               !concreteTypeSelectionsNames.includes(selection.schemaName)
-          ),
-          ...Array.from(baseFragments.values()).filter(
-            selection => !concreteFragmentsNames.includes(selection.ref)
           ),
           ...concreteTypeSelections
         ]).map(selection => {
@@ -264,8 +279,8 @@ function selectionsToAST(
     // If we don't know which types are left we set the value to "%other",
     // otherwise return a union of type names.
     if (!possibleTypesLeft || possibleTypesLeft.length > 0) {
-      types.push([
-        ...Array.from(typenameAliases).map(typenameAlias => {
+      concreteTypes.push(
+        Array.from(typenameAliases).map(typenameAlias => {
           const otherProp = objectTypeProperty(
             typenameAlias,
             possibleTypesLeft
@@ -290,26 +305,13 @@ function selectionsToAST(
           );
 
           return otherPropWithComment;
-        }),
-        ...(baseFragments.size > 0
-          ? objectTypeProperty(
-              FRAGMENT_REFS,
-              ts.createTypeReferenceNode(FRAGMENT_REFS_TYPE_NAME, [
-                ts.createUnionTypeNode(
-                  Array.from(baseFragments.values()).map(selection =>
-                    ts.createLiteralTypeNode(
-                      ts.createStringLiteral(selection.ref!)
-                    )
-                  )
-                )
-              ])
-            )
-          : [])
-      ]);
+        })
+      );
     }
-  } else {
-    let selectionMap = selectionsToMap(Array.from(baseFields.values()));
+  }
 
+  let selectionMap = selectionsToMap(Array.from(baseFields.values()));
+  if (!typeFieldsPresentForUnion) {
     for (const concreteType in byConcreteType) {
       selectionMap = mergeSelections(
         selectionMap,
@@ -321,53 +323,58 @@ function selectionsToAST(
         )
       );
     }
+  }
 
-    const selectionMapValues = groupRefs([
+  const baseTypeProps = groupRefs(
+    [
       ...Array.from(baseFragments.values()),
       ...Array.from(selectionMap.values())
-    ]).map(sel =>
-      isTypenameSelection(sel) &&
-      (sel.concreteType ||
-        (nodeType && schema.isUnion(schema.getNullableType(nodeType))))
-        ? makeProp(
-            schema,
-            {
-              ...sel,
-              conditional: false
-            },
-            state,
-            unmasked,
-            sel.concreteType,
-            nodeType && schema.isUnion(schema.getNullableType(nodeType))
-              ? schema.getNullableType(nodeType)
-              : undefined
-          )
-        : makeProp(schema, sel, state, unmasked)
-    );
+    ].filter(
+      selection => !typeFieldsPresentForUnion || !isTypenameSelection(selection)
+    )
+  ).map(sel =>
+    isTypenameSelection(sel) &&
+    (sel.concreteType ||
+      (nodeType && schema.isUnion(schema.getNullableType(nodeType))))
+      ? makeProp(
+          schema,
+          {
+            ...sel,
+            conditional: false
+          },
+          state,
+          unmasked,
+          sel.concreteType,
+          nodeType && schema.isUnion(schema.getNullableType(nodeType))
+            ? schema.getNullableType(nodeType)
+            : undefined
+        )
+      : makeProp(schema, sel, state, unmasked)
+  );
 
-    types.push(selectionMapValues);
+  if (fragmentTypeName) {
+    baseTypeProps.push(
+      objectTypeProperty(
+        REF_TYPE,
+        ts.createLiteralTypeNode(ts.createStringLiteral(fragmentTypeName))
+      )
+    );
   }
 
-  const typeElements = types.map(props => {
-    if (fragmentTypeName) {
-      props.push(
-        objectTypeProperty(
-          REF_TYPE,
-          ts.createLiteralTypeNode(ts.createStringLiteral(fragmentTypeName))
-        )
-      );
-    }
-
-    return unmasked
+  const propsToObject = (props: ts.PropertySignature[]) =>
+    unmasked
       ? ts.createTypeLiteralNode(props)
       : exactObjectTypeAnnotation(props);
-  });
 
-  if (typeElements.length === 1) {
-    return typeElements[0];
+  const baseType = propsToObject(baseTypeProps);
+  if (concreteTypes.length === 0) {
+    return baseType;
   }
 
-  return ts.createUnionTypeNode(typeElements);
+  const unionType = ts.createUnionTypeNode(concreteTypes.map(propsToObject));
+  return baseTypeProps.length > 0
+    ? ts.createIntersectionTypeNode([unionType, baseType])
+    : unionType;
 }
 
 // We don't have exact object types in typescript.
