@@ -249,12 +249,16 @@ function selectionsToAST(
     // It might be some other type then the listed concrete types. We try to
     // figure out which types remain here.
     let possibleTypesLeft: TypeID[] | null = null;
-    const innerType = nodeType !== null ? schema.getRawType(nodeType) : null;
-    if (innerType !== null && schema.isUnion(innerType)) {
+    const innerType =
+      nodeType !== null ? schema.getNullableType(nodeType) : null;
+    if (
+      innerType !== null &&
+      (schema.isUnion(innerType) || schema.isInterface(innerType))
+    ) {
       const typesSeen = Object.keys(byConcreteType);
-      possibleTypesLeft = schema
-        .getUnionTypes(innerType)
-        .filter(type => !typesSeen.includes(type.name));
+      possibleTypesLeft = Array.from(schema.getPossibleTypes(innerType)).filter(
+        type => !typesSeen.includes(type.name)
+      );
     }
 
     // If we don't know which types are left we set the value to "%other",
