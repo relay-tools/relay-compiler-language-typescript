@@ -38,7 +38,7 @@
     "prettier": "prettier --write '{src,types,test}/**/*.ts'",
     "prepublish": "npm run build",
     "relay": "node bin/relay-compiler.js --schema test/schema.graphql --src test/ --outputDir __generated__",
-    "sync-fixtures": "rsync -avh --delete --stats --progress ../relay/packages/relay-compiler/language/javascript/__tests__/fixtures/flow-generator/**/*.graphql test/fixtures/type-generator",
+    "sync-fixtures": "ts-node ./syncFixture.ts",
     "test": "npm run type-check && jest",
     "watch": "concurrently 'tsc --watch' 'chokidar \"lib/**/*.js\" -c \"yalc publish --force --push\"'",
     "type-check": "tsc --noEmit --pretty"
