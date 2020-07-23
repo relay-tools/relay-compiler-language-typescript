@@ -35,11 +35,6 @@ const souceFilePaths = [
     cwd:
       "../relay/packages/relay-compiler/language/javascript/__tests__/fixtures/flow-generator/useHaste",
     pattern: "*.graphql"
-  },
-  {
-    cwd:
-      "../relay/packages/relay-compiler/codegen/__tests__/fixtures/compileRelayArtifacts",
-    pattern: "append-edge.graphql"
   }
 ];
 
