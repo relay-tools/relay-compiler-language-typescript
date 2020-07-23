@@ -43,4 +43,4 @@ const souceFilePaths = [
   }
 ];
 
-syncFixtures({ souceFilePaths, dest: "./teste" });
+syncFixtures({ souceFilePaths, dest: "./test/fixtures/type-generator" });
