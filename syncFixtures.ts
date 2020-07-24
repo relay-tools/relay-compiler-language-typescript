@@ -16,13 +16,14 @@ const syncFixtures = ({ souceFilePaths, dest }: SyncFixturesType) => {
       .sync(pattern, {
         cwd
       })
-      .forEach(file => {
+      .forEach(filePath => {
+        const file = getFileNameFromPath(filePath);
         try {
           fs.copyFileSync(
-            path.join(__dirname, `${cwd}/${file}`),
+            path.join(__dirname, `${cwd}/${filePath}`),
             `${dest}/${file}`
           );
-          console.log(`${file} was copied`);
+          console.log(`${filePath} was copied`);
         } catch (error) {
           console.error(error);
         }
@@ -30,11 +31,13 @@ const syncFixtures = ({ souceFilePaths, dest }: SyncFixturesType) => {
   });
 };
 
+const getFileNameFromPath = (filePath: string) => filePath.split("/").pop();
+
 const souceFilePaths = [
   {
     cwd:
-      "../relay/packages/relay-compiler/language/javascript/__tests__/fixtures/flow-generator/useHaste",
-    pattern: "*.graphql"
+      "../relay/packages/relay-compiler/language/javascript/__tests__/fixtures/flow-generator",
+    pattern: "**/*.graphql"
   }
 ];
 
