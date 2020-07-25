@@ -21,9 +21,18 @@ import { TodoApp_viewer } from "../__relay_artifacts__/TodoApp_viewer.graphql"
 import { AddTodoMutation } from "../__relay_artifacts__/AddTodoMutation.graphql"
 
 const mutation = graphql`
-  mutation AddTodoMutation($input: AddTodoInput!) {
+  mutation AddTodoMutation($input: AddTodoInput!, $connections: [String!]!, $append: Boolean! = true) {
     addTodo(input: $input) {
-      todoEdge {
+      todoEdge @include(if: $append) @appendEdge(connections: $connections) {
+        __typename
+        cursor
+        node {
+          complete
+          id
+          text
+        }
+      }
+      todoEdge @skip(if: $append) @prependEdge(connections: $connections) {
         __typename
         cursor
         node {
@@ -52,7 +61,7 @@ function sharedUpdater(
 
 let tempID = 0
 
-function commit(environment: Environment, text: string, user: TodoApp_viewer) {
+function commit(environment: Environment, text: string, user: TodoApp_viewer, append: boolean) {
   return commitMutation<AddTodoMutation>(environment, {
     mutation,
     variables: {
@@ -60,12 +69,8 @@ function commit(environment: Environment, text: string, user: TodoApp_viewer) {
         text,
         clientMutationId: (tempID++).toString(),
       },
-    },
-    updater: store => {
-      const payload = store.getRootField("addTodo")
-      if (!payload) throw new Error("assertion failed")
-      const newEdge = payload.getLinkedRecord("todoEdge")
-      sharedUpdater(store, user, newEdge)
+      append,
+      connections: [`client:${user.id}:__TodoList_todos_connection`]
     },
     optimisticUpdater: store => {
       const id = "client:newTodo:" + tempID++
