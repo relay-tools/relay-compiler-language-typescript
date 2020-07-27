@@ -1,3 +1,15 @@
+# v12.0.4 (Fri Jul 24 2020)
+
+#### 🐛  Bug Fix
+
+- Make syncFixtures flexible to get fixtures from other paths [#197](https://github.com/relay-tools/relay-compiler-language-typescript/pull/197) ([@thicodes](https://github.com/thicodes))
+
+#### Authors: 1
+
+- [@thicodes](https://github.com/thicodes)
+
+---
+
 # v12.0.3 (Wed May 20 2020)
 
 #### 🐛  Bug Fix
