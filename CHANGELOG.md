@@ -1,3 +1,16 @@
+# v13.0.0 (Mon Jul 27 2020)
+
+#### 💥  Breaking Change
+
+- Upgrade to support relay v10.0.1 [#199](https://github.com/relay-tools/relay-compiler-language-typescript/pull/199) ([@thicodes](https://github.com/thicodes) [@maraisr](https://github.com/maraisr))
+
+#### Authors: 2
+
+- [@thicodes](https://github.com/thicodes)
+- Marais Rossouw ([@maraisr](https://github.com/maraisr))
+
+---
+
 # v12.0.4 (Fri Jul 24 2020)
 
 #### 🐛  Bug Fix
