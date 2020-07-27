@@ -1,6 +1,6 @@
 {
   "name": "relay-compiler-language-typescript",
-  "version": "12.0.4",
+  "version": "13.0.0",
   "description": "A language plugin for Relay that adds TypeScript support, including emitting type definitions.",
   "keywords": [
     "graphql",
@@ -27,10 +27,10 @@
       "email": "eloy.de.enige@gmail.com"
     }
   ],
+  "main": "lib/index.js",
   "files": [
     "lib"
   ],
-  "main": "lib/index.js",
   "scripts": {
     "build": "rm -rf lib && tsc",
     "lint": "tslint -c tslint.json --project tsconfig.json",
@@ -40,8 +40,8 @@
     "relay": "node bin/relay-compiler.js --schema test/schema.graphql --src test/ --outputDir __generated__",
     "sync-fixtures": "ts-node ./syncFixtures.ts",
     "test": "npm run type-check && jest",
-    "watch": "concurrently 'tsc --watch' 'chokidar \"lib/**/*.js\" -c \"yalc publish --force --push\"'",
-    "type-check": "tsc --noEmit --pretty"
+    "type-check": "tsc --noEmit --pretty",
+    "watch": "concurrently 'tsc --watch' 'chokidar \"lib/**/*.js\" -c \"yalc publish --force --push\"'"
   },
   "husky": {
     "hooks": {
@@ -59,6 +59,7 @@
       "git add"
     ]
   },
+  "prettier": {},
   "jest": {
     "moduleFileExtensions": [
       "js",
@@ -92,9 +93,9 @@
     "jest-cli": "^24.8.0",
     "lint-staged": "^9.2.1",
     "prettier": "^1.19.1",
-    "relay-compiler": "^10.0.0",
-    "relay-runtime": "^10.0.0",
-    "relay-test-utils-internal": "^10.0.0",
+    "relay-compiler": "^10.0.1",
+    "relay-runtime": "^10.0.1",
+    "relay-test-utils-internal": "^10.0.1",
     "ts-jest": "^22.0.1",
     "ts-node": "^8.10.2",
     "tslint": "^5.18.0",
@@ -110,6 +111,5 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
-  },
-  "prettier": {}
+  }
 }

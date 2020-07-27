@@ -5432,7 +5432,7 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.11.0.tgz#b85dfecd48ad1ce469ff558a882ca8e8313928fa"
   integrity sha512-gbBVYR2p8mnriqAwWx9LbuUrShnAuSCNnuPGyc7GJrMVQtPDAh8iLpv7FRuMPFb56KkaVZIYSz1PrjI9q0QPCw==
 
-react-relay@0.0.0-experimental-8058ef82:
+react-relay@^0.0.0-experimental-8058ef82:
   version "0.0.0-experimental-8058ef82"
   resolved "https://registry.yarnpkg.com/react-relay/-/react-relay-0.0.0-experimental-8058ef82.tgz#16b9ce15ee9563a30ef69563773d6933464bf630"
   integrity sha512-YZy/k397brMlOxxdxgA1i8LMFCEB4PgHk2pFw4vSa2cd/9PmKDnlPbYp6Y6u6aW7FY/mybn5qSwjwF8vnxJhIQ==

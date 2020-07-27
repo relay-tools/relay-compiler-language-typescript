@@ -21,7 +21,7 @@
     "prop-types": "^15.6.2",
     "react": "0.0.0-experimental-f42431abe",
     "react-dom": "0.0.0-experimental-f42431abe",
-    "react-relay": "0.0.0-experimental-8058ef82",
+    "react-relay": "^0.0.0-experimental-8058ef82",
     "relay-runtime": "^10.0.1",
     "todomvc-app-css": "^2.1.0",
     "todomvc-common": "^1.0.3",
