@@ -19,6 +19,8 @@ import { TodoListFooter_viewer$key } from "../__relay_artifacts__/TodoListFooter
 
 interface Props {
   viewer: TodoListFooter_viewer$key
+  onSetAppend: () => void;
+  append: boolean;
 }
 
 const TodoListFooter = (props: Props) => {
@@ -63,6 +65,10 @@ const TodoListFooter = (props: Props) => {
         <strong>{numRemainingTodos}</strong> item
         {numRemainingTodos === 1 ? "" : "s"} left
       </span>
+      <label>
+        <input type="checkbox" value={props.append} onChange={props.onSetAppend}/>
+        Append
+      </label>
       {numCompletedTodos > 0 && (
         <button
           className="clear-completed"

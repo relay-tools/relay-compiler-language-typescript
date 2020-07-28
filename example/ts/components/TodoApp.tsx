@@ -29,12 +29,23 @@ interface Props {
   viewer: TodoApp_viewer
 }
 
-class TodoApp extends React.Component<Props> {
+interface State {
+  append: boolean;
+}
+
+class TodoApp extends React.Component<Props, State> {
+  state = {
+    append: false
+  };
+
+  onSetAppend = () => this.setState(({ append }) => ({ append: !append }));
+
   _handleTextInputSave = (text: string) => {
     AddTodoMutation.commit(
       this.props.relay.environment,
       text,
       this.props.viewer,
+      this.state.append
     );
   };
   render() {
@@ -54,7 +65,7 @@ class TodoApp extends React.Component<Props> {
             />
           </header>
           <TodoList viewer={this.props.viewer} />
-          {hasTodos && <TodoListFooter viewer={this.props.viewer} />}
+          {hasTodos && <TodoListFooter viewer={this.props.viewer} onSetAppend={this.onSetAppend} append={this.state.append}/>}
         </section>
         <footer className="info">
           <p>

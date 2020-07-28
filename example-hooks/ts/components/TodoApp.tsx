@@ -26,6 +26,7 @@ interface Props {
 
 const TodoApp = (props: Props) => {
   const environment = useRelayEnvironment()
+  const [append, setAppend] = React.useState<boolean>(false);
 
   const viewer = useFragment(
     graphql`
@@ -40,10 +41,12 @@ const TodoApp = (props: Props) => {
   )
 
   const handleTextInputSave = (text: string) => {
-    AddTodoMutation.commit(environment, text, viewer)
+    AddTodoMutation.commit(environment, text, viewer, append)
   }
 
   const hasTodos = (viewer.totalCount || 0) > 0
+
+  const onSetAppend = () => setAppend(prev => !prev);
 
   return (
     <div>
@@ -58,7 +61,7 @@ const TodoApp = (props: Props) => {
           />
         </header>
         <TodoList viewer={viewer} />
-        {hasTodos && <TodoListFooter viewer={viewer} />}
+        {hasTodos && <TodoListFooter viewer={viewer} onSetAppend={onSetAppend} append={append}/>}
       </section>
       <footer className="info">
         <p>Double-click to edit a todo</p>
