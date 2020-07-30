@@ -15,12 +15,15 @@ import RemoveCompletedTodosMutation from "../mutations/RemoveCompletedTodosMutat
 import React from "react"
 import { graphql, useRelayEnvironment, useFragment } from "react-relay/hooks"
 
-import { TodoListFooter_viewer$key } from "../__relay_artifacts__/TodoListFooter_viewer.graphql"
+import {
+  TodoListFooter_viewer$key,
+  TodoListFooter_viewer,
+} from "../__relay_artifacts__/TodoListFooter_viewer.graphql"
 
 interface Props {
   viewer: TodoListFooter_viewer$key
-  onSetAppend: () => void;
-  append: boolean;
+  onSetAppend: () => void
+  append: boolean
 }
 
 const TodoListFooter = (props: Props) => {

@@ -5,7 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Todo_viewer = {
     readonly id: string;
-    readonly totalCount: number | null;
+    readonly totalCount: number;
     readonly completedCount: number | null;
     readonly " $refType": "Todo_viewer";
 };

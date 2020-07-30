@@ -26,7 +26,7 @@ interface Props {
 
 const TodoApp = (props: Props) => {
   const environment = useRelayEnvironment()
-  const [append, setAppend] = React.useState<boolean>(false);
+  const [append, setAppend] = React.useState<boolean>(false)
 
   const viewer = useFragment(
     graphql`
@@ -46,7 +46,7 @@ const TodoApp = (props: Props) => {
 
   const hasTodos = (viewer.totalCount || 0) > 0
 
-  const onSetAppend = () => setAppend(prev => !prev);
+  const onSetAppend = () => setAppend(prev => !prev)
 
   return (
     <div>
