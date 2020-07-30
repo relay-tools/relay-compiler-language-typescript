@@ -44,7 +44,7 @@ class TodoListFooter extends React.Component<Props> {
           {numRemainingTodos === 1 ? "" : "s"} left
         </span>
         <label>
-          <input type="checkbox" value={this.props.append} onChange={this.props.onSetAppend}/>
+          <input type="checkbox" checked={this.props.append} onChange={this.props.onSetAppend}/>
           Append
         </label>
         {numCompletedTodos > 0 && (
