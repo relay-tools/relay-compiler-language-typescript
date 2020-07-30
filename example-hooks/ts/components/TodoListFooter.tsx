@@ -66,7 +66,11 @@ const TodoListFooter = (props: Props) => {
         {numRemainingTodos === 1 ? "" : "s"} left
       </span>
       <label>
-        <input type="checkbox" value={props.append} onChange={props.onSetAppend}/>
+        <input
+          type="checkbox"
+          checked={props.append}
+          onChange={props.onSetAppend}
+        />
         Append
       </label>
       {numCompletedTodos > 0 && (
