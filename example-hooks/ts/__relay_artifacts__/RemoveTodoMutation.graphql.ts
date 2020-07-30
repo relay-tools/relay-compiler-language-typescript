@@ -14,7 +14,7 @@ export type RemoveTodoMutationResponse = {
         readonly deletedTodoId: string | null;
         readonly viewer: {
             readonly completedCount: number | null;
-            readonly totalCount: number;
+            readonly totalCount: number | null;
         } | null;
     } | null;
 };

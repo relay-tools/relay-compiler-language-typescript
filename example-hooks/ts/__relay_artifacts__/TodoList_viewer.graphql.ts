@@ -14,7 +14,7 @@ export type TodoList_viewer = {
         } | null> | null;
     } | null;
     readonly id: string;
-    readonly totalCount: number;
+    readonly totalCount: number | null;
     readonly completedCount: number | null;
     readonly " $fragmentRefs": FragmentRefs<"Todo_viewer">;
     readonly " $refType": "TodoList_viewer";

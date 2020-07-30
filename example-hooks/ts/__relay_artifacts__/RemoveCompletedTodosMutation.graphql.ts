@@ -13,7 +13,7 @@ export type RemoveCompletedTodosMutationResponse = {
         readonly deletedTodoIds: ReadonlyArray<string | null> | null;
         readonly viewer: {
             readonly completedCount: number | null;
-            readonly totalCount: number;
+            readonly totalCount: number | null;
         } | null;
     } | null;
 };

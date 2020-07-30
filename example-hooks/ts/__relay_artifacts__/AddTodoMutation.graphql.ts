@@ -24,7 +24,7 @@ export type AddTodoMutationResponse = {
         } | null;
         readonly viewer: {
             readonly id: string;
-            readonly totalCount: number;
+            readonly totalCount: number | null;
         } | null;
     } | null;
 };

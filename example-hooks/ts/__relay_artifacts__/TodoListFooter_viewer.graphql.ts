@@ -14,7 +14,7 @@ export type TodoListFooter_viewer = {
             } | null;
         } | null> | null;
     } | null;
-    readonly totalCount: number;
+    readonly totalCount: number | null;
     readonly " $refType": "TodoListFooter_viewer";
 };
 export type TodoListFooter_viewer$data = TodoListFooter_viewer;
