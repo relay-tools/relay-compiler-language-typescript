@@ -24,6 +24,7 @@ export const formatterFactory = (
   }
   return `/* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 ${hash ? `/* ${hash} */\n` : ""}
 ${documentTypeImport}
 ${typeText || ""}
