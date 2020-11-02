@@ -1,3 +1,16 @@
+# v13.0.2 (Mon Nov 02 2020)
+
+#### 🐛  Bug Fix
+
+- Bump chokidar-cli from 2.0.0 to 2.1.0 [#209](https://github.com/relay-tools/relay-compiler-language-typescript/pull/209) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- [Security] Bump acorn from 5.7.3 to 5.7.4 [#206](https://github.com/relay-tools/relay-compiler-language-typescript/pull/206) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+
+#### Authors: 1
+
+- [@dependabot-preview[bot]](https://github.com/dependabot-preview[bot])
+
+---
+
 # v13.0.1 (Tue Aug 04 2020)
 
 #### 🐛  Bug Fix
