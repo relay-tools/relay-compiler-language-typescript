@@ -78,7 +78,7 @@
   "devDependencies": {
     "@artsy/auto-config": "^1.0.0",
     "@types/graphql": "^14.2.3",
-    "@types/invariant": "2.2.30",
+    "@types/invariant": "2.2.34",
     "@types/jest": "^24.0.17",
     "@types/node": "8.10.51",
     "@types/relay-compiler": "^8.0.0",
