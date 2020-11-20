@@ -781,15 +781,10 @@
     graphql "^14.5.3"
     typescript "^3.0.0"
 
-"@types/relay-runtime@*":
-  version "8.0.6"
-  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-8.0.6.tgz#931c640f9a37b4c328aaa4e5159e0c85e5ffbbfa"
-  integrity sha512-05MJfbE/1TAz4ttx9a9x9xjaOe0KAYymWo/FcqGh+wRvz5ZvRdRPEssmIwcNsdJZVWTB3R/VBAYx6IvXMHIPNQ==
-
-"@types/relay-runtime@^10.0.1":
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-10.0.1.tgz#0fca4e922e77a29772d325f0eb21fc461cfd7f1f"
-  integrity sha512-7JTrA3QR3rSgLVkMjFjmkUkGHKAiNZCXOX46okT+20kiuxfg6Fz/q90ukVAYTXLfbFHXWQQRZZ69HOdiR5IFGQ==
+"@types/relay-runtime@*", "@types/relay-runtime@^10.0.1":
+  version "10.1.1"
+  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-10.1.1.tgz#39a58a430c29d319e8f218c0514e8452bc75b6ae"
+  integrity sha512-SDuprmRVzjf0A6leKKCtxTjjiOa/hJ4sHZBDEK86z3heuyAM8brJ/T7h/bT+D/l86wePMen88i++CamgNbxPEw==
 
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
