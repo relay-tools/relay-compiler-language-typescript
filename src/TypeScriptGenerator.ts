@@ -1168,7 +1168,7 @@ function getDataTypeName(name: string): string {
 }
 
 // Should match FLOW_TRANSFORMS array
-// https://github.com/facebook/relay/blob/v6.0.0/packages/relay-compiler/language/javascript/RelayFlowGenerator.js#L621-L627
+// https://github.com/facebook/relay/blob/v10.0.0/packages/relay-compiler/language/javascript/RelayFlowGenerator.js#L982
 export const transforms: TypeGenerator["transforms"] = [
   RelayDirectiveTransform.transform,
   MaskTransform.transform,

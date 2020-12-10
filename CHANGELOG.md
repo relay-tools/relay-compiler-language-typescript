@@ -1,3 +1,66 @@
+# v13.0.2 (Mon Nov 02 2020)
+
+#### 🐛  Bug Fix
+
+- Bump chokidar-cli from 2.0.0 to 2.1.0 [#209](https://github.com/relay-tools/relay-compiler-language-typescript/pull/209) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- [Security] Bump acorn from 5.7.3 to 5.7.4 [#206](https://github.com/relay-tools/relay-compiler-language-typescript/pull/206) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+
+#### Authors: 1
+
+- [@dependabot-preview[bot]](https://github.com/dependabot-preview[bot])
+
+---
+
+# v13.0.1 (Tue Aug 04 2020)
+
+#### 🐛  Bug Fix
+
+- Disable ts-checks on output files [#194](https://github.com/relay-tools/relay-compiler-language-typescript/pull/194) ([@AnotherHermit](https://github.com/AnotherHermit))
+- Update fixtures and tests with relay-compiler v10.0.0 [#196](https://github.com/relay-tools/relay-compiler-language-typescript/pull/196) (root@DESKTOP-R4RQUN7.localdomain [@wadamek65](https://github.com/wadamek65))
+
+#### ⚠️  Pushed to master
+
+- Revert "stash demo prep changes"  ([@alloy](https://github.com/alloy))
+- [examples] Run webpack in dev mode  ([@alloy](https://github.com/alloy))
+- [examples] More package cleanup and type-fixing  ([@alloy](https://github.com/alloy))
+- stash demo prep changes  ([@alloy](https://github.com/alloy))
+- [example-hooks] Fix checkbox not being checked  ([@alloy](https://github.com/alloy))
+- [example-hooks] Fix incorrect @typings/relay-runtime being loaded  ([@alloy](https://github.com/alloy))
+
+#### Authors: 4
+
+- [@AnotherHermit](https://github.com/AnotherHermit)
+- Eloy Durán ([@alloy](https://github.com/alloy))
+- root (root@DESKTOP-R4RQUN7.localdomain)
+- Wojciech Adamek ([@wadamek65](https://github.com/wadamek65))
+
+---
+
+# v13.0.0 (Mon Jul 27 2020)
+
+#### 💥  Breaking Change
+
+- Upgrade to support relay v10.0.1 [#199](https://github.com/relay-tools/relay-compiler-language-typescript/pull/199) ([@thicodes](https://github.com/thicodes) [@maraisr](https://github.com/maraisr))
+
+#### Authors: 2
+
+- [@thicodes](https://github.com/thicodes)
+- Marais Rossouw ([@maraisr](https://github.com/maraisr))
+
+---
+
+# v12.0.4 (Fri Jul 24 2020)
+
+#### 🐛  Bug Fix
+
+- Make syncFixtures flexible to get fixtures from other paths [#197](https://github.com/relay-tools/relay-compiler-language-typescript/pull/197) ([@thicodes](https://github.com/thicodes))
+
+#### Authors: 1
+
+- [@thicodes](https://github.com/thicodes)
+
+---
+
 # v12.0.3 (Wed May 20 2020)
 
 #### 🐛  Bug Fix

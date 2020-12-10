@@ -21,6 +21,8 @@ import { Environment } from "relay-runtime";
 interface Props {
   relay: RelayProp;
   viewer: TodoListFooter_viewer;
+  append: boolean;
+  onSetAppend: () => void;
 }
 
 class TodoListFooter extends React.Component<Props> {
@@ -41,6 +43,10 @@ class TodoListFooter extends React.Component<Props> {
           <strong>{numRemainingTodos}</strong> item
           {numRemainingTodos === 1 ? "" : "s"} left
         </span>
+        <label>
+          <input type="checkbox" checked={this.props.append} onChange={this.props.onSetAppend}/>
+          Append
+        </label>
         {numCompletedTodos > 0 && (
           <button
             className="clear-completed"

@@ -1,6 +1,6 @@
 {
   "name": "relay-compiler-language-typescript",
-  "version": "12.0.3",
+  "version": "13.0.2",
   "description": "A language plugin for Relay that adds TypeScript support, including emitting type definitions.",
   "keywords": [
     "graphql",
@@ -27,10 +27,10 @@
       "email": "eloy.de.enige@gmail.com"
     }
   ],
+  "main": "lib/index.js",
   "files": [
     "lib"
   ],
-  "main": "lib/index.js",
   "scripts": {
     "build": "rm -rf lib && tsc",
     "lint": "tslint -c tslint.json --project tsconfig.json",
@@ -38,10 +38,10 @@
     "prettier": "prettier --write '{src,types,test}/**/*.ts'",
     "prepublish": "npm run build",
     "relay": "node bin/relay-compiler.js --schema test/schema.graphql --src test/ --outputDir __generated__",
-    "sync-fixtures": "rsync -avh --delete --stats --progress ../relay/packages/relay-compiler/language/javascript/__tests__/fixtures/flow-generator/**/*.graphql test/fixtures/type-generator",
+    "sync-fixtures": "ts-node ./syncFixtures.ts",
     "test": "npm run type-check && jest",
-    "watch": "concurrently 'tsc --watch' 'chokidar \"lib/**/*.js\" -c \"yalc publish --force --push\"'",
-    "type-check": "tsc --noEmit --pretty"
+    "type-check": "tsc --noEmit --pretty",
+    "watch": "concurrently 'tsc --watch' 'chokidar \"lib/**/*.js\" -c \"yalc publish --force --push\"'"
   },
   "husky": {
     "hooks": {
@@ -59,6 +59,7 @@
       "git add"
     ]
   },
+  "prettier": {},
   "jest": {
     "moduleFileExtensions": [
       "js",
@@ -81,20 +82,22 @@
     "@types/jest": "^24.0.17",
     "@types/node": "8.10.51",
     "@types/relay-compiler": "^8.0.0",
-    "@types/relay-runtime": "^8.0.0",
-    "babel-plugin-relay": "^9.0.0",
+    "@types/relay-runtime": "^10.0.1",
+    "babel-plugin-relay": "^10.0.0",
     "chokidar-cli": "^2.0.0",
     "concurrently": "^5.0.0",
-    "graphql": "^14.5.8",
+    "glob": "^7.1.6",
+    "graphql": "^15.3.0",
     "husky": "^3.0.2",
     "jest": "^24.8.0",
     "jest-cli": "^24.8.0",
     "lint-staged": "^9.2.1",
     "prettier": "^1.19.1",
-    "relay-compiler": "^8.0.0",
-    "relay-runtime": "^9.0.0",
-    "relay-test-utils-internal": "^8.0.0",
+    "relay-compiler": "^10.0.1",
+    "relay-runtime": "^10.0.1",
+    "relay-test-utils-internal": "^10.0.1",
     "ts-jest": "^22.0.1",
+    "ts-node": "^8.10.2",
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "3.6.4"
@@ -108,6 +111,5 @@
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
-  },
-  "prettier": {}
+  }
 }
