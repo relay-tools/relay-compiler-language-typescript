@@ -1107,9 +1107,9 @@ babel-plugin-macros@^2.0.0:
     resolve "^1.12.0"
 
 babel-plugin-relay@^10.0.0:
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-relay/-/babel-plugin-relay-10.0.1.tgz#7e0e12768018ed48f22c623cc1db456989c92647"
-  integrity sha512-0tNZFLVitUbNIHb/PuLYCqW3IvxQK8m5MomrOd5fRy4ljG86fV0KLARjedUQhwRQf32ELU7ODgXFazLza4yZYQ==
+  version "10.1.2"
+  resolved "https://registry.yarnpkg.com/babel-plugin-relay/-/babel-plugin-relay-10.1.2.tgz#8f85ea9a92f9b173fe534960f08c6a7d58c6925d"
+  integrity sha512-vaGaRcO/5axeTSCRgEvFUMIsOJdSItORqCftDWfoA0nHpXbLgonmiPNGMkNx0rjDYVz2wm7ktA/Fc13twZ2lDQ==
   dependencies:
     babel-plugin-macros "^2.0.0"
 
