@@ -92,7 +92,7 @@
     "jest": "^24.8.0",
     "jest-cli": "^24.8.0",
     "lint-staged": "^9.2.1",
-    "prettier": "^1.19.1",
+    "prettier": "^2.2.1",
     "relay-compiler": "^10.0.1",
     "relay-runtime": "^10.0.1",
     "relay-test-utils-internal": "^10.0.1",
