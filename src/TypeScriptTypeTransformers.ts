@@ -37,7 +37,8 @@ export function transformScalarType(
   } else {
     return ts.createUnionTypeNode([
       transformNonNullableScalarType(schema, type, state, objectProps),
-      ts.createKeywordTypeNode(ts.SyntaxKind.NullKeyword)
+      // @ts-ignore
+      ts.createKeywordTypeNode(ts.SyntaxKind.NullKeyword),
     ]);
   }
 }
@@ -55,7 +56,7 @@ function transformNonNullableScalarType(
         schema.getListItemType(type),
         state,
         objectProps
-      )
+      ),
     ]);
   } else if (
     schema.isObject(type) ||
@@ -121,7 +122,8 @@ export function transformInputType(
   } else {
     return ts.createUnionTypeNode([
       transformNonNullableInputType(schema, type, state),
-      ts.createKeywordTypeNode(ts.SyntaxKind.NullKeyword)
+      // @ts-ignore
+      ts.createKeywordTypeNode(ts.SyntaxKind.NullKeyword),
     ]);
   }
 }
@@ -133,7 +135,7 @@ function transformNonNullableInputType(
 ) {
   if (schema.isList(type)) {
     return ts.createTypeReferenceNode(ts.createIdentifier("Array"), [
-      transformInputType(schema, schema.getListItemType(type), state)
+      transformInputType(schema, schema.getListItemType(type), state),
     ]);
   } else if (schema.isScalar(type)) {
     return transformGraphQLScalarType(schema.getTypeString(type), state);

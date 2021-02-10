@@ -1,12 +1,16 @@
 import { CompilerContext, IRTransforms, Root } from "relay-compiler";
+// @ts-ignore
 import { TypeGeneratorOptions } from "relay-compiler/lib/language/RelayLanguagePluginInterface";
+// @ts-ignore
 import { generateTestsFromFixtures } from "relay-test-utils-internal/lib/generateTestsFromFixtures";
+// @ts-ignore
 import * as parseGraphQLText from "relay-test-utils-internal/lib/parseGraphQLText";
+// @ts-ignore
 import { TestSchema } from "relay-test-utils-internal/lib/TestSchema";
 import * as TypeScriptGenerator from "../src/TypeScriptGenerator";
 
 function generate(
-  text,
+  text: string,
   options: TypeGeneratorOptions,
   context?: CompilerContext
 ) {
@@ -65,7 +69,7 @@ function generate(
 }
 
 describe("Snapshot tests", () => {
-  function generateContext(text) {
+  function generateContext(text: string) {
     const relaySchema = TestSchema.extend(IRTransforms.schemaExtensions);
     const { definitions, schema: extendedSchema } = parseGraphQLText(
       relaySchema,
@@ -81,7 +85,7 @@ describe("Snapshot tests", () => {
   }
 
   describe("TypeScriptGenerator with a single artifact directory", () => {
-    generateTestsFromFixtures(`${__dirname}/fixtures/type-generator`, text => {
+    generateTestsFromFixtures(`${__dirname}/fixtures/type-generator`, (text: string) => {
       const context = generateContext(text);
       return generate(
         text,
@@ -100,7 +104,7 @@ describe("Snapshot tests", () => {
   });
 
   describe("TypeScriptGenerator without a single artifact directory", () => {
-    generateTestsFromFixtures(`${__dirname}/fixtures/type-generator`, text => {
+    generateTestsFromFixtures(`${__dirname}/fixtures/type-generator`, (text: string) => {
       const context = generateContext(text);
       return generate(
         text,
