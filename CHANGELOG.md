@@ -1,3 +1,15 @@
+# v13.0.4 (Thu Feb 11 2021)
+
+#### 🐛  Bug Fix
+
+- chore: bump typescript from 4.1.4 to 4.1.5 [#268](https://github.com/relay-tools/relay-compiler-language-typescript/pull/268) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+
+#### Authors: 1
+
+- [@dependabot-preview[bot]](https://github.com/dependabot-preview[bot])
+
+---
+
 # v13.0.3 (Thu Feb 11 2021)
 
 #### 🐛  Bug Fix
