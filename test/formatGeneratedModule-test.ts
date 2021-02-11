@@ -47,8 +47,7 @@ describe("formatGeneratedModule", () => {
         concreteText: JSON.stringify({ the: { fragment: { data: 42 } } }),
         typeText: "export type CompleteExample = { readonly id: string }",
         hash: "@relayHash abcde",
-        relayRuntimeModule: "relay-runtime",
-        sourceHash: "edcba"
+        sourceHash: "edcba",
       })
     ).toMatchFile(
       join(__dirname, "fixtures/generated-module/complete-example.ts")
@@ -60,13 +59,13 @@ describe("formatGeneratedModule", () => {
     expect(
       formatGeneratedModule({
         moduleName: "complete-example",
-         // @ts-ignore
+        // @ts-ignore
         documentType: "ConcreteFragment",
         docText: null,
         concreteText: JSON.stringify({ the: { fragment: { data: 42 } } }),
         typeText: "export type CompleteExample = { readonly id: string }",
         hash: "@relayHash abcde",
-        sourceHash: "edcba"
+        sourceHash: "edcba",
       })
     ).toMatchFile(
       join(__dirname, "fixtures/generated-module/complete-example.ts")
@@ -78,13 +77,13 @@ describe("formatGeneratedModule", () => {
     expect(
       formatGeneratedModule({
         moduleName: "complete-example",
-         // @ts-ignore
+        // @ts-ignore
         documentType: "ConcreteFragment",
         docText: null,
         concreteText: JSON.stringify({ the: { fragment: { data: 42 } } }),
         typeText: "export type CompleteExample = { readonly id: string }",
         hash: null,
-        sourceHash: "edcba"
+        sourceHash: "edcba",
       })
     ).toMatchFile(
       join(__dirname, "fixtures/generated-module/complete-example-no-cast.ts")
