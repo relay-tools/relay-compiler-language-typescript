@@ -1,13 +1,9 @@
-import { CompilerContext, IRTransforms, Root } from "relay-compiler";
-// @ts-ignore
+import { CompilerContext, IRTransforms, Root,  } from "relay-compiler";
 import { TypeGeneratorOptions } from "relay-compiler/lib/language/RelayLanguagePluginInterface";
-// @ts-ignore
 import { generateTestsFromFixtures } from "relay-test-utils-internal/lib/generateTestsFromFixtures";
-// @ts-ignore
-import * as parseGraphQLText from "relay-test-utils-internal/lib/parseGraphQLText";
-// @ts-ignore
 import { TestSchema } from "relay-test-utils-internal/lib/TestSchema";
 import * as TypeScriptGenerator from "../src/TypeScriptGenerator";
+import parseGraphQLText = require("relay-test-utils-internal/lib/parseGraphQLText");
 
 function generate(
   text: string,
@@ -16,7 +12,7 @@ function generate(
 ) {
   const schema = TestSchema.extend([
     ...IRTransforms.schemaExtensions,
-    `
+    /* GraphQL */ `
       scalar Color
       extend type User {
         color: Color

@@ -50,7 +50,6 @@ describe("formatGeneratedModule", () => {
         relayRuntimeModule: "relay-runtime",
         sourceHash: "edcba"
       })
-      // @ts-ignore
     ).toMatchFile(
       join(__dirname, "fixtures/generated-module/complete-example.ts")
     );
@@ -69,7 +68,6 @@ describe("formatGeneratedModule", () => {
         hash: "@relayHash abcde",
         sourceHash: "edcba"
       })
-       // @ts-ignore
     ).toMatchFile(
       join(__dirname, "fixtures/generated-module/complete-example.ts")
     );
@@ -88,7 +86,6 @@ describe("formatGeneratedModule", () => {
         hash: null,
         sourceHash: "edcba"
       })
-       // @ts-ignore
     ).toMatchFile(
       join(__dirname, "fixtures/generated-module/complete-example-no-cast.ts")
     );

@@ -21,7 +21,7 @@ describe("FindGraphQLTags", () => {
     ).toEqual([
       {
         keyName: null,
-        template: `
+        template: /* GraphQL */ `
           fragment TestModule_artist on Artist {
             name
           }
