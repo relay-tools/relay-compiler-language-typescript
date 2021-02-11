@@ -1,9 +1,9 @@
 import { CompilerContext, IRTransforms, Root,  } from "relay-compiler";
 import { TypeGeneratorOptions } from "relay-compiler/lib/language/RelayLanguagePluginInterface";
 import { generateTestsFromFixtures } from "relay-test-utils-internal/lib/generateTestsFromFixtures";
+import parseGraphQLText = require("relay-test-utils-internal/lib/parseGraphQLText");
 import { TestSchema } from "relay-test-utils-internal/lib/TestSchema";
 import * as TypeScriptGenerator from "../src/TypeScriptGenerator";
-import parseGraphQLText = require("relay-test-utils-internal/lib/parseGraphQLText");
 
 function generate(
   text: string,
