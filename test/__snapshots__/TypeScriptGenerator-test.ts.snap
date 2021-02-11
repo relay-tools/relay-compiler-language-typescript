@@ -884,7 +884,7 @@ exports[`Snapshot tests TypeScriptGenerator with a single artifact directory mat
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation AppendEdgeMutation(
   $input: CommentCreateInput!,
-  $connections: [String!]!
+  $connections: [ID!]!
 )  {
   commentCreate(input: $input) {
     feedbackCommentEdge @appendEdge(connections: $connections) {
@@ -898,7 +898,7 @@ mutation AppendEdgeMutation(
 
 mutation PrependEdgeMutation(
   $input: CommentCreateInput!,
-  $connections: [String!]!
+  $connections: [ID!]!
 )  {
   commentCreate(input: $input) {
     feedbackCommentEdge @prependEdge(connections: $connections) {
@@ -3418,7 +3418,7 @@ exports[`Snapshot tests TypeScriptGenerator without a single artifact directory 
 ~~~~~~~~~~ INPUT ~~~~~~~~~~
 mutation AppendEdgeMutation(
   $input: CommentCreateInput!,
-  $connections: [String!]!
+  $connections: [ID!]!
 )  {
   commentCreate(input: $input) {
     feedbackCommentEdge @appendEdge(connections: $connections) {
@@ -3432,7 +3432,7 @@ mutation AppendEdgeMutation(
 
 mutation PrependEdgeMutation(
   $input: CommentCreateInput!,
-  $connections: [String!]!
+  $connections: [ID!]!
 )  {
   commentCreate(input: $input) {
     feedbackCommentEdge @prependEdge(connections: $connections) {
