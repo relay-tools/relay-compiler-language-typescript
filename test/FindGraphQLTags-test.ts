@@ -1,7 +1,7 @@
 import * as FindGraphQLTags from "../src/FindGraphQLTags";
 
 describe("FindGraphQLTags", () => {
-  function find(text: string) {
+  function find(text) {
     return FindGraphQLTags.find(text, "/path/to/TestModule.ts");
   }
 
@@ -21,7 +21,7 @@ describe("FindGraphQLTags", () => {
     ).toEqual([
       {
         keyName: null,
-        template: /* GraphQL */ `
+        template: `
           fragment TestModule_artist on Artist {
             name
           }

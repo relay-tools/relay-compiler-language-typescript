@@ -32,7 +32,7 @@
     "lib"
   ],
   "scripts": {
-    "build": "rm -rf lib && tsc --project tsconfig.build.json",
+    "build": "rm -rf lib && tsc",
     "lint": "tslint -c tslint.json --project tsconfig.json",
     "pr-check": "scripts/pr-check.sh",
     "prettier": "prettier --write '{src,types,test}/**/*.ts'",
@@ -41,7 +41,7 @@
     "sync-fixtures": "ts-node ./syncFixtures.ts",
     "test": "npm run type-check && jest",
     "type-check": "tsc --noEmit --pretty",
-    "watch": "concurrently 'tsc --watch --project tsconfig.build.json' 'chokidar \"lib/**/*.js\" -c \"yalc publish --force --push\"'"
+    "watch": "concurrently 'tsc --watch' 'chokidar \"lib/**/*.js\" -c \"yalc publish --force --push\"'"
   },
   "husky": {
     "hooks": {
@@ -77,7 +77,6 @@
   },
   "devDependencies": {
     "@artsy/auto-config": "^1.0.0",
-    "@babel/runtime": "7.12.13",
     "@types/graphql": "^14.2.3",
     "@types/invariant": "2.2.34",
     "@types/jest": "^26.0.20",

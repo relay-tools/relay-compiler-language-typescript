@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 
-import diff from "jest-diff";
+import * as diff from "jest-diff";
 
 import { formatterFactory } from "../src/formatGeneratedModule";
 
@@ -41,13 +41,13 @@ describe("formatGeneratedModule", () => {
     expect(
       formatGeneratedModule({
         moduleName: "complete-example",
-        // @ts-ignore
         documentType: "ConcreteFragment",
         docText: null,
         concreteText: JSON.stringify({ the: { fragment: { data: 42 } } }),
         typeText: "export type CompleteExample = { readonly id: string }",
         hash: "@relayHash abcde",
-        sourceHash: "edcba",
+        relayRuntimeModule: "relay-runtime",
+        sourceHash: "edcba"
       })
     ).toMatchFile(
       join(__dirname, "fixtures/generated-module/complete-example.ts")
@@ -59,13 +59,12 @@ describe("formatGeneratedModule", () => {
     expect(
       formatGeneratedModule({
         moduleName: "complete-example",
-        // @ts-ignore
         documentType: "ConcreteFragment",
         docText: null,
         concreteText: JSON.stringify({ the: { fragment: { data: 42 } } }),
         typeText: "export type CompleteExample = { readonly id: string }",
         hash: "@relayHash abcde",
-        sourceHash: "edcba",
+        sourceHash: "edcba"
       })
     ).toMatchFile(
       join(__dirname, "fixtures/generated-module/complete-example.ts")
@@ -77,13 +76,12 @@ describe("formatGeneratedModule", () => {
     expect(
       formatGeneratedModule({
         moduleName: "complete-example",
-        // @ts-ignore
         documentType: "ConcreteFragment",
         docText: null,
         concreteText: JSON.stringify({ the: { fragment: { data: 42 } } }),
         typeText: "export type CompleteExample = { readonly id: string }",
         hash: null,
-        sourceHash: "edcba",
+        sourceHash: "edcba"
       })
     ).toMatchFile(
       join(__dirname, "fixtures/generated-module/complete-example-no-cast.ts")

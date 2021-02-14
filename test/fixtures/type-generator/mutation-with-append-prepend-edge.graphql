@@ -1,6 +1,6 @@
 mutation AppendEdgeMutation(
   $input: CommentCreateInput!,
-  $connections: [ID!]!
+  $connections: [String!]!
 )  {
   commentCreate(input: $input) {
     feedbackCommentEdge @appendEdge(connections: $connections) {
@@ -14,7 +14,7 @@ mutation AppendEdgeMutation(
 
 mutation PrependEdgeMutation(
   $input: CommentCreateInput!,
-  $connections: [ID!]!
+  $connections: [String!]!
 )  {
   commentCreate(input: $input) {
     feedbackCommentEdge @prependEdge(connections: $connections) {
