@@ -150,9 +150,13 @@ function makeProp(
       )
     );
   }
-  const typeProperty = objectTypeProperty(key, value, {
-    optional: conditional,
-  });
+  const typeProperty = objectTypeProperty(key, value);
+  if (conditional) {
+    // @ts-ignore
+    typeProperty.questionToken = ts.factory.createToken(
+      ts.SyntaxKind.QuestionToken
+    );
+  }
 
   return typeProperty;
 }
@@ -555,7 +559,10 @@ function createVisitor(
           ts.factory.createTypeReferenceNode(dataTypeName, undefined),
           { optional: true }
         );
-
+        // @ts-ignore
+        refTypeDataProperty.questionToken = ts.factory.createToken(
+          ts.SyntaxKind.QuestionToken
+        );
         const refTypeFragmentRefProperty = objectTypeProperty(
           FRAGMENT_REFS,
           ts.factory.createTypeReferenceNode(FRAGMENT_REFS_TYPE_NAME, [
@@ -745,9 +752,13 @@ function makeRawResponseProp(
     );
   }
 
-  const typeProperty = objectTypeProperty(key, value, {
-    optional: conditional,
-  });
+  const typeProperty = objectTypeProperty(key, value);
+  if (conditional) {
+    // @ts-ignore
+    typeProperty.questionToken = ts.factory.createToken(
+      ts.SyntaxKind.QuestionToken
+    );
+  }
 
   return typeProperty;
 }
