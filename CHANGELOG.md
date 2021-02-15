@@ -1,3 +1,15 @@
+# v13.0.6 (Mon Feb 15 2021)
+
+#### 🐛  Bug Fix
+
+- chore: bump @types/node from 14.14.25 to 14.14.28 [#273](https://github.com/relay-tools/relay-compiler-language-typescript/pull/273) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+
+#### Authors: 1
+
+- [@dependabot-preview[bot]](https://github.com/dependabot-preview[bot])
+
+---
+
 # v13.0.5 (Mon Feb 15 2021)
 
 #### 🐛  Bug Fix
