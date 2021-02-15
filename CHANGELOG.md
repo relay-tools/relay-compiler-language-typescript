@@ -1,3 +1,15 @@
+# v13.0.5 (Mon Feb 15 2021)
+
+#### 🐛  Bug Fix
+
+- fix: revert breaking changes introduced in 13.0.3 [#274](https://github.com/relay-tools/relay-compiler-language-typescript/pull/274) ([@n1ru4l](https://github.com/n1ru4l))
+
+#### Authors: 1
+
+- Laurin Quast ([@n1ru4l](https://github.com/n1ru4l))
+
+---
+
 # v13.0.4 (Thu Feb 11 2021)
 
 #### 🐛  Bug Fix
