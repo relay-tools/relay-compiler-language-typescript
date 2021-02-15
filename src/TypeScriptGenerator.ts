@@ -51,7 +51,7 @@ export const generate: TypeGenerator["generate"] = (schema, node, options) => {
   const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
 
   const resultFile = ts.createSourceFile(
-    "grapghql-def.ts",
+    "graphql-def.ts",
     "",
     ts.ScriptTarget.Latest,
     false,
