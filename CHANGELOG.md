@@ -1,3 +1,88 @@
+# v13.0.6 (Mon Feb 15 2021)
+
+#### 🐛  Bug Fix
+
+- chore: bump @types/node from 14.14.25 to 14.14.28 [#273](https://github.com/relay-tools/relay-compiler-language-typescript/pull/273) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+
+#### Authors: 1
+
+- [@dependabot-preview[bot]](https://github.com/dependabot-preview[bot])
+
+---
+
+# v13.0.5 (Mon Feb 15 2021)
+
+#### 🐛  Bug Fix
+
+- fix: revert breaking changes introduced in 13.0.3 [#274](https://github.com/relay-tools/relay-compiler-language-typescript/pull/274) ([@n1ru4l](https://github.com/n1ru4l))
+
+#### Authors: 1
+
+- Laurin Quast ([@n1ru4l](https://github.com/n1ru4l))
+
+---
+
+# v13.0.4 (Thu Feb 11 2021)
+
+#### 🐛  Bug Fix
+
+- chore: bump typescript from 4.1.4 to 4.1.5 [#268](https://github.com/relay-tools/relay-compiler-language-typescript/pull/268) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+
+#### Authors: 1
+
+- [@dependabot-preview[bot]](https://github.com/dependabot-preview[bot])
+
+---
+
+# v13.0.3 (Thu Feb 11 2021)
+
+#### 🐛  Bug Fix
+
+- Bump relay-runtime from 10.0.1 to 10.1.2 [#241](https://github.com/relay-tools/relay-compiler-language-typescript/pull/241) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- fix: bring package in a state where build and test do not fail [#267](https://github.com/relay-tools/relay-compiler-language-typescript/pull/267) ([@n1ru4l](https://github.com/n1ru4l))
+- Bump typescript from 4.1.3 to 4.1.4 [#266](https://github.com/relay-tools/relay-compiler-language-typescript/pull/266) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump ts-jest from 26.5.0 to 26.5.1 [#265](https://github.com/relay-tools/relay-compiler-language-typescript/pull/265) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump relay-test-utils-internal from 10.0.1 to 10.1.3 [#252](https://github.com/relay-tools/relay-compiler-language-typescript/pull/252) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump ts-jest from 26.4.4 to 26.5.0 [#260](https://github.com/relay-tools/relay-compiler-language-typescript/pull/260) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump lint-staged from 10.5.3 to 10.5.4 [#263](https://github.com/relay-tools/relay-compiler-language-typescript/pull/263) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump @types/node from 14.14.22 to 14.14.25 [#262](https://github.com/relay-tools/relay-compiler-language-typescript/pull/262) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump lint-staged from 9.4.2 to 10.5.3 [#229](https://github.com/relay-tools/relay-compiler-language-typescript/pull/229) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump relay-compiler from 10.1.2 to 10.1.3 [#253](https://github.com/relay-tools/relay-compiler-language-typescript/pull/253) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump graphql from 15.4.0 to 15.5.0 [#256](https://github.com/relay-tools/relay-compiler-language-typescript/pull/256) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump @types/relay-runtime from 10.1.7 to 10.1.8 [#258](https://github.com/relay-tools/relay-compiler-language-typescript/pull/258) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump tslint from 5.20.0 to 6.1.3 [#240](https://github.com/relay-tools/relay-compiler-language-typescript/pull/240) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump @types/node from 14.14.21 to 14.14.22 [#251](https://github.com/relay-tools/relay-compiler-language-typescript/pull/251) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump babel-plugin-relay from 10.1.2 to 10.1.3 [#254](https://github.com/relay-tools/relay-compiler-language-typescript/pull/254) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump relay-runtime from 10.1.2 to 10.1.3 [#255](https://github.com/relay-tools/relay-compiler-language-typescript/pull/255) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump relay-compiler from 10.0.1 to 10.1.2 [#247](https://github.com/relay-tools/relay-compiler-language-typescript/pull/247) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump husky from 3.0.9 to 4.3.8 [#248](https://github.com/relay-tools/relay-compiler-language-typescript/pull/248) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump jest from 24.9.0 to 26.6.3 [#220](https://github.com/relay-tools/relay-compiler-language-typescript/pull/220) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- [Security] Bump yargs-parser from 13.1.1 to 13.1.2 [#245](https://github.com/relay-tools/relay-compiler-language-typescript/pull/245) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump jest-cli from 24.9.0 to 26.6.3 [#249](https://github.com/relay-tools/relay-compiler-language-typescript/pull/249) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump @types/node from 8.10.51 to 14.14.21 [#250](https://github.com/relay-tools/relay-compiler-language-typescript/pull/250) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump concurrently from 5.0.0 to 5.3.0 [#237](https://github.com/relay-tools/relay-compiler-language-typescript/pull/237) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump @artsy/auto-config from 1.0.1 to 1.0.2 [#238](https://github.com/relay-tools/relay-compiler-language-typescript/pull/238) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump babel-plugin-relay from 10.0.1 to 10.1.2 [#239](https://github.com/relay-tools/relay-compiler-language-typescript/pull/239) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump prettier from 1.19.1 to 2.2.1 [#242](https://github.com/relay-tools/relay-compiler-language-typescript/pull/242) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump ts-node from 8.10.2 to 9.1.1 [#243](https://github.com/relay-tools/relay-compiler-language-typescript/pull/243) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump @types/jest from 24.0.20 to 26.0.20 [#244](https://github.com/relay-tools/relay-compiler-language-typescript/pull/244) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump ts-jest from 22.4.6 to 26.4.4 [#221](https://github.com/relay-tools/relay-compiler-language-typescript/pull/221) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump typescript from 3.6.4 to 4.1.3 [#233](https://github.com/relay-tools/relay-compiler-language-typescript/pull/233) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump @types/relay-runtime from 10.0.1 to 10.1.7 [#236](https://github.com/relay-tools/relay-compiler-language-typescript/pull/236) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump graphql from 15.3.0 to 15.4.0 [#215](https://github.com/relay-tools/relay-compiler-language-typescript/pull/215) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- [Security] Bump lodash from 4.17.15 to 4.17.20 [#214](https://github.com/relay-tools/relay-compiler-language-typescript/pull/214) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- [Security] Bump tree-kill from 1.2.1 to 1.2.2 [#213](https://github.com/relay-tools/relay-compiler-language-typescript/pull/213) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- [Security] Bump handlebars from 4.4.5 to 4.7.6 [#210](https://github.com/relay-tools/relay-compiler-language-typescript/pull/210) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Bump @types/invariant from 2.2.30 to 2.2.34 [#207](https://github.com/relay-tools/relay-compiler-language-typescript/pull/207) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- [Security] Bump ini from 1.3.5 to 1.3.8 [#232](https://github.com/relay-tools/relay-compiler-language-typescript/pull/232) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+
+#### Authors: 2
+
+- [@dependabot-preview[bot]](https://github.com/dependabot-preview[bot])
+- Laurin Quast ([@n1ru4l](https://github.com/n1ru4l))
+
+---
+
 # v13.0.2 (Mon Nov 02 2020)
 
 #### 🐛  Bug Fix

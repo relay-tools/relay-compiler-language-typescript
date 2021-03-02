@@ -37,6 +37,7 @@ export function transformScalarType(
   } else {
     return ts.createUnionTypeNode([
       transformNonNullableScalarType(schema, type, state, objectProps),
+      // @ts-ignore
       ts.createKeywordTypeNode(ts.SyntaxKind.NullKeyword)
     ]);
   }
@@ -121,6 +122,7 @@ export function transformInputType(
   } else {
     return ts.createUnionTypeNode([
       transformNonNullableInputType(schema, type, state),
+      // @ts-ignore
       ts.createKeywordTypeNode(ts.SyntaxKind.NullKeyword)
     ]);
   }

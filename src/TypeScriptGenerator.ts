@@ -52,7 +52,7 @@ export const generate: TypeGenerator["generate"] = (schema, node, options) => {
   const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
 
   const resultFile = ts.createSourceFile(
-    "grapghql-def.ts",
+    "graphql-def.ts",
     "",
     ts.ScriptTarget.Latest,
     false,
@@ -159,6 +159,7 @@ function makeProp(
   }
   const typeProperty = objectTypeProperty(key, value);
   if (conditional) {
+    // @ts-ignore
     typeProperty.questionToken = ts.createToken(ts.SyntaxKind.QuestionToken);
   }
 
@@ -621,6 +622,7 @@ function createVisitor(
           ts.createTypeReferenceNode(dataTypeName, undefined),
           { optional: true }
         );
+        // @ts-ignore
         refTypeDataProperty.questionToken = ts.createToken(
           ts.SyntaxKind.QuestionToken
         );
@@ -803,6 +805,7 @@ function makeRawResponseProp(
 
   const typeProperty = objectTypeProperty(key, value);
   if (conditional) {
+    // @ts-ignore
     typeProperty.questionToken = ts.createToken(ts.SyntaxKind.QuestionToken);
   }
 
