@@ -1,5 +1,5 @@
 import { FormatModule, LocalArgumentDefinition } from "relay-compiler";
-import addAnyTypeCast from "./addAnyTypeCast";
+import { formatterFactory } from "./formatGeneratedModule";
 import relayCompilerLanguageTypescript from "./index";
 import { loadCompilerOptions } from "./loadCompilerOptions";
 
@@ -8,13 +8,7 @@ export default function relayHooksTypescriptCompiler() {
 
   const formatModule: FormatModule = (opts) => {
     const {
-      // moduleName,
       documentType,
-      docText,
-      concreteText,
-      typeText,
-      hash,
-      sourceHash,
       definition,
       definition: { name, metadata },
     } = opts;
@@ -125,28 +119,12 @@ export default function relayHooksTypescriptCompiler() {
       allImports.push(typeImports.join("\n"));
     }
 
-    const docTextComment = docText ? "\n/*\n" + docText.trim() + "\n*/\n" : "";
-    let nodeStatement = `const node: ${
-      documentType || "never"
-    } = ${concreteText};`;
-    if (compilerOptions.noImplicitAny) {
-      nodeStatement = addAnyTypeCast(nodeStatement).trim();
-    }
-    return `/* tslint:disable */
-/* eslint-disable */
-// @ts-nocheck
-${hash ? `/* ${hash} */\n` : ""}
-${allImports.join("\n")}
-${typeText || ""}
-
-${docTextComment}
-${nodeStatement}
-(node as any).hash = '${sourceHash}';
-
-export default node;
-
-${allHooks.join("\n")}
-`;
+    return formatterFactory(compilerOptions, {
+      makeImports() {
+        return allImports.join("\n");
+      },
+      append: allHooks.join("\n"),
+    })(opts);
   };
 
   return {
