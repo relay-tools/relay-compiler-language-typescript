@@ -36,16 +36,6 @@ interface Props {
 }
 
 graphql`
-  fragment TodoData on Todo {
-    complete
-    id
-    text
-  }
-  fragment TodoViewer on User {
-    id
-    totalCount
-    completedCount
-  }
   mutation TodoRemoveMutation($input: RemoveTodoInput!) {
     removeTodo(input: $input) {
       deletedTodoId
@@ -55,6 +45,9 @@ graphql`
       }
     }
   }
+`
+
+graphql`
   mutation TodoRenameMutation($input: RenameTodoInput!) {
     renameTodo(input: $input) {
       todo {
@@ -63,6 +56,9 @@ graphql`
       }
     }
   }
+`
+
+graphql`
   mutation TodoChangeStatusMutation($input: ChangeTodoStatusInput!) {
     changeTodoStatus(input: $input) {
       todo {
@@ -80,8 +76,22 @@ graphql`
 const Todo = (props: Props) => {
   const [isEditing, setIsEditing] = React.useState(false)
 
+  graphql`
+    fragment TodoData on Todo {
+      complete
+      id
+      text
+    }
+  `
   const todo = useTodoDataFragment(props.todo)
 
+  graphql`
+    fragment TodoViewer on User {
+      id
+      totalCount
+      completedCount
+    }
+  `
   const viewer = useTodoViewerFragment(props.viewer)
 
   const [commitRename] = useTodoRenameMutation()

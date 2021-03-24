@@ -26,6 +26,21 @@ interface Props {
 }
 
 graphql`
+  mutation TodoListMarkAllTodosMutation($input: MarkAllTodosInput!) {
+    markAllTodos(input: $input) {
+      changedTodos {
+        id
+        complete
+      }
+      viewer {
+        id
+        completedCount
+      }
+    }
+  }
+`
+
+graphql`
   fragment TodoList on User
   @argumentDefinitions(
     last: { type: "Int" }
@@ -48,18 +63,6 @@ graphql`
     totalCount
     completedCount
     ...TodoViewer
-  }
-  mutation TodoListMarkAllTodosMutation($input: MarkAllTodosInput!) {
-    markAllTodos(input: $input) {
-      changedTodos {
-        id
-        complete
-      }
-      viewer {
-        id
-        completedCount
-      }
-    }
   }
 `
 

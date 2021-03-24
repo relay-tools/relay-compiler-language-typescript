@@ -29,28 +29,14 @@ interface Props {
 }
 
 graphql`
-  fragment TodoAppData on User
-  @refetchable(queryName: "TodoAppRefetchQuery")
-  @argumentDefinitions(
-    last: { type: "Int" }
-    first: { type: "Int" }
-    after: { type: "String" }
-    before: { type: "String" }
-  ) {
-    id
-    totalCount
-    isAppending
-    ...TodoListFooterData
-    ...TodoList
-      @arguments(last: $last, first: $first, after: $after, before: $before)
-  }
-
   mutation TodoAppSetAppendingMutation($isAppending: Boolean!) {
     setAppending(appending: $isAppending) {
       isAppending
     }
   }
+`
 
+graphql`
   mutation TodoAppAddTodoMutation(
     $input: AddTodoInput!
     $connections: [ID!]!
@@ -85,6 +71,23 @@ graphql`
 let tempID = 0
 
 const TodoApp = (props: Props) => {
+  graphql`
+    fragment TodoAppData on User
+    @refetchable(queryName: "TodoAppRefetchQuery")
+    @argumentDefinitions(
+      last: { type: "Int" }
+      first: { type: "Int" }
+      after: { type: "String" }
+      before: { type: "String" }
+    ) {
+      id
+      totalCount
+      isAppending
+      ...TodoListFooterData
+      ...TodoList
+        @arguments(last: $last, first: $first, after: $after, before: $before)
+    }
+  `
   const [viewer, refetch] = useRefetchableTodoAppDataFragment(props.frag)
   const [addTodo] = useTodoAppAddTodoMutation()
   const [setAppending] = useTodoAppSetAppendingMutation()
