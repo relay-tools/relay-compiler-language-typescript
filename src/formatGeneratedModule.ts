@@ -17,7 +17,7 @@ const defaultFormatOptions: FormatterOptions = {
 
 export const formatterFactory = (
   compilerOptions: ts.CompilerOptions = {},
-  { makeImports }: FormatterOptions = defaultFormatOptions
+  { makeImports, append }: FormatterOptions = defaultFormatOptions
 ): FormatModule => (details) => {
   const {
     documentType,
@@ -46,5 +46,5 @@ ${docTextComment}
 ${nodeStatement}
 (node as any).hash = '${sourceHash}';
 export default node;
-`;
+${append ? `\n${append}\n` : ""}`;
 };
