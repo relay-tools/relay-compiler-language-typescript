@@ -208,16 +208,16 @@ export function usePaginated${n}(fragmentRef: any) {
 
 function makePreloadedQueryBlock(name: string) {
   const n = capitalize(name);
-  return `export function usePreloaded${n}(preloadedQuery: PreloadedQuery<${name}>, options?: {
-  UNSTABLE_renderPolicy?: RenderPolicy;
-}) {
+  return `type PreloadedQueryOptions = Parameters<typeof usePreloadedQuery>[2];
+
+export function usePreloaded${n}(preloadedQuery: PreloadedQuery<${name}>, options?: PreloadedQueryOptions) {
   return usePreloadedQuery<${name}>(node, preloadedQuery, options)
 }`;
 }
 
 function makeQueryLoaderBlock(name: string) {
-  const fn = capitalize(name);
-  return `export function use${fn}Loader(initialQueryReference?: PreloadedQuery<${name}> | null) {
+  const n = capitalize(name);
+  return `export function use${n}Loader(initialQueryReference?: PreloadedQuery<${name}> | null) {
   return useQueryLoader(node, initialQueryReference)
 }`;
 }
@@ -228,14 +228,11 @@ function makeLazyLoadBlock(
 ) {
   const n = capitalize(name);
   const noVars = args.length === 0;
-  return `export function use${n}(variables: VariablesOf<${name}>${
+  return `type LazyLoadOptions = Parameters<typeof useLazyLoadQuery>[2];
+
+export function use${n}(variables: VariablesOf<${name}>${
     noVars ? " = {}" : ""
-  }, options?: {
-  fetchKey?: string | number;
-  fetchPolicy?: FetchPolicy;
-  networkCacheConfig?: CacheConfig;
-  UNSTABLE_renderPolicy?: RenderPolicy;
-}) {
+  }, options?: LazyLoadOptions) {
   return useLazyLoadQuery<${name}>(node, variables, options)
 }`;
 }
