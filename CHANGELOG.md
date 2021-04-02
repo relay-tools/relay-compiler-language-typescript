@@ -1,3 +1,15 @@
+# v13.0.9 (Fri Apr 02 2021)
+
+#### 🐛  Bug Fix
+
+- Revert "feat: drop typescript 3 and Node.js 10 support (#275)" [#317](https://github.com/relay-tools/relay-compiler-language-typescript/pull/317) ([@n1ru4l](https://github.com/n1ru4l))
+
+#### Authors: 1
+
+- Laurin Quast ([@n1ru4l](https://github.com/n1ru4l))
+
+---
+
 # v13.0.8 (Fri Apr 02 2021)
 
 
