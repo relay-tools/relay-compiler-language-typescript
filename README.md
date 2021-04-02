@@ -14,6 +14,8 @@ yarn add graphql relay-compiler --dev
 yarn add typescript relay-compiler-language-typescript --dev
 ```
 
+**Note:** Starting with version 14.0.0 relay-compiler-language-typescript requires a minimum TypeScript version of 4.2.3 being installed in your project.
+
 ## Configuration
 
 ### relay-compiler
