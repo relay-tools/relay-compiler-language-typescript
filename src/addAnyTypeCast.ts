@@ -5,9 +5,9 @@ export default function addAsAnyToObjectLiterals(oldSource: string): string {
     return function transform(rootNode: T) {
       function visit(node: ts.Node): ts.Node {
         if (node.kind === ts.SyntaxKind.ObjectLiteralExpression) {
-          return ts.factory.createAsExpression(
+          return ts.createAsExpression(
             node as ts.Expression,
-            ts.factory.createTypeReferenceNode("any", [])
+            ts.createTypeReferenceNode("any", [])
           );
         }
         return ts.visitEachChild(node, visit, context);
@@ -27,7 +27,7 @@ export default function addAsAnyToObjectLiterals(oldSource: string): string {
   const result = ts.transform(source, [transformer]);
 
   const printer: ts.Printer = ts.createPrinter({
-    newLine: ts.NewLineKind.LineFeed,
+    newLine: ts.NewLineKind.LineFeed
   });
   return printer.printFile(result.transformed[0] as ts.SourceFile);
 }

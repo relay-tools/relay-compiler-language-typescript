@@ -1,4 +1,39 @@
+import { readFileSync } from "fs";
+import { join } from "path";
+
+import diff from "jest-diff";
+
 import { formatterFactory } from "../src/formatGeneratedModule";
+
+expect.extend({
+  toMatchFile(received, fixturePath) {
+    const actual = readFileSync(fixturePath, "utf8");
+    if (received.trim() === actual.trim()) {
+      return {
+        message: () => `expected ${fixturePath} not to match:\n\n${received}`,
+        pass: true
+      };
+    } else {
+      return {
+        message: () => {
+          const diffString = diff(actual, received, {
+            expand: (this as any).expand
+          });
+          return (
+            this.utils.matcherHint(".toBe") +
+            "\n\n" +
+            `Expected value to be (using ===):\n` +
+            `  ${this.utils.printExpected(actual)}\n` +
+            `Received:\n` +
+            `  ${this.utils.printReceived(received)}` +
+            (diffString ? `\n\nDifference:\n\n${diffString}` : "")
+          );
+        },
+        pass: false
+      };
+    }
+  }
+});
 
 describe("formatGeneratedModule", () => {
   it("works", () => {
@@ -14,21 +49,9 @@ describe("formatGeneratedModule", () => {
         hash: "@relayHash abcde",
         sourceHash: "edcba",
       })
-    ).toMatchInlineSnapshot(`
-      "/* tslint:disable */
-      /* eslint-disable */
-      // @ts-nocheck
-      /* @relayHash abcde */
-
-      import { ConcreteFragment } from \\"relay-runtime\\";
-      export type CompleteExample = { readonly id: string }
-
-
-      const node: ConcreteFragment = { \\"the\\": { \\"fragment\\": { \\"data\\": 42 } } } as any;
-      (node as any).hash = 'edcba';
-      export default node;
-      "
-    `);
+    ).toMatchFile(
+      join(__dirname, "fixtures/generated-module/complete-example.ts")
+    );
   });
 
   it("works without passing relay runtime module explicitly", () => {
@@ -44,21 +67,9 @@ describe("formatGeneratedModule", () => {
         hash: "@relayHash abcde",
         sourceHash: "edcba",
       })
-    ).toMatchInlineSnapshot(`
-      "/* tslint:disable */
-      /* eslint-disable */
-      // @ts-nocheck
-      /* @relayHash abcde */
-
-      import { ConcreteFragment } from \\"relay-runtime\\";
-      export type CompleteExample = { readonly id: string }
-
-
-      const node: ConcreteFragment = { \\"the\\": { \\"fragment\\": { \\"data\\": 42 } } } as any;
-      (node as any).hash = 'edcba';
-      export default node;
-      "
-    `);
+    ).toMatchFile(
+      join(__dirname, "fixtures/generated-module/complete-example.ts")
+    );
   });
 
   it("doesn't add a typecast if noImplicitAny is not set", () => {
@@ -74,19 +85,8 @@ describe("formatGeneratedModule", () => {
         hash: null,
         sourceHash: "edcba",
       })
-    ).toMatchInlineSnapshot(`
-      "/* tslint:disable */
-      /* eslint-disable */
-      // @ts-nocheck
-
-      import { ConcreteFragment } from \\"relay-runtime\\";
-      export type CompleteExample = { readonly id: string }
-
-
-      const node: ConcreteFragment = {\\"the\\":{\\"fragment\\":{\\"data\\":42}}};
-      (node as any).hash = 'edcba';
-      export default node;
-      "
-    `);
+    ).toMatchFile(
+      join(__dirname, "fixtures/generated-module/complete-example-no-cast.ts")
+    );
   });
 });

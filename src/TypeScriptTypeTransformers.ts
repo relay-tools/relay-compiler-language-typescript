@@ -35,11 +35,10 @@ export function transformScalarType(
       objectProps
     );
   } else {
-    return ts.factory.createUnionTypeNode([
+    return ts.createUnionTypeNode([
       transformNonNullableScalarType(schema, type, state, objectProps),
-      ts.factory.createLiteralTypeNode(
-        ts.factory.createToken(ts.SyntaxKind.NullKeyword)
-      ),
+      // @ts-ignore
+      ts.createKeywordTypeNode(ts.SyntaxKind.NullKeyword),
     ]);
   }
 }
@@ -51,17 +50,14 @@ function transformNonNullableScalarType(
   objectProps?: ts.TypeNode
 ): ts.TypeNode {
   if (schema.isList(type)) {
-    return ts.factory.createTypeReferenceNode(
-      ts.factory.createIdentifier("ReadonlyArray"),
-      [
-        transformScalarType(
-          schema,
-          schema.getListItemType(type),
-          state,
-          objectProps
-        ),
-      ]
-    );
+    return ts.createTypeReferenceNode(ts.createIdentifier("ReadonlyArray"), [
+      transformScalarType(
+        schema,
+        schema.getListItemType(type),
+        state,
+        objectProps
+      ),
+    ]);
   } else if (
     schema.isObject(type) ||
     schema.isUnion(type) ||
@@ -86,17 +82,17 @@ function transformGraphQLScalarType(
     case "ID":
     case "String":
     case "Url":
-      return ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+      return ts.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
     case "Float":
     case "Int":
-      return ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword);
+      return ts.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword);
     case "Boolean":
-      return ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword);
+      return ts.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword);
 
     default:
       return customType
-        ? ts.factory.createTypeReferenceNode(customType, undefined)
-        : ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword);
+        ? ts.createTypeReferenceNode(customType, undefined)
+        : ts.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword);
   }
 }
 
@@ -106,8 +102,8 @@ function transformGraphQLEnumType(
   state: State
 ): ts.TypeNode {
   state.usedEnums[schema.getTypeString(type)] = type;
-  return ts.factory.createTypeReferenceNode(
-    ts.factory.createIdentifier(schema.getTypeString(type)),
+  return ts.createTypeReferenceNode(
+    ts.createIdentifier(schema.getTypeString(type)),
     []
   );
 }
@@ -124,11 +120,10 @@ export function transformInputType(
       state
     );
   } else {
-    return ts.factory.createUnionTypeNode([
+    return ts.createUnionTypeNode([
       transformNonNullableInputType(schema, type, state),
-      ts.factory.createLiteralTypeNode(
-        ts.factory.createToken(ts.SyntaxKind.NullKeyword)
-      ),
+      // @ts-ignore
+      ts.createKeywordTypeNode(ts.SyntaxKind.NullKeyword),
     ]);
   }
 }
@@ -139,10 +134,9 @@ function transformNonNullableInputType(
   state: State
 ) {
   if (schema.isList(type)) {
-    return ts.factory.createTypeReferenceNode(
-      ts.factory.createIdentifier("Array"),
-      [transformInputType(schema, schema.getListItemType(type), state)]
-    );
+    return ts.createTypeReferenceNode(ts.createIdentifier("Array"), [
+      transformInputType(schema, schema.getListItemType(type), state),
+    ]);
   } else if (schema.isScalar(type)) {
     return transformGraphQLScalarType(schema.getTypeString(type), state);
   } else if (schema.isEnum(type)) {
@@ -150,8 +144,8 @@ function transformNonNullableInputType(
   } else if (schema.isInputObject(type)) {
     const typeIdentifier = getInputObjectTypeIdentifier(schema, type);
     if (state.generatedInputObjectTypes[typeIdentifier]) {
-      return ts.factory.createTypeReferenceNode(
-        ts.factory.createIdentifier(typeIdentifier),
+      return ts.createTypeReferenceNode(
+        ts.createIdentifier(typeIdentifier),
         []
       );
     }
@@ -162,25 +156,23 @@ function transformNonNullableInputType(
     const props = fields.map((fieldID: FieldID) => {
       const fieldType = schema.getFieldType(fieldID);
       const fieldName = schema.getFieldName(fieldID);
-      const property = ts.factory.createPropertySignature(
+      const property = ts.createPropertySignature(
         undefined,
-        ts.factory.createIdentifier(fieldName),
+        ts.createIdentifier(fieldName),
         state.optionalInputFields.indexOf(fieldName) >= 0 ||
           !schema.isNonNull(fieldType)
-          ? ts.factory.createToken(ts.SyntaxKind.QuestionToken)
+          ? ts.createToken(ts.SyntaxKind.QuestionToken)
           : undefined,
-        transformInputType(schema, fieldType, state)
+        transformInputType(schema, fieldType, state),
+        undefined
       );
 
       return property;
     });
-    state.generatedInputObjectTypes[
-      typeIdentifier
-    ] = ts.factory.createTypeLiteralNode(props);
-    return ts.factory.createTypeReferenceNode(
-      ts.factory.createIdentifier(typeIdentifier),
-      []
+    state.generatedInputObjectTypes[typeIdentifier] = ts.createTypeLiteralNode(
+      props
     );
+    return ts.createTypeReferenceNode(ts.createIdentifier(typeIdentifier), []);
   } else {
     throw new Error(`Could not convert from GraphQL type ${type.toString()}`);
   }
