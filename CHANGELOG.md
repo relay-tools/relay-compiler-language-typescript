@@ -1,3 +1,17 @@
+# v13.0.7 (Fri Apr 02 2021)
+
+#### 🐛  Bug Fix
+
+- feat: drop typescript 3 and Node.js 10 support [#275](https://github.com/relay-tools/relay-compiler-language-typescript/pull/275) ([@n1ru4l](https://github.com/n1ru4l))
+- feat: include .d.ts types in release [#309](https://github.com/relay-tools/relay-compiler-language-typescript/pull/309) ([@tgriesser](https://github.com/tgriesser))
+
+#### Authors: 2
+
+- Laurin Quast ([@n1ru4l](https://github.com/n1ru4l))
+- Tim Griesser ([@tgriesser](https://github.com/tgriesser))
+
+---
+
 # v13.0.6 (Mon Feb 15 2021)
 
 #### 🐛  Bug Fix
