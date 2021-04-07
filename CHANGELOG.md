@@ -1,3 +1,15 @@
+# v13.0.10 (Wed Apr 07 2021)
+
+#### 🐛  Bug Fix
+
+- chore: [security] bump y18n from 4.0.0 to 4.0.2 [#321](https://github.com/relay-tools/relay-compiler-language-typescript/pull/321) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+
+#### Authors: 1
+
+- [@dependabot-preview[bot]](https://github.com/dependabot-preview[bot])
+
+---
+
 # v13.0.9 (Fri Apr 02 2021)
 
 #### 🐛  Bug Fix
