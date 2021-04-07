@@ -1,5 +1,45 @@
 {
-  "extends": "@artsy",
   "name": "Eloy Durán",
   "email": "eloy.de.enige@gmail.com",
+  "labels": [
+    {
+      "name": "Version: Major",
+      "changelogTitle": "💥 Breaking Change",
+      "description": "Increment the major version when merged",
+      "releaseType": "major"
+    },
+    {
+      "name": "Version: Minor",
+      "changelogTitle": "🚀 Enhancement",
+      "description": "Increment the minor version when merged",
+      "releaseType": "minor"
+    },
+    {
+      "name": "Version: Patch",
+      "changelogTitle": "🐛 Bug Fix",
+      "description": "Increment the patch version when merged",
+      "releaseType": "patch"
+    },
+    {
+      "name": "Skip Release",
+      "description": "Preserve the current version when merged",
+      "releaseType": "skip"
+    },
+    {
+      "name": "Version: Trivial",
+      "changelogTitle": "🏠 Internal",
+      "description": "Changes only affect the internal API",
+      "releaseType": "none"
+    },
+    {
+      "name": "Docs",
+      "changelogTitle": "📝 Documentation",
+      "description": "Changes only affect the documentation",
+      "releaseType": "none"
+    }
+  ],
+  "plugins": [
+    "npm",
+    "released"
+  ]
 }

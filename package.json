@@ -77,7 +77,6 @@
     "invariant": "^2.2.4"
   },
   "devDependencies": {
-    "@artsy/auto-config": "^1.0.0",
     "@babel/runtime": "7.12.13",
     "@types/graphql": "^14.2.3",
     "@types/invariant": "2.2.34",
