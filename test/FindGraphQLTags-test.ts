@@ -26,8 +26,8 @@ describe("FindGraphQLTags", () => {
             name
           }
         `,
-        sourceLocationOffset: { line: 5, column: 16 }
-      }
+        sourceLocationOffset: { line: 5, column: 16 },
+      },
     ]);
   });
 
@@ -38,8 +38,8 @@ describe("FindGraphQLTags", () => {
       {
         keyName: null,
         template: `fragment TestModule_artist on Artist {name}`,
-        sourceLocationOffset: { line: 1, column: 8 }
-      }
+        sourceLocationOffset: { line: 1, column: 8 },
+      },
     ]);
   });
   // TODO: Cover all cases where tags are extracted

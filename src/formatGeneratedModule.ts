@@ -11,14 +11,15 @@ export const formatterFactory = (
   concreteText,
   typeText,
   hash,
-  sourceHash
+  sourceHash,
 }) => {
   const documentTypeImport = documentType
     ? `import { ${documentType} } from "relay-runtime";`
     : "";
   const docTextComment = docText ? "\n/*\n" + docText.trim() + "\n*/\n" : "";
-  let nodeStatement = `const node: ${documentType ||
-    "never"} = ${concreteText};`;
+  let nodeStatement = `const node: ${
+    documentType || "never"
+  } = ${concreteText};`;
   if (compilerOptions.noImplicitAny) {
     nodeStatement = addAnyTypeCast(nodeStatement).trim();
   }
