@@ -76,6 +76,20 @@ higher in your `tsconfig.json`. Note that the `eagerESModules` option from
 `relay-compiler` has no effect on the generated code if `module` is ES2015 or
 higher.* 
 
+#### Custom Headers
+
+If you need to add a custom header to generated files, perhaps for a custom linter
+or to get boilerplate license code in, that can be passed in also in compilerOptions 
+as `banner`:
+
+```json
+{
+  "compilerOptions": {
+    "banner": "/* &copy; 2021 Example.org - @generated code */"
+  }
+}
+```
+
 ## Problems
 
 ### React Hot Loader

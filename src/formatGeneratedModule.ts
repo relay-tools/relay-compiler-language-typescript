@@ -90,7 +90,8 @@ ${nodeStatement}
 export default node;
 `;
 
-    const content = `/* tslint:disable */
+    const banner = compilerOptions.banner ? compilerOptions.banner + "\n" : "";
+    const content = `${banner}/* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 ${hash ? `/* ${hash} */\n` : ""}
