@@ -76,6 +76,20 @@ Note that this does mean you need to configure Babel to transform the ES module
 [`babel-plugin-transform-es2015-modules-commonjs`](https://babeljs.io/docs/plugins/transform-es2015-modules-commonjs/)
 transform plugin, if you’re not already.
 
+#### Custom Headers
+
+If you need to add a custom header to generated files, perhaps for a custom linter
+or to get boilerplate license code in, that can be passed in also in compilerOptions 
+as `customHeader`:
+
+```json
+{
+  "compilerOptions": {
+    "customHeader": "/* &copy; 2021 Example.org - @generated code */"
+  }
+}
+```
+
 ## Problems
 
 ### React Hot Loader
