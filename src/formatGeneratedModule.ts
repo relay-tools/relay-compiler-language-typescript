@@ -22,7 +22,7 @@ export const formatterFactory = (
   if (compilerOptions.noImplicitAny) {
     nodeStatement = addAnyTypeCast(nodeStatement).trim();
   }
-  var customHeader = compilerOptions.customHeader ? compilerOptions.customHeader + "\n" : "";
+  const customHeader = compilerOptions.customHeader ? compilerOptions.customHeader + "\n" : "";
   return `${customHeader}/* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
