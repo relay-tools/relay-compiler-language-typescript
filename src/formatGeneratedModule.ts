@@ -22,8 +22,8 @@ export const formatterFactory = (
   if (compilerOptions.noImplicitAny) {
     nodeStatement = addAnyTypeCast(nodeStatement).trim();
   }
-  const customHeader = compilerOptions.customHeader ? compilerOptions.customHeader + "\n" : "";
-  return `${customHeader}/* tslint:disable */
+  const banner = compilerOptions.banner ? compilerOptions.banner + "\n" : "";
+  return `${banner}/* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 ${hash ? `/* ${hash} */\n` : ""}

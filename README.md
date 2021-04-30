@@ -80,12 +80,12 @@ transform plugin, if you’re not already.
 
 If you need to add a custom header to generated files, perhaps for a custom linter
 or to get boilerplate license code in, that can be passed in also in compilerOptions 
-as `customHeader`:
+as `banner`:
 
 ```json
 {
   "compilerOptions": {
-    "customHeader": "/* &copy; 2021 Example.org - @generated code */"
+    "banner": "/* &copy; 2021 Example.org - @generated code */"
   }
 }
 ```
