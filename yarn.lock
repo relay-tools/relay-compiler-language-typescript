@@ -954,10 +954,10 @@
     graphql "^14.5.3"
     typescript "^3.0.0"
 
-"@types/relay-runtime@*", "@types/relay-runtime@^10.0.1":
-  version "10.1.8"
-  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-10.1.8.tgz#dc60ca3332693b952e5e2871718320a2377b466e"
-  integrity sha512-8oZA8RGHD7590ObCt0aWZSWIS5GYwcJIp70FovVu9mIHP7rmpVH2u0y29nJZ5TuSEbPNz6zy09IBMWjaHMruZg==
+"@types/relay-runtime@*", "@types/relay-runtime@^11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-11.0.0.tgz#7ddbe41152d46b614d1f3f7f0672cfb721eb93f1"
+  integrity sha512-D5JNxDhkcPSIMZc2j3N/fh61399O309ph9RVmzbF+Fsyvepsqy7FirFKcJ2CMfYxE/kb8ZD/Xdzs3CYZEiQc4w==
 
 "@types/stack-utils@^2.0.0":
   version "2.0.0"
