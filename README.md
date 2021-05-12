@@ -81,7 +81,7 @@ transform plugin, if you’re not already.
 ### React Hot Loader
 
 React Hot Loader is known to not always work well with generated code such as
-our typing artefacts, which will lead to loading modules _with_ TypeScript types
+our typing artifacts, which will lead to loading modules _with_ TypeScript types
 into the browser and break. As a maintainer of RHL
 [pointed out](https://github.com/gaearon/react-hot-loader/issues/1032) in a
 similar issue:
