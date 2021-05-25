@@ -3,7 +3,7 @@ import * as util from "util";
 
 import {
   GraphQLTag,
-  GraphQLTagFinder
+  GraphQLTagFinder,
 } from "relay-compiler/lib/language/RelayLanguagePluginInterface";
 
 function isCreateContainerFunction(
@@ -65,7 +65,7 @@ function visit(node: ts.Node, addGraphQLTag: (tag: GraphQLTag) => void): void {
             break;
           }
           if (ts.isObjectLiteralExpression(fragmentSpec)) {
-            fragmentSpec.properties.forEach(prop => {
+            fragmentSpec.properties.forEach((prop) => {
               invariant(
                 ts.isPropertyAssignment(prop) &&
                   prop.questionToken == null &&
@@ -90,7 +90,7 @@ function visit(node: ts.Node, addGraphQLTag: (tag: GraphQLTag) => void): void {
               addGraphQLTag({
                 keyName: (propAssignment.name as ts.Identifier).text,
                 template: getGraphQLText(taggedTemplate),
-                sourceLocationOffset: getSourceLocationOffset(taggedTemplate)
+                sourceLocationOffset: getSourceLocationOffset(taggedTemplate),
               });
             });
           } else {
@@ -111,7 +111,7 @@ function visit(node: ts.Node, addGraphQLTag: (tag: GraphQLTag) => void): void {
             addGraphQLTag({
               keyName: null,
               template: getGraphQLText(taggedTemplate),
-              sourceLocationOffset: getSourceLocationOffset(taggedTemplate)
+              sourceLocationOffset: getSourceLocationOffset(taggedTemplate),
             });
           }
           // Visit remaining arguments
@@ -130,7 +130,7 @@ function visit(node: ts.Node, addGraphQLTag: (tag: GraphQLTag) => void): void {
           addGraphQLTag({
             keyName: null,
             template: getGraphQLText(taggedTemplate),
-            sourceLocationOffset: getSourceLocationOffset(taggedTemplate)
+            sourceLocationOffset: getSourceLocationOffset(taggedTemplate),
           });
         }
       }
@@ -167,7 +167,7 @@ function getSourceLocationOffset(quasi: ts.TaggedTemplateExpression) {
   const loc = quasi.getSourceFile().getLineAndCharacterOfPosition(pos);
   return {
     line: loc.line + 1,
-    column: loc.character + 1
+    column: loc.character + 1,
   };
 }
 
@@ -180,6 +180,6 @@ function invariant(condition: boolean, msg: string, ...args: any[]) {
 export const find: GraphQLTagFinder = (text, filePath) => {
   const result: GraphQLTag[] = [];
   const ast = ts.createSourceFile(filePath, text, ts.ScriptTarget.Latest, true);
-  visit(ast, tag => result.push(tag));
+  visit(ast, (tag) => result.push(tag));
   return result;
 };

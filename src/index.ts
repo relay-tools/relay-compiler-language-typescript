@@ -10,6 +10,6 @@ export default function plugin(): PluginInterface {
     outputExtension: "ts",
     findGraphQLTags: find,
     formatModule: formatterFactory(loadCompilerOptions()),
-    typeGenerator: TypeScriptGenerator
+    typeGenerator: TypeScriptGenerator,
   };
 }
