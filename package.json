@@ -81,7 +81,7 @@
     "@types/graphql": "^14.2.3",
     "@types/invariant": "2.2.34",
     "@types/jest": "^26.0.20",
-    "@types/node": "15.0.1",
+    "@types/node": "16.3.0",
     "@types/relay-compiler": "^8.0.0",
     "@types/relay-runtime": "^10.0.1",
     "babel-plugin-relay": "^11.0.1",
