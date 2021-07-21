@@ -2,35 +2,62 @@ import { FormatModule } from "relay-compiler";
 import * as ts from "typescript";
 import addAnyTypeCast from "./addAnyTypeCast";
 
-const createRequireRegex = () => /require\("(.*)"\)/g;
-const escapeRegexString = (str: string) =>
-  str.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+const createRequireRegex = () => /require\('(.*)'\)/g;
 
-// collects all require calls and converts them to top level imports
-const requireToImport = (content: string) => {
+function getModuleName(path: string) {
+  const [moduleName] = path.replace("./", "").split(".");
+  return moduleName;
+}
+
+// collects all require calls and converts them top-level imports
+const requireToImport = (content: string): string => {
+  const requireRegex = createRequireRegex();
+
+  // collect all require paths (unique)
   const requirePaths = new Set<string>();
-  const regex = createRequireRegex();
-  let result: null | RegExpExecArray = null;
   while (true) {
-    result = regex.exec(content);
-    if (result === null) {
+    const res = requireRegex.exec(content);
+    if (res === null) {
       break;
     }
-    requirePaths.add(result[1]);
+    requirePaths.add(res[1]);
   }
-
-  for (const requirePath of requirePaths) {
-    const [baseName] = requirePath.replace("./", "").split(".");
-    content =
-      `import ${baseName} from "${requirePath.replace(".ts", "")}";\n` +
-      content.replace(
-        new RegExp(escapeRegexString(`require('${requirePath}')`), "g"),
-        baseName
-      );
-  }
-
+  // replace all require paths
+  Array.from(requirePaths).forEach((requirePath) => {
+    content = content.replace(
+      `require('${requirePath}')`,
+      getModuleName(requirePath)
+    );
+  });
+  // create top-level imports
+  const topLevelImports = Array.from(requirePaths)
+    .sort()
+    .map(
+      (requirePath) =>
+        `import ${getModuleName(requirePath)} from "${requirePath.replace(
+          ".ts",
+          ""
+        )}";`
+    );
+  // add top-level imports
+  content = `${topLevelImports.join("\n")}
+${content}`;
   return content;
 };
+
+type FormatContentOptions = {
+  replaceRequire: boolean;
+};
+
+function formatContent(
+  rawContent: string,
+  options: FormatContentOptions
+): string {
+  if (!options.replaceRequire) {
+    return rawContent;
+  }
+  return requireToImport(rawContent);
+}
 
 export const formatterFactory = (
   compilerOptions: ts.CompilerOptions = {}
@@ -43,6 +70,8 @@ export const formatterFactory = (
   hash,
   sourceHash,
 }) => {
+  const { noImplicitAny, module = -1 } = compilerOptions;
+
   const documentTypeImport = documentType
     ? `import { ${documentType} } from "relay-runtime";`
     : "";
@@ -50,7 +79,7 @@ export const formatterFactory = (
   let nodeStatement = `const node: ${
     documentType || "never"
   } = ${concreteText};`;
-  if (compilerOptions.noImplicitAny) {
+  if (noImplicitAny) {
     nodeStatement = addAnyTypeCast(nodeStatement).trim();
   }
   const rawContent = `${typeText || ""}
@@ -66,6 +95,8 @@ export default node;
 // @ts-nocheck
 ${hash ? `/* ${hash} */\n` : ""}
 ${documentTypeImport}
-${requireToImport(rawContent)}`;
+${formatContent(rawContent, {
+  replaceRequire: module >= ts.ModuleKind.ES2015,
+})}`;
   return content;
 };
