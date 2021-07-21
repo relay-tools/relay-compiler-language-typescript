@@ -1,0 +1,68 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: "@types/node"
+    versions:
+    - 14.14.24
+    - 14.14.26
+    - 14.14.30
+    - 14.14.31
+    - 14.14.32
+    - 14.14.33
+    - 14.14.34
+    - 14.14.35
+    - 14.14.36
+    - 14.14.37
+    - 15.0.0
+  - dependency-name: relay-compiler
+    versions:
+    - 11.0.0
+    - 11.0.1
+  - dependency-name: relay-runtime
+    versions:
+    - 11.0.0
+    - 11.0.1
+  - dependency-name: concurrently
+    versions:
+    - 6.0.0
+    - 6.0.1
+    - 6.0.2
+  - dependency-name: "@types/relay-runtime"
+    versions:
+    - 10.1.10
+    - 10.1.9
+  - dependency-name: y18n
+    versions:
+    - 4.0.1
+  - dependency-name: husky
+    versions:
+    - 5.0.9
+    - 5.1.0
+    - 5.1.1
+    - 5.1.2
+    - 5.1.3
+    - 5.2.0
+  - dependency-name: babel-plugin-relay
+    versions:
+    - 11.0.0
+  - dependency-name: typescript
+    versions:
+    - 4.2.2
+    - 4.2.3
+  - dependency-name: ts-jest
+    versions:
+    - 26.5.2
+    - 26.5.3
+  - dependency-name: "@babel/runtime"
+    versions:
+    - 7.12.18
+    - 7.13.2
+    - 7.13.6
+    - 7.13.7
+    - 7.13.8
+    - 7.13.9

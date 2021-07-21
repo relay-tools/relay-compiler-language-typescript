@@ -1,3 +1,44 @@
+# v14.0.0 (Wed Apr 07 2021)
+
+#### 💥 Breaking Change
+
+- feat: drop typescript 3 support [#275](https://github.com/relay-tools/relay-compiler-language-typescript/pull/275) ([@n1ru4l](https://github.com/n1ru4l))
+
+#### 🏠 Internal
+
+- Remove artsy auto-config dep, update auto pinned version [#322](https://github.com/relay-tools/relay-compiler-language-typescript/pull/322) ([@zephraph](https://github.com/zephraph))
+
+#### Authors: 2
+
+- Justin Bennett ([@zephraph](https://github.com/zephraph))
+- Laurin Quast ([@n1ru4l](https://github.com/n1ru4l))
+
+---
+
+# v13.0.10 (Wed Apr 07 2021)
+
+#### 🐛  Bug Fix
+
+- chore: [security] bump y18n from 4.0.0 to 4.0.2 [#321](https://github.com/relay-tools/relay-compiler-language-typescript/pull/321) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+
+#### Authors: 1
+
+- [@dependabot-preview[bot]](https://github.com/dependabot-preview[bot])
+
+---
+
+# v13.0.9 (Fri Apr 02 2021)
+
+#### 🐛  Bug Fix
+
+- Revert "feat: drop typescript 3 and Node.js 10 support (#275)" [#317](https://github.com/relay-tools/relay-compiler-language-typescript/pull/317) ([@n1ru4l](https://github.com/n1ru4l))
+
+#### Authors: 1
+
+- Laurin Quast ([@n1ru4l](https://github.com/n1ru4l))
+
+---
+
 # v13.0.8 (Fri Apr 02 2021)
 
 
