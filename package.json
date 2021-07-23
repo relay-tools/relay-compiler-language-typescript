@@ -73,7 +73,6 @@
     }
   },
   "dependencies": {
-    "immutable": "^4.0.0-rc.12",
     "invariant": "^2.2.4"
   },
   "devDependencies": {
