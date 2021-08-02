@@ -1,4 +1,4 @@
-import { CompilerContext, IRTransforms, Root,  } from "relay-compiler";
+import { CompilerContext, IRTransforms, Root } from "relay-compiler";
 import { TypeGeneratorOptions } from "relay-compiler/lib/language/RelayLanguagePluginInterface";
 import { generateTestsFromFixtures } from "relay-test-utils-internal/lib/generateTestsFromFixtures";
 import parseGraphQLText = require("relay-test-utils-internal/lib/parseGraphQLText");
@@ -23,7 +23,18 @@ function generate(
         birthdate: Date
         emailAddresses: [String]
         firstName(if: Boolean, unless: Boolean): String
-        friends(after: ID, before: ID, first: Int, last: Int, orderby: [String], find: String, isViewerFriend: Boolean, if: Boolean, unless: Boolean, traits: [PersonalityTraits]): FriendsConnection
+        friends(
+          after: ID
+          before: ID
+          first: Int
+          last: Int
+          orderby: [String]
+          find: String
+          isViewerFriend: Boolean
+          if: Boolean
+          unless: Boolean
+          traits: [PersonalityTraits]
+        ): FriendsConnection
         hometown: Page
         id: ID!
         lastName: String
@@ -38,7 +49,7 @@ function generate(
         websites: [String]
         username: String
       }
-    `
+    `,
   ]);
   const { definitions, schema: extendedSchema } = parseGraphQLText(
     schema,
@@ -49,7 +60,7 @@ function generate(
     .applyTransforms(TypeScriptGenerator.transforms)
     .documents()
     .map(
-      doc =>
+      (doc) =>
         `// ${doc.name}.graphql\n${TypeScriptGenerator.generate(
           extendedSchema,
           doc as any,
@@ -57,7 +68,7 @@ function generate(
             ...options,
             normalizationIR: context
               ? (context.get(doc.name) as Root)
-              : undefined
+              : undefined,
           }
         )}`
     )
@@ -76,46 +87,52 @@ describe("Snapshot tests", () => {
       .applyTransforms([
         ...IRTransforms.commonTransforms,
         ...IRTransforms.queryTransforms,
-        ...IRTransforms.codegenTransforms
+        ...IRTransforms.codegenTransforms,
       ]);
   }
 
   describe("TypeScriptGenerator with a single artifact directory", () => {
-    generateTestsFromFixtures(`${__dirname}/fixtures/type-generator`, (text: string) => {
-      const context = generateContext(text);
-      return generate(
-        text,
-        {
-          customScalars: {},
-          // enumsHasteModule: null,
-          existingFragmentNames: new Set(["PhotoFragment"]),
-          optionalInputFields: [],
-          useHaste: false,
-          useSingleArtifactDirectory: true,
-          noFutureProofEnums: false
-        },
-        context
-      );
-    });
+    generateTestsFromFixtures(
+      `${__dirname}/fixtures/type-generator`,
+      (text: string) => {
+        const context = generateContext(text);
+        return generate(
+          text,
+          {
+            customScalars: {},
+            // enumsHasteModule: null,
+            existingFragmentNames: new Set(["PhotoFragment"]),
+            optionalInputFields: [],
+            useHaste: false,
+            useSingleArtifactDirectory: true,
+            noFutureProofEnums: false,
+          },
+          context
+        );
+      }
+    );
   });
 
   describe("TypeScriptGenerator without a single artifact directory", () => {
-    generateTestsFromFixtures(`${__dirname}/fixtures/type-generator`, (text: string) => {
-      const context = generateContext(text);
-      return generate(
-        text,
-        {
-          customScalars: {},
-          // enumsHasteModule: null,
-          existingFragmentNames: new Set(["PhotoFragment"]),
-          optionalInputFields: [],
-          useHaste: false,
-          useSingleArtifactDirectory: false,
-          noFutureProofEnums: false
-        },
-        context
-      );
-    });
+    generateTestsFromFixtures(
+      `${__dirname}/fixtures/type-generator`,
+      (text: string) => {
+        const context = generateContext(text);
+        return generate(
+          text,
+          {
+            customScalars: {},
+            // enumsHasteModule: null,
+            existingFragmentNames: new Set(["PhotoFragment"]),
+            optionalInputFields: [],
+            useHaste: false,
+            useSingleArtifactDirectory: false,
+            noFutureProofEnums: false,
+          },
+          context
+        );
+      }
+    );
   });
 });
 
@@ -133,7 +150,7 @@ describe("Does not add `%future added values` when the noFutureProofEnums option
     useHaste: true,
     useSingleArtifactDirectory: false,
     // This is what's different from the tests above.
-    noFutureProofEnums: true
+    noFutureProofEnums: true,
   });
 
   // Without the option, PersonalityTraits would be `"CHEERFUL" | ... | "%future added value");`
@@ -159,14 +176,14 @@ describe.each`
   `;
   const types = generate(text, {
     customScalars: {
-      Color: mapping
+      Color: mapping,
     },
     // enumsHasteModule: null,
     existingFragmentNames: new Set(["PhotoFragment"]),
     optionalInputFields: [],
     useHaste: false,
     useSingleArtifactDirectory: true,
-    noFutureProofEnums: false
+    noFutureProofEnums: false,
   });
 
   expect(types).toContain(`color: ${type} | null`);

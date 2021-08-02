@@ -42,15 +42,15 @@ to instruct `babel-plugin-relay` to use in your `.babelrc`:
 
 ### TypeScript
 
-Also be sure to configure the TypeScript compiler to transpile to `es2015`
-modules and leave transpilation to `commonjs` modules up to Babel with the
-following `tsconfig.json` settings:
+Also be sure to configure the TypeScript compiler to transpile to `ES2015`
+modules (or higher) and leave transpilation to `CommonJS` modules (if required)
+up to Babel with the following `tsconfig.json` settings:
 
-```json
+```json5
 {
   "compilerOptions": {
-    "target": "es2015",
-    "module": "es2015"
+    "module": "ES2015", // ES2015 or higher
+    "target": "ES2020"  // best use the highest target setting compatible with your Babel setup
   }
 }
 ```
@@ -68,13 +68,13 @@ react_relay_1.createFragmentContainer(
 );
 ```
 
-…and this makes it impossible for `babel-plugin-relay` to find the locations
+… which makes it impossible for `babel-plugin-relay` to find the locations
 where the `graphql` function is being used.
 
-Note that this does mean you need to configure Babel to transform the ES module
-`import` and `export` statements, by using the
-[`babel-plugin-transform-es2015-modules-commonjs`](https://babeljs.io/docs/plugins/transform-es2015-modules-commonjs/)
-transform plugin, if you’re not already.
+*The generated code uses ES2015 module syntax if `module` is set to ES2015 or
+higher in your `tsconfig.json`. Note that the `eagerESModules` option from
+`relay-compiler` has no effect on the generated code if `module` is ES2015 or
+higher.* 
 
 ## Problems
 
