@@ -76,7 +76,7 @@
     "invariant": "^2.2.4"
   },
   "devDependencies": {
-    "@babel/runtime": "7.13.17",
+    "@babel/runtime": "7.15.3",
     "@types/graphql": "^14.2.3",
     "@types/invariant": "2.2.34",
     "@types/jest": "^26.0.20",
