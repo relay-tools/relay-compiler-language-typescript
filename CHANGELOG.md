@@ -1,3 +1,48 @@
+# v14.1.0 (Sun Aug 08 2021)
+
+#### 🚀 Enhancement
+
+- wip: collect inline require statements and convert them to top level imports [#269](https://github.com/relay-tools/relay-compiler-language-typescript/pull/269) ([@n1ru4l](https://github.com/n1ru4l) [@asterikx](https://github.com/asterikx) erik.mueller@mailbox.org)
+
+#### 🐛 Bug Fix
+
+- Drop immutable [#399](https://github.com/relay-tools/relay-compiler-language-typescript/pull/399) ([@TrySound](https://github.com/TrySound))
+- Update README.md [#361](https://github.com/relay-tools/relay-compiler-language-typescript/pull/361) ([@hanford](https://github.com/hanford))
+
+#### 🏠 Internal
+
+- Add missing github token [#415](https://github.com/relay-tools/relay-compiler-language-typescript/pull/415) ([@zephraph](https://github.com/zephraph))
+- Move to GH actions for release [#407](https://github.com/relay-tools/relay-compiler-language-typescript/pull/407) ([@zephraph](https://github.com/zephraph))
+
+#### 🔩 Dependency Updates
+
+- chore: bump @types/node from 14.14.41 to 15.0.1 [#337](https://github.com/relay-tools/relay-compiler-language-typescript/pull/337) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- chore: bump @types/jest from 26.0.22 to 26.0.23 [#335](https://github.com/relay-tools/relay-compiler-language-typescript/pull/335) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- Upgrade to GitHub-native Dependabot [#338](https://github.com/relay-tools/relay-compiler-language-typescript/pull/338) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- chore: bump @babel/runtime from 7.13.10 to 7.13.17 [#327](https://github.com/relay-tools/relay-compiler-language-typescript/pull/327) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- chore: bump @types/node from 14.14.39 to 14.14.41 [#326](https://github.com/relay-tools/relay-compiler-language-typescript/pull/326) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- chore: bump ts-jest from 26.5.4 to 26.5.5 [#330](https://github.com/relay-tools/relay-compiler-language-typescript/pull/330) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- chore: bump @types/jest from 26.0.20 to 26.0.22 [#332](https://github.com/relay-tools/relay-compiler-language-typescript/pull/332) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- chore: bump babel-plugin-relay from 11.0.1 to 11.0.2 [#333](https://github.com/relay-tools/relay-compiler-language-typescript/pull/333) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- chore: bump @types/node from 14.14.28 to 14.14.39 [#325](https://github.com/relay-tools/relay-compiler-language-typescript/pull/325) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- chore: bump concurrently from 5.3.0 to 6.0.2 [#324](https://github.com/relay-tools/relay-compiler-language-typescript/pull/324) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- chore: bump typescript from 4.2.3 to 4.2.4 [#323](https://github.com/relay-tools/relay-compiler-language-typescript/pull/323) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- chore: bump babel-plugin-relay from 10.1.3 to 11.0.1 [#310](https://github.com/relay-tools/relay-compiler-language-typescript/pull/310) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- chore: bump ts-jest from 26.5.1 to 26.5.4 [#304](https://github.com/relay-tools/relay-compiler-language-typescript/pull/304) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+- chore: bump @babel/runtime from 7.12.13 to 7.13.10 [#296](https://github.com/relay-tools/relay-compiler-language-typescript/pull/296) ([@dependabot-preview[bot]](https://github.com/dependabot-preview[bot]))
+
+#### Authors: 7
+
+- [@dependabot-preview[bot]](https://github.com/dependabot-preview[bot])
+- Bogdan Chadkin ([@TrySound](https://github.com/TrySound))
+- Erik Müller ([@asterikx](https://github.com/asterikx))
+- Erik Müller (erik.mueller@mailbox.org)
+- Jack Hanford ([@hanford](https://github.com/hanford))
+- Justin Bennett ([@zephraph](https://github.com/zephraph))
+- Laurin Quast ([@n1ru4l](https://github.com/n1ru4l))
+
+---
+
 # v14.0.0 (Wed Apr 07 2021)
 
 #### 💥 Breaking Change

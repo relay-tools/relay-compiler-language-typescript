@@ -5,9 +5,18 @@ export const loadCompilerOptions = (): ts.CompilerOptions => {
   if (!configFileName) {
     return {};
   }
-  const result = ts.readConfigFile(configFileName, ts.sys.readFile);
-  if (result.error) {
+  const configFile = ts.readConfigFile(configFileName, ts.sys.readFile);
+  if (configFile.error) {
     return {};
   }
-  return result.config.compilerOptions;
+  // parse config file contents (to convert strings to enum values etc.)
+  const parsedConfig = ts.parseJsonConfigFileContent(
+    configFile.config,
+    ts.sys,
+    "./"
+  );
+  if (parsedConfig.errors.length > 0) {
+    return {};
+  }
+  return parsedConfig.options;
 };

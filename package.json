@@ -1,6 +1,6 @@
 {
   "name": "relay-compiler-language-typescript",
-  "version": "14.0.0",
+  "version": "14.1.0",
   "description": "A language plugin for Relay that adds TypeScript support, including emitting type definitions.",
   "keywords": [
     "graphql",
@@ -35,14 +35,14 @@
   "scripts": {
     "build": "rimraf lib && tsc --project tsconfig.build.json",
     "lint": "tslint -c tslint.json --project tsconfig.json",
-    "pr-check": "scripts/pr-check.sh",
     "prettier": "prettier --write '{src,types,test}/**/*.ts'",
     "prepublish": "npm run build",
     "relay": "node bin/relay-compiler.js --schema test/schema.graphql --src test/ --outputDir __generated__",
     "sync-fixtures": "ts-node ./syncFixtures.ts",
     "test": "npm run type-check && jest",
     "type-check": "tsc --noEmit --pretty",
-    "watch": "concurrently 'tsc --watch --project tsconfig.build.json' 'chokidar \"lib/**/*.js\" -c \"yalc publish --force --push\"'"
+    "watch": "concurrently 'tsc --watch --project tsconfig.build.json' 'chokidar \"lib/**/*.js\" -c \"yalc publish --force --push\"'",
+    "release": "npx auto@v10.30.0 shipit -v"
   },
   "husky": {
     "hooks": {
@@ -73,7 +73,6 @@
     }
   },
   "dependencies": {
-    "immutable": "^4.0.0-rc.12",
     "invariant": "^2.2.4"
   },
   "devDependencies": {
