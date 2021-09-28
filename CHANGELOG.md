@@ -1,3 +1,22 @@
+# v14.1.1 (Tue Sep 28 2021)
+
+#### 🐛 Bug Fix
+
+- chore: update jestv27 [#451](https://github.com/relay-tools/relay-compiler-language-typescript/pull/451) ([@saihaj](https://github.com/saihaj))
+- style: format code [#453](https://github.com/relay-tools/relay-compiler-language-typescript/pull/453) ([@saihaj](https://github.com/saihaj))
+
+#### 🔩 Dependency Updates
+
+- chore(deps-dev): bump ts-node from 9.1.1 to 10.2.1 [#425](https://github.com/relay-tools/relay-compiler-language-typescript/pull/425) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump ws from 7.4.2 to 7.4.6 [#371](https://github.com/relay-tools/relay-compiler-language-typescript/pull/371) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 2
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Saihajpreet Singh ([@saihaj](https://github.com/saihaj))
+
+---
+
 # v14.1.0 (Sun Aug 08 2021)
 
 #### 🚀 Enhancement
