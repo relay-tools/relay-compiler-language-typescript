@@ -41,6 +41,7 @@
     "sync-fixtures": "ts-node ./syncFixtures.ts",
     "test": "npm run type-check && jest",
     "type-check": "tsc --noEmit --pretty",
+    "prettier-check": "prettier '{src,types,test}/**/*.ts'",
     "watch": "concurrently 'tsc --watch --project tsconfig.build.json' 'chokidar \"lib/**/*.js\" -c \"yalc publish --force --push\"'",
     "release": "npx auto@v10.30.0 shipit -v",
     "prepare": "husky install"
