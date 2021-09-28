@@ -42,12 +42,8 @@
     "test": "npm run type-check && jest",
     "type-check": "tsc --noEmit --pretty",
     "watch": "concurrently 'tsc --watch --project tsconfig.build.json' 'chokidar \"lib/**/*.js\" -c \"yalc publish --force --push\"'",
-    "release": "npx auto@v10.30.0 shipit -v"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "release": "npx auto@v10.30.0 shipit -v",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "**/*.json": [
@@ -87,7 +83,7 @@
     "concurrently": "^6.2.2",
     "glob": "^7.1.6",
     "graphql": "^15.6.0",
-    "husky": "^4.3.8",
+    "husky": "^7.0.0",
     "jest": "^26.6.3",
     "jest-cli": "^26.6.3",
     "lint-staged": "^11.1.2",
