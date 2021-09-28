@@ -84,7 +84,7 @@
     "@types/relay-runtime": "^10.0.1",
     "babel-plugin-relay": "^11.0.1",
     "chokidar-cli": "^2.0.0",
-    "concurrently": "^6.0.2",
+    "concurrently": "^6.2.2",
     "glob": "^7.1.6",
     "graphql": "^15.6.0",
     "husky": "^4.3.8",
