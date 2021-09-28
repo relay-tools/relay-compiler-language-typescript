@@ -1,3 +1,20 @@
+# v14.1.2 (Tue Sep 28 2021)
+
+#### 🐛 Bug Fix
+
+- Upgrade sub dependencies [#465](https://github.com/relay-tools/relay-compiler-language-typescript/pull/465) ([@fxOne](https://github.com/fxOne))
+
+#### 🔩 Dependency Updates
+
+- chore(deps-dev): bump jest-cli from 26.6.3 to 27.2.3 [#464](https://github.com/relay-tools/relay-compiler-language-typescript/pull/464) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 2
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Dominic Buetow ([@fxOne](https://github.com/fxOne))
+
+---
+
 # v14.1.1 (Tue Sep 28 2021)
 
 #### 🐛 Bug Fix
