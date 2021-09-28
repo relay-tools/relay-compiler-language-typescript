@@ -99,7 +99,7 @@
     "typescript": "4.2.4"
   },
   "peerDependencies": {
-    "@types/react-relay": ">=7.0.17",
+    "@types/react-relay": ">=11.0.2",
     "@types/relay-runtime": ">=12.0.0",
     "relay-compiler": ">=12.0.0",
     "relay-runtime": ">=12.0.0",
