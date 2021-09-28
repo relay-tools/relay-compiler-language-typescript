@@ -76,7 +76,7 @@
     "@types/invariant": "2.2.35",
     "@types/jest": "^26.0.20",
     "@types/node": "16.10.1",
-    "@types/relay-compiler": "^8.0.0",
+    "@types/relay-compiler": "^8.0.1",
     "@types/relay-runtime": "^10.0.1",
     "babel-plugin-relay": "^11.0.1",
     "chokidar-cli": "^3.0.0",

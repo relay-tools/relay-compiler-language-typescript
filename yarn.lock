@@ -1137,10 +1137,10 @@
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.1.6.tgz#f4b1efa784e8db479cdb8b14403e2144b1e9ff03"
   integrity sha512-6gOkRe7OIioWAXfnO/2lFiv+SJichKVSys1mSsgyrYHSEjk8Ctv4tSR/Odvnu+HWlH2C8j53dahU03XmQdd5fA==
 
-"@types/relay-compiler@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@types/relay-compiler/-/relay-compiler-8.0.0.tgz#98961b923555145067d3895f8774f3024f14e6fa"
-  integrity sha512-rSR62gfhm2ZZp888RK93/jODOCA1j2MpWr5ibZEyYprmVG1G9KE5TfNUERCcc9z58F4d8tMIX00ZpBOU1sWcDA==
+"@types/relay-compiler@^8.0.1":
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/@types/relay-compiler/-/relay-compiler-8.0.1.tgz#eb85b503cfa571e60a1ae3eb5a4513fa9fcdb5f6"
+  integrity sha512-C2CkGeyInDAedzLrI0KcQvSKTqtMvG49tw79AqnkGJ3qyaGHbCFQYnysndPr4iyLvphNt6DJCxAqr4egFbGNzw==
   dependencies:
     "@types/relay-runtime" "*"
     graphql "^14.5.3"
