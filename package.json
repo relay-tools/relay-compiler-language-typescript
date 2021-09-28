@@ -74,7 +74,7 @@
   "devDependencies": {
     "@babel/runtime": "7.15.4",
     "@types/invariant": "2.2.35",
-    "@types/jest": "^26.0.20",
+    "@types/jest": "^27.0.2",
     "@types/node": "16.10.1",
     "@types/relay-compiler": "^8.0.1",
     "@types/relay-runtime": "^12.0.0",
