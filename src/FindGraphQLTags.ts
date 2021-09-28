@@ -79,7 +79,8 @@ function visit(node: ts.Node, addGraphQLTag: (tag: GraphQLTag) => void): void {
               // We tested for this
               const propAssignment = prop as ts.PropertyAssignment;
 
-              const taggedTemplate = propAssignment.initializer as ts.TaggedTemplateExpression;
+              const taggedTemplate =
+                propAssignment.initializer as ts.TaggedTemplateExpression;
               invariant(
                 isGraphQLTag(taggedTemplate.tag),
                 "FindGraphQLTags: `%s` expects fragment definitions to be tagged " +

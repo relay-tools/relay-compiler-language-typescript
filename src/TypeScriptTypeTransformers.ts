@@ -174,9 +174,8 @@ function transformNonNullableInputType(
 
       return property;
     });
-    state.generatedInputObjectTypes[
-      typeIdentifier
-    ] = ts.factory.createTypeLiteralNode(props);
+    state.generatedInputObjectTypes[typeIdentifier] =
+      ts.factory.createTypeLiteralNode(props);
     return ts.factory.createTypeReferenceNode(
       ts.factory.createIdentifier(typeIdentifier),
       []

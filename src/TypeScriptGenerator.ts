@@ -447,7 +447,7 @@ function createVisitor(
           selectionsToAST(
             schema,
             /* $FlowFixMe: selections have already been transformed */
-            (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>,
+            node.selections as any as ReadonlyArray<ReadonlyArray<Selection>>,
             state,
             false
           )
@@ -521,7 +521,7 @@ function createVisitor(
       Fragment(node) {
         const flattenedSelections: Selection[] = flattenArray(
           /* $FlowFixMe: selections have already been transformed */
-          (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
+          node.selections as any as ReadonlyArray<ReadonlyArray<Selection>>
         );
         const numConcreteSelections = flattenedSelections.filter(
           (s) => s.concreteType
@@ -605,7 +605,7 @@ function createVisitor(
       InlineFragment(node) {
         return flattenArray(
           /* $FlowFixMe: selections have already been transformed */
-          (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
+          node.selections as any as ReadonlyArray<ReadonlyArray<Selection>>
         ).map((typeSelection) => {
           return schema.isAbstractType(node.typeCondition)
             ? {
@@ -621,7 +621,7 @@ function createVisitor(
       Condition(node: Condition) {
         return flattenArray(
           /* $FlowFixMe: selections have already been transformed */
-          (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
+          node.selections as any as ReadonlyArray<ReadonlyArray<Selection>>
         ).map((selection) => {
           return {
             ...selection,
@@ -692,7 +692,7 @@ function visitLinkedField(node: LinkedField) {
       nodeSelections: selectionsToMap(
         flattenArray(
           /* $FlowFixMe: selections have already been transformed */
-          (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
+          node.selections as any as ReadonlyArray<ReadonlyArray<Selection>>
         ),
         /*
          * append concreteType to key so overlapping fields with different
@@ -879,7 +879,7 @@ function createRawResponseTypeVisitor(
           selectionsToRawResponseBabel(
             schema,
             /* $FlowFixMe: selections have already been transformed */
-            (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>,
+            node.selections as any as ReadonlyArray<ReadonlyArray<Selection>>,
             state,
             null
           )
@@ -890,7 +890,7 @@ function createRawResponseTypeVisitor(
 
         return flattenArray(
           /* $FlowFixMe: selections have already been transformed */
-          (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
+          node.selections as any as ReadonlyArray<ReadonlyArray<Selection>>
         ).map((typeSelection) => {
           return schema.isAbstractType(typeCondition)
             ? typeSelection
@@ -906,7 +906,7 @@ function createRawResponseTypeVisitor(
       ClientExtension(node) {
         return flattenArray(
           /* $FlowFixMe: selections have already been transformed */
-          (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
+          node.selections as any as ReadonlyArray<ReadonlyArray<Selection>>
         ).map((sel) => ({
           ...sel,
           conditional: true,
@@ -916,19 +916,19 @@ function createRawResponseTypeVisitor(
       Condition(node) {
         return flattenArray(
           /* $FlowFixMe: selections have already been transformed */
-          (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
+          node.selections as any as ReadonlyArray<ReadonlyArray<Selection>>
         );
       },
       Defer(node) {
         return flattenArray(
           /* $FlowFixMe: selections have already been transformed */
-          (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
+          node.selections as any as ReadonlyArray<ReadonlyArray<Selection>>
         );
       },
       Stream(node) {
         return flattenArray(
           /* $FlowFixMe: selections have already been transformed */
-          (node.selections as any) as ReadonlyArray<ReadonlyArray<Selection>>
+          node.selections as any as ReadonlyArray<ReadonlyArray<Selection>>
         );
       },
       ModuleImport(node) {
