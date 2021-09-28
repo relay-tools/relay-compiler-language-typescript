@@ -59,30 +59,30 @@ function formatContent(
   return requireToImport(rawContent);
 }
 
-export const formatterFactory = (
-  compilerOptions: ts.CompilerOptions = {}
-): FormatModule => ({
-  moduleName,
-  documentType,
-  docText,
-  concreteText,
-  typeText,
-  hash,
-  sourceHash,
-}) => {
-  const { noImplicitAny, module = -1 } = compilerOptions;
+export const formatterFactory =
+  (compilerOptions: ts.CompilerOptions = {}): FormatModule =>
+  ({
+    moduleName,
+    documentType,
+    docText,
+    concreteText,
+    typeText,
+    hash,
+    sourceHash,
+  }) => {
+    const { noImplicitAny, module = -1 } = compilerOptions;
 
-  const documentTypeImport = documentType
-    ? `import { ${documentType} } from "relay-runtime";`
-    : "";
-  const docTextComment = docText ? "\n/*\n" + docText.trim() + "\n*/\n" : "";
-  let nodeStatement = `const node: ${
-    documentType || "never"
-  } = ${concreteText};`;
-  if (noImplicitAny) {
-    nodeStatement = addAnyTypeCast(nodeStatement).trim();
-  }
-  const rawContent = `${typeText || ""}
+    const documentTypeImport = documentType
+      ? `import { ${documentType} } from "relay-runtime";`
+      : "";
+    const docTextComment = docText ? "\n/*\n" + docText.trim() + "\n*/\n" : "";
+    let nodeStatement = `const node: ${
+      documentType || "never"
+    } = ${concreteText};`;
+    if (noImplicitAny) {
+      nodeStatement = addAnyTypeCast(nodeStatement).trim();
+    }
+    const rawContent = `${typeText || ""}
 
 ${docTextComment}
 ${nodeStatement}
@@ -90,7 +90,7 @@ ${nodeStatement}
 export default node;
 `;
 
-  const content = `/* tslint:disable */
+    const content = `/* tslint:disable */
 /* eslint-disable */
 // @ts-nocheck
 ${hash ? `/* ${hash} */\n` : ""}
@@ -98,5 +98,5 @@ ${documentTypeImport}
 ${formatContent(rawContent, {
   replaceRequire: module >= ts.ModuleKind.ES2015,
 })}`;
-  return content;
-};
+    return content;
+  };
