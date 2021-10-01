@@ -1,3 +1,21 @@
+# v14.1.3 (Fri Oct 01 2021)
+
+#### 🐛 Bug Fix
+
+- Resolve `basePath` parameter to prevent errors when loading compiler options [#470](https://github.com/relay-tools/relay-compiler-language-typescript/pull/470) ([@holmesal](https://github.com/holmesal))
+
+#### 🔩 Dependency Updates
+
+- chore(deps-dev): bump @types/node from 16.10.1 to 16.10.2 [#469](https://github.com/relay-tools/relay-compiler-language-typescript/pull/469) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump jest from 27.2.3 to 27.2.4 [#467](https://github.com/relay-tools/relay-compiler-language-typescript/pull/467) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 2
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Alonso Holmes ([@holmesal](https://github.com/holmesal))
+
+---
+
 # v14.1.2 (Tue Sep 28 2021)
 
 #### 🐛 Bug Fix
