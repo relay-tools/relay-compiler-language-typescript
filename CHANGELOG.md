@@ -1,3 +1,15 @@
+# v14.2.0 (Fri Oct 01 2021)
+
+#### 🚀 Enhancement
+
+- feat: adding the ability to include a custom header on generated files [#334](https://github.com/relay-tools/relay-compiler-language-typescript/pull/334) ([@kaolin](https://github.com/kaolin))
+
+#### Authors: 1
+
+- ʞɐoןıu ıɯɐƃo ɟıɹǝ ([@kaolin](https://github.com/kaolin))
+
+---
+
 # v14.1.3 (Fri Oct 01 2021)
 
 #### 🐛 Bug Fix
