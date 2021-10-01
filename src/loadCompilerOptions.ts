@@ -13,7 +13,7 @@ export const loadCompilerOptions = (): ts.CompilerOptions => {
   const parsedConfig = ts.parseJsonConfigFileContent(
     configFile.config,
     ts.sys,
-    "./"
+    ts.sys.resolvePath('./')
   );
   if (parsedConfig.errors.length > 0) {
     return {};
