@@ -1,3 +1,23 @@
+# v14.2.1 (Wed Oct 06 2021)
+
+#### 🐛 Bug Fix
+
+- chore: Auto merge for dependabot [#475](https://github.com/relay-tools/relay-compiler-language-typescript/pull/475) ([@fxOne](https://github.com/fxOne))
+
+#### 🔩 Dependency Updates
+
+- chore(deps-dev): bump graphql from 15.6.0 to 15.6.1 [#474](https://github.com/relay-tools/relay-compiler-language-typescript/pull/474) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 16.10.2 to 16.10.3 [#473](https://github.com/relay-tools/relay-compiler-language-typescript/pull/473) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump lint-staged from 11.1.2 to 11.2.0 [#472](https://github.com/relay-tools/relay-compiler-language-typescript/pull/472) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump concurrently from 6.2.2 to 6.3.0 [#471](https://github.com/relay-tools/relay-compiler-language-typescript/pull/471) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 2
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Dominic Buetow ([@fxOne](https://github.com/fxOne))
+
+---
+
 # v14.2.0 (Fri Oct 01 2021)
 
 #### 🚀 Enhancement
