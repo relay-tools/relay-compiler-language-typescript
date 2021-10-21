@@ -24,15 +24,15 @@ import {
 
 type Selection = {
   key: string;
-  schemaName?: string;
-  value?: any;
-  nodeType?: TypeID;
-  conditional?: boolean;
-  concreteType?: string;
-  ref?: string;
-  nodeSelections?: SelectionMap | null;
-  kind?: string;
-  documentName?: string;
+  schemaName?: string | undefined;
+  value?: any | undefined;
+  nodeType?: TypeID | undefined;
+  conditional?: boolean | undefined;
+  concreteType?: string | undefined;
+  ref?: string | undefined;
+  nodeSelections?: SelectionMap | null | undefined;
+  kind?: string | undefined;
+  documentName?: string | undefined;
 };
 
 type SelectionMap = Map<string, Selection>;
@@ -309,10 +309,31 @@ function exactObjectTypeAnnotation(
 
 const idRegex = /^[$a-zA-Z_][$a-z0-9A-Z_]*$/;
 
+// union optional types with undefined for compat with exactOptionalPropertyTypes
+function createInexactOptionalType(type: ts.TypeNode): ts.TypeNode {
+  if (ts.isUnionTypeNode(type)) {
+    return ts.factory.updateUnionTypeNode(
+      type,
+      ts.factory.createNodeArray([
+        ...type.types,
+        ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+      ])
+    );
+  } else {
+    return ts.factory.createUnionTypeNode([
+      type,
+      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+    ]);
+  }
+}
+
 function objectTypeProperty(
   propertyName: string,
   type: ts.TypeNode,
-  options: { readonly?: boolean; optional?: boolean } = {}
+  options: {
+    readonly?: boolean | undefined;
+    optional?: boolean | undefined;
+  } = {}
 ): ts.PropertySignature {
   const { optional, readonly = true } = options;
   const modifiers = readonly
@@ -325,7 +346,7 @@ function objectTypeProperty(
       ? ts.factory.createIdentifier(propertyName)
       : ts.factory.createStringLiteral(propertyName),
     optional ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
-    type
+    optional ? createInexactOptionalType(type) : type
   );
 }
 

@@ -9,7 +9,7 @@ export type ScalarTypeMapping = {
 export type State = {
   generatedFragments: Set<string>;
   generatedInputObjectTypes: {
-    [name: string]: ts.TypeNode | "pending";
+    [name: string]: ts.TypeLiteralNode | "pending";
   };
   matchFields: Map<string, ts.TypeNode>;
   runtimeImports: Set<string>;
@@ -37,9 +37,7 @@ export function transformScalarType(
   } else {
     return ts.factory.createUnionTypeNode([
       transformNonNullableScalarType(schema, type, state, objectProps),
-      ts.factory.createLiteralTypeNode(
-        ts.factory.createToken(ts.SyntaxKind.NullKeyword)
-      ),
+      ts.factory.createLiteralTypeNode(ts.factory.createNull()),
     ]);
   }
 }
@@ -115,20 +113,29 @@ function transformGraphQLEnumType(
 export function transformInputType(
   schema: Schema,
   type: TypeID,
-  state: State
+  state: State,
+  options: {
+    inputObjectProperty?: boolean | undefined;
+  } = {}
 ): ts.TypeNode {
+  const { inputObjectProperty } = options;
   if (schema.isNonNull(type)) {
     return transformNonNullableInputType(
       schema,
       schema.getNullableType(type),
       state
     );
+  } else if (inputObjectProperty) {
+    return ts.factory.createUnionTypeNode([
+      transformNonNullableInputType(schema, type, state),
+      ts.factory.createLiteralTypeNode(ts.factory.createNull()),
+      // add undefined to support exactOptionalPropertyTypes
+      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+    ]);
   } else {
     return ts.factory.createUnionTypeNode([
       transformNonNullableInputType(schema, type, state),
-      ts.factory.createLiteralTypeNode(
-        ts.factory.createToken(ts.SyntaxKind.NullKeyword)
-      ),
+      ts.factory.createLiteralTypeNode(ts.factory.createNull()),
     ]);
   }
 }
@@ -169,7 +176,9 @@ function transformNonNullableInputType(
           !schema.isNonNull(fieldType)
           ? ts.factory.createToken(ts.SyntaxKind.QuestionToken)
           : undefined,
-        transformInputType(schema, fieldType, state)
+        transformInputType(schema, fieldType, state, {
+          inputObjectProperty: true,
+        })
       );
 
       return property;
