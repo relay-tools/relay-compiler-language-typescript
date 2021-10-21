@@ -24,15 +24,15 @@ import {
 
 type Selection = {
   key: string;
-  schemaName?: string;
-  value?: any;
-  nodeType?: TypeID;
-  conditional?: boolean;
-  concreteType?: string;
-  ref?: string;
-  nodeSelections?: SelectionMap | null;
-  kind?: string;
-  documentName?: string;
+  schemaName?: string | undefined;
+  value?: any | undefined;
+  nodeType?: TypeID | undefined;
+  conditional?: boolean | undefined;
+  concreteType?: string | undefined;
+  ref?: string | undefined;
+  nodeSelections?: SelectionMap | null | undefined;
+  kind?: string | undefined;
+  documentName?: string | undefined;
 };
 
 type SelectionMap = Map<string, Selection>;
@@ -309,12 +309,32 @@ function exactObjectTypeAnnotation(
 
 const idRegex = /^[$a-zA-Z_][$a-z0-9A-Z_]*$/;
 
+// union optional types with undefined for compat with exactOptionalPropertyTypes
+function createInexactOptionalType(type: ts.TypeNode): ts.TypeNode {
+  const undefinedType = ts.factory.createKeywordTypeNode(
+    ts.SyntaxKind.UndefinedKeyword
+  );
+
+  if (!ts.isUnionTypeNode(type)) {
+    return ts.factory.createUnionTypeNode([type, undefinedType]);
+  }
+
+  return ts.factory.updateUnionTypeNode(
+    type,
+    ts.factory.createNodeArray([...type.types, undefinedType])
+  );
+}
+
 function objectTypeProperty(
   propertyName: string,
   type: ts.TypeNode,
-  options: { readonly?: boolean; optional?: boolean } = {}
+  options: {
+    readonly?: boolean | undefined;
+    optional?: boolean | undefined;
+    inputVariable?: boolean | undefined;
+  } = {}
 ): ts.PropertySignature {
-  const { optional, readonly = true } = options;
+  const { optional, readonly = true, inputVariable } = options;
   const modifiers = readonly
     ? [ts.factory.createToken(ts.SyntaxKind.ReadonlyKeyword)]
     : undefined;
@@ -325,7 +345,7 @@ function objectTypeProperty(
       ? ts.factory.createIdentifier(propertyName)
       : ts.factory.createStringLiteral(propertyName),
     optional ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
-    type
+    optional && inputVariable ? createInexactOptionalType(type) : type
   );
 }
 
@@ -999,7 +1019,41 @@ function generateInputObjectTypes(state: State) {
           " defined before calling `generateInputObjectTypes`"
       );
     } else {
-      return exportType(typeIdentifier, inputObjectType);
+      const updatedMembers: ts.PropertySignature[] = [];
+
+      inputObjectType.forEachChild((child) => {
+        if (ts.isPropertySignature(child)) {
+          if (child.type && child.questionToken) {
+            updatedMembers.push(
+              ts.factory.updatePropertySignature(
+                child,
+                child.modifiers,
+                child.name,
+                child.questionToken,
+                createInexactOptionalType(child.type)
+              )
+            );
+          } else {
+            updatedMembers.push(child);
+          }
+        } else {
+          // this should be unreachable since TypeLiteralNodes created by
+          // generatedInputObjectTypes() are only given PropertySignature
+          // children (which can't be expressed via current types)
+          throw new Error(
+            "TypeScriptGenerator: Child of generated InputObjectType is not" +
+              "PropertySignature"
+          );
+        }
+      });
+
+      return exportType(
+        typeIdentifier,
+        ts.factory.updateTypeLiteralNode(
+          inputObjectType,
+          ts.factory.createNodeArray(updatedMembers)
+        )
+      );
     }
   });
 }
@@ -1012,7 +1066,11 @@ function generateInputVariablesType(schema: Schema, node: Root, state: State) {
         return objectTypeProperty(
           arg.name,
           transformInputType(schema, arg.type, state),
-          { readonly: false, optional: !schema.isNonNull(arg.type) }
+          {
+            readonly: false,
+            optional: !schema.isNonNull(arg.type),
+            inputVariable: true,
+          }
         );
       })
     )
