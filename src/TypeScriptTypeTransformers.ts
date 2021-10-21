@@ -9,7 +9,7 @@ export type ScalarTypeMapping = {
 export type State = {
   generatedFragments: Set<string>;
   generatedInputObjectTypes: {
-    [name: string]: ts.TypeNode | "pending";
+    [name: string]: ts.TypeLiteralNode | "pending";
   };
   matchFields: Map<string, ts.TypeNode>;
   runtimeImports: Set<string>;
@@ -37,9 +37,7 @@ export function transformScalarType(
   } else {
     return ts.factory.createUnionTypeNode([
       transformNonNullableScalarType(schema, type, state, objectProps),
-      ts.factory.createLiteralTypeNode(
-        ts.factory.createToken(ts.SyntaxKind.NullKeyword)
-      ),
+      ts.factory.createLiteralTypeNode(ts.factory.createNull()),
     ]);
   }
 }
@@ -115,7 +113,8 @@ function transformGraphQLEnumType(
 export function transformInputType(
   schema: Schema,
   type: TypeID,
-  state: State
+  state: State,
+  isListItemType = false
 ): ts.TypeNode {
   if (schema.isNonNull(type)) {
     return transformNonNullableInputType(
@@ -123,12 +122,17 @@ export function transformInputType(
       schema.getNullableType(type),
       state
     );
+  } else if (isListItemType) {
+    return ts.factory.createUnionTypeNode([
+      transformNonNullableInputType(schema, type, state),
+      ts.factory.createLiteralTypeNode(ts.factory.createNull()),
+    ]);
   } else {
     return ts.factory.createUnionTypeNode([
       transformNonNullableInputType(schema, type, state),
-      ts.factory.createLiteralTypeNode(
-        ts.factory.createToken(ts.SyntaxKind.NullKeyword)
-      ),
+      ts.factory.createLiteralTypeNode(ts.factory.createNull()),
+      // add undefined to support exactOptionalPropertyTypes
+      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
     ]);
   }
 }
@@ -141,7 +145,7 @@ function transformNonNullableInputType(
   if (schema.isList(type)) {
     return ts.factory.createTypeReferenceNode(
       ts.factory.createIdentifier("Array"),
-      [transformInputType(schema, schema.getListItemType(type), state)]
+      [transformInputType(schema, schema.getListItemType(type), state, true)]
     );
   } else if (schema.isScalar(type)) {
     return transformGraphQLScalarType(schema.getTypeString(type), state);
