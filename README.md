@@ -14,7 +14,7 @@ yarn add graphql relay-compiler --dev
 yarn add typescript relay-compiler-language-typescript --dev
 ```
 
-**Note:** Starting with version 14.0.0 relay-compiler-language-typescript requires a minimum TypeScript version of 4.2.3 being installed in your project.
+**Note:** Starting with version 15.0.0 relay-compiler-language-typescript requires a minimum TypeScript version of 4.5.0 being installed in your project.
 
 ## Configuration
 
@@ -74,12 +74,12 @@ where the `graphql` function is being used.
 *The generated code uses ES2015 module syntax if `module` is set to ES2015 or
 higher in your `tsconfig.json`. Note that the `eagerESModules` option from
 `relay-compiler` has no effect on the generated code if `module` is ES2015 or
-higher.* 
+higher.*
 
 #### Custom Headers
 
 If you need to add a custom header to generated files, perhaps for a custom linter
-or to get boilerplate license code in, that can be passed in also in compilerOptions 
+or to get boilerplate license code in, that can be passed in also in compilerOptions
 as `banner`:
 
 ```json
