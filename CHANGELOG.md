@@ -1,3 +1,34 @@
+# v15.0.0 (Tue Nov 23 2021)
+
+#### 💥 Breaking Change
+
+- Fixing TypeScript 4.5 type generation [#519](https://github.com/relay-tools/relay-compiler-language-typescript/pull/519) ([@fxOne](https://github.com/fxOne))
+
+#### 🐛 Bug Fix
+
+- Update README.md [#518](https://github.com/relay-tools/relay-compiler-language-typescript/pull/518) ([@MoSattler](https://github.com/MoSattler))
+
+#### 🔩 Dependency Updates
+
+- chore(deps-dev): bump lint-staged from 12.0.3 to 12.1.2 [#517](https://github.com/relay-tools/relay-compiler-language-typescript/pull/517) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 16.11.7 to 16.11.9 [#515](https://github.com/relay-tools/relay-compiler-language-typescript/pull/515) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/jest from 27.0.2 to 27.0.3 [#516](https://github.com/relay-tools/relay-compiler-language-typescript/pull/516) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump lint-staged from 12.0.2 to 12.0.3 [#514](https://github.com/relay-tools/relay-compiler-language-typescript/pull/514) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump lint-staged from 11.2.6 to 12.0.2 [#511](https://github.com/relay-tools/relay-compiler-language-typescript/pull/511) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump concurrently from 6.3.0 to 6.4.0 [#510](https://github.com/relay-tools/relay-compiler-language-typescript/pull/510) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @babel/runtime from 7.16.0 to 7.16.3 [#509](https://github.com/relay-tools/relay-compiler-language-typescript/pull/509) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 16.11.6 to 16.11.7 [#508](https://github.com/relay-tools/relay-compiler-language-typescript/pull/508) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @babel/runtime from 7.15.4 to 7.16.0 [#506](https://github.com/relay-tools/relay-compiler-language-typescript/pull/506) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump graphql from 15.7.1 to 15.7.2 [#504](https://github.com/relay-tools/relay-compiler-language-typescript/pull/504) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 3
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Dominic Buetow ([@fxOne](https://github.com/fxOne))
+- Mo Sattler ([@MoSattler](https://github.com/MoSattler))
+
+---
+
 # v14.3.0 (Fri Oct 29 2021)
 
 #### 🚀 Enhancement
