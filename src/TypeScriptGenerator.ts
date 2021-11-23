@@ -87,6 +87,7 @@ function aggregateRuntimeImports(ast: ts.Statement[]) {
     const importSpecifiers: ts.ImportSpecifier[] = [];
     namedImports.map((namedImport) => {
       const specifier = ts.factory.createImportSpecifier(
+        false,
         undefined,
         ts.factory.createIdentifier(namedImport)
       );
@@ -423,6 +424,7 @@ function importTypes(names: string[], fromModule: string): ts.Statement {
         ts.factory.createNamedImports(
           names.map((name) =>
             ts.factory.createImportSpecifier(
+              false,
               undefined,
               ts.factory.createIdentifier(name)
             )
@@ -1083,6 +1085,7 @@ function getFragmentRefsTypeImport(state: State): ts.Statement[] {
           undefined,
           ts.factory.createNamedImports([
             ts.factory.createImportSpecifier(
+              false,
               undefined,
               ts.factory.createIdentifier("FragmentRefs")
             ),
