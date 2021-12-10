@@ -857,9 +857,9 @@
     graphql "^14.5.3"
 
 "@types/relay-runtime@*", "@types/relay-runtime@^12.0.0":
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-12.0.0.tgz#0045cde65fff67c7c34c8cd1cff7bd61eb45c7f9"
-  integrity sha512-vICXIW4+CGP2te0uQDAaR93Dge4vnLBxECpHFWGBmj02b6CJqNiIWt/IWc+uwL8ljZ2IermfjTyd07HaZuO+VA==
+  version "12.0.1"
+  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-12.0.1.tgz#a25a9755f7925a202a7ec3a49857de46943ecf02"
+  integrity sha512-zYhQjy7FtTb6cgGuwBT09NLL308GIlo/tcnsfmZ095l/135TD8VladcOkowK/3o8jDAbQ2uLsMJ4No2tcxRenA==
 
 "@types/stack-utils@^2.0.0":
   version "2.0.1"
