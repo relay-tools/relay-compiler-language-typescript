@@ -1,3 +1,75 @@
+# v15.0.1 (Sun Jan 30 2022)
+
+#### 🐛 Bug Fix
+
+- [Chore] add note that this repository is obsolete [#593](https://github.com/relay-tools/relay-compiler-language-typescript/pull/593) ([@fxOne](https://github.com/fxOne))
+
+#### 🔩 Dependency Updates
+
+- chore(deps-dev): bump @types/node from 17.0.12 to 17.0.13 [#592](https://github.com/relay-tools/relay-compiler-language-typescript/pull/592) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump lint-staged from 12.3.1 to 12.3.2 [#591](https://github.com/relay-tools/relay-compiler-language-typescript/pull/591) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 17.0.10 to 17.0.12 [#590](https://github.com/relay-tools/relay-compiler-language-typescript/pull/590) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump lint-staged from 12.2.2 to 12.3.1 [#589](https://github.com/relay-tools/relay-compiler-language-typescript/pull/589) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump lint-staged from 12.2.1 to 12.2.2 [#588](https://github.com/relay-tools/relay-compiler-language-typescript/pull/588) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump typescript from 4.5.4 to 4.5.5 [#587](https://github.com/relay-tools/relay-compiler-language-typescript/pull/587) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump lint-staged from 12.2.0 to 12.2.1 [#586](https://github.com/relay-tools/relay-compiler-language-typescript/pull/586) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 17.0.9 to 17.0.10 [#584](https://github.com/relay-tools/relay-compiler-language-typescript/pull/584) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump lint-staged from 12.1.7 to 12.2.0 [#585](https://github.com/relay-tools/relay-compiler-language-typescript/pull/585) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 17.0.8 to 17.0.9 [#583](https://github.com/relay-tools/relay-compiler-language-typescript/pull/583) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump ts-jest from 27.1.2 to 27.1.3 [#582](https://github.com/relay-tools/relay-compiler-language-typescript/pull/582) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump follow-redirects from 1.14.4 to 1.14.7 in /example-hooks [#579](https://github.com/relay-tools/relay-compiler-language-typescript/pull/579) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump follow-redirects from 1.14.4 to 1.14.7 in /example [#578](https://github.com/relay-tools/relay-compiler-language-typescript/pull/578) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/relay-runtime from 12.0.1 to 12.0.2 [#572](https://github.com/relay-tools/relay-compiler-language-typescript/pull/572) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump lint-staged from 12.1.5 to 12.1.7 [#571](https://github.com/relay-tools/relay-compiler-language-typescript/pull/571) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump jest from 27.4.6 to 27.4.7 [#566](https://github.com/relay-tools/relay-compiler-language-typescript/pull/566) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump jest-cli from 27.4.6 to 27.4.7 [#565](https://github.com/relay-tools/relay-compiler-language-typescript/pull/565) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump jest from 27.4.5 to 27.4.6 [#564](https://github.com/relay-tools/relay-compiler-language-typescript/pull/564) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump concurrently from 6.5.1 to 7.0.0 [#561](https://github.com/relay-tools/relay-compiler-language-typescript/pull/561) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump jest-cli from 27.4.5 to 27.4.6 [#563](https://github.com/relay-tools/relay-compiler-language-typescript/pull/563) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 17.0.7 to 17.0.8 [#562](https://github.com/relay-tools/relay-compiler-language-typescript/pull/562) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump lint-staged from 12.1.4 to 12.1.5 [#560](https://github.com/relay-tools/relay-compiler-language-typescript/pull/560) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 17.0.5 to 17.0.7 [#559](https://github.com/relay-tools/relay-compiler-language-typescript/pull/559) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/jest from 27.0.3 to 27.4.0 [#558](https://github.com/relay-tools/relay-compiler-language-typescript/pull/558) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @babel/runtime from 7.16.5 to 7.16.7 [#557](https://github.com/relay-tools/relay-compiler-language-typescript/pull/557) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump lint-staged from 12.1.3 to 12.1.4 [#556](https://github.com/relay-tools/relay-compiler-language-typescript/pull/556) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 17.0.4 to 17.0.5 [#555](https://github.com/relay-tools/relay-compiler-language-typescript/pull/555) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 17.0.2 to 17.0.4 [#554](https://github.com/relay-tools/relay-compiler-language-typescript/pull/554) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 17.0.1 to 17.0.2 [#553](https://github.com/relay-tools/relay-compiler-language-typescript/pull/553) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 16.11.13 to 17.0.1 [#550](https://github.com/relay-tools/relay-compiler-language-typescript/pull/550) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump concurrently from 6.5.0 to 6.5.1 [#551](https://github.com/relay-tools/relay-compiler-language-typescript/pull/551) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump lint-staged from 12.1.2 to 12.1.3 [#549](https://github.com/relay-tools/relay-compiler-language-typescript/pull/549) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump ts-jest from 27.1.1 to 27.1.2 [#547](https://github.com/relay-tools/relay-compiler-language-typescript/pull/547) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump concurrently from 6.4.0 to 6.5.0 [#548](https://github.com/relay-tools/relay-compiler-language-typescript/pull/548) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 16.11.12 to 16.11.13 [#545](https://github.com/relay-tools/relay-compiler-language-typescript/pull/545) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump jest from 27.4.4 to 27.4.5 [#542](https://github.com/relay-tools/relay-compiler-language-typescript/pull/542) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump typescript from 4.5.3 to 4.5.4 [#544](https://github.com/relay-tools/relay-compiler-language-typescript/pull/544) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump jest-cli from 27.4.4 to 27.4.5 [#543](https://github.com/relay-tools/relay-compiler-language-typescript/pull/543) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @babel/runtime from 7.16.3 to 7.16.5 [#541](https://github.com/relay-tools/relay-compiler-language-typescript/pull/541) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump jest from 27.4.3 to 27.4.4 [#539](https://github.com/relay-tools/relay-compiler-language-typescript/pull/539) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/relay-runtime from 12.0.0 to 12.0.1 [#538](https://github.com/relay-tools/relay-compiler-language-typescript/pull/538) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump jest-cli from 27.4.3 to 27.4.4 [#537](https://github.com/relay-tools/relay-compiler-language-typescript/pull/537) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump typescript from 4.5.2 to 4.5.3 [#536](https://github.com/relay-tools/relay-compiler-language-typescript/pull/536) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump ts-jest from 27.1.0 to 27.1.1 [#535](https://github.com/relay-tools/relay-compiler-language-typescript/pull/535) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump graphql from 15.7.2 to 15.8.0 [#534](https://github.com/relay-tools/relay-compiler-language-typescript/pull/534) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 16.11.11 to 16.11.12 [#533](https://github.com/relay-tools/relay-compiler-language-typescript/pull/533) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump prettier from 2.5.0 to 2.5.1 [#531](https://github.com/relay-tools/relay-compiler-language-typescript/pull/531) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump ts-jest from 27.0.7 to 27.1.0 [#532](https://github.com/relay-tools/relay-compiler-language-typescript/pull/532) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/relay-compiler from 8.0.1 to 8.0.2 [#530](https://github.com/relay-tools/relay-compiler-language-typescript/pull/530) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump jest from 27.4.2 to 27.4.3 [#527](https://github.com/relay-tools/relay-compiler-language-typescript/pull/527) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump jest from 27.4.1 to 27.4.2 [#525](https://github.com/relay-tools/relay-compiler-language-typescript/pull/525) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump jest from 27.3.1 to 27.4.1 [#523](https://github.com/relay-tools/relay-compiler-language-typescript/pull/523) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 16.11.10 to 16.11.11 [#524](https://github.com/relay-tools/relay-compiler-language-typescript/pull/524) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump jest-cli from 27.3.1 to 27.4.1 [#522](https://github.com/relay-tools/relay-compiler-language-typescript/pull/522) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump prettier from 2.4.1 to 2.5.0 [#521](https://github.com/relay-tools/relay-compiler-language-typescript/pull/521) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 16.11.9 to 16.11.10 [#520](https://github.com/relay-tools/relay-compiler-language-typescript/pull/520) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 2
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Dominic Buetow ([@fxOne](https://github.com/fxOne))
+
+---
+
 # v15.0.0 (Tue Nov 23 2021)
 
 #### 💥 Breaking Change
