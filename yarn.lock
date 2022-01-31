@@ -1875,10 +1875,10 @@ fbjs-css-vars@^1.0.0:
   resolved "https://registry.yarnpkg.com/fbjs-css-vars/-/fbjs-css-vars-1.0.2.tgz#216551136ae02fe255932c3ec8775f18e2c078b8"
   integrity sha512-b2XGFAFdWZWg0phtAWLHCk836A1Xann+I+Dgd3Gk64MHKZO44FfoD1KxyvbSh0qZsIoXQGGlVztIY+oitJPpRQ==
 
-fbjs@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-3.0.0.tgz#0907067fb3f57a78f45d95f1eacffcacd623c165"
-  integrity sha512-dJd4PiDOFuhe7vk4F80Mba83Vr2QuK86FoxtgPmzBqEJahncp+13YCmfoa53KHCo6OnlXLG7eeMWPfB5CrpVKg==
+fbjs@^3.0.0, fbjs@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-3.0.2.tgz#dfae08a85c66a58372993ce2caf30863f569ff94"
+  integrity sha512-qv+boqYndjElAJHNN3NoM8XuwQZ1j2m3kEvTgdle8IDjr6oUbkEpvABWtj/rQl3vq4ew7dnElBxL4YJAwTVqQQ==
   dependencies:
     cross-fetch "^3.0.4"
     fbjs-css-vars "^1.0.0"
@@ -1886,7 +1886,7 @@ fbjs@^3.0.0:
     object-assign "^4.1.0"
     promise "^7.1.1"
     setimmediate "^1.0.5"
-    ua-parser-js "^0.7.18"
+    ua-parser-js "^0.7.30"
 
 fill-range@^7.0.1:
   version "7.0.1"
@@ -3202,7 +3202,7 @@ regenerator-runtime@^0.13.4:
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz#8925742a98ffd90814988d7566ad30ca3b263b52"
   integrity sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==
 
-relay-compiler@12.0.0, relay-compiler@^12.0.0:
+relay-compiler@^12.0.0:
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/relay-compiler/-/relay-compiler-12.0.0.tgz#9f292d483fb871976018704138423a96c8a45439"
   integrity sha512-SWqeSQZ+AMU/Cr7iZsHi1e78Z7oh00I5SvR092iCJq79aupqJ6Ds+I1Pz/Vzo5uY5PY0jvC4rBJXzlIN5g9boQ==
@@ -3234,15 +3234,23 @@ relay-runtime@12.0.0, relay-runtime@^12.0.0:
     fbjs "^3.0.0"
     invariant "^2.2.4"
 
-relay-test-utils-internal@^12.0.0:
-  version "12.0.0"
-  resolved "https://registry.yarnpkg.com/relay-test-utils-internal/-/relay-test-utils-internal-12.0.0.tgz#ced8c78c5480e8d905372a4f47b12a1eab720ccd"
-  integrity sha512-uDG+9f2PqsK8tS071niVf29jQwErPcQjaS0hF3T5TydOzJTXZOf5su2g/jmHZHVJkO/iPxWlIH2U4JYbFCb8yg==
+relay-runtime@13.0.2:
+  version "13.0.2"
+  resolved "https://registry.yarnpkg.com/relay-runtime/-/relay-runtime-13.0.2.tgz#02adb73ddc159c57b92a23c52984bf73fae0d1fc"
+  integrity sha512-sP4lNGfFcOm7tQD12qlvwsiOREDgjkw4FQAjtemmtwivKOqI4qHAL22Ar62r5TPVlASn4iVWMk7rIdIJI20KGQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
-    fbjs "^3.0.0"
-    relay-compiler "12.0.0"
-    relay-runtime "12.0.0"
+    fbjs "^3.0.2"
+    invariant "^2.2.4"
+
+relay-test-utils-internal@^13.0.2:
+  version "13.0.2"
+  resolved "https://registry.yarnpkg.com/relay-test-utils-internal/-/relay-test-utils-internal-13.0.2.tgz#d5738cb4596a78b738f985177e9e4ebb3ed6009a"
+  integrity sha512-IwqnbHbVYuakYzk6Xv8dkZZks1U7r2l8/3+04/RghX96QWk/FvATtta8FRfy5LXd9vStPJdTtQP92QpbT17mKw==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    fbjs "^3.0.2"
+    relay-runtime "13.0.2"
 
 require-directory@^2.1.1:
   version "2.1.1"
@@ -3737,10 +3745,10 @@ typescript@4.5.5:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.5.tgz#d8c953832d28924a9e3d37c73d729c846c5896f3"
   integrity sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA==
 
-ua-parser-js@^0.7.18:
-  version "0.7.28"
-  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.28.tgz#8ba04e653f35ce210239c64661685bf9121dec31"
-  integrity sha512-6Gurc1n//gjp9eQNXjD9O3M/sMwVtN5S8Lv9bvOYBfKfDNiIIhqiyi01vMBO45u4zkDE420w/e0se7Vs+sIg+g==
+ua-parser-js@^0.7.30:
+  version "0.7.31"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.31.tgz#649a656b191dffab4f21d5e053e27ca17cbff5c6"
+  integrity sha512-qLK/Xe9E2uzmYI3qLeOmI0tEOt+TBBQyUIAh4aAgU05FVYzeZrKUdkAZfBNVGRaHVgV0TDkdEngJSw/SyQchkQ==
 
 universalify@^0.1.2:
   version "0.1.2"
