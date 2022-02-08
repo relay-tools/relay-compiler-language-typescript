@@ -1039,10 +1039,10 @@
     "@types/relay-runtime" "*"
     graphql "^14.5.3"
 
-"@types/relay-runtime@*", "@types/relay-runtime@^12.0.0":
-  version "12.0.2"
-  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-12.0.2.tgz#2d4162a23753f1ee27014a61d95a26ccae02dcc3"
-  integrity sha512-TXHpHL4VFjCQfBDTXA8A7NMkANXRRNJISM/LewfwtqEKjaikFrPj70LLI/JVWthLcdQMhp0hw5RtO57i6gEcvw==
+"@types/relay-runtime@*", "@types/relay-runtime@^13.0.1":
+  version "13.0.1"
+  resolved "https://registry.yarnpkg.com/@types/relay-runtime/-/relay-runtime-13.0.1.tgz#d148c41dfceb5ad13e90b80a382e2a0aee1dfc80"
+  integrity sha512-zV5x2SBywHoEY44JTJgL7XuSCsQUBXnqarlrSH7Zp/6gJM/XqEAYYuC3+mx27GyrysnXJooEkwZinjfw2ap+bw==
 
 "@types/stack-utils@^2.0.0":
   version "2.0.1"
