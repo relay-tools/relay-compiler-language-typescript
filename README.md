@@ -1,6 +1,6 @@
 # Obsolete
 
-This is repository is obsolete as [relay@13](https://github.com/facebook/relay/releases/tag/v13.0.0) now supports TypeScript directly.
+This repository is obsolete as [relay@13](https://github.com/facebook/relay/releases/tag/v13.0.0) now supports TypeScript directly.
 
 # relay-compiler-language-typescript
 
