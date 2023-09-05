@@ -72,7 +72,7 @@
     "invariant": "^2.2.4"
   },
   "devDependencies": {
-    "@babel/runtime": "7.22.11",
+    "@babel/runtime": "7.22.15",
     "@types/invariant": "2.2.35",
     "@types/jest": "^27.0.2",
     "@types/node": "18.16.3",
